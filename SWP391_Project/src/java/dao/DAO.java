@@ -5,7 +5,6 @@
 package dao;
 
 import Context.DBContext;
-import Entity.OTP;
 import Entity.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -41,7 +40,7 @@ public class DAO {
 
         }
     }
-
+    
     public List<User> getAllUser() {
         List<User> list = new ArrayList<>();
         String query = "select * from swp_demo.users";
