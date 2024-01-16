@@ -31,6 +31,7 @@
             <p class="forgot-pass">Forgot password?</p>
             <button type="button" class="submit">Sign In</button>
             <button type="button" class="submit" style="background-color: gray" id="homeButton">Home Page</button>
+            <button type="button" class="submit" style="background-color: gray" > <a href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:9999/SWP391_Project/loginGoogleHandler&response_type=code&client_id=351960657846-lejfsvfrmte5906hvkrj70out2u775s0.apps.googleusercontent.com&approval_prompt=force">Login with google</a></button>
         </div>
         <div class="sub-cont">
             <div class="img">

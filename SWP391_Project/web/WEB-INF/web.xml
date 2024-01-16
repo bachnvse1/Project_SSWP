@@ -12,6 +12,10 @@
         <servlet-name>VerifyCode</servlet-name>
         <servlet-class>Controller.VerifyCode</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>loginGoogleHandler</servlet-name>
+        <servlet-class>Controller.loginGoogleHandler</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SendEmail</servlet-name>
         <url-pattern>/send</url-pattern>
@@ -23,5 +27,9 @@
     <servlet-mapping>
         <servlet-name>VerifyCode</servlet-name>
         <url-pattern>/VerifyCode</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loginGoogleHandler</servlet-name>
+        <url-pattern>/loginGoogleHandler</url-pattern>
     </servlet-mapping>
 </web-app>
