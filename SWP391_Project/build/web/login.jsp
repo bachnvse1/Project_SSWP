@@ -62,7 +62,7 @@
                     <span>Email</span>
                     <input type="text" id="email" name="email"/>
                 </label>
-                    <button type="button" onclick="sendData()" class="submit">Sign Up</button>
+                    <button type="submit" class="submit">Sign Up</button>
                 </label>
                 </form>
             </div>
@@ -87,7 +87,8 @@
             });
         });
     </script>
-    </script>
+    
+    
     <script>
         document.querySelector('.img__btn').addEventListener('click', function() {
             document.querySelector('.cont').classList.toggle('s--signup');
