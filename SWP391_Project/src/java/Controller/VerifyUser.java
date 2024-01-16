@@ -38,8 +38,6 @@ public class VerifyUser extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String user = request.getParameter("user");
-        
-        
         String password = request.getParameter("pass");
         String email = request.getParameter("email");
         PrintWriter out = response.getWriter();
@@ -53,9 +51,8 @@ public class VerifyUser extends HttpServlet {
         session.setAttribute("user", user);
         session.setAttribute("pass", password);
         session.setAttribute("email", email);
-        
-        
-        
+        response.sendRedirect("verify.jsp");
+
     }
     
     public int GenOTP() {
