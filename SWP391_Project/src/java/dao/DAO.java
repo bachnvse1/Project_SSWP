@@ -91,7 +91,31 @@ public class DAO {
     }
     
     //HUY
-    
+        public User Login(String username, String pass) {
+        
+        String query = "select * from swp_demo.users where username = ? and password = ?";
+        try {
+            con = new DBContext().connection; //connect sql
+            ps = con.prepareStatement(query);
+            ps.setString(1, username);
+            ps.setString(2, pass);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return new User(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getBoolean(6),
+                        rs.getBoolean(7),
+                        rs.getTimestamp(8),
+                        rs.getTimestamp(9));
+            }
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
     
     
     
