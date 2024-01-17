@@ -18,19 +18,36 @@
     <br>
     <br>
     <div class="cont">
+        <script>
+    function refreshCaptcha() {
+        // Đổi nguồn ảnh của thẻ img
+        
+        var captchaImage = document.getElementById('captchaImage');
+        captchaImage.src = "captchaimage"; // Thay 'new_captcha_image_url' bằng URL mới của ảnh CAPTCHA
+    }
+</script>
         <div class="form sign-in">
             <h2>Welcome</h2>
-            <form action="login">
+            <form action="login" method="post">
+                <div style="color: red;size: 10px;text-align: center">${mess}</div>
             <label>
                 <span>User</span>
-                <input type="text" name="user"/>
+                <input type="text" name="user" value="${username}"/>
             </label>
             <label>
                 <span>Password</span>
-                <input type="password" name="password" />
+                <input type="password" name="password" value="${pass}" />
             </label>
+           <label>
+            
+                <img id="captchaImage" src="captchaimage" alt="CAPTCHA image" />
+                <input type="text" name="capchaRespone" />
+                <a href="captchaimage">HUYU</a>
+            </label>
+
             <p class="forgot-pass">Forgot password?</p>
-            <button type="button" class="submit">Sign In</button>
+            
+            <button type="submit" class="submit">Sign In</button>
             </form>
             <button type="button" class="submit" style="background-color: gray" id="homeButton">Home Page</button>
             <button type="button" class="submit" style="background-color: gray" > <a href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:9999/SWP391_Project/loginGoogleHandler&response_type=code&client_id=351960657846-lejfsvfrmte5906hvkrj70out2u775s0.apps.googleusercontent.com&approval_prompt=force" style="color: white; text-decoration: none;">Login with google</a></button>

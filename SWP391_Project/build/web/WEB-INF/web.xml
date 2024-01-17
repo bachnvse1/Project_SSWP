@@ -16,6 +16,14 @@
         <servlet-name>loginGoogleHandler</servlet-name>
         <servlet-class>Controller.loginGoogleHandler</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>Controller.LoginServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CaptchaImageServlet</servlet-name>
+        <servlet-class>Controller.CaptchaImageServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SendEmail</servlet-name>
         <url-pattern>/send</url-pattern>
@@ -31,5 +39,13 @@
     <servlet-mapping>
         <servlet-name>loginGoogleHandler</servlet-name>
         <url-pattern>/loginGoogleHandler</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CaptchaImageServlet</servlet-name>
+        <url-pattern>/captchaimage</url-pattern>
     </servlet-mapping>
 </web-app>
