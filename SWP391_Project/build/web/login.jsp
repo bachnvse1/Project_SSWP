@@ -28,8 +28,8 @@
                 <span>Password</span>
                 <input type="password" />
             </label>
-            <p class="forgot-pass">Forgot password?</p>
-            <button type="button" class="submit">Sign In</button>
+            <a href="forgot">  <p class="forgot-pass">Forgot password?</p> </a>
+                      <button type="button" class="submit">Sign In</button>
             <button type="button" class="submit" style="background-color: gray" id="homeButton">Home Page</button>
         </div>
         <div class="sub-cont">
@@ -55,7 +55,7 @@
                     <input type="text" id="username" name="user" required=""/>
                 </label>
                 <label>
-                    <span>Password</span>
+                    <span href="">Password</span>
                     <input type="password" id="password" name="pass" required=""/>
                 </label>
                 <label>
