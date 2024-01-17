@@ -33,7 +33,7 @@
             <button type="button" class="submit">Sign In</button>
             </form>
             <button type="button" class="submit" style="background-color: gray" id="homeButton">Home Page</button>
-            <button type="button" class="submit" style="background-color: gray" > <a href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:9999/SWP391_Project/loginGoogleHandler&response_type=code&client_id=351960657846-lejfsvfrmte5906hvkrj70out2u775s0.apps.googleusercontent.com&approval_prompt=force">Login with google</a></button>
+            <button type="button" class="submit" style="background-color: gray" > <a href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:9999/SWP391_Project/loginGoogleHandler&response_type=code&client_id=351960657846-lejfsvfrmte5906hvkrj70out2u775s0.apps.googleusercontent.com&approval_prompt=force" style="color: white; text-decoration: none;">Login with google</a></button>
         </div>
         <div class="sub-cont">
             <div class="img">
@@ -51,7 +51,7 @@
                 </div>
             </div>
             <div class="form sign-up">
-                <form action="VerifyUser" method="get">
+                <form id="loginForm">
                     <h2>Create your Account</h2>
                 <label>
                     <span>User</span>
@@ -63,14 +63,13 @@
                 </label>
                 <label>
                     <span>Email</span>
-                    <input type="text" id="email" name="email"/>
+                    <input type="text" id="email" name="email" required=""/>
                 </label>
                     <button type="submit" class="submit">Sign Up</button>
-                </label>
+                  
                 </form>
-            </div>
-            <div id="result"></div>
         </div>
+    </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
@@ -89,7 +88,32 @@
                 });
             });
         });
+        
+        $(document).ready(function () {
+            $('#loginForm').submit(function (e) {
+                e.preventDefault(); // Prevents the default form submission
+
+                var formData = {
+                    username: $('#username').val(),
+                    password: $('#password').val(),
+                    email: $('#email').val()
+                };
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'VerifyUser', // Replace 'MyServlet' with the actual URL of your servlet
+                    data: formData,
+                    success: function (response) {
+                        $("#loginForm").html(response);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            });
+        });
     </script>
+    
     
     
     <script>
