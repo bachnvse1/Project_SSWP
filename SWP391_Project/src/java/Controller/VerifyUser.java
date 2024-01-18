@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpSession;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import com.google.gson.Gson;
 
 /**
  *
@@ -106,8 +107,8 @@ public class VerifyUser extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         // Lấy dữ liệu từ request
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+        String username = request.getParameter("user");
+        String password = request.getParameter("pass");
         String email = request.getParameter("email");
         // Xử lý dữ liệu nếu cần
         // Ví dụ: kiểm tra đăng nhập
@@ -120,32 +121,15 @@ public class VerifyUser extends HttpServlet {
             int code = GenOTP();
             SendEmail sm = new SendEmail();
             sm.Send(email, code);
-
             HttpSession session = request.getSession();
             session.setAttribute("otp", code);
             session.setAttribute("user", username);
             session.setAttribute("pass", password);
             session.setAttribute("email", email);
-            response.sendRedirect("verify.jsp");
+            response.getWriter().write("success");
+
         } else {
-            mess += "Fail to sign in";
-            out.print("<h2>Create your Account</h2>\n" +
-"                <label>\n" +
-"                    <span>User</span>\n" +
-"                    <input type=\"text\" id=\"username\" name=\"user\" required=\"\"/>\n" +
-"                </label>\n" +
-"                <label>\n" +
-"                    <span>Password</span>\n" +
-"                    <input type=\"password\" id=\"password\" name=\"pass\" required=\"\"/>\n" +
-"                </label>\n" +
-"                <label>\n" +
-"                    <span>Email</span>\n" +
-"                    <input type=\"text\" id=\"email\" name=\"email\" required=\"\"/>\n" +
-"                </label>\n" +
-"                    <button type=\"submit\" class=\"submit\">Sign Up</button>\n" +
-"                  <label>\n" +
-"                      <span style=\"color:red;\">"+mess+"</span>\n" +
-"                </label>");
+            response.getWriter().write("error");
         }
     }
 
