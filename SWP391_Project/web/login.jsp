@@ -3,7 +3,7 @@
     Created on : Jan 12, 2024, 7:58:18 PM
     Author     : ADMIN
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -66,7 +66,8 @@
                     <input type="text" id="email" name="email" required=""/>
                 </label>
                     <button type="submit" class="submit">Sign Up</button>
-                  
+                    <div id="error-message">
+                    </div>
                 </form>
         </div>
     </div>
@@ -87,15 +88,15 @@
                     }    
                 });
             });
-        });
+        }); 
         
         $(document).ready(function () {
             $('#loginForm').submit(function (e) {
                 e.preventDefault(); // Prevents the default form submission
 
                 var formData = {
-                    username: $('#username').val(),
-                    password: $('#password').val(),
+                    user: $('#username').val(),
+                    pass: $('#password').val(),
                     email: $('#email').val()
                 };
 
@@ -103,8 +104,13 @@
                     type: 'POST',
                     url: 'VerifyUser', // Replace 'MyServlet' with the actual URL of your servlet
                     data: formData,
+                    
                     success: function (response) {
-                        $("#loginForm").html(response);
+                        if(response == "success") {
+                            window.location.href = "verify.jsp";
+                        } else {
+                            $("#error-message").html("<label><span>Invalid infomation </span></label>");
+                        }
                     },
                     error: function (error) {
                         console.log(error);
@@ -113,7 +119,6 @@
             });
         });
     </script>
-    
     
     
     <script>
