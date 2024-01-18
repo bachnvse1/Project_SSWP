@@ -12,29 +12,44 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="css/Login.css"/>
-
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body>
         <br>
         <br>
-        <div class="cont" style="height: 600px;">
+        <script>
+            
+        </script>
+        <div class="cont" style="height: 600px">
             <div class="form sign-in">
                 <h2>Welcome</h2>
-                <form action="login">
+                <form action="login" method="post">
+                    <div style="color: red;size: 10px;text-align: center">${mess}</div>
                     <label>
                         <span>User</span>
-                        <input type="text" name="user"/>
+                        <input type="text" name="user" value="${username}"/>
                     </label>
                     <label>
                         <span>Password</span>
-                        <input type="password" name="password" />
+                        <input type="password" name="password" value="${pass}" />
                     </label>
+                    <label>
+                        
+                        <div class="input-group-prepend" style="display: flex">
+                            <img id="captchaImage" src="captchaimage" alt="CAPTCHA image" />
+                            <input type="text" placeholder="Captcha" name="capchaRespone" />
+                            <button type="button" onclick="refreshCaptcha()" class="btn btn-light" style="width: 15%"><i class="fa fa-refresh" style="color: black;"></i></button>
+                           </div>
+                    </label>
+                    
                     <p class="forgot-pass">Forgot password?</p>
-                    <button type="button" class="submit">Sign In</button>
+
+                    <button type="submit" class="submit">Sign In</button>
                 </form>
-                <button type="button" class="submit" style="background-color: gray" > <a href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:9999/SWP391_Project/loginGoogleHandler&response_type=code&client_id=351960657846-lejfsvfrmte5906hvkrj70out2u775s0.apps.googleusercontent.com&approval_prompt=force" style="color: white; text-decoration: none;">Login with google</a></button>
                 <button type="button" class="submit" style="background-color: gray" id="homeButton">Home Page</button>
-            </div>
+                <button type="button" class="submit" style="background-color: gray" > <a href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:9999/SWP391_Project/loginGoogleHandler&response_type=code&client_id=351960657846-lejfsvfrmte5906hvkrj70out2u775s0.apps.googleusercontent.com&approval_prompt=force" style="color: white; text-decoration: none;">Login with google</a></button>
+</div>
+        
             <div class="sub-cont">
                 <div class="img">
                     <div class="img__text m--up">
@@ -66,16 +81,14 @@
                                                         <input type="text" id="email" name="email" required=""/>
                                                     </label>
                                                     <button type="submit" class="submit">Sign Up</button>
-                                                    <label style="width: 400px;">
-                                                        <span id="error-message" style="color:red;"></span>
-                                                    </label>
                                                 </form>
                                             </div>
                                             </div>
                                             </div>
                                             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-                                            <script>
-                                                $(document).ready(function () {
+           <script>
+                               
+         $(document).ready(function () {
                                                     $("#homeButton").click(function () {
                                                         $.ajax({
                                                             type: 'GET',
@@ -111,7 +124,7 @@
                                                                     window.location.href = "verify.jsp";
                                                                 } else {
                                                                     alert("          Check format infomation!!!\n          Ex:\n          User: not contain special characters\n          Password: must contain special characters and digit\n          Email: abc@xyz.com");
-                                                                    //$("#error-message").html("Check format infomation!!!</br>Ex: User (not contain special characters), pass: bacht1@, email: abc@xyz.com");
+                                                                   
                                                                 }
                                                             },
                                                             error: function (error) {
@@ -120,13 +133,19 @@
                                                         });
                                                     });
                                                 });
+                                                
+                                                function refreshCaptcha() {
+                // Sử dụng AJAX để làm mới ảnh CAPTCHA
+                $.get('refreshcaptcha', function () {
+                    // Thay đổi src của ảnh để làm mới
+                    $('#captchaImage').attr('src', 'captchaimage?' + new Date().getTime());
+                });
+            }
                                             </script>
-
-
-                                            <script>
-                                                document.querySelector('.img__btn').addEventListener('click', function () {
-                                                    document.querySelector('.cont').classList.toggle('s--signup');
-                                                });
-                                            </script>
-                                            </body>
-                                            </html>
+<script>
+        document.querySelector('.img__btn').addEventListener('click', function () {
+        document.querySelector('.cont').classList.toggle('s--signup');
+});
+   </script>
+         </body>
+        </html>
