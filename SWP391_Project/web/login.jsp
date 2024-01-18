@@ -42,7 +42,7 @@
             
                 <img id="captchaImage" src="captchaimage" alt="CAPTCHA image" />
                 <input type="text" name="capchaRespone" />
-                <a href="captchaimage">HUYU</a>
+             
             </label>
 
             <p class="forgot-pass">Forgot password?</p>
