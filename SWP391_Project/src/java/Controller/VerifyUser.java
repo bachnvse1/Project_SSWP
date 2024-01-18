@@ -84,7 +84,7 @@ public class VerifyUser extends HttpServlet {
         // Xử lý dữ liệu nếu cần
         // Ví dụ: kiểm tra đăng nhập
         try {
-            if (validate.checkInput(username, "^[a-zA-Z0-9]+$", 5, 10)
+            if (validate.checkInput(username, "^[^@,!#$%&*]*$", 5, 10)
                    && validate.checkInput(email, "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", 0, 20)
                    && validate.checkInput(password, "^(?=.*[!@#$%^&*(),.?\":{}|<>]).*$", 6, 15)) {
                 DAO dao = new DAO();

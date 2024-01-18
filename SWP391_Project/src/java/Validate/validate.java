@@ -15,7 +15,7 @@ public class validate {
     public boolean checkInput(String input, String regex, int min, int max) {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(input);
-        if (input.length() >= min && matcher.matches() == true && input.length() <= max) {
+        if (input.length() >= min && matcher.matches() && input.length() <= max) {
             return true;
         }
         return false;
