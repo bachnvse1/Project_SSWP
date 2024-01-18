@@ -43,7 +43,7 @@ body{
 }
 
 .otp-box .inputs{
-    display: flex;
+    display: block;
     justify-content: space-between;
     max-width: 320px;
     margin: 0 auto;
@@ -51,7 +51,7 @@ body{
 }
 
 .otp-box .inputs input{
-    width: 40px;
+    width: 150px;
     height: 40px;
     border: 1px solid #bbb;
     border-radius: 8px;
@@ -59,12 +59,15 @@ body{
     text-align: center;
     color: #111;
     caret-color: transparent;
+    margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 .otp-box .verify-button button{
-    width: 100%;
+    width: 100px;
     height: 40px;
     font-size: 15px;
+    font-family: cursive;
     border: none;
     background-color: grey;
     border-radius: 8px;
