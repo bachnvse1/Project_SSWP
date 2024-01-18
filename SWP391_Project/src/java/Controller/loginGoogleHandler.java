@@ -41,8 +41,10 @@ public class loginGoogleHandler extends HttpServlet {
         String code = request.getParameter("code");
         String accessToken = getToken(code);
         userGoogle u = getUserInfo(accessToken);
+        HttpSession session = request.getSession();
+        session.setAttribute("user", u);
         
-        response.sendRedirect("home.jsp");
+
     }
 
     public static String getToken(String code) throws ClientProtocolException, IOException {

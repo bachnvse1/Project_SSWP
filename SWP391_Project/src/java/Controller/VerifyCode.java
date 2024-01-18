@@ -8,6 +8,7 @@ import dao.DAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -36,7 +37,7 @@ public class VerifyCode extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet VerifyCode</title>");            
+            out.println("<title>Servlet VerifyCode</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet VerifyCode at " + request.getContextPath() + "</h1>");
@@ -73,19 +74,30 @@ public class VerifyCode extends HttpServlet {
             throws ServletException, IOException {
         DAO dao = new DAO();
         //processRequest(request, response);
-        PrintWriter out = response.getWriter();
-        String code = request.getParameter("otp_code");
-        int code_1 = Integer.parseInt(code);
         HttpSession session = request.getSession();
-        int code_give = (int) session.getAttribute("otp");
         String user = (String) session.getAttribute("user");
         String pass = (String) session.getAttribute("pass");
         String email = (String) session.getAttribute("email");
-        if(code_1 == code_give) {
-            dao.signup(user, pass, email);
-        } else {
-            out.print("not");
+        PrintWriter out = response.getWriter();
+        String code = request.getParameter("otp_code");
+        String mess = "";
+        int code_give = (int) session.getAttribute("otp");
+        try {
+            int code_1 = Integer.parseInt(code);
+            if (code_1 == code_give) {
+                dao.signup(user, pass, email);
+                mess += "Sign up success!!!";
+                request.setAttribute("messSuccess", mess);
+                request.getRequestDispatcher("verify.jsp").forward(request, response);
+            } else {
+                throw new NumberFormatException();
+            }
+        } catch (NumberFormatException e) {
+            mess += "OTP error, input again!!!";
+            request.setAttribute("messError", mess);
+            request.getRequestDispatcher("verify.jsp").forward(request, response);
         }
+
     }
 
     /**

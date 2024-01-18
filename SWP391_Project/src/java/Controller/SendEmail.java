@@ -20,15 +20,16 @@ import javax.mail.internet.MimeMessage;
 public class SendEmail {
      public void Send(String email, int otp) {
 
-        final String fromEmail = "taidmhe01@outlook.com";
-        final String password = "@Tai01062001";
+        final String fromEmail = "bachnvse@gmail.com";
+        final String password = "qihc gnxu dggn uaje";
 
 // Config SMTP
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp.office365.com"); // smtp.office365.com
-        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.port", "465");
+        props.put("mail.smtp.socketFactory.port", "465");
 
 // Create session // tạo mail root gửi đi
         Session session = Session.getInstance(props,

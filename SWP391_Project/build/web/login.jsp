@@ -3,7 +3,7 @@
     Created on : Jan 12, 2024, 7:58:18 PM
     Author     : ADMIN
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -54,7 +54,8 @@
                 </form>
                 <button type="button" class="submit" style="background-color: gray" id="homeButton">Home Page</button>
                 <button type="button" class="submit" style="background-color: gray" > <a href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:9999/SWP391_Project/loginGoogleHandler&response_type=code&client_id=351960657846-lejfsvfrmte5906hvkrj70out2u775s0.apps.googleusercontent.com&approval_prompt=force" style="color: white; text-decoration: none;">Login with google</a></button>
-            </div>
+
+        
             <div class="sub-cont">
                 <div class="img">
                     <div class="img__text m--up">
@@ -86,60 +87,63 @@
                                                         <input type="text" id="email" name="email" required=""/>
                                                     </label>
                                                     <button type="submit" class="submit">Sign Up</button>
-
                                                 </form>
                                             </div>
                                             </div>
                                             </div>
                                             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-                                            <script>
-                                $(document).ready(function () {
-                                    $("#homeButton").click(function () {
-                                        $.ajax({
-                                            type: 'GET',
-                                            url: "home.jsp",
-                                            success: function (response) {
-                                                $("body").html(response);
-                                            },
-                                            error: function () {
-                                                // Xử lý lỗi nếu có
-                                                alert("Đã xảy ra lỗi khi tải trang");
-                                            }
-                                        });
-                                    });
-                                });
+           <script>
+                               
+         $(document).ready(function () {
+                                                    $("#homeButton").click(function () {
+                                                        $.ajax({
+                                                            type: 'GET',
+                                                            url: "home.jsp",
+                                                            success: function (response) {
+                                                                $("body").html(response);
+                                                            },
+                                                            error: function () {
+                                                                // Xử lý lỗi nếu có
+                                                                alert("Đã xảy ra lỗi khi tải trang");
+                                                            }
+                                                        });
+                                                    });
+                                                });
 
-                                $(document).ready(function () {
-                                    $('#loginForm').submit(function (e) {
-                                        e.preventDefault(); // Prevents the default form submission
+                                                $(document).ready(function () {
+                                                    $('#loginForm').submit(function (e) {
+                                                        e.preventDefault(); // Prevents the default form submission
 
-                                        var formData = {
-                                            username: $('#username').val(),
-                                            password: $('#password').val(),
-                                            email: $('#email').val()
-                                        };
+                                                        var formData = {
+                                                            user: $('#username').val(),
+                                                            pass: $('#password').val(),
+                                                            email: $('#email').val()
+                                                        };
 
-                                        $.ajax({
-                                            type: 'POST',
-                                            url: 'VerifyUser', // Replace 'MyServlet' with the actual URL of your servlet
-                                            data: formData,
-                                            success: function (response) {
-                                                $("#loginForm").html(response);
-                                            },
-                                            error: function (error) {
-                                                console.log(error);
-                                            }
-                                        });
-                                    });
-                                });
-                                            </script>
+                                                        $.ajax({
+                                                            type: 'POST',
+                                                            url: 'VerifyUser', // Replace 'MyServlet' with the actual URL of your servlet
+                                                            data: formData,
 
-
-
-                                            <script>
-                                                document.querySelector('.img__btn').addEventListener('click', function () {
-                                                    document.querySelector('.cont').classList.toggle('s--signup');
+                                                            success: function (response) {
+                                                                if (response === "success") {
+                                                                    window.location.href = "verify.jsp";
+                                                                } else {
+                                                                    alert("          Check format infomation!!!\n          Ex:\n          User: not contain special characters\n          Password: must contain special characters and digit\n          Email: abc@xyz.com");
+                                                                   
+                                                                }
+                                                            },
+                                                            error: function (error) {
+                                                                console.log(error);
+                                                            }
+                                                        });
+                                                    });
                                                 });
                                             </script>
-                                            </body>
-                                            </html>
+<script>
+        document.querySelector('.img__btn').addEventListener('click', function () {
+        document.querySelector('.cont').classList.toggle('s--signup');
+});
+   </script>
+         </body>
+        </html>

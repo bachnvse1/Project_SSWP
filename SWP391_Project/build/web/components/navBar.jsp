@@ -10,6 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -35,10 +36,17 @@
                             <i class="bi-cart-fill me-1"></i>
                             Cart
                             <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                        </button>         
+
+                        <button class="btn btn-outline-dark" type="button" style="margin-left: 20px;" id="loadInfoButton">
+                            <a href="url" target="_blank"><i class="fa fa-user" style="color: black;"></i></a>
+                            <a href="url" target="target">Huy Ngu</a>
                         </button>
-                        
                         <button class="btn btn-outline-dark" type="button" style="margin-left: 20px;" id="loginButton">
                             Login
+                        </button>
+                        <button class="btn btn-outline-dark" type="button" style="margin-left: 20px;" id="logoutButton">
+                            Logout
                         </button>
                     </form>
                 </div>
