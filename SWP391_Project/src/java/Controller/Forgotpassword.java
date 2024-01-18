@@ -66,9 +66,6 @@ public class Forgotpassword extends HttpServlet {
         request.setAttribute("flag", 1);
         request.getRequestDispatcher("forgotpassword.jsp").forward(request, response);
     }
-
- 
-
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         DAO dao = new DAO();

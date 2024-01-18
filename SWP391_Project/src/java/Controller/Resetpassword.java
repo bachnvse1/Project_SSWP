@@ -14,6 +14,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -51,17 +53,29 @@ protected void processRequest(HttpServletRequest request, HttpServletResponse re
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-        String otp = request.getParameter("otp");
+       
+        try {
+             String otp = request.getParameter("otp");
         int otp_1 = Integer.parseInt(otp);
         HttpSession session = request.getSession();
         int code = (int) session.getAttribute("code");
-        if (otp_1 == code) {
+             if (otp_1 == code) {
             request.setAttribute("flag", 3);
             request.getRequestDispatcher("forgotpassword.jsp").forward(request, response);
-        } else {
-            request.setAttribute("flag", 1);
-            request.getRequestDispatcher("forgotpassword.jsp").forward(request, response);
+             }else{
+                throw new NumberFormatException();
+             }
+        } catch (NumberFormatException e) {
+             request.setAttribute("flag", 1);
+         request.getRequestDispatcher("forgotpassword.jsp").forward(request, response);
         }
+//        if (otp_1 == code) {
+//            request.setAttribute("flag", 3);
+//            request.getRequestDispatcher("forgotpassword.jsp").forward(request, response);
+//        } else {
+//            request.setAttribute("flag", 1);
+//            request.getRequestDispatcher("forgotpassword.jsp").forward(request, response);
+//        }
     }
 
     /**

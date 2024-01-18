@@ -7,6 +7,10 @@
 <html>
     <head>
         <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Verify OTP</title>
+        <link rel="stylesheet" href="css/verify.css">
     </head>
     <body>
     
@@ -56,8 +60,8 @@
                               <div class="row">
                                 <div class="col-12">
                                   <div class="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-md-center mt-5">
-                                    <a href="#!" class="link-secondary text-decoration-none">Login</a>
-                                    <a href="#!" class="link-secondary text-decoration-none">Register</a>
+                                    <a href="login.jsp" class="link-secondary text-decoration-none">Login</a>
+                                  
                                   </div>
                                 </div>
                               </div>
@@ -75,11 +79,23 @@
             
             <c:if test="${flag == 2}">
                 <form action="reset" method="get">
-                    <div class="inputBox">
-                        <input id="pass" type="text" name="otp" placeholder="OTP"> 
-                    </div>
-                    <input type="submit" name="" value="Submit">
-                        <p style="color: red;text-align: center">${requestScope.msg}</p>
+                    <div class="otp-box">
+            <form action="VerifyCode" method="post">
+                <div class="img">
+                    <img src="https://t.ly/7CuFm" alt="" width="100px">
+                </div>
+                <div class="content-box">
+                    <h2>Verification code</h2>
+                    <p>We just send a Verification code to your email</p>
+                </div>
+                <div class="inputs">
+                    <input type="text" maxlength="5" name="otp" required="">
+                </div>
+                <div class="verify-button">
+                    <button type="submit">Verify</button>
+                </div>
+            </form>
+        </div>
                 </form> 
             </c:if>
              
@@ -134,15 +150,14 @@
                                       <button class="btn btn-dark btn-lg" type="submit">Reset</button>
                                             <div class="row">
                                                 <div class="col-12">
-                                                  <p class="mb-0 mt-5 text-secondary text-center">Already have an account? <a href="#!" class="link-primary text-decoration-none">Sign in</a></p>
+                                                  <p class="mb-0 mt-5 text-secondary text-center">Already have an account? <a href="login.jsp" class="link-primary text-decoration-none">Sign in</a></p>
                                                       <p style="color: red;text-align: center">${requestScope.msg}</p>
                                                 </div>
                                              </div>
                                     </div>
                                   </div>
                                 </div>
-                              </form>
-                             
+                              </form>                            
                             </div>
                           </div>
                         </div>
