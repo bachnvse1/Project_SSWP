@@ -9,7 +9,7 @@ package Entity;
  * @author ADMIN
  */
 public class userGoogle {
-     private String id;
+    private String id;
     private String email;
     private boolean verify_email;
     private String name;
