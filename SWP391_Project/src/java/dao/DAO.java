@@ -90,6 +90,11 @@ public class DAO {
         return null;
     }
     
+    public String getEmail() {
+        return null;
+    }
+    
+    
     //HUY
         public User Login(String username, String pass) {
         
