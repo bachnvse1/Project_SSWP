@@ -72,17 +72,19 @@ public class LoginServlet extends HttpServlet {
         //processRequest(request, response);
         String user = request.getParameter("user");
         String pass = request.getParameter("password");     
-       
-        DAO dal = new DAO();
+         request.setAttribute("username", user);
+         request.setAttribute("pass", pass);
+        String captcha = request.getParameter("capchaRespone");
+          String sessionCaptcha = (String) request.getSession().getAttribute("captcha");
+          DAO dal = new DAO();
         User us = dal.Login(user, pass);
-        if(us==null){
-            request.setAttribute("username", user);
-            request.setAttribute("pass", pass);
+          if(captcha!=null && captcha.equals(sessionCaptcha)){
+              if(us==null){
+           
             request.setAttribute("mess", "Wrong user or pass");
             request.getRequestDispatcher("login.jsp").forward(request, response);  
         }else if(us.isIs_Active()==false){
-            request.setAttribute("username", user);
-            request.setAttribute("pass", pass);
+            
             request.setAttribute("mess", "Account has banned!");
             request.getRequestDispatcher("login.jsp").forward(request, response);  
         }else{
@@ -90,6 +92,16 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("user", us);
             response.sendRedirect("home.jsp");
         }
+          }
+          else if(captcha.equals("")){
+              request.setAttribute("mess", "Captcha cannot be left blank!");
+            request.getRequestDispatcher("login.jsp").forward(request, response);  
+          }else{
+            request.setAttribute("mess", "Captcha is wrong!");
+            request.getRequestDispatcher("login.jsp").forward(request, response);  
+          }
+        
+        
         
         
     }

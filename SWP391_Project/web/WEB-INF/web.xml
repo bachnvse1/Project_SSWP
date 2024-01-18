@@ -24,6 +24,10 @@
         <servlet-name>CaptchaImageServlet</servlet-name>
         <servlet-class>Controller.CaptchaImageServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RefreshCaptchaServlet</servlet-name>
+        <servlet-class>Controller.RefreshCaptchaServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SendEmail</servlet-name>
         <url-pattern>/send</url-pattern>
@@ -47,5 +51,9 @@
     <servlet-mapping>
         <servlet-name>CaptchaImageServlet</servlet-name>
         <url-pattern>/captchaimage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RefreshCaptchaServlet</servlet-name>
+        <url-pattern>/refreshcaptcha</url-pattern>
     </servlet-mapping>
 </web-app>

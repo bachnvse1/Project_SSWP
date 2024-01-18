@@ -11,19 +11,12 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.util.Random;
-import javax.imageio.ImageIO;
 
 /**
  *
  * @author tudo7
  */
-public class CaptchaImageServlet extends HttpServlet {
+public class RefreshCaptchaServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -40,10 +33,10 @@ public class CaptchaImageServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CaptchaImageServlet</title>");  
+            out.println("<title>Servlet RefreshCaptchaServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CaptchaImageServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet RefreshCaptchaServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,44 +54,9 @@ public class CaptchaImageServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
       //  processRequest(request, response);
-        Random random = new Random();
-        String capchaString = generateCapchaString();
-        BufferedImage img = new BufferedImage(100,40, BufferedImage.TYPE_INT_RGB);
-        Graphics2D g2D = img.createGraphics();
-        //Ve chuoi so len anh
-        g2D.setFont(new Font("SansSerif", Font.PLAIN, 25));
-        g2D.setColor(Color.WHITE);
-        g2D.drawString(capchaString, 10, 25);
-        
-        //Luu chuoi so vao session de kiem tra sau
-        request.getSession().setAttribute("captcha", capchaString);
-        // vẽ các đường gạch ngang
-       
+         request.getRequestDispatcher("/captchaimage").include(request, response);
+    } 
 
-        for (int i = 0; i < 10; i++) {
-            g2D.setColor(new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)));
-            int x = (int) (5 + random.nextInt(3));
-            int y = random.nextInt(img.getHeight());
-            int width = 100 + random.nextInt(31);
-            int height = random.nextInt(img.getHeight() / 2); // Độ cao của đường cong
-            int startAngle = 180;
-            int arcAngle = 150 + random.nextInt(30);
-
-            g2D.drawArc(x, y, width, height, startAngle, arcAngle);
-        }
-        // Gui anh ve client
-        ImageIO.write(img, "png", response.getOutputStream());
-       
-//        g2D.dispose();
-              
-    }
-    
- public static String generateCapchaString(){
-        Random random = new Random();
-        // Sinh số từ 100000 đến 999999;
-        int number = random.nextInt(900000)+100000;
-        return String.valueOf(number);
-    }
     /** 
      * Handles the HTTP <code>POST</code> method.
      * @param request servlet request
@@ -110,7 +68,6 @@ public class CaptchaImageServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         processRequest(request, response);
-        
     }
 
     /** 
