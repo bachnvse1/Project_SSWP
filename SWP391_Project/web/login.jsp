@@ -18,13 +18,7 @@
         <br>
         <br>
         <script>
-            function refreshCaptcha() {
-                // Sử dụng AJAX để làm mới ảnh CAPTCHA
-                $.get('refreshcaptcha', function () {
-                    // Thay đổi src của ảnh để làm mới
-                    $('#captchaImage').attr('src', 'captchaimage?' + new Date().getTime());
-                });
-            }
+            
         </script>
         <div class="cont" style="height: 600px">
             <div class="form sign-in">
@@ -47,14 +41,14 @@
                             <button type="button" onclick="refreshCaptcha()" class="btn btn-light" style="width: 15%"><i class="fa fa-refresh" style="color: black;"></i></button>
                            </div>
                     </label>
-
+                    
                     <p class="forgot-pass">Forgot password?</p>
 
                     <button type="submit" class="submit">Sign In</button>
                 </form>
                 <button type="button" class="submit" style="background-color: gray" id="homeButton">Home Page</button>
                 <button type="button" class="submit" style="background-color: gray" > <a href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:9999/SWP391_Project/loginGoogleHandler&response_type=code&client_id=351960657846-lejfsvfrmte5906hvkrj70out2u775s0.apps.googleusercontent.com&approval_prompt=force" style="color: white; text-decoration: none;">Login with google</a></button>
-
+</div>
         
             <div class="sub-cont">
                 <div class="img">
@@ -139,6 +133,14 @@
                                                         });
                                                     });
                                                 });
+                                                
+                                                function refreshCaptcha() {
+                // Sử dụng AJAX để làm mới ảnh CAPTCHA
+                $.get('refreshcaptcha', function () {
+                    // Thay đổi src của ảnh để làm mới
+                    $('#captchaImage').attr('src', 'captchaimage?' + new Date().getTime());
+                });
+            }
                                             </script>
 <script>
         document.querySelector('.img__btn').addEventListener('click', function () {
