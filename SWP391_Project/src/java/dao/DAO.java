@@ -140,7 +140,7 @@ public class DAO {
     public static void main(String[] args) {
        DAO dao = new DAO();
         //dao.signup("bach", "1234", "bach@gmil.com");
-        System.out.println(dao.getUser("bach").toString());
+        System.out.println(dao.Login("bach", "123").toString());
         
         List<User> list = dao.getAllUser();
         for (User user : list) {
