@@ -4,6 +4,7 @@
     Author     : ADMIN
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,9 +27,20 @@
                 <div class="inputs">
                     <input type="text" maxlength="5" name="otp_code" required="">
                 </div>
-                <div class="verify-button">
-                    <button type="submit">Verify</button>
-                </div>
+                <c:if test="${messSuccess != null}">
+                    <p style="color:red;">${messSuccess}</p></br>
+                    <div class="verify-button">
+                        <button type="button"><a href="home.jsp" target="target" style="text-decoration: none; color: white;">Home</a></button>
+                    </div>
+                </c:if>
+                <c:if test="${messError != null}">
+                    <p style="color:red;">${messError}</p></br>
+                    <div class="verify-button">
+                        <button type="submit">Verify</button>
+                    </div>
+
+                </c:if>
+
             </form>
         </div>
     </body>
