@@ -42,7 +42,7 @@
                            </div>
                     </label>
                     
-                    <p class="forgot-pass">Forgot password?</p>
+                     <a href="forgot"><p class="forgot-pass">Forgot password?</p></a>
 
                     <button type="submit" class="submit">Sign In</button>
                 </form>
