@@ -16,7 +16,7 @@
     </head>
     <body>
         <div class="otp-box">
-            <form action="VerifyCode" method="post">
+            <form id="loginForm">
                 <div class="img">
                     <img src="https://t.ly/7CuFm" alt="" width="100px">
                 </div>
@@ -25,23 +25,44 @@
                     <p>We just send a Verification code to your email</p>
                 </div>
                 <div class="inputs">
-                    <input type="text" maxlength="5" name="otp_code" required="">
-                </div>
-                <c:if test="${messSuccess != null}">
-                    <p style="color:red;">${messSuccess}</p></br>
+                    <input type="text" maxlength="5" id="Otp_code" required="">
                     <div class="verify-button">
+                        <button type="submit">Verify</button></br></br>
                         <button type="button"><a href="home.jsp" target="target" style="text-decoration: none; color: white;">Home</a></button>
                     </div>
-                </c:if>
-                <c:if test="${messError != null}">
-                    <p style="color:red;">${messError}</p></br>
-                    <div class="verify-button">
-                        <button type="submit">Verify</button>
-                    </div>
-
-                </c:if>
-
+                </div>
             </form>
         </div>
-    </body>
+
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#loginForm').submit(function (e) {
+                e.preventDefault(); // Prevents the default form submission
+
+                var formData = {
+                    otp_code: $('#Otp_code').val()
+                };
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'VerifyCode',
+                    data: formData,
+                    success: function (response) {
+                        if (response === "success") {
+                            alert("Sign up success!!!");
+
+                        } else {
+                            alert("OTP error!!!\nPlease input again!");
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
 </html>

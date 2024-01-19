@@ -78,16 +78,16 @@ public class VerifyUser extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         validate validate = new validate();
         // Lấy dữ liệu từ request
+        DAO dao = new DAO();
         String username = request.getParameter("user");
         String password = request.getParameter("pass");
         String email = request.getParameter("email");
-        // Xử lý dữ liệu nếu cần
-        // Ví dụ: kiểm tra đăng nhập
         try {
-            if (validate.checkInput(username, "^[^@,!#$%&*]*$", 5, 10)
-                   && validate.checkInput(email, "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", 0, 20)
-                   && validate.checkInput(password, "^(?=.*[!@#$%^&*(),.?\":{}|<>]).*$", 6, 15)) {
-                DAO dao = new DAO();
+            if (validate.checkInput(username, "^[^@,!#$%&*]*$", 5, 20)
+                && validate.checkInput(email, "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", 0, 50)
+                && validate.checkInput(password, "^(?=.*[!@#$%^&*(),.?\":{}|<>]).*$", 6, 15) 
+                && dao.getUsername(username) == null
+                && dao.getEmail(email) == null) {
                 int code = GenOTP();
                 SendEmail sm = new SendEmail();
                 sm.Send(email, code);

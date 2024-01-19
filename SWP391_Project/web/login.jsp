@@ -18,7 +18,7 @@
         <br>
         <br>
         <script>
-            
+
         </script>
         <div class="cont" style="height: 600px">
             <div class="form sign-in">
@@ -34,22 +34,22 @@
                         <input type="password" name="password" value="${pass}" />
                     </label>
                     <label>
-                        
+
                         <div class="input-group-prepend" style="display: flex">
                             <img id="captchaImage" src="captchaimage" alt="CAPTCHA image" />
                             <input type="text" placeholder="Captcha" name="capchaRespone" />
                             <button type="button" onclick="refreshCaptcha()" class="btn btn-light" style="width: 15%"><i class="fa fa-refresh" style="color: black;"></i></button>
-                           </div>
+                        </div>
                     </label>
-                    
+
                     <p class="forgot-pass">Forgot password?</p>
 
                     <button type="submit" class="submit">Sign In</button>
                 </form>
-                <button type="button" class="submit" style="background-color: gray" id="homeButton">Home Page</button>
+                <button type="button" class="submit" style="background-color: gray"><a href="home.jsp" style="text-decoration: none; color: white">Home Page</a></button>
                 <button type="button" class="submit" style="background-color: gray" > <a href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:9999/SWP391_Project/loginGoogleHandler&response_type=code&client_id=351960657846-lejfsvfrmte5906hvkrj70out2u775s0.apps.googleusercontent.com&approval_prompt=force" style="color: white; text-decoration: none;">Login with google</a></button>
-</div>
-        
+            </div>
+
             <div class="sub-cont">
                 <div class="img">
                     <div class="img__text m--up">
@@ -86,66 +86,65 @@
                                             </div>
                                             </div>
                                             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-           <script>
-                               
-         $(document).ready(function () {
-                                                    $("#homeButton").click(function () {
-                                                        $.ajax({
-                                                            type: 'GET',
-                                                            url: "home.jsp",
-                                                            success: function (response) {
-                                                                $("body").html(response);
-                                                            },
-                                                            error: function () {
-                                                                // Xử lý lỗi nếu có
-                                                                alert("Đã xảy ra lỗi khi tải trang");
-                                                            }
-                                                        });
-                                                    });
-                                                });
+                                            <script>
 
-                                                $(document).ready(function () {
-                                                    $('#loginForm').submit(function (e) {
-                                                        e.preventDefault(); // Prevents the default form submission
+                                $(document).ready(function () {
+                                    $("#homeButton").click(function () {
+                                        $.ajax({
+                                            type: 'GET',
+                                            url: "home.jsp",
+                                            success: function (response) {
+                                                $("body").html(response);
+                                            },
+                                            error: function () {
+                                                // Xử lý lỗi nếu có
+                                                alert("Đã xảy ra lỗi khi tải trang");
+                                            }
+                                        });
+                                    });
+                                });
 
-                                                        var formData = {
-                                                            user: $('#username').val(),
-                                                            pass: $('#password').val(),
-                                                            email: $('#email').val()
-                                                        };
+                                $(document).ready(function () {
+                                    $('#loginForm').submit(function (e) {
+                                        e.preventDefault(); // Prevents the default form submission
 
-                                                        $.ajax({
-                                                            type: 'POST',
-                                                            url: 'VerifyUser', // Replace 'MyServlet' with the actual URL of your servlet
-                                                            data: formData,
+                                        var formData = {
+                                            user: $('#username').val(),
+                                            pass: $('#password').val(),
+                                            email: $('#email').val()
+                                        };
 
-                                                            success: function (response) {
-                                                                if (response === "success") {
-                                                                    window.location.href = "verify.jsp";
-                                                                } else {
-                                                                    alert("          Check format infomation!!!\n          Ex:\n          User: not contain special characters\n          Password: must contain special characters and digit\n          Email: abc@xyz.com");
-                                                                   
-                                                                }
-                                                            },
-                                                            error: function (error) {
-                                                                console.log(error);
-                                                            }
-                                                        });
-                                                    });
-                                                });
-                                                
-                                                function refreshCaptcha() {
-                // Sử dụng AJAX để làm mới ảnh CAPTCHA
-                $.get('refreshcaptcha', function () {
-                    // Thay đổi src của ảnh để làm mới
-                    $('#captchaImage').attr('src', 'captchaimage?' + new Date().getTime());
-                });
-            }
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: 'VerifyUser',
+                                            data: formData,
+
+                                            success: function (response) {
+                                                if (response === "success") {
+                                                    window.location.href = "verify.jsp";
+                                                } else {
+                                                    alert("          Check format infomation!!!\n          Ex:\n          User: NOT contain special CHARACTERS\n          AVOID DUPLICATE USERNAME!!!\n          Password: must CONTAIN special CHARACTERS and DIGIT\n          Email: abc@xyz.com and CAN NOT DUPLICATE EMAIL!!!");
+                                                }
+                                            },
+                                            error: function (error) {
+                                                console.log(error);
+                                            }
+                                        });
+                                    });
+                                });
+
+                                function refreshCaptcha() {
+                                    // Sử dụng AJAX để làm mới ảnh CAPTCHA
+                                    $.get('refreshcaptcha', function () {
+                                        // Thay đổi src của ảnh để làm mới
+                                        $('#captchaImage').attr('src', 'captchaimage?' + new Date().getTime());
+                                    });
+                                }
                                             </script>
-<script>
-        document.querySelector('.img__btn').addEventListener('click', function () {
-        document.querySelector('.cont').classList.toggle('s--signup');
-});
-   </script>
-         </body>
-        </html>
+                                            <script>
+                                                document.querySelector('.img__btn').addEventListener('click', function () {
+                                                    document.querySelector('.cont').classList.toggle('s--signup');
+                                                });
+                                            </script>
+                                            </body>
+                                            </html>
