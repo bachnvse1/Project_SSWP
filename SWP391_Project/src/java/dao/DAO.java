@@ -12,7 +12,7 @@ import java.sql.ResultSet;
 import entity.*;
 import context.*;
 import java.util.*;
-
+import java.sql.SQLException;
 /**
  *
  * @author ADMIN
@@ -162,6 +162,46 @@ public class DAO {
     
     //BINH
     
+    public User isEmail(String email) {
+        String sql = "select * from users where email = ?";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(sql);
+            ps.setString(1, email);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return new User(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getBoolean(6),
+                        rs.getBoolean(7),
+                        rs.getTimestamp(8),
+                        rs.getTimestamp(9));
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return null;
+    }
+
+    public User updatePassword(String pass, int  id ) {
+        String sql = "Update users set password=? where id =? ";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(sql);
+            ps.setString(1, pass);
+            ps.setInt(2, id);
+       ps.executeUpdate();
+                    
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return null;
+      
+    }
     
     
     
