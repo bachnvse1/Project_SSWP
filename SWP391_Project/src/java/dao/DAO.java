@@ -5,7 +5,6 @@
 package dao;
 
 import Context.DBContext;
-import Entity.OTP;
 import Entity.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,7 +12,7 @@ import java.sql.ResultSet;
 import entity.*;
 import context.*;
 import java.util.*;
-
+import java.sql.SQLException;
 /**
  *
  * @author ADMIN
@@ -41,7 +40,7 @@ public class DAO {
 
         }
     }
-
+    
     public List<User> getAllUser() {
         List<User> list = new ArrayList<>();
         String query = "select * from swp_demo.users";
@@ -91,13 +90,82 @@ public class DAO {
         return null;
     }
     
-    //HUY
+    public String getEmail() {
+        return null;
+    }
     
+    
+    //HUY
+        public User Login(String username, String pass) {
+        
+        String query = "select * from swp_demo.users where username = ? and password = ?";
+        try {
+            con = new DBContext().connection; //connect sql
+            ps = con.prepareStatement(query);
+            ps.setString(1, username);
+            ps.setString(2, pass);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return new User(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getBoolean(6),
+                        rs.getBoolean(7),
+                        rs.getTimestamp(8),
+                        rs.getTimestamp(9));
+            }
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
     
     
     
     //BINH
     
+    public User isEmail(String email) {
+        String sql = "select * from users where email = ?";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(sql);
+            ps.setString(1, email);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return new User(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getBoolean(6),
+                        rs.getBoolean(7),
+                        rs.getTimestamp(8),
+                        rs.getTimestamp(9));
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return null;
+    }
+
+    public User updatePassword(String pass, int  id ) {
+        String sql = "Update users set password=? where id =? ";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(sql);
+            ps.setString(1, pass);
+            ps.setInt(2, id);
+       ps.executeUpdate();
+                    
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return null;
+      
+    }
     
     
     
@@ -112,7 +180,7 @@ public class DAO {
     public static void main(String[] args) {
        DAO dao = new DAO();
         //dao.signup("bach", "1234", "bach@gmil.com");
-        System.out.println(dao.getUser("bach").toString());
+        System.out.println(dao.Login("bach", "123").toString());
         
         List<User> list = dao.getAllUser();
         for (User user : list) {

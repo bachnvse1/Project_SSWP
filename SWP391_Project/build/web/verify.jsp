@@ -4,36 +4,44 @@
     Author     : ADMIN
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-        <link rel="stylesheet" href="css/verify.css"/>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Verify OTP</title>
+        <link rel="stylesheet" href="css/verify.css">
     </head>
     <body>
-    <div class="container">
-    <div class="row justify-content-md-center">
-      <div class="col-md-4 text-center">
-        <div class="row">
-          <div class="col-sm-12 mt-5 bgWhite">
-            <div class="title">
-              Verify OTP
-            </div>
-            
-            <form action="" class="mt-5">
-              <input class="otp" type="text" oninput='digitValidate(this)' onkeyup='tabChange(1)' maxlength=1 >
-              <input class="otp" type="text" oninput='digitValidate(this)' onkeyup='tabChange(2)' maxlength=1 >
-              <input class="otp" type="text" oninput='digitValidate(this)' onkeyup='tabChange(3)' maxlength=1 >
-              <input class="otp" type="text" oninput='digitValidate(this)'onkeyup='tabChange(4)' maxlength=1 >
+        <div class="otp-box">
+            <form action="VerifyCode" method="post">
+                <div class="img">
+                    <img src="https://t.ly/7CuFm" alt="" width="100px">
+                </div>
+                <div class="content-box">
+                    <h2>Verification code</h2>
+                    <p>We just send a Verification code to your email</p>
+                </div>
+                <div class="inputs">
+                    <input type="text" maxlength="5" name="otp_code" required="">
+                </div>
+                <c:if test="${messSuccess != null}">
+                    <p style="color:red;">${messSuccess}</p></br>
+                    <div class="verify-button">
+                        <button type="button"><a href="home.jsp" target="target" style="text-decoration: none; color: white;">Home</a></button>
+                    </div>
+                </c:if>
+                <c:if test="${messError != null}">
+                    <p style="color:red;">${messError}</p></br>
+                    <div class="verify-button">
+                        <button type="submit">Verify</button>
+                    </div>
+
+                </c:if>
+
             </form>
-            <hr class="mt-4">
-            <button class='btn btn-primary btn-block mt-4 mb-4 customBtn'>Verify</button>
-          </div>
         </div>
-      </div>
-  </div>
-</div>
     </body>
 </html>

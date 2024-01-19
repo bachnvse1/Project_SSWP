@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import Validate.validate;
 import Entity.User;
 import dao.DAO;
 import java.io.IOException;
@@ -15,8 +16,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.Random;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  *
@@ -37,24 +36,9 @@ public class VerifyUser extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String user = request.getParameter("user");
-        String password = request.getParameter("pass");
-        String email = request.getParameter("email");
-        PrintWriter out = response.getWriter();
-        DAO dao = new DAO();
-        int code = GenOTP();
-        SendEmail sm = new SendEmail();
-        sm.Send(email, code);
-        
-        HttpSession session = request.getSession();
-        session.setAttribute("otp", code);
-        session.setAttribute("user", user);
-        session.setAttribute("pass", password);
-        session.setAttribute("email", email);
-        response.sendRedirect("verify.jsp");
 
     }
-    
+
     public int GenOTP() {
         int min = 10_000; // Số nguyên tối thiểu (bao gồm)
         int max = 99_999; // Số nguyên tối đa (bao gồm)
@@ -62,18 +46,6 @@ public class VerifyUser extends HttpServlet {
         int randomNumber = random.nextInt(max - min + 1) + min;
 
         return randomNumber;
-    }
-    
-    public String checkString(String input, String msg, int min, int max, String regex) {
-        
-        // Tạo Pattern từ regex
-        Pattern pattern = Pattern.compile(regex);
-        // Tạo Matcher
-        Matcher matcher = pattern.matcher(input);
-        if(matcher.matches() && input.length() >= min && input.length() < max ) {
-            return input;
-        }
-        return msg;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -102,8 +74,40 @@ public class VerifyUser extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        validate validate = new validate();
+        // Lấy dữ liệu từ request
+        String username = request.getParameter("user");
+        String password = request.getParameter("pass");
+        String email = request.getParameter("email");
+        // Xử lý dữ liệu nếu cần
+        // Ví dụ: kiểm tra đăng nhập
+        try {
+            if (validate.checkInput(username, "^[^@,!#$%&*]*$", 5, 10)
+                   && validate.checkInput(email, "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", 0, 20)
+                   && validate.checkInput(password, "^(?=.*[!@#$%^&*(),.?\":{}|<>]).*$", 6, 15)) {
+                DAO dao = new DAO();
+                int code = GenOTP();
+                SendEmail sm = new SendEmail();
+                sm.Send(email, code);
+                HttpSession session = request.getSession();
+                session.setAttribute("otp", code);
+                session.setAttribute("user", username);
+                session.setAttribute("pass", password);
+                session.setAttribute("email", email);
+                response.getWriter().write("success");
+            } else {
+                response.getWriter().write("error");
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error");
+        }
     }
+
+    // Phương thức kiểm tra đăng nhập đơn giản, bạn có thể thay thế bằng logic phức tạp hơn
+    
 
     /**
      * Returns a short description of the servlet.
