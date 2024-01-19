@@ -42,8 +42,8 @@
                         </div>
                     </label>
 
-                    <p class="forgot-pass">Forgot password?</p>
-
+                    <a href="forgot"><p class="forgot-pass">Forgot password?</p>
+</a>
                     <button type="submit" class="submit">Sign In</button>
                 </form>
                 <button type="button" class="submit" style="background-color: gray"><a href="home.jsp" style="text-decoration: none; color: white">Home Page</a></button>
