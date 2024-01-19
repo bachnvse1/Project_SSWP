@@ -8,7 +8,6 @@ import dao.DAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -86,16 +85,18 @@ public class VerifyCode extends HttpServlet {
             int code_1 = Integer.parseInt(code);
             if (code_1 == code_give) {
                 dao.signup(user, pass, email);
-                mess += "Sign up success!!!";
-                request.setAttribute("messSuccess", mess);
-                request.getRequestDispatcher("verify.jsp").forward(request, response);
+                //mess += "Sign up success!!!";
+//                request.setAttribute("messSuccess", mess);
+//                request.getRequestDispatcher("verify.jsp").forward(request, response);
+                response.getWriter().write("success");
             } else {
-                throw new NumberFormatException();
+                response.getWriter().write("error");
             }
-        } catch (NumberFormatException e) {
-            mess += "OTP error, input again!!!";
-            request.setAttribute("messError", mess);
-            request.getRequestDispatcher("verify.jsp").forward(request, response);
+        } catch (Exception e) {
+//            mess += "OTP error, input again!!!";
+//            request.setAttribute("messError", mess);
+//            request.getRequestDispatcher("verify.jsp").forward(request, response);
+              response.getWriter().write("error");
         }
 
     }

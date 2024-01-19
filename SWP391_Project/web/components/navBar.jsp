@@ -3,7 +3,7 @@
     Created on : Jan 17, 2024, 9:59:34 AM
     Author     : ADMIN
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -39,8 +39,8 @@
                         </button>         
 
                         <button class="btn btn-outline-dark" type="button" style="margin-left: 20px;" id="loadInfoButton">
-                            <a href="url" target="_blank"><i class="fa fa-user" style="color: black;"></i></a>
-                            <a href="url" target="target">Huy Ngu</a>
+                            <a href="" target="_blank"><i class="fa fa-user" style="color: black;"></i></a>
+                            <a target="target">Huy ngu</a>
                         </button>
                         <button class="btn btn-outline-dark" type="button" style="margin-left: 20px;" id="loginButton">
                             Login
