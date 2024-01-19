@@ -20,7 +20,7 @@
         <script>
 
         </script>
-        <div class="cont" style="height: 600px">
+        <div class="cont" style="height: 620px;">
             <div class="form sign-in">
                 <h2>Welcome</h2>
                 <form action="login" method="post">
@@ -35,15 +35,19 @@
                     </label>
                     <label>
 
-                        <div class="input-group-prepend" style="display: flex">
-                            <img id="captchaImage" src="captchaimage" alt="CAPTCHA image" />
-                            <input type="text" placeholder="Captcha" name="capchaRespone" />
-                            <button type="button" onclick="refreshCaptcha()" class="btn btn-light" style="width: 15%"><i class="fa fa-refresh" style="color: black;"></i></button>
+                        <div class="input-group-prepend">
+                            <div style="display: flex;">
+                                <img id="captchaImage" src="captchaimage" alt="CAPTCHA image" style="margin-left: 5em;" />
+                                <button type="button" onclick="refreshCaptcha()" class="btn btn-light" style="width: 50px; background-color: white;"><i class="fa fa-refresh" style="color: black;"></i></button>
+                            </div>
+
+                            <input type="text" placeholder="" name="capchaRespone" />
+
+
                         </div>
                     </label>
 
-                    <a href="forgot"><p class="forgot-pass">Forgot password?</p>
-</a>
+                    <a href="forgot"><p class="forgot-pass">Forgot password?</p></a>
                     <button type="submit" class="submit">Sign In</button>
                 </form>
                 <button type="button" class="submit" style="background-color: gray"><a href="home.jsp" style="text-decoration: none; color: white">Home Page</a></button>
@@ -88,58 +92,58 @@
                                             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
                                             <script>
 
-                                $(document).ready(function () {
-                                    $("#homeButton").click(function () {
-                                        $.ajax({
-                                            type: 'GET',
-                                            url: "home.jsp",
-                                            success: function (response) {
-                                                $("body").html(response);
-                                            },
-                                            error: function () {
-                                                // Xử lý lỗi nếu có
-                                                alert("Đã xảy ra lỗi khi tải trang");
-                                            }
-                                        });
-                                    });
-                                });
-
-                                $(document).ready(function () {
-                                    $('#loginForm').submit(function (e) {
-                                        e.preventDefault(); // Prevents the default form submission
-
-                                        var formData = {
-                                            user: $('#username').val(),
-                                            pass: $('#password').val(),
-                                            email: $('#email').val()
-                                        };
-
-                                        $.ajax({
-                                            type: 'POST',
-                                            url: 'VerifyUser',
-                                            data: formData,
-
-                                            success: function (response) {
-                                                if (response === "success") {
-                                                    window.location.href = "verify.jsp";
-                                                } else {
-                                                    alert("          Check format infomation!!!\n          Ex:\n          User: NOT contain special CHARACTERS\n          AVOID DUPLICATE USERNAME!!!\n          Password: must CONTAIN special CHARACTERS and DIGIT\n          Email: abc@xyz.com and CAN NOT DUPLICATE EMAIL!!!");
+                                    $(document).ready(function () {
+                                        $("#homeButton").click(function () {
+                                            $.ajax({
+                                                type: 'GET',
+                                                url: "home.jsp",
+                                                success: function (response) {
+                                                    $("body").html(response);
+                                                },
+                                                error: function () {
+                                                    // Xử lý lỗi nếu có
+                                                    alert("Đã xảy ra lỗi khi tải trang");
                                                 }
-                                            },
-                                            error: function (error) {
-                                                console.log(error);
-                                            }
+                                            });
                                         });
                                     });
-                                });
 
-                                function refreshCaptcha() {
-                                    // Sử dụng AJAX để làm mới ảnh CAPTCHA
-                                    $.get('refreshcaptcha', function () {
-                                        // Thay đổi src của ảnh để làm mới
-                                        $('#captchaImage').attr('src', 'captchaimage?' + new Date().getTime());
+                                    $(document).ready(function () {
+                                        $('#loginForm').submit(function (e) {
+                                            e.preventDefault(); // Prevents the default form submission
+
+                                            var formData = {
+                                                user: $('#username').val(),
+                                                pass: $('#password').val(),
+                                                email: $('#email').val()
+                                            };
+
+                                            $.ajax({
+                                                type: 'POST',
+                                                url: 'VerifyUser',
+                                                data: formData,
+
+                                                success: function (response) {
+                                                    if (response === "success") {
+                                                        window.location.href = "verify.jsp";
+                                                    } else {
+                                                        alert("          Check format infomation!!!\n          Ex:\n          User: NOT contain special CHARACTERS\n          AVOID DUPLICATE USERNAME!!!\n          Password: must CONTAIN special CHARACTERS and DIGIT\n          Email: abc@xyz.com and CAN NOT DUPLICATE EMAIL!!!");
+                                                    }
+                                                },
+                                                error: function (error) {
+                                                    console.log(error);
+                                                }
+                                            });
+                                        });
                                     });
-                                }
+
+                                    function refreshCaptcha() {
+                                        // Sử dụng AJAX để làm mới ảnh CAPTCHA
+                                        $.get('refreshcaptcha', function () {
+                                            // Thay đổi src của ảnh để làm mới
+                                            $('#captchaImage').attr('src', 'captchaimage?' + new Date().getTime());
+                                        });
+                                    }
                                             </script>
                                             <script>
                                                 document.querySelector('.img__btn').addEventListener('click', function () {
