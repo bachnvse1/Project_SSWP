@@ -26,7 +26,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet(name = "Forgotpassword", urlPatterns = {"/forgot"})
 public class Forgotpassword extends HttpServlet {
 
-   /**
+    /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
@@ -66,21 +66,27 @@ public class Forgotpassword extends HttpServlet {
         request.setAttribute("flag", 1);
         request.getRequestDispatcher("forgotpassword.jsp").forward(request, response);
     }
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         DAO dao = new DAO();
         String email = request.getParameter("email");
-       User user = dao.isEmail(email);
-        
-            request.setAttribute("flag", 2);
+        User user = dao.isEmail(email);
+        if(dao.isEmailExists(email)){
             SendEmail sm = new SendEmail();
             int code = GenOTP();
             sm.Send(email, code);
             HttpSession session = request.getSession();
             session.setAttribute("code", code);
             session.setAttribute("email1", email);
+            request.setAttribute("flag", 2);
             request.getRequestDispatcher("forgotpassword.jsp").forward(request, response);
+        }else{
+             request.setAttribute("flag", 2);
+            request.getRequestDispatcher("forgotpassword.jsp").forward(request, response);
+        }
        
+
     }
 
     public int GenOTP() {
