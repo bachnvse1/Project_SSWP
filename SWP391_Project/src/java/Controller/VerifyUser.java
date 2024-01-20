@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import static java.lang.System.out;
 import java.util.Random;
 
 /**
@@ -77,38 +78,41 @@ public class VerifyUser extends HttpServlet {
         //processRequest(request, response);
         response.setContentType("text/html;charset=UTF-8");
         validate validate = new validate();
-        // Lấy dữ liệu từ request
         DAO dao = new DAO();
+        String mess = "";
+        PrintWriter out = response.getWriter();
         String username = request.getParameter("user");
         String password = request.getParameter("pass");
         String email = request.getParameter("email");
-        try {
-            if (validate.checkInput(username, "^[^@,!#$%&*]*$", 5, 20)
-                && validate.checkInput(email, "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", 0, 50)
-                && validate.checkInput(password, "^(?=.*[!@#$%^&*(),.?\":{}|<>]).*$", 6, 15) 
-                && dao.getUsername(username) == null
-                && dao.getEmail(email) == null) {
-                int code = GenOTP();
-                SendEmail sm = new SendEmail();
-                sm.Send(email, code);
-                HttpSession session = request.getSession();
-                session.setAttribute("otp", code);
-                session.setAttribute("user", username);
-                session.setAttribute("pass", password);
-                session.setAttribute("email", email);
-                response.getWriter().write("success");
+        if (validate.checkInput(username, "^[^@,!#$%&*]*$", 5, 20)
+                && dao.getUsername(username) == null) {
+            if (validate.checkInput(password, "^(?=.*[!@#$%^&*(),.?\":{}|<>]).*$", 6, 15)) {
+                if (validate.checkInput(email, "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", 0, 50)
+                        && dao.getEmail(email) == null) {
+                    int code = GenOTP();
+                    SendEmail sm = new SendEmail();
+                    sm.Send(email, code);
+                    HttpSession session = request.getSession();
+                    session.setAttribute("otp", code);
+                    session.setAttribute("user", username);
+                    session.setAttribute("pass", password);
+                    session.setAttribute("email", email);
+                    response.getWriter().write("success");
+                } else {
+                    mess = "Email: abc@xyz.com and CAN NOT DUPLICATE EMAIL!";
+                    out.print(mess);
+                }
             } else {
-                response.getWriter().write("error");
+                mess = "Password: must CONTAIN special CHARACTERS and DIGIT";
+                out.print(mess);
             }
-
-        } catch (Exception e) {
-            System.out.println("Error");
+        } else {
+            mess = "Username can not duplicate and not cantain CHARACTERS!";
+            out.print(mess);
         }
     }
 
     // Phương thức kiểm tra đăng nhập đơn giản, bạn có thể thay thế bằng logic phức tạp hơn
-    
-
     /**
      * Returns a short description of the servlet.
      *

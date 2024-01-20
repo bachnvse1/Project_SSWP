@@ -19,7 +19,7 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="home.jsp"><i class="fa fa-home"></i>Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
@@ -39,15 +39,21 @@
                         </button>         
 
                         <button class="btn btn-outline-dark" type="button" style="margin-left: 20px;" id="loadInfoButton">
-                            <a href="" target="_blank"><i class="fa fa-user" style="color: black;"></i></a>
-                            <a target="target">Huy ngu</a>
+                            <a href="#"><i class="fa fa-user" style="color: black;"></i></a>
+                            <a>${displayname}</a>
                         </button>
-                        <button class="btn btn-outline-dark" type="button" style="margin-left: 20px;" id="loginButton">
-                            Login
-                        </button>
-                        <button class="btn btn-outline-dark" type="button" style="margin-left: 20px;" id="logoutButton">
-                            Logout
-                        </button>
+                        
+                        <c:if test="${user == null}">
+                            <button class="btn btn-outline-dark" type="button" style="margin-left: 20px;" id="loginButton">
+                                Login
+                            </button>
+                        </c:if>
+                        <c:if test="${user != null}">
+                            <button class="btn btn-outline-dark" type="button" style="margin-left: 20px;" id="logoutButton">
+                                Logout
+                            </button>
+                        </c:if>
+
                     </form>
                 </div>
             </div>

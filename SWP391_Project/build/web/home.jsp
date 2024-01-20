@@ -12,7 +12,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Shop Homepage - Start Bootstrap Template</title>
+        <title>Shop Ong Ban Tat</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Bootstrap icons-->
@@ -251,6 +251,24 @@
                     $.ajax({
                         type: 'GET',
                         url: "login.jsp",
+                        success: function(response){
+                            $("body").html(response);
+                        },
+                        error: function () {
+                        // Xử lý lỗi nếu có
+                        alert("Đã xảy ra lỗi khi tải trang");
+                        }        
+                    });
+                    
+                });
+            });
+            
+            
+            $(document).ready(function(){
+                $("#logoutButton").click(function(){
+                    $.ajax({
+                        type: 'GET',
+                        url: "logout",
                         success: function(response){
                             $("body").html(response);
                         },

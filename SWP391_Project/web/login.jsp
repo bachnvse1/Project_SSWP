@@ -13,6 +13,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="css/Login.css"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     </head>
     <body>
         <br>
@@ -38,20 +39,26 @@
                         <div class="input-group-prepend">
                             <div style="display: flex;">
                                 <img id="captchaImage" src="captchaimage" alt="CAPTCHA image" style="margin-left: 5em;" />
-                                <button type="button" onclick="refreshCaptcha()" class="btn btn-light" style="width: 50px; background-color: white;"><i class="fa fa-refresh" style="color: black;"></i></button>
+                                <button type="button" onclick="refreshCaptcha()" class="btn btn-light" style="width: 50px; background-color: white;">
+                                    <i class="fa fa-refresh" style="color: black;"></i>
+                                </button>
                             </div>
 
                             <input type="text" placeholder="" name="capchaRespone" />
-
-
                         </div>
                     </label>
 
                     <a href="forgot"><p class="forgot-pass">Forgot password?</p></a>
                     <button type="submit" class="submit">Sign In</button>
                 </form>
-                <button type="button" class="submit" style="background-color: gray"><a href="home.jsp" style="text-decoration: none; color: white">Home Page</a></button>
-                <button type="button" class="submit" style="background-color: gray" > <a href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:9999/SWP391_Project/loginGoogleHandler&response_type=code&client_id=351960657846-lejfsvfrmte5906hvkrj70out2u775s0.apps.googleusercontent.com&approval_prompt=force" style="color: white; text-decoration: none;">Login with google</a></button>
+
+                <button type="button" class="submit" style="background-color: #ac2925;" >
+                    <a href="https://accounts.google.com/o/oauth2/auth?scope=profile+email&redirect_uri=http://localhost:9999/SWP391_Project/loginGoogleHandler&response_type=code&client_id=351960657846-lejfsvfrmte5906hvkrj70out2u775s0.apps.googleusercontent.com&approval_prompt=force" style="color: white; text-decoration: none;">
+                        <i class="fab fa-google"></i></a>
+                </button>
+                <button type="button" class="submit" style="background-color: gray">
+                    <a href="home.jsp" style="text-decoration: none; color: white"><i class="fa fa-home"></i></a>
+                </button>
             </div>
 
             <div class="sub-cont">
@@ -75,16 +82,22 @@
                                                     <label>
                                                         <span>User</span>
                                                         <input type="text" id="username" name="user" required=""/>
+
                                                     </label>
                                                     <label>
                                                         <span>Password</span>
                                                         <input type="password" id="password" name="pass" required=""/>
+
                                                     </label>
                                                     <label>
                                                         <span>Email</span>
                                                         <input type="text" id="email" name="email" required=""/>
+
                                                     </label>
                                                     <button type="submit" class="submit">Sign Up</button>
+                                                    <label>
+                                                        <span id="mess-error" style="color: red;"></span>
+                                                    </label>
                                                 </form>
                                             </div>
                                             </div>
@@ -93,24 +106,8 @@
                                             <script>
 
                                     $(document).ready(function () {
-                                        $("#homeButton").click(function () {
-                                            $.ajax({
-                                                type: 'GET',
-                                                url: "home.jsp",
-                                                success: function (response) {
-                                                    $("body").html(response);
-                                                },
-                                                error: function () {
-                                                    // Xử lý lỗi nếu có
-                                                    alert("Đã xảy ra lỗi khi tải trang");
-                                                }
-                                            });
-                                        });
-                                    });
-
-                                    $(document).ready(function () {
                                         $('#loginForm').submit(function (e) {
-                                            e.preventDefault(); // Prevents the default form submission
+                                            e.preventDefault(); // 
 
                                             var formData = {
                                                 user: $('#username').val(),
@@ -127,7 +124,7 @@
                                                     if (response === "success") {
                                                         window.location.href = "verify.jsp";
                                                     } else {
-                                                        alert("          Check format infomation!!!\n          Ex:\n          User: NOT contain special CHARACTERS\n          AVOID DUPLICATE USERNAME!!!\n          Password: must CONTAIN special CHARACTERS and DIGIT\n          Email: abc@xyz.com and CAN NOT DUPLICATE EMAIL!!!");
+                                                        $("#mess-error").html(response);
                                                     }
                                                 },
                                                 error: function (error) {
@@ -138,9 +135,9 @@
                                     });
 
                                     function refreshCaptcha() {
-                                        // Sử dụng AJAX để làm mới ảnh CAPTCHA
+
                                         $.get('refreshcaptcha', function () {
-                                            // Thay đổi src của ảnh để làm mới
+
                                             $('#captchaImage').attr('src', 'captchaimage?' + new Date().getTime());
                                         });
                                     }

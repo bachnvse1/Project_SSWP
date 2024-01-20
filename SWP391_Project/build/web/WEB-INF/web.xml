@@ -28,11 +28,14 @@
         <servlet-name>RefreshCaptchaServlet</servlet-name>
         <servlet-class>Controller.RefreshCaptchaServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>Controller.LogoutServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SendEmail</servlet-name>
         <url-pattern>/send</url-pattern>
     </servlet-mapping>
-    
     <servlet-mapping>
         <servlet-name>VerifyCode</servlet-name>
         <url-pattern>/VerifyCode</url-pattern>
@@ -52,5 +55,9 @@
     <servlet-mapping>
         <servlet-name>RefreshCaptchaServlet</servlet-name>
         <url-pattern>/refreshcaptcha</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/logout</url-pattern>
     </servlet-mapping>
 </web-app>
