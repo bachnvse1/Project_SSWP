@@ -15,10 +15,18 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body>
-        <br>
-        <br>
         <script>
-            
+            function showPass(){
+            var passwordfield = document.getElementById("password");
+            var icon = document.querySelector(".show-password");
+            if (passwordfield.type = "password") {
+                    passwordfield.type ="text";
+                    icon.innerHTML = '<i class="fa fa-eye"></i>';
+                } else {
+                    passwordfield.type = "password";
+                    icon.innerHTML = '<i class="fa fa-eye-slash"></i>';
+}
+            }
         </script>
         <div class="cont" style="height: 600px">
             <div class="form sign-in">
@@ -31,7 +39,10 @@
                     </label>
                     <label>
                         <span>Password</span>
-                        <input type="password" name="password" value="${pass}" />
+                        <div style="position: relative;">
+                        <input id="password" type="password" name="password" value="${pass}" />
+                        <span class="show-password" style="position: absolute;transform: translateY(-100%);left: 95%" onclick="showPass()"><i class="fa fa-eye-slash"></i></span>
+                        </div>
                     </label>
                     <label>
                         
