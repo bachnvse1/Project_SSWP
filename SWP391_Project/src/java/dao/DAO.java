@@ -11,7 +11,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import java.sql.SQLException;
+<<<<<<< HEAD
 import java.util.*;
+=======
+>>>>>>> origin/branch-5
 
 /**
  *
@@ -23,7 +26,6 @@ public class DAO  extends DBContext {
     public PreparedStatement ps = null; //ném câu lệnh query sang sql
     public ResultSet rs = null; //nhận kết quả trả về
 
-    
     // Bach + Sign up
     public void signup(String user, String pass, String email) {
         String query = "INSERT users (username, password, email, display_Name, is_admin, is_verify, is_active) VALUES (?, ?, ?, ?, 0, 0, 1)";
@@ -40,6 +42,7 @@ public class DAO  extends DBContext {
 
         }
     }
+<<<<<<< HEAD
     
     public void setVerifyTrue(String email) {
         String query = "Update swp_demo.users set is_verify = 1 WHERE email = ?; ";
@@ -54,6 +57,9 @@ public class DAO  extends DBContext {
         }
     }
     
+=======
+
+>>>>>>> origin/branch-5
     public List<User> getAllUser() {
         List<User> list = new ArrayList<>();
         String query = "select * from swp_demo.users";
@@ -78,9 +84,9 @@ public class DAO  extends DBContext {
         }
         return list;
     }
-    
+
     public User getUser(String username) {
-        
+
         String query = "select * from swp_demo.users where username = ?";
         try {
             con = new DBContext().connection; //connect sql
@@ -104,7 +110,7 @@ public class DAO  extends DBContext {
         }
         return null;
     }
-    
+
     public User getEmail(String email) {
         String query = "select * from swp_demo.users where email = ?";
         try {
@@ -129,7 +135,7 @@ public class DAO  extends DBContext {
         }
         return null;
     }
-    
+
     public String getUsername(String username) {
         String query = "select * from swp_demo.users where username = ?";
         try {
@@ -145,11 +151,10 @@ public class DAO  extends DBContext {
         }
         return null;
     }
-    
-    
+
     //HUY
-        public User Login(String username, String pass) {
-        
+    public User Login(String username, String pass) {
+
         String query = "select * from swp_demo.users where username = ? and password = ?";
         try {
             con = new DBContext().connection; //connect sql
@@ -174,11 +179,30 @@ public class DAO  extends DBContext {
         }
         return null;
     }
-    
-    
-    
+
     //BINH
-    
+    public boolean isEmailExists(String email) {
+        boolean emailExists = false;
+
+        String sql = "SELECT COUNT(*) FROM users WHERE email = ?";
+        try {
+            con = new DBContext().connection; //connect sql
+            ps = con.prepareStatement(sql);
+            ps.setString(1, email);
+
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                emailExists = count > 0;
+            }
+
+        } catch (Exception e) {
+
+        }
+
+        return emailExists;
+    }
+
     public User isEmail(String email) {
         String sql = "select * from users where email = ?";
         try {
@@ -205,26 +229,24 @@ public class DAO  extends DBContext {
         return null;
     }
 
-    public User updatePassword(String pass, int  id ) {
+    public User updatePassword(String pass, int id) {
         String sql = "Update users set password=? where id =? ";
         try {
             con = new DBContext().connection;
             ps = con.prepareStatement(sql);
             ps.setString(1, pass);
             ps.setInt(2, id);
-       ps.executeUpdate();
-                    
+            ps.executeUpdate();
+
         } catch (SQLException ex) {
             System.out.println(ex);
         }
         return null;
-      
+
     }
-    
-    
-    
 
     //HUE
+<<<<<<< HEAD
     
       public void updateProfile(int userId, String username, String email, String displayName) {
         String sql = "UPDATE users SET username=?, display_name=?, email=? WHERE id=?";
@@ -281,10 +303,11 @@ public class DAO  extends DBContext {
     }
     
     
+=======
+>>>>>>> origin/branch-5
     //CHIEN
-
     public static void main(String[] args) {
-       DAO dao = new DAO();
+        DAO dao = new DAO();
         //dao.signup("bach", "1234", "bach@gmil.com");
         List<User> list = dao.getAllUser();
         for (User user : list) {
