@@ -4,7 +4,7 @@
  */
 package Controller;
 
-import Entity.User;
+import Entity.*;
 import dao.DAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -83,7 +83,7 @@ public class VerifyCode extends HttpServlet {
         try {
             int code_1 = Integer.parseInt(code);
             if (code_1 == code_give) {
-                dao.setActiveTrue(email);
+                dao.setVerifyTrue(email);
                 response.getWriter().write("success");
             } else {
                 response.getWriter().write("error");

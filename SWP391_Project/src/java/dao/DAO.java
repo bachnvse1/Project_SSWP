@@ -9,8 +9,6 @@ import Entity.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import entity.*;
-import context.*;
 import java.util.*;
 import java.sql.SQLException;
 /**
@@ -26,7 +24,7 @@ public class DAO {
     
     // Bach + Sign up
     public void signup(String user, String pass, String email) {
-        String query = "INSERT users (username, password, email, display_Name, isAdmin, is_active) VALUES (?, ?, ?, ?, 0, 0)";
+        String query = "INSERT users (username, password, email, display_Name, is_admin, is_verify, is_active) VALUES (?, ?, ?, ?, 0, 0, 1)";
         try {
             con = new DBContext().connection; //connect sql
             ps = con.prepareStatement(query);
@@ -41,8 +39,8 @@ public class DAO {
         }
     }
     
-    public void setActiveTrue(String email) {
-        String query = "Update swp_demo.users set is_active = 1 WHERE email = ?; ";
+    public void setVerifyTrue(String email) {
+        String query = "Update swp_demo.users set is_verify = 1 WHERE email = ?; ";
         try {
             con = new DBContext().connection; //connect sql
             ps = con.prepareStatement(query);
@@ -69,8 +67,9 @@ public class DAO {
                         rs.getString(5),
                         rs.getBoolean(6),
                         rs.getBoolean(7),
-                        rs.getTimestamp(8),
-                        rs.getTimestamp(9)));
+                        rs.getBoolean(8),
+                        rs.getTimestamp(9),
+                        rs.getTimestamp(10)));
             }
         } catch (Exception e) {
 
@@ -94,8 +93,9 @@ public class DAO {
                         rs.getString(5),
                         rs.getBoolean(6),
                         rs.getBoolean(7),
-                        rs.getTimestamp(8),
-                        rs.getTimestamp(9));
+                        rs.getBoolean(8),
+                        rs.getTimestamp(9),
+                        rs.getTimestamp(10));
             }
         } catch (Exception e) {
 
@@ -118,8 +118,9 @@ public class DAO {
                         rs.getString(5),
                         rs.getBoolean(6),
                         rs.getBoolean(7),
-                        rs.getTimestamp(8),
-                        rs.getTimestamp(9));
+                        rs.getBoolean(8),
+                        rs.getTimestamp(9),
+                        rs.getTimestamp(10));
             }
         } catch (Exception e) {
 
@@ -162,8 +163,9 @@ public class DAO {
                         rs.getString(5),
                         rs.getBoolean(6),
                         rs.getBoolean(7),
-                        rs.getTimestamp(8),
-                        rs.getTimestamp(9));
+                        rs.getBoolean(8),
+                        rs.getTimestamp(9),
+                        rs.getTimestamp(10));
             }
         } catch (Exception e) {
 
@@ -190,8 +192,9 @@ public class DAO {
                         rs.getString(5),
                         rs.getBoolean(6),
                         rs.getBoolean(7),
-                        rs.getTimestamp(8),
-                        rs.getTimestamp(9));
+                        rs.getBoolean(8),
+                        rs.getTimestamp(9),
+                        rs.getTimestamp(10));
             }
 
         } catch (SQLException ex) {
