@@ -54,7 +54,8 @@
 
                 <button type="button" class="submit" style="background-color: #ac2925;" >
                     <a href="https://accounts.google.com/o/oauth2/auth?scope=profile+email&redirect_uri=http://localhost:9999/SWP391_Project/loginGoogleHandler&response_type=code&client_id=351960657846-lejfsvfrmte5906hvkrj70out2u775s0.apps.googleusercontent.com&approval_prompt=force" style="color: white; text-decoration: none;">
-                        <i class="fab fa-google"></i></a>
+                        <i class="fab fa-google"></i>
+                    </a>
                 </button>
                 <button type="button" class="submit" style="background-color: gray">
                     <a href="home.jsp" style="text-decoration: none; color: white"><i class="fa fa-home"></i></a>

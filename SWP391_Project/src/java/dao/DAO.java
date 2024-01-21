@@ -11,10 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import java.sql.SQLException;
-<<<<<<< HEAD
 import java.util.*;
-=======
->>>>>>> origin/branch-5
 
 /**
  *
@@ -42,7 +39,7 @@ public class DAO  extends DBContext {
 
         }
     }
-<<<<<<< HEAD
+
     
     public void setVerifyTrue(String email) {
         String query = "Update swp_demo.users set is_verify = 1 WHERE email = ?; ";
@@ -57,9 +54,7 @@ public class DAO  extends DBContext {
         }
     }
     
-=======
 
->>>>>>> origin/branch-5
     public List<User> getAllUser() {
         List<User> list = new ArrayList<>();
         String query = "select * from swp_demo.users";
@@ -246,7 +241,6 @@ public class DAO  extends DBContext {
     }
 
     //HUE
-<<<<<<< HEAD
     
       public void updateProfile(int userId, String username, String email, String displayName) {
         String sql = "UPDATE users SET username=?, display_name=?, email=? WHERE id=?";
@@ -302,9 +296,7 @@ public class DAO  extends DBContext {
         return null;
     }
     
-    
-=======
->>>>>>> origin/branch-5
+
     //CHIEN
     public static void main(String[] args) {
         DAO dao = new DAO();
