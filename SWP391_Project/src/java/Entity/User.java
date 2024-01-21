@@ -24,6 +24,14 @@ public class User {
 
     public User() {
     }
+        public User(String username, String password, String email, String display_name) {
+
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.display_name = display_name;
+    }
+
 
     public User(int id, String username, String password, String email, String display_name, boolean is_Admin, boolean is_Active, Timestamp create_At, Timestamp update_At) {
         this.id = id;

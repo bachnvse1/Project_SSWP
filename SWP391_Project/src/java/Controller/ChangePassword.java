@@ -4,11 +4,12 @@
  */
 package Controller;
 
-import Entity.User;
 import dao.DAO;
+import Entity.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -16,9 +17,10 @@ import jakarta.servlet.http.HttpSession;
 
 /**
  *
- * @author tudo7
+ * @author acer
  */
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "ChangePassword", urlPatterns = {"/ChangePassword"})
+public class ChangePassword extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,10 +39,10 @@ public class LoginServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginServlet</title>");
+            out.println("<title>Servlet ChangePassword</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ChangePassword at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,7 +60,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        request.getRequestDispatcher("password.jsp").forward(request, response);
     }
 
     /**
@@ -72,43 +74,36 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
-        String user = request.getParameter("user");
-        String pass = request.getParameter("password");
-        request.setAttribute("username", user);
-        request.setAttribute("pass", pass);
-        String captcha = request.getParameter("capchaRespone");
-        String sessionCaptcha = (String) request.getSession().getAttribute("captcha");
-        DAO dal = new DAO();
-        User us = dal.Login(user, pass);
-        if (captcha != null && captcha.equals(sessionCaptcha)) {
-            if (us == null) {
+        String user = request.getParameter("username");
+        String oldPass = request.getParameter("oldPassword");
+        String newPass = request.getParameter("newPassword");
+        String confirmPassword = request.getParameter("confirmPassword");
 
-                request.setAttribute("mess", "Wrong user or pass");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
-            } else if (us.isIs_Active() == false) {
+        DAO c = new DAO();
 
-                request.setAttribute("mess", "Account has banned!");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
-            } else {
-                HttpSession session = request.getSession();
-                session.setAttribute("user", us);
-                session.setAttribute("displayname", us.getUsername());
-                response.sendRedirect("home.jsp");
-            }
-        } else if (captcha.equals("")) {
-            request.setAttribute("mess", "Captcha cannot be left blank!");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+        User u = c.getUser(user, oldPass);
+        if (!newPass.equals(confirmPassword) || u == null) {
+            String mess = "Change password not success";
+            request.setAttribute("fail", mess);
+            request.getRequestDispatcher("password.jsp").forward(request, response);
         } else {
-            request.setAttribute("mess", "Captcha is wrong!");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+            int uId = u.getId();
+            String email = u.getEmail();
+            String displayName = u.getDisplay_name();
+            String username = u.getUsername();
+            User users = new User(username, newPass, email, displayName);
+//            HttpSession session = request.getSession();
+            c.changePassword(users);
+            String mess = "Change password success";
+            request.setAttribute("done", mess);
+             request.getRequestDispatcher("password.jsp").forward(request, response);
+//            session.setAttribute("acc", users);
+            HttpSession session = request.getSession();
+            session.setAttribute("user", users);
+            session.setAttribute("displayname", users.getUsername());
+            
+            response.sendRedirect("password.jsp");
         }
-        HttpSession session = request.getSession();
-        session.setAttribute("user", us);
-        session.setAttribute("id", us.getId());
-        session.setAttribute("username", us.getUsername());
-        request.getRequestDispatcher("editprofile.jsp");
-
     }
 
     /**

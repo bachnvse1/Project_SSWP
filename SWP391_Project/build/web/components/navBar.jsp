@@ -39,8 +39,8 @@
                         </button>         
 
                         <button class="btn btn-outline-dark" type="button" style="margin-left: 20px;" id="loadInfoButton">
-                            <a href="url" target="_blank"><i class="fa fa-user" style="color: black;"></i></a>
-                            <a href="url" target="target">Huy Ngu</a>
+                            <a href="EditProfile" target="_blank"><i class="fa fa-user" style="color: black;"></i></a>
+                            <a href="EditProfile" target="target">${sessionScope.displayname}</a>
                         </button>
                         <button class="btn btn-outline-dark" type="button" style="margin-left: 20px;" id="loginButton">
                             Login
