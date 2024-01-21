@@ -12,7 +12,6 @@ import java.sql.Timestamp;
  */
 public class userGoogle {
     public String id;
-    public String name;
     public String email;
     public boolean is_active;
     public String given_name;
@@ -23,9 +22,8 @@ public class userGoogle {
         
     }
 
-    public userGoogle(String id, String name, String email, boolean is_active, String given_name, Timestamp create_At, Timestamp update_At) {
+    public userGoogle(String id, String email, boolean is_active, String given_name, Timestamp create_At, Timestamp update_At) {
         this.id = id;
-        this.name = name;
         this.email = email;
         this.is_active = is_active;
         this.given_name = given_name;
@@ -41,17 +39,11 @@ public class userGoogle {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getEmail() {
         return email;
     }
+
 
     public void setEmail(String email) {
         this.email = email;
@@ -65,6 +57,8 @@ public class userGoogle {
         this.is_active = is_active;
     }
 
+
+
     public String getGiven_name() {
         return given_name;
     }
@@ -73,6 +67,7 @@ public class userGoogle {
         this.given_name = given_name;
     }
 
+  
     public Timestamp getCreate_At() {
         return create_At;
     }
@@ -91,6 +86,6 @@ public class userGoogle {
 
     @Override
     public String toString() {
-        return "userGoogle{" + "id=" + id + ", name=" + name + ", email=" + email + ", is_active=" + is_active + ", given_name=" + given_name + ", create_At=" + create_At + ", update_At=" + update_At + '}';
+        return "userGoogle{" + "id=" + id  + ", email=" + email + ", is_active=" + is_active +  "given_name=" + given_name +  ", create_At="  + create_At + ", update_At=" + update_At + '}';
     }
 }

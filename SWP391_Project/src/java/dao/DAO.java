@@ -6,18 +6,20 @@ package dao;
 
 import Context.DBContext;
 import Entity.User;
+import Entity.userGoogle;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import java.sql.SQLException;
 import java.util.*;
+import java.sql.Timestamp;
 
 /**
  *
  * @author ADMIN
  */
-public class DAO  extends DBContext {
+public class DAO extends DBContext {
 
     public Connection con = null; //connect to sql
     public PreparedStatement ps = null; //ném câu lệnh query sang sql
@@ -40,7 +42,21 @@ public class DAO  extends DBContext {
         }
     }
 
-    
+    public void signupGoogle(String id, String name, String email) {
+        String query = "INSERT userGoogle (id, name, email, is_active) VALUES (?, ?, ?, 1)";
+        try {
+            con = new DBContext().connection; //connect sql
+            ps = con.prepareStatement(query);
+            ps.setString(1, id);
+            ps.setString(2, name);
+            ps.setString(3, email);
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+
+        }
+    }
+
     public void setVerifyTrue(String email) {
         String query = "Update swp_demo.users set is_verify = 1 WHERE email = ?; ";
         try {
@@ -53,7 +69,6 @@ public class DAO  extends DBContext {
 
         }
     }
-    
 
     public List<User> getAllUser() {
         List<User> list = new ArrayList<>();
@@ -104,6 +119,51 @@ public class DAO  extends DBContext {
 
         }
         return null;
+    }
+
+    public userGoogle getUserGoogle(String email) {
+
+        String query = "select * from swp_demo.usergoogle where email = ?";
+        try {
+            con = new DBContext().connection; //connect sql
+            ps = con.prepareStatement(query);
+            ps.setString(1, email);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return new userGoogle(
+                        rs.getString(1),
+                        rs.getString(3),
+                        rs.getBoolean(4),
+                        rs.getString(2),
+                        rs.getTimestamp(5),
+                        rs.getTimestamp(6));
+            }
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
+
+    public List<userGoogle> getAllUserGoogle() {
+        List<userGoogle> list = new ArrayList<>();
+        String query = "select * from swp_demo.usergoogle";
+        try {
+            con = new DBContext().connection; //connect sql
+            ps = con.prepareStatement(query);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new userGoogle(
+                        rs.getString(1),
+                        rs.getString(2),
+                        rs.getBoolean(3),
+                        rs.getString(4),
+                        rs.getTimestamp(5),
+                        rs.getTimestamp(6)));
+            }
+        } catch (Exception e) {
+
+        }
+        return list;
     }
 
     public User getEmail(String email) {
@@ -241,18 +301,14 @@ public class DAO  extends DBContext {
     }
 
     //HUE
-    
-      public void updateProfile(int userId, String username, String email, String displayName) {
-        String sql = "UPDATE users SET username=?, display_name=?, email=? WHERE id=?";
+    public void updateProfile(String email, String displayName, int id) {
+        String sql = "UPDATE users SET display_name=?, email=? WHERE id=?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
-            st.setString(1, username);
+            st.setString(1, displayName);
             // st.setString(2, password);
-            st.setString(2, displayName);
-            st.setString(3, email);
-
-            st.setInt(4, userId);
-
+            st.setString(2, email);
+            st.setInt(3, id);
             st.executeUpdate();
             // Execute the update query         
         } catch (SQLException e) {
@@ -295,16 +351,31 @@ public class DAO  extends DBContext {
         }
         return null;
     }
-    
+
+    public boolean isEmailAlreadyExists(String email, int id) {
+
+        String sql = "Select * from users where email = ? AND id != ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, email);
+            st.setInt(2, id);
+
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                int count = rs.getInt(1);
+                return count > 0;
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return false;
+    }
 
     //CHIEN
     public static void main(String[] args) {
         DAO dao = new DAO();
         //dao.signup("bach", "1234", "bach@gmil.com");
-        List<User> list = dao.getAllUser();
-        for (User user : list) {
-            System.out.println(user.toString());
-        }
-        System.out.println(dao.getEmail("Bachnvhe172297@fpt.edu.vn"));
+        System.out.println(dao.getUserGoogle("bachnvse@gmail.com").toString());
     }
 }

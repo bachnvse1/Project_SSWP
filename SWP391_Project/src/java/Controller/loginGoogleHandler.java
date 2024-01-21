@@ -8,6 +8,7 @@ import Entity.Constants;
 import Entity.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import dao.DAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -42,8 +43,19 @@ public class loginGoogleHandler extends HttpServlet {
         String accessToken = getToken(code);
         userGoogle u = getUserInfo(accessToken);
         HttpSession session = request.getSession();
-        session.setAttribute("userGoogle", u);
-        out.print(u);
+        DAO dao = new DAO();
+        userGoogle u_new = dao.getUserGoogle(u.getEmail());
+        if (u_new == null) {
+            dao.signupGoogle(u.getId(), u.getGiven_name(), u.getEmail());
+            userGoogle u_login = dao.getUserGoogle(u.getEmail());
+            session.setAttribute("user", u_login);
+            session.setAttribute("displayname", u.getGiven_name());
+            response.sendRedirect("home.jsp");
+        } else {
+            session.setAttribute("user", u_new);
+            session.setAttribute("displayname", u.getGiven_name());
+            response.sendRedirect("home.jsp");
+        }
     }
 
     public static String getToken(String code) throws ClientProtocolException, IOException {
@@ -59,14 +71,15 @@ public class loginGoogleHandler extends HttpServlet {
         String accessToken = jobj.get("access_token").toString().replaceAll("\"", "");
         return accessToken;
     }
-    
-    public static userGoogle getUserInfo(String accessToken) throws ClientProtocolException, IOException{
+
+    public static userGoogle getUserInfo(String accessToken) throws ClientProtocolException, IOException {
         String link = Constants.GOOGLE_LINK_GET_USER_INFO + accessToken;
         String response = Request.Get(link).execute().returnContent().asString();
         userGoogle googlePojo = new Gson().fromJson(response, userGoogle.class);
-        
+
         return googlePojo;
     }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

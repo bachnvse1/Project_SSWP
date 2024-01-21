@@ -5,11 +5,11 @@
 package Controller;
 
 import Entity.User;
-import Validate.validate;
 import dao.DAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,9 +17,10 @@ import jakarta.servlet.http.HttpSession;
 
 /**
  *
- * @author tudo7
+ * @author ADMIN
  */
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "VerifyCodeUpdate", urlPatterns = {"/VerifyCodeUpdate"})
+public class VerifyCodeUpdate extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +39,10 @@ public class LoginServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginServlet</title>");
+            out.println("<title>Servlet VerifyCodeUpdate</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet VerifyCodeUpdate at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -73,47 +74,28 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        DAO dao = new DAO();
         //processRequest(request, response);
-        String user = request.getParameter("username");
-        String pass = request.getParameter("password");
-        request.setAttribute("username", user);
-        request.setAttribute("pass", pass);
-        String captcha = request.getParameter("capchaRespone");
-        String sessionCaptcha = (String) request.getSession().getAttribute("captcha");
-        DAO dal = new DAO();
-        User us = dal.Login(user, pass);
-
-//        validate val = new validate();
+        HttpSession session = request.getSession();
+        String email = (String) session.getAttribute("email");
+        PrintWriter out = response.getWriter();
+        String code = request.getParameter("otp_code");
+        String mess = "";
+        User u = (User) session.getAttribute("user");
+        int code_give = (int) session.getAttribute("otp");
         try {
-            if (captcha != null && captcha.equals(sessionCaptcha)) {
-                if (user.equals("")) {
-                    response.getWriter().write("Username cannot be empty!");
-                } else if (pass.equals("")) {
-                    response.getWriter().write("Password cannot be empty!");
-                } else {
-                    if (us == null) {
-                        response.getWriter().write("ACCOUNT DOES NOT EXIT!");
-                    } else if (us.isIs_Active() == false) {
-                        response.getWriter().write("ACCOUNT HAS BANNED!");
-                    } else {
-                        HttpSession session = request.getSession();
-                        session.setAttribute("user", us);
-                        session.setAttribute("displayname",us.getDisplay_name());
-                        response.getWriter().write("success");
-                        
-                    }
-                }
-
-            }else if(captcha.isEmpty()){
-                response.getWriter().write("Captcha cannot be empty!");
-            }else{
-                response.getWriter().write("Captcha wrong!");
+            int code_1 = Integer.parseInt(code);
+            if (code_1 == code_give) {
+                dao.setVerifyTrue(email);
+                response.getWriter().write("success");
+            } else {
+                response.getWriter().write("error");
             }
-
-            }
-//            if(val.checkInput(pass, "\"^(?=.*[!@#$%^&*(),.?\\\":{}|<>]).*$\"", 3, 15))
-         catch (Exception e) {
-            System.out.println("Error");
+        } catch (Exception e) {
+//            mess += "OTP error, input again!!!";
+//            request.setAttribute("messError", mess);
+//            request.getRequestDispatcher("verify.jsp").forward(request, response);
+              response.getWriter().write("error");
         }
     }
 

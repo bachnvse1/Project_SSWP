@@ -18,16 +18,11 @@
         <div class="otp-box">
             <form id="loginForm">
                 <div class="img">
-                    <img src="https://t.ly/7CuFm" alt="" width="100px">
+                    <img src="https://apps.uk/wp-content/uploads/2022/11/verification-codes.png" alt="" width="300px">
                 </div>
-                <div class="content-box">
-                    <h2>Verification code</h2>
-                    <p>We just send a Verification code to your email</p>
-                </div>
+              
                 <div class="inputs">
                     <input type="text" maxlength="5" id="Otp_code" required="">
-                    
-                    
                     <div class="verify-button">
                         <button type="submit">Verify</button></br></br>
                         <button type="button"><a href="home.jsp" target="target" style="text-decoration: none; color: white;">Home</a></button>
@@ -53,7 +48,7 @@
                     data: formData,
                     success: function (response) {
                         if (response === "success") {
-                            alert("Sign up success!!!");
+                            alert("Verify code success!");
 
                         } else {
                             alert("OTP error!!!\nPlease input again!");

@@ -15,6 +15,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.Random;
+import Validate.validate;
 
 /**
  *
@@ -82,9 +84,6 @@ public class EditProfile extends HttpServlet {
         String email = request.getParameter("email");
         //   Integer isAdmin =  Integer.parseInt(request.getParameter("Admin"));
 
-        HttpSession session = request.getSession();
-        User u = (User) session.getAttribute("user");
-        
         if (username == null || username.trim().isEmpty()) {
             request.setAttribute("errorMsg1", "Username is required.");
             RequestDispatcher dispatcher = request.getRequestDispatcher("editprofile.jsp");
@@ -100,30 +99,49 @@ public class EditProfile extends HttpServlet {
 //        return;
 //    }
         //Validate Display Name
-        if (displayName == null || displayName.trim().isEmpty()) {
-            request.setAttribute("errorMsg3", "Display Name is required.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("editprofile.jsp");
-            dispatcher.forward(request, response);
-            return;
-        }
-
+//        if (displayName == null || displayName.trim().isEmpty()) {
+//            request.setAttribute("errorMsg3", "Display Name is required.");
+//            RequestDispatcher dispatcher = request.getRequestDispatcher("editprofile.jsp");
+//            dispatcher.forward(request, response);
+//            return;
+//        }
         // Validate Email
-        if (email == null || email.trim().isEmpty()) {
+        if (email == null || email.trim().isEmpty() || isEmailAlreadyExists(email, id)) {
             request.setAttribute("errorMsg4", "Invalid or empty email address.");
             RequestDispatcher dispatcher = request.getRequestDispatcher("editprofile.jsp");
             dispatcher.forward(request, response);
             return;
         }
-
-        DAO d = new DAO();
         
-        d.updateProfile(id, username, email, displayName);
-            String mess = "Edit profile success";
+        validate s = new validate();
+        
+        DAO d = new DAO();
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("user");
+        if (email.equals(u.getEmail()) && s.checkInput(email, "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", 0, 50)) {
+            d.updateProfile(email, displayName, u.getId());
             u.setDisplay_name(displayName);
-            u.setEmail(email);
+            String mess = "Edit profile success";
             request.setAttribute("done", mess);
             request.getRequestDispatcher("editprofile.jsp").forward(request, response);
-          
+        } else {
+            int code = GenOTP();
+            SendEmail sm = new SendEmail();
+            sm.Send(email, code);
+            u.setEmail(email);
+            d.updateProfile(email, displayName, u.getId());
+            session.setAttribute("otp", code);
+            session.setAttribute("email", email);
+            session.setAttribute("displayname", displayName);
+            response.sendRedirect("verify.jsp");
+        }
+
+//        d.updateProfile(id, username, email, displayName);
+//        String mess = "Edit profile success";
+//        request.setAttribute("done", mess);
+//        u.setDisplay_name(displayName);
+//        u.setEmail(email);
+//        request.getRequestDispatcher("editprofile.jsp").forward(request, response);
     }
 
     private boolean isValidEmail(String email) {
@@ -132,6 +150,26 @@ public class EditProfile extends HttpServlet {
         // Replace this with a more robust email validation if needed
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
         return email.matches(emailRegex);
+    }
+
+    private boolean isEmailAlreadyExists(String email, int id) {
+        try {
+            DAO d = new DAO();
+            // Assuming you have a method in DAO to check if the email exists for a different user
+            return d.isEmailAlreadyExists(email, id);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+
+    public int GenOTP() {
+        int min = 10_000; // Số nguyên tối thiểu (bao gồm)
+        int max = 99_999; // Số nguyên tối đa (bao gồm)
+        Random random = new Random();
+        int randomNumber = random.nextInt(max - min + 1) + min;
+
+        return randomNumber;
     }
 
     /**

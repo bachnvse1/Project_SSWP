@@ -5,6 +5,7 @@
 package Controller;
 
 import Entity.User;
+import Entity.userGoogle;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -36,7 +37,7 @@ public class LogoutServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LogoutServlet</title>");            
+            out.println("<title>Servlet LogoutServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet LogoutServlet at " + request.getContextPath() + "</h1>");
@@ -61,11 +62,20 @@ public class LogoutServlet extends HttpServlet {
         HttpSession session = request.getSession();
         PrintWriter out = response.getWriter();
         User u = (User) session.getAttribute("user");
-        if(u != null) {
+        if (u != null) {
             session.removeAttribute("user");
             session.removeAttribute("displayname");
             response.sendRedirect("login.jsp");
+        } else {
+            userGoogle u2 = (userGoogle) session.getAttribute("user");
+
+            if (u2 != null) {
+                session.removeAttribute("user");
+                session.removeAttribute("displayname");
+                response.sendRedirect("login.jsp");
+            }
         }
+
     }
 
     /**

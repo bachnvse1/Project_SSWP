@@ -44,11 +44,11 @@
 
                 $.ajax({
                     type: 'POST',
-                    url: 'VerifyCode',
+                    url: 'VerifyCodeUpdate',
                     data: formData,
                     success: function (response) {
                         if (response === "success") {
-                            alert("Verify code success!");
+                            alert("Update success !");
 
                         } else {
                             alert("OTP error!!!\nPlease input again!");

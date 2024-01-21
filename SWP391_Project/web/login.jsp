@@ -152,7 +152,7 @@
                                                         type: "POST",
                                                         url: "login",
                                                         data: {
-                                                            user: username,
+                                                            username: username,
                                                             password: password,
                                                             capchaRespone: captcha
                                                         },

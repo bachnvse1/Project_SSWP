@@ -34,20 +34,19 @@
 
 
 
-                <c:if test="${user == null}">
+                <c:if test="${sessionScope.user == null}">
                     <button class="btn btn-outline-dark" type="button" style="margin-left: 20px;" id="loginButton">
                         Login
                     </button>
                 </c:if>
-                <c:if test="${user != null}">
-                    <button class="btn btn-outline-dark" type="button" style="margin-left: 20px;" id="loadInfoButton">
-                        <a href="EditProfile" target="_blank"><i class="fa fa-user" style="color: black;"> ${user.username}</i></a>
+                <c:if test="${sessionScope.user != null}">
+                    <button class="btn btn-outline-dark" type="button" style="margin-left: 20px;">
+                        <a href="EditProfile" target="_blank"><i class="fa fa-user" style="color: black;"> ${sessionScope.displayname}</i></a>
                     </button>
                     <button class="btn btn-outline-dark" type="button" style="margin-left: 20px;" id="logoutButton">
                         Logout
                     </button>
                 </c:if>
-
             </form>
         </div>
     </div>
