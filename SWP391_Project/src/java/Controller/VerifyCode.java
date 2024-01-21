@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import Entity.User;
 import dao.DAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -74,8 +75,6 @@ public class VerifyCode extends HttpServlet {
         DAO dao = new DAO();
         //processRequest(request, response);
         HttpSession session = request.getSession();
-        String user = (String) session.getAttribute("user");
-        String pass = (String) session.getAttribute("pass");
         String email = (String) session.getAttribute("email");
         PrintWriter out = response.getWriter();
         String code = request.getParameter("otp_code");
@@ -84,10 +83,7 @@ public class VerifyCode extends HttpServlet {
         try {
             int code_1 = Integer.parseInt(code);
             if (code_1 == code_give) {
-                dao.signup(user, pass, email);
-                //mess += "Sign up success!!!";
-//                request.setAttribute("messSuccess", mess);
-//                request.getRequestDispatcher("verify.jsp").forward(request, response);
+                dao.setActiveTrue(email);
                 response.getWriter().write("success");
             } else {
                 response.getWriter().write("error");

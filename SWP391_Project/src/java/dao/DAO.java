@@ -26,7 +26,7 @@ public class DAO {
     
     // Bach + Sign up
     public void signup(String user, String pass, String email) {
-        String query = "INSERT users (username, password, email, display_Name, isAdmin, is_active) VALUES (?, ?, ?, ?, 0, 1)";
+        String query = "INSERT users (username, password, email, display_Name, isAdmin, is_active) VALUES (?, ?, ?, ?, 0, 0)";
         try {
             con = new DBContext().connection; //connect sql
             ps = con.prepareStatement(query);
@@ -34,6 +34,19 @@ public class DAO {
             ps.setString(2, pass);
             ps.setString(3, email);
             ps.setString(4, user);
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+
+        }
+    }
+    
+    public void setActiveTrue(String email) {
+        String query = "Update swp_demo.users set is_active = 1 WHERE email = ?; ";
+        try {
+            con = new DBContext().connection; //connect sql
+            ps = con.prepareStatement(query);
+            ps.setString(1, email);
             ps.executeUpdate();
 
         } catch (Exception e) {

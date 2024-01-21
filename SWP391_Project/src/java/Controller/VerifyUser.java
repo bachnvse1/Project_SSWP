@@ -94,9 +94,8 @@ public class VerifyUser extends HttpServlet {
                     sm.Send(email, code);
                     HttpSession session = request.getSession();
                     session.setAttribute("otp", code);
-                    session.setAttribute("user", username);
-                    session.setAttribute("pass", password);
                     session.setAttribute("email", email);
+                    dao.signup(username, password, email);
                     response.getWriter().write("success");
                 } else {
                     mess = "Email: abc@xyz.com and CAN NOT DUPLICATE EMAIL!";
