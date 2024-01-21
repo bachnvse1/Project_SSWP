@@ -260,12 +260,12 @@ public class DAO  extends DBContext {
         }
     }
 
-    public void changePassword(User u) {
+    public void changePassword(String password, String username) {
         String sql = "UPDATE users SET password=? WHERE username=?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
-            st.setString(1, u.getPassword());
-            st.setString(2, u.getUsername());
+            st.setString(1, password);
+            st.setString(2, username);
 
             st.executeUpdate();
 

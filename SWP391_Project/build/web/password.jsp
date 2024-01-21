@@ -76,7 +76,7 @@
             <form action="ChangePassword" method="post" class="forpass">
 
             <label for="username">Username: </label>
-            <input type="text" name="username" value="${sessionScope.displayname}" readonly=""><br>
+            <input type="text" name="username" value="${user.username}" readonly=""><br>
             <label for="oldPassword">Old Password:</label>
             <input type="password" name="oldPassword" required><br>
 

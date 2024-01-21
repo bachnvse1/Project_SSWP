@@ -81,27 +81,20 @@ public class ChangePassword extends HttpServlet {
 
         DAO c = new DAO();
 
-        User u = c.getUser(user, oldPass);
-        if (!newPass.equals(confirmPassword) || u == null) {
+        if (!newPass.equals(confirmPassword)) {
             String mess = "Change password not success";
             request.setAttribute("fail", mess);
             request.getRequestDispatcher("password.jsp").forward(request, response);
         } else {
-            int uId = u.getId();
-            String email = u.getEmail();
-            String displayName = u.getDisplay_name();
-            String username = u.getUsername();
-            User users = new User(username, newPass, email, displayName);
+            
 //            HttpSession session = request.getSession();
-            c.changePassword(users);
+            c.changePassword(newPass, user);
             String mess = "Change password success";
             request.setAttribute("done", mess);
              request.getRequestDispatcher("password.jsp").forward(request, response);
 //            session.setAttribute("acc", users);
             HttpSession session = request.getSession();
-            session.setAttribute("user", users);
-            session.setAttribute("displayname", users.getUsername());
-            
+            session.setAttribute("user", user);            
             response.sendRedirect("password.jsp");
         }
     }

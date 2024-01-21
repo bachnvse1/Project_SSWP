@@ -49,10 +49,6 @@
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>CaptchaImageServlet</servlet-name>
-        <url-pattern>/captchaimage</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>RefreshCaptchaServlet</servlet-name>
         <url-pattern>/refreshcaptcha</url-pattern>
     </servlet-mapping>

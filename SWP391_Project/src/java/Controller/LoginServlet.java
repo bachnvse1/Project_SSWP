@@ -82,37 +82,13 @@ public class LoginServlet extends HttpServlet {
         String sessionCaptcha = (String) request.getSession().getAttribute("captcha");
         DAO dal = new DAO();
         User us = dal.Login(user, pass);
-<<<<<<< HEAD
-        if (captcha != null && captcha.equals(sessionCaptcha)) {
-            if (us == null) {
 
-                request.setAttribute("mess", "Wrong user or pass");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
-            } else if (us.isIs_Active() == false) {
-
-                request.setAttribute("mess", "Account has banned!");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
-            } else {
-                HttpSession session = request.getSession();
-                session.setAttribute("user", us);
-                session.setAttribute("displayname", us.getDisplay_name());
-
-                response.sendRedirect("home.jsp");
-            }
-        } else if (captcha.equals("")) {
-            request.setAttribute("mess", "Captcha cannot be left blank!");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        } else {
-            request.setAttribute("mess", "Captcha is wrong!");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        }
-=======
 //        validate val = new validate();
         try {
             if (captcha != null && captcha.equals(sessionCaptcha)) {
-                if (user == null) {
+                if (user.equals("")) {
                     response.getWriter().write("Username cannot be empty!");
-                } else if (pass == null) {
+                } else if (pass.equals("")) {
                     response.getWriter().write("Password cannot be empty!");
                 } else {
                     if (us == null) {
@@ -122,6 +98,7 @@ public class LoginServlet extends HttpServlet {
                     } else {
                         HttpSession session = request.getSession();
                         session.setAttribute("user", us);
+                        
                         response.getWriter().write("success");
                         
                     }
@@ -138,29 +115,6 @@ public class LoginServlet extends HttpServlet {
          catch (Exception e) {
             System.out.println("Error");
         }
-
-//          if(captcha!=null && captcha.equals(sessionCaptcha)){
-//              if(us==null){
-//            request.setAttribute("mess", "Wrong user or pass");
-//            request.getRequestDispatcher("login.jsp").forward(request, response);  
-//        }else if(us.isIs_Active()==false){
-//            
-//            request.setAttribute("mess", "Account has banned!");
-//            request.getRequestDispatcher("login.jsp").forward(request, response);  
-//        }else{
-//             HttpSession session = request.getSession();
-//            session.setAttribute("user", us);
-//            response.sendRedirect("home.jsp");
-//        }
-//          }
-//          else if(captcha.equals("")){
-//              request.setAttribute("mess", "Captcha cannot be left blank!");
-//            request.getRequestDispatcher("login.jsp").forward(request, response);  
-//          }else{
-//            request.setAttribute("mess", "Captcha is wrong!");
-//            request.getRequestDispatcher("login.jsp").forward(request, response);  
-//          }
->>>>>>> origin/branch-9
     }
 
     /**

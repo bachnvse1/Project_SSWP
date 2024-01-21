@@ -41,8 +41,7 @@
                 </c:if>
                 <c:if test="${user != null}">
                     <button class="btn btn-outline-dark" type="button" style="margin-left: 20px;" id="loadInfoButton">
-                        <a href="EditProfile" target="_blank"><i class="fa fa-user" style="color: black;"></i></a>
-                        <a href="EditProfile" target="target" style="color: black; text-decoration: none;">${sessionScope.displayname}</a>
+                        <a href="EditProfile" target="_blank"><i class="fa fa-user" style="color: black;"> ${user.username}</i></a>
                     </button>
                     <button class="btn btn-outline-dark" type="button" style="margin-left: 20px;" id="logoutButton">
                         Logout

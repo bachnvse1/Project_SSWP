@@ -91,7 +91,7 @@
 
                 <!-- Display Name Field -->
                 <label>Display Name:</label>
-                <input type="text" name="display" value="${displayname}">
+                <input type="text" name="display" value="${user.display_name}">
                 <c:if test="${not empty errorMsg3}">
                     <p class="error-message">${errorMsg3}</p>
                 </c:if>
@@ -99,7 +99,7 @@
 
                 <!-- Email Field -->
                 <label>Email:</label>
-                <input type="text" name="email" value="">
+                <input type="text" name="email" value="${user.email}">
                 <c:if test="${not empty errorMsg4}">
                     <p class="error-message">${errorMsg4}</p>
                 </c:if>

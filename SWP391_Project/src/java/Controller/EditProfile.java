@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import Entity.User;
 import dao.DAO;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
@@ -81,7 +82,8 @@ public class EditProfile extends HttpServlet {
         String email = request.getParameter("email");
         //   Integer isAdmin =  Integer.parseInt(request.getParameter("Admin"));
 
-        
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("user");
         
         if (username == null || username.trim().isEmpty()) {
             request.setAttribute("errorMsg1", "Username is required.");
@@ -116,7 +118,9 @@ public class EditProfile extends HttpServlet {
         DAO d = new DAO();
         
         d.updateProfile(id, username, email, displayName);
-                String mess = "Edit profile success";
+            String mess = "Edit profile success";
+            u.setDisplay_name(displayName);
+            u.setEmail(email);
             request.setAttribute("done", mess);
             request.getRequestDispatcher("editprofile.jsp").forward(request, response);
           
