@@ -83,7 +83,7 @@ public class Forgotpassword extends HttpServlet {
             request.getRequestDispatcher("forgotpassword.jsp").forward(request, response);
         }else{
              request.setAttribute("flag", 2);
-            request.getRequestDispatcher("forgotpassword.jsp").forward(request, response);
+             request.getRequestDispatcher("forgotpassword.jsp").forward(request, response);
         }
        
 
