@@ -21,7 +21,7 @@
         <script>
 
         </script>
-        <div class="cont" style="height: 620px;">
+        <div class="cont" style="height: 650px;">
             <div class="form sign-in">
                 <h2>Welcome</h2>
                 <form action="login" method="post">
@@ -147,5 +147,7 @@
                                                     document.querySelector('.cont').classList.toggle('s--signup');
                                                 });
                                             </script>
+
+                                            <script src="jscript/login_logout.js"></script>
                                             </body>
                                             </html>

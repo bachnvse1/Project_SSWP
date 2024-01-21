@@ -236,55 +236,16 @@
             </div>
         </section>
         <!-- Footer-->
-        <footer class="py-5 bg-dark">
-            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
-        </footer>
+        <%@include file="components/footer.jsp" %>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         
-        <script>
-            $(document).ready(function(){
-                $("#loginButton").click(function(){
-                    $.ajax({
-                        type: 'GET',
-                        url: "login.jsp",
-                        success: function(response){
-                            $("body").html(response);
-                        },
-                        error: function () {
-                        // Xử lý lỗi nếu có
-                        alert("Đã xảy ra lỗi khi tải trang");
-                        }        
-                    });
-                    
-                });
-            });
-            
-            
-            $(document).ready(function(){
-                $("#logoutButton").click(function(){
-                    $.ajax({
-                        type: 'GET',
-                        url: "logout",
-                        success: function(response){
-                            $("body").html(response);
-                        },
-                        error: function () {
-                        // Xử lý lỗi nếu có
-                        alert("Đã xảy ra lỗi khi tải trang");
-                        }        
-                    });
-                    
-                });
-            });
+        <script src="jscript/login_logout.js">
         </script>
         
-        <script>
-            
-        </script>
     </body>
 </html>
 

@@ -104,12 +104,6 @@ public class LoginServlet extends HttpServlet {
             request.setAttribute("mess", "Captcha is wrong!");
             request.getRequestDispatcher("login.jsp").forward(request, response);
         }
-    HttpSession session = request.getSession();
-        session.setAttribute("user", us);
-        session.setAttribute("id", us.getId());
-        session.setAttribute("username", us.getUsername());
-        request.getRequestDispatcher("editprofile.jsp");
-
     }
 
     /**
