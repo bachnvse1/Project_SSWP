@@ -5,6 +5,7 @@
 package Controller;
 
 import Entity.User;
+import Validate.validate;
 import dao.DAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -81,6 +82,7 @@ public class LoginServlet extends HttpServlet {
         String sessionCaptcha = (String) request.getSession().getAttribute("captcha");
         DAO dal = new DAO();
         User us = dal.Login(user, pass);
+<<<<<<< HEAD
         if (captcha != null && captcha.equals(sessionCaptcha)) {
             if (us == null) {
 
@@ -104,6 +106,61 @@ public class LoginServlet extends HttpServlet {
             request.setAttribute("mess", "Captcha is wrong!");
             request.getRequestDispatcher("login.jsp").forward(request, response);
         }
+=======
+//        validate val = new validate();
+        try {
+            if (captcha != null && captcha.equals(sessionCaptcha)) {
+                if (user == null) {
+                    response.getWriter().write("Username cannot be empty!");
+                } else if (pass == null) {
+                    response.getWriter().write("Password cannot be empty!");
+                } else {
+                    if (us == null) {
+                        response.getWriter().write("ACCOUNT DOES NOT EXIT!");
+                    } else if (us.isIs_Active() == false) {
+                        response.getWriter().write("ACCOUNT HAS BANNED!");
+                    } else {
+                        HttpSession session = request.getSession();
+                        session.setAttribute("user", us);
+                        response.getWriter().write("success");
+                        
+                    }
+                }
+
+            }else if(captcha.isEmpty()){
+                response.getWriter().write("Captcha cannot be empty!");
+            }else{
+                response.getWriter().write("Captcha wrong!");
+            }
+
+            }
+//            if(val.checkInput(pass, "\"^(?=.*[!@#$%^&*(),.?\\\":{}|<>]).*$\"", 3, 15))
+         catch (Exception e) {
+            System.out.println("Error");
+        }
+
+//          if(captcha!=null && captcha.equals(sessionCaptcha)){
+//              if(us==null){
+//            request.setAttribute("mess", "Wrong user or pass");
+//            request.getRequestDispatcher("login.jsp").forward(request, response);  
+//        }else if(us.isIs_Active()==false){
+//            
+//            request.setAttribute("mess", "Account has banned!");
+//            request.getRequestDispatcher("login.jsp").forward(request, response);  
+//        }else{
+//             HttpSession session = request.getSession();
+//            session.setAttribute("user", us);
+//            response.sendRedirect("home.jsp");
+//        }
+//          }
+//          else if(captcha.equals("")){
+//              request.setAttribute("mess", "Captcha cannot be left blank!");
+//            request.getRequestDispatcher("login.jsp").forward(request, response);  
+//          }else{
+//            request.setAttribute("mess", "Captcha is wrong!");
+//            request.getRequestDispatcher("login.jsp").forward(request, response);  
+//          }
+>>>>>>> origin/branch-9
     }
 
     /**
