@@ -39,10 +39,11 @@
                         </button>         
 
                         <button class="btn btn-outline-dark" type="button" style="margin-left: 20px;" id="loadInfoButton">
-                            <a href="#"><i class="fa fa-user" style="color: black;"></i></a>
-                            <a>${displayname}</a>
+
+                            <a href="EditProfile" target="_blank"><i class="fa fa-user" style="color: black;"></i></a>
+                            <a href="EditProfile" target="target">${sessionScope.displayname}</a>
                         </button>
-                        
+                      
                         <c:if test="${user == null}">
                             <button class="btn btn-outline-dark" type="button" style="margin-left: 20px;" id="loginButton">
                                 Login

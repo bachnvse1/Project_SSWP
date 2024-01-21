@@ -22,6 +22,7 @@ public class DBContext {
     private static final String USER = "root";
     private static final String PASSWORD = "123456";
 
+
     // Phương thức để lấy connection
     public DBContext() {
         try {

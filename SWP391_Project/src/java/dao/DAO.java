@@ -9,13 +9,15 @@ import Entity.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.*;
+
 import java.sql.SQLException;
+import java.util.*;
+
 /**
  *
  * @author ADMIN
  */
-public class DAO {
+public class DAO  extends DBContext {
 
     public Connection con = null; //connect to sql
     public PreparedStatement ps = null; //ném câu lệnh query sang sql
@@ -224,7 +226,59 @@ public class DAO {
 
     //HUE
     
-    
+      public void updateProfile(int userId, String username, String email, String displayName) {
+        String sql = "UPDATE users SET username=?, display_name=?, email=? WHERE id=?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, username);
+            // st.setString(2, password);
+            st.setString(2, displayName);
+            st.setString(3, email);
+
+            st.setInt(4, userId);
+
+            st.executeUpdate();
+            // Execute the update query         
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    public void changePassword(User u) {
+        String sql = "UPDATE users SET password=? WHERE username=?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, u.getPassword());
+            st.setString(2, u.getUsername());
+
+            st.executeUpdate();
+
+            // Execute the update query         
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    public User getUser(String username, String password) {
+        String sql = "Select * from users where username = ? and password=? ";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, username);
+            st.setString(2, password);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                User u = new User();
+                u.setUsername(rs.getString("username"));
+                u.setPassword(rs.getString("password"));
+                return u;
+            }
+            // Execute the update query         
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
     
     
     //CHIEN
