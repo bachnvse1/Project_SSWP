@@ -54,6 +54,7 @@ public class loginGoogleHandler extends HttpServlet {
         } else {
             session.setAttribute("user", u_new);
             session.setAttribute("displayname", u.getGiven_name());
+            session.setAttribute("status", 1);
             response.sendRedirect("home.jsp");
         }
     }

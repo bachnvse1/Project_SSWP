@@ -99,6 +99,7 @@ public class LoginServlet extends HttpServlet {
                         HttpSession session = request.getSession();
                         session.setAttribute("user", us);
                         session.setAttribute("displayname",us.getDisplay_name());
+                        session.setAttribute("status", 0);
                         response.getWriter().write("success");
                         
                     }

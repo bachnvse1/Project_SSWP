@@ -377,5 +377,7 @@ public class DAO extends DBContext {
         DAO dao = new DAO();
         //dao.signup("bach", "1234", "bach@gmil.com");
         System.out.println(dao.getUserGoogle("bachnvse@gmail.com").toString());
+        User u = dao.getEmail("bachnvse@gmail.com");
+        
     }
 }
