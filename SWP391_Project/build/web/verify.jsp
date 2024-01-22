@@ -16,17 +16,18 @@
     </head>
     <body>
         <div class="otp-box">
-            <form id="loginForm">
+            <form id="VerifyForm">
                 <div class="img">
                     <img src="https://apps.uk/wp-content/uploads/2022/11/verification-codes.png" alt="" width="300px">
                 </div>
-              
+
                 <div class="inputs">
                     <input type="text" maxlength="5" id="Otp_code" required="">
                     <div class="verify-button">
                         <button type="submit">Verify</button></br></br>
                         <button type="button"><a href="home.jsp" target="target" style="text-decoration: none; color: white;">Home</a></button>
-                    </div>
+                    </div></br>
+                    <p style="color: #084298;" onclick="resendMail()">Resend Email</p>
                 </div>
             </form>
         </div>
@@ -34,32 +35,56 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
-        $(document).ready(function () {
-            $('#loginForm').submit(function (e) {
-                e.preventDefault(); // Prevents the default form submission
+                        $(document).ready(function () {
+                            $('#VerifyForm').submit(function (e) {
+                                e.preventDefault(); // Prevents the default form submission
 
-                var formData = {
-                    otp_code: $('#Otp_code').val()
-                };
+                                var formData = {
+                                    otp_code: $('#Otp_code').val()
+                                };
 
-                $.ajax({
-                    type: 'POST',
-                    url: 'VerifyCode',
-                    data: formData,
-                    success: function (response) {
-                        if (response === "success") {
-                            alert("Verify code success!");
+                                $.ajax({
+                                    type: 'POST',
+                                    url: 'VerifyCode',
+                                    data: formData,
+                                    success: function (response) {
+                                        if (response === "success") {
+                                            alert("Verify code success!");
 
-                        } else {
-                            alert("OTP error!!!\nPlease input again!");
+                                        } else {
+                                            alert("OTP error!!!\nPlease input again!");
+                                        }
+                                    },
+                                    error: function (error) {
+                                        console.log(error);
+                                    }
+                                });
+                            });
+                        });
+
+                        function resendMail() {
+                            var formData = {
+                                otp_code: $('#Otp_code').val()
+                            };
+
+                            $.ajax({
+                                type: 'GET',
+                                url: "VerifyCode",
+                                data: formData,
+                                success: function (response) {
+                                    if (response === "success") {
+                                        alert("Verify code success!");
+
+                                    } else {
+                                        alert(response);
+                                    }
+                                },
+                                error: function (error) {
+                                    console.log(error);
+                                }
+
+                            });
                         }
-                    },
-                    error: function (error) {
-                        console.log(error);
-                    }
-                });
-            });
-        });
     </script>
 </body>
 </html>
