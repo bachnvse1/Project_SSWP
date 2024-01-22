@@ -52,7 +52,6 @@
                     <a href="forgot"><p class="forgot-pass">Forgot password?</p></a>
                     <button onclick="SignIn()" type="button" class="submit" id="buttonSignin">Sign In</button>
                 </form>
-<<<<<<< HEAD
 
                 <button type="button" class="submit" style="background-color: #ac2925;" >
                     <a href="https://accounts.google.com/o/oauth2/auth?scope=profile+email&redirect_uri=http://localhost:9999/SWP391_Project/loginGoogleHandler&response_type=code&client_id=351960657846-lejfsvfrmte5906hvkrj70out2u775s0.apps.googleusercontent.com&approval_prompt=force" style="color: white; text-decoration: none;">
@@ -64,12 +63,6 @@
                 </button>
             </div>
 
-=======
-                <button type="button" class="submit" style="background-color: gray" id="homeButton">Home Page</button>
-                <button type="button" class="submit" style="background-color: gray" > <a href="https://accounts.google.com/o/oauth2/auth?scope=profile+email&redirect_uri=http://localhost:9999/SWP391_Project/loginGoogleHandler&response_type=code&client_id=351960657846-lejfsvfrmte5906hvkrj70out2u775s0.apps.googleusercontent.com&approval_prompt=force" style="color: white; text-decoration: none;">Login with google</a></button>
-</div>
-        
->>>>>>> origin/branch-khoa
             <div class="sub-cont">
                 <div class="img">
                     <div class="img__text m--up">
