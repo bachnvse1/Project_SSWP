@@ -21,10 +21,6 @@ public class DBContext {
     private static final String URL = "jdbc:mysql://localhost:3306/swp_demo";
     private static final String USER = "root";
     private static final String PASSWORD = "123456";
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/branch-khoa
 
     // Phương thức để lấy connection
     public DBContext() {

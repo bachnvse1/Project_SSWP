@@ -183,6 +183,8 @@
 
                                                                 window.location.href = "verify.jsp";
 
+                                                            } else if (response === "admin") {
+                                                                window.location.href = "ManageAccount";
                                                             } else {
                                                                 refreshCaptcha();
 

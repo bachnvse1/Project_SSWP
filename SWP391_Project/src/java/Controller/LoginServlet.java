@@ -83,7 +83,6 @@ public class LoginServlet extends HttpServlet {
         String sessionCaptcha = (String) request.getSession().getAttribute("captcha");
         DAO dal = new DAO();
         User us = dal.Login(user, pass);
-<<<<<<< HEAD
 
 //        validate val = new validate();
         try {
@@ -98,11 +97,18 @@ public class LoginServlet extends HttpServlet {
                     } else if (us.isIs_Active() == false) {
                         response.getWriter().write("ACCOUNT HAS BANNED!");
                     } else if (us.isIs_verify() == true) {
-                        HttpSession session = request.getSession();
-                        session.setAttribute("user", us);
-                        session.setAttribute("displayname", us.getDisplay_name());
-                        session.setAttribute("status", 0);
-                        response.getWriter().write("success");
+                        if (us.isIs_Admin() == true) {
+                            HttpSession session = request.getSession();
+                            session.setAttribute("user", us);
+                            response.getWriter().write("admin");
+                        } else {
+                            HttpSession session = request.getSession();
+                            session.setAttribute("user", us);
+                            session.setAttribute("displayname", us.getDisplay_name());
+                            session.setAttribute("status", 0);
+                            response.getWriter().write("success");
+                        }
+
                     } else {
                         int code = GenOTP();
                         SendEmail sm = new SendEmail();
@@ -119,40 +125,10 @@ public class LoginServlet extends HttpServlet {
             } else {
                 response.getWriter().write("Captcha wrong!");
             }
-
         } //            if(val.checkInput(pass, "\"^(?=.*[!@#$%^&*(),.?\\\":{}|<>]).*$\"", 3, 15))
         catch (Exception e) {
             System.out.println("Error");
         }
-=======
-          if(captcha!=null && captcha.equals(sessionCaptcha)){
-              if(us==null){
-           
-            request.setAttribute("mess", "Wrong user or pass");
-            request.getRequestDispatcher("login.jsp").forward(request, response);  
-        }else if(us.isIs_Active()==false){
-            
-            request.setAttribute("mess", "Account has banned!");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        }else if(us.isIs_Admin()==true){
-            
-            HttpSession session = request.getSession();
-            session.setAttribute("user", us);
-            response.sendRedirect("ManageAccount");
-        }else{
-             HttpSession session = request.getSession();
-            session.setAttribute("user", us);
-            response.sendRedirect("home.jsp");
-        }
-          }
-          else if(captcha.equals("")){
-              request.setAttribute("mess", "Captcha cannot be left blank!");
-            request.getRequestDispatcher("login.jsp").forward(request, response);  
-          }else{
-            request.setAttribute("mess", "Captcha is wrong!");
-            request.getRequestDispatcher("login.jsp").forward(request, response);  
-          }  
->>>>>>> origin/branch-khoa
     }
 
     /**

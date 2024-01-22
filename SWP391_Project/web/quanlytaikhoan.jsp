@@ -41,10 +41,6 @@
         <link href="css/style.css" rel="stylesheet" type="text/css"/> 
         <link href="css/manager.css" rel="stylesheet" type="text/css"/>
 
-        <!--           <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round"> -->
-        <!--         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> -->
-        <!--       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
-        <!--     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">  -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
@@ -96,21 +92,15 @@
     </head>
     <body>
 
-        <!--Main Navigation-->
         <header>
             <jsp:include page="LeftAdmin.jsp"></jsp:include>
 
 
             </header>
-            <!--Main Navigation-->
 
-            <!--Main layout-->
-
-            <!-- QUẢN LÝ USER THƯỜNG -->
             <main>
                 <div class="container pt-4">
 
-                    <!--Section: Quan Ly tai Khoan-->
                     <section class="mb-4">
                         <div class="card">
                             <div class="card-header py-3 row">
@@ -174,14 +164,13 @@
 
         </main>
 
-        <!-- QUẢN LÝ USER ĐĂNG NHẬP BẰNG GOOGLE -->
         <main>
             <div class="container pt-4">
 
 
 
 
-                <!--Section: Quan Ly tai Khoan-->
+
                 <section class="mb-4">
                     <div class="card">
                         <div class="card-header py-3 row">
@@ -211,15 +200,15 @@
                                         <c:forEach items="${listB}" var="o">
                                             <tr>
                                                 
-                                                <td>${o.id}</td>
-                                                <td>${o.name}</td>
+                                                <td>${o.idgg}</td>
+                                                <td>${o.given_name}</td>
                                                 <td>${o.email}</td>
-                                                <td style="color: ${o.is_Active ? 'blue' : 'red'}">${o.is_Active}</td>
+                                                <td style="color: ${o.is_active ? 'blue' : 'red'}">${o.is_active}</td>
                                                 <td>${o.create_At}</td>
                                                 <td>${o.update_At}</td>
                                       
                                                 <td>
-                                                    <a href="GetInfAccGgForAdmin?idgg=${o.id}" class="btn btn-success edit-btn"
+                                                    <a href="GetInfAccGgForAdmin?idgg=${o.idgg}" class="btn btn-success edit-btn"
                                                                                                            
                                                        <i class="material-icons">&#9998;</i>
                                                     </a>
@@ -233,7 +222,6 @@
                         </div>
                     </div>
                 </section>
-                <!--Section: Quan Ly tai Khoan-->
             </div>
 
 

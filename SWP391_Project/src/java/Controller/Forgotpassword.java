@@ -72,7 +72,7 @@ public class Forgotpassword extends HttpServlet {
         DAO dao = new DAO();
         String email = request.getParameter("email");
         User user = dao.isEmail(email);
-        if(dao.isEmailExists(email)){
+        if (dao.isEmailExists(email)) {
             SendEmail sm = new SendEmail();
             int code = GenOTP();
             sm.Send(email, code);
@@ -81,11 +81,10 @@ public class Forgotpassword extends HttpServlet {
             session.setAttribute("email1", email);
             request.setAttribute("flag", 2);
             request.getRequestDispatcher("forgotpassword.jsp").forward(request, response);
-        }else{
-             request.setAttribute("flag", 2);
+        } else {
+            request.setAttribute("flag", 2);
             request.getRequestDispatcher("forgotpassword.jsp").forward(request, response);
         }
-       
 
     }
 

@@ -45,11 +45,10 @@ public class loginGoogleHandler extends HttpServlet {
         String accessToken = getToken(code);
         userGoogle u = getUserInfo(accessToken);
         HttpSession session = request.getSession();
-<<<<<<< HEAD
         DAO dao = new DAO();
         userGoogle u_new = dao.getUserGoogle(u.getEmail());
         if (u_new == null) {
-            dao.signupGoogle(u.getId(), u.getGiven_name(), u.getEmail());
+            dao.signupGoogle(u.getIdgg(), u.getGiven_name(), u.getEmail());
             userGoogle u_login = dao.getUserGoogle(u.getEmail());
             session.setAttribute("user", u_login);
             session.setAttribute("displayname", u.getGiven_name());
@@ -60,10 +59,8 @@ public class loginGoogleHandler extends HttpServlet {
             session.setAttribute("status", 1);
             response.sendRedirect("home.jsp");
         }
-=======
         session.setAttribute("userGoogle", u);
 
->>>>>>> origin/branch-khoa
     }
 
     public static String getToken(String code) throws ClientProtocolException, IOException {

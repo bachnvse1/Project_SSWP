@@ -42,7 +42,7 @@ public class GetInfAccountForAdmin extends HttpServlet {
         
         DAO dao = new DAO();
         
-        User usa = dao.getUser(id);
+        User usa = dao.getUserById(id);
         request.setAttribute("user", usa);
         //userGoogle us = dao.getUserGg(idgg);
         //request.setAttribute("userGoogle", us);

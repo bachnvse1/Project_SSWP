@@ -30,12 +30,12 @@
                                
                                 <div class="form-group">
                                     <label for="id">ID</label>
-                                    <input value="${userGoogle.id}" type="text" class="form-control" id="ids" name="ids" readonly>
+                                    <input value="${userGoogle.idgg}" type="text" class="form-control" id="ids" name="ids" readonly>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="id">Name</label>
-                                    <input value="${userGoogle.name}" type="text" class="form-control" id="username" name="username" readonly>
+                                    <input value="${userGoogle.given_name}" type="text" class="form-control" id="username" name="username" readonly>
                                 </div>
 
                                 <div class="form-group">

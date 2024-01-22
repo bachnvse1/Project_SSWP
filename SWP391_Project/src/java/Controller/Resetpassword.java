@@ -18,6 +18,8 @@ import jakarta.servlet.http.HttpSession;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+ 
+
 /**
  *
  * @author My pc
@@ -55,7 +57,7 @@ public class Resetpassword extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-
+        String msg = "";
         try {
             String otp = request.getParameter("otp");
             int otp_1 = Integer.parseInt(otp);
@@ -68,6 +70,8 @@ public class Resetpassword extends HttpServlet {
                 throw new NumberFormatException();
             }
         } catch (NumberFormatException e) {
+            msg = "Reset PassWord Fail!";
+            request.setAttribute("msg", msg);
             request.setAttribute("flag", 1);
             request.getRequestDispatcher("forgotpassword.jsp").forward(request, response);
         }
@@ -112,7 +116,7 @@ public class Resetpassword extends HttpServlet {
             }
 
         } else {
-            error += "The length of Password should be 6-16 characters";
+            error += "The length of Password should be 6-16 characters and 1 charater special!";
             request.setAttribute("error", error);
             request.setAttribute("flag", 3);
             request.getRequestDispatcher("forgotpassword.jsp").forward(request, response);

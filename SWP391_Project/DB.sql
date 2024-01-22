@@ -1,13 +1,15 @@
 SELECT * FROM swp_demo.users;
+
+
 SELECT * FROM swp_demo.usergoogle;
 
-DELETE FROM swp_demo.usergoogle;
+DELETE FROM swp_demo.users;
 select * from swp_demo.usergoogle where email = 'bachnvse@gmail.com';
 
 UPDATE swp_demo.users
 SET is_active = 1
 WHERE email = 'bachnvse@gmail.com';
-
+INSERT users (username, password, email, display_Name, is_admin, is_verify, is_active) VALUES ('admin5', 'bachtk203@', 'bachnvse@gmail.com', 'bach', 1, 0, 1)
 INSERT users (username, password, email, display_Name, is_admin, is_verify, is_active) VALUES ('admin', 'bachtk203@', 'sdfsdf', 'bach', 0, 0, 1)
 INSERT userGoogle (id, name, email, is_active) VALUES ('54345345', 'hi', 'bachnv@gmail.com', 1);
 

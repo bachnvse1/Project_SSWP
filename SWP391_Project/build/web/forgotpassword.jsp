@@ -52,8 +52,9 @@
                                                             </div>
                                                             <div class="col-12">
                                                                 <div class="d-grid">
-                                                                    <button class="btn btn-dark btn-lg" type="submit">Reset Password</button>
+                                                                    <button class="btn btn-dark btn-lg" id="resetButton" type="submit">Reset Password</button>
                                                                 </div>
+                                                                <p style="color: red;text-align: center">${requestScope.msg}</p>
                                                             </div>
                                                         </div>
                                                     </form>
@@ -170,5 +171,20 @@
 
 
     </div>
+    <script>
+        let isButtonClicked = false;
+
+        document.getElementById('resetButton').addEventListener('click', function (event) {
+            if (!isButtonClicked) {
+                // Thực hiện hành động
+                isButtonClicked = true;
+
+                // Tùy chọn: Thêm loader hoặc thông báo
+            } else {
+                // Ngăn không cho hành động xảy ra lần nữa
+                event.preventDefault();
+            }
+        });
+    </script>
 </body>
 </html>
