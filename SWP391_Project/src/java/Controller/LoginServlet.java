@@ -86,7 +86,12 @@ public class LoginServlet extends HttpServlet {
         }else if(us.isIs_Active()==false){
             
             request.setAttribute("mess", "Account has banned!");
-            request.getRequestDispatcher("login.jsp").forward(request, response);  
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+        }else if(us.isIs_Admin()==true){
+            
+            HttpSession session = request.getSession();
+            session.setAttribute("user", us);
+            response.sendRedirect("ManageAccount");
         }else{
              HttpSession session = request.getSession();
             session.setAttribute("user", us);
@@ -99,11 +104,7 @@ public class LoginServlet extends HttpServlet {
           }else{
             request.setAttribute("mess", "Captcha is wrong!");
             request.getRequestDispatcher("login.jsp").forward(request, response);  
-          }
-        
-        
-        
-        
+          }  
     }
 
     /** 

@@ -4,28 +4,21 @@
  */
 package Controller;
 
-import Entity.Constants;
-import Entity.*;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import dao.DAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.util.List;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.fluent.Form;
-import org.apache.http.client.fluent.Request;
 
 /**
  *
- * @author ADMIN
+ * @author Nguyen Minh Khoa
  */
-public class loginGoogleHandler extends HttpServlet {
+@WebServlet(name = "EditAccountByAdmin", urlPatterns = {"/EditAccountByAdmin"})
+public class EditAccountByAdmin extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,38 +31,27 @@ public class loginGoogleHandler extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        PrintWriter out = response.getWriter();
         response.setContentType("text/html;charset=UTF-8");
-        String code = request.getParameter("code");
-        String accessToken = getToken(code);
-        userGoogle u = getUserInfo(accessToken);
-        HttpSession session = request.getSession();
-        session.setAttribute("userGoogle", u);
+        String ids = request.getParameter("ids");
+        int id = Integer.parseInt(ids);
+        String isActiveValue = request.getParameter("isActiveValue");
+        boolean is_Active = Boolean.parseBoolean(isActiveValue);
+
+        DAO dao = new DAO();
+        dao.editUserByAdmin(id,is_Active);
+        response.sendRedirect("ManageAccount");
 
     }
 
-    public static String getToken(String code) throws ClientProtocolException, IOException {
-        // call api to get token
-        String response = Request.Post(Constants.GOOGLE_LINK_GET_TOKEN)
-                .bodyForm(Form.form().add("client_id", Constants.GOOGLE_CLIENT_ID)
-                        .add("client_secret", Constants.GOOGLE_CLIENT_SECRET)
-                        .add("redirect_uri", Constants.GOOGLE_REDIRECT_URI).add("code", code)
-                        .add("grant_type", Constants.GOOGLE_GRANT_TYPE).build())
-                .execute().returnContent().asString();
-
-        JsonObject jobj = new Gson().fromJson(response, JsonObject.class);
-        String accessToken = jobj.get("access_token").toString().replaceAll("\"", "");
-        return accessToken;
-    }
-    
-    public static userGoogle getUserInfo(String accessToken) throws ClientProtocolException, IOException{
-        String link = Constants.GOOGLE_LINK_GET_USER_INFO + accessToken;
-        String response = Request.Get(link).execute().returnContent().asString();
-        userGoogle googlePojo = new Gson().fromJson(response, userGoogle.class);
-        
-        return googlePojo;
-    }
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

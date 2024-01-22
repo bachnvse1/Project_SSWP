@@ -18,7 +18,7 @@ public class DBContext {
 
     public Connection connection;
 
-    private static final String URL = "jdbc:mysql://localhost:3306/swpdemo";
+    private static final String URL = "jdbc:mysql://localhost:3306/swp_demo";
     private static final String USER = "root";
     private static final String PASSWORD = "123456";
 
@@ -27,7 +27,6 @@ public class DBContext {
         try {
             // Load driver
             Class.forName("com.mysql.cj.jdbc.Driver");
-
             // Kết nối đến cơ sở dữ liệu và trả về connection
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (ClassNotFoundException | SQLException e) {

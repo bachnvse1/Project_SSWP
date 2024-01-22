@@ -4,31 +4,32 @@
  */
 package Entity;
 
+import java.sql.Timestamp;
+
 /**
  *
  * @author ADMIN
  */
 public class userGoogle {
+
     private String id;
     private String email;
-    private boolean verify_email;
     private String name;
-    private String given_name;
-    private String family_name;
-    private String picture;
-
+    public boolean is_Active;
+    public Timestamp create_At;
+    public Timestamp update_At;
+    
     public userGoogle() {
-        
+
     }
 
-    public userGoogle(String id, String email, boolean verify_email, String name, String given_name, String family_name, String picture) {
+    public userGoogle(String id, String email, String name, boolean is_Active, Timestamp create_At, Timestamp update_At) {
         this.id = id;
         this.email = email;
-        this.verify_email = verify_email;
         this.name = name;
-        this.given_name = given_name;
-        this.family_name = family_name;
-        this.picture = picture;
+        this.is_Active = is_Active;
+        this.create_At = create_At;
+        this.update_At = update_At;
     }
 
     public String getId() {
@@ -47,14 +48,6 @@ public class userGoogle {
         this.email = email;
     }
 
-    public boolean isVerify_email() {
-        return verify_email;
-    }
-
-    public void setVerify_email(boolean verify_email) {
-        this.verify_email = verify_email;
-    }
-
     public String getName() {
         return name;
     }
@@ -63,32 +56,33 @@ public class userGoogle {
         this.name = name;
     }
 
-    public String getGiven_name() {
-        return given_name;
+    public boolean isIs_Active() {
+        return is_Active;
     }
 
-    public void setGiven_name(String given_name) {
-        this.given_name = given_name;
+    public void setIs_Active(boolean is_Active) {
+        this.is_Active = is_Active;
     }
 
-    public String getFamily_name() {
-        return family_name;
+    public Timestamp getCreate_At() {
+        return create_At;
     }
 
-    public void setFamily_name(String family_name) {
-        this.family_name = family_name;
+    public void setCreate_At(Timestamp create_At) {
+        this.create_At = create_At;
     }
 
-    public String getPicture() {
-        return picture;
+    public Timestamp getUpdate_At() {
+        return update_At;
     }
 
-    public void setPicture(String picture) {
-        this.picture = picture;
+    public void setUpdate_At(Timestamp update_At) {
+        this.update_At = update_At;
     }
 
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", email=" + email + ", verify_email=" + verify_email + ", name=" + name + ", given_name=" + given_name + ", family_name=" + family_name + ", picture=" + picture + '}';
+        return "userGoogle{" + "id=" + id + ", email=" + email + ", name=" + name + ", is_Active=" + is_Active + ", create_At=" + create_At + ", update_At=" + update_At + '}';
     }
+
 }
