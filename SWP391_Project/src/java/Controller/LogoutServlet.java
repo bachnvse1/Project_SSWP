@@ -61,21 +61,9 @@ public class LogoutServlet extends HttpServlet {
         //processRequest(request, response);
         HttpSession session = request.getSession();
         PrintWriter out = response.getWriter();
-        User u = (User) session.getAttribute("user");
-        if (u != null) {
-            session.removeAttribute("user");
-            session.removeAttribute("displayname");
-            response.sendRedirect("login.jsp");
-        } else {
-            userGoogle u2 = (userGoogle) session.getAttribute("user");
-
-            if (u2 != null) {
-                session.removeAttribute("user");
-                session.removeAttribute("displayname");
-                response.sendRedirect("login.jsp");
-            }
-        }
-
+        session.removeAttribute("user");
+        session.removeAttribute("displayname");
+        response.sendRedirect("login.jsp");
     }
 
     /**
