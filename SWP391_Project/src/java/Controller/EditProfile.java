@@ -118,13 +118,13 @@ public class EditProfile extends HttpServlet {
         DAO d = new DAO();
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("user");
-        if (email.equals(u.getEmail()) && s.checkInput(email, "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", 0, 50)) {
+        if (email.equals(u.getEmail()) ) {
             d.updateProfile(email, displayName, u.getId());
             u.setDisplay_name(displayName);
             String mess = "Edit profile success";
             request.setAttribute("done", mess);
             request.getRequestDispatcher("editprofile.jsp").forward(request, response);
-        } else {
+        } else if(s.checkInput(email, "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", 0, 50)){
             int code = GenOTP();
             SendEmail sm = new SendEmail();
             sm.Send(email, code);
@@ -133,7 +133,11 @@ public class EditProfile extends HttpServlet {
             session.setAttribute("otp", code);
             session.setAttribute("email", email);
             session.setAttribute("displayname", displayName);
-            response.sendRedirect("verify.jsp");
+            response.sendRedirect("verifyEmailUpdate.jsp");
+        } else {
+            String mess = "Email not correct form";
+            request.setAttribute("errorMsg4", mess);
+            request.getRequestDispatcher("editprofile.jsp").forward(request, response);
         }
 
 //        d.updateProfile(id, username, email, displayName);

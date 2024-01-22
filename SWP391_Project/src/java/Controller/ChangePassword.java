@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import Validate.validate;
 
 /**
  *
@@ -78,25 +79,33 @@ public class ChangePassword extends HttpServlet {
         String oldPass = request.getParameter("oldPassword");
         String newPass = request.getParameter("newPassword");
         String confirmPassword = request.getParameter("confirmPassword");
-
+        validate s = new validate();
         DAO c = new DAO();
+        User u = c.getUser(user);
+        if (oldPass.equals(u.getPassword())) {
+            if (s.checkInput(newPass, "^(?=.*[!@#$%^&*(),.?\":{}|<>]).*$", 6, 15)) {
+                if (confirmPassword.equals(newPass)) {
+                    c.changePassword(newPass, user);
+                    String mess = "Change password success";
+                    request.setAttribute("done", mess);
+                    request.getRequestDispatcher("password.jsp").forward(request, response);
+                } else {
+                    String mess = "New pass and confirm new pass must be the same";
+                    request.setAttribute("fail", mess);
+                    request.getRequestDispatcher("password.jsp").forward(request, response);
+                }
 
-        if (!newPass.equals(confirmPassword)) {
-            String mess = "Change password not success";
+            } else{
+                String mess = "New pass not correct form!";
+                request.setAttribute("fail", mess);
+                request.getRequestDispatcher("password.jsp").forward(request, response);
+            }
+        } else {
+            String mess = "Old password not correct";
             request.setAttribute("fail", mess);
             request.getRequestDispatcher("password.jsp").forward(request, response);
-        } else {
-            
-//            HttpSession session = request.getSession();
-            c.changePassword(newPass, user);
-            String mess = "Change password success";
-            request.setAttribute("done", mess);
-             request.getRequestDispatcher("password.jsp").forward(request, response);
-//            session.setAttribute("acc", users);
-            HttpSession session = request.getSession();
-            session.setAttribute("user", user);            
-            response.sendRedirect("password.jsp");
         }
+
     }
 
     /**

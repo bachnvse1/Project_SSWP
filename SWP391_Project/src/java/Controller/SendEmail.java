@@ -21,7 +21,7 @@ public class SendEmail {
      public void Send(String email, int otp) {
 
         final String fromEmail = "bachnvse@gmail.com";
-        final String password = "qihc gnxu dggn uaje";
+        final String password = "qihc gnxu dggn uaje"; // key
 
 // Config SMTP
         Properties props = new Properties();
@@ -47,7 +47,7 @@ public class SendEmail {
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(email));
             message.setSubject("Verify");
-            message.setText("Otp Code : " + otp);
+            message.setText("OTP Code : " + otp);
 
             Transport.send(message);
         } catch (MessagingException e) {

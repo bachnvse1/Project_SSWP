@@ -24,7 +24,7 @@
                 <div class="inputs">
                     <input type="text" maxlength="5" id="Otp_code" required="">
                     <div class="verify-button">
-                        <button type="submit">Verify</button></br></br>
+                        <button type="submit" onclick="verifyButton">Verify</button></br></br>
                         <button type="button"><a href="home.jsp" target="target" style="text-decoration: none; color: white;">Home</a></button>
                     </div>
                 </div>

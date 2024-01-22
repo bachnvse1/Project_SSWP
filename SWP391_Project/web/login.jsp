@@ -50,7 +50,7 @@
                     </label>
 
                     <a href="forgot"><p class="forgot-pass">Forgot password?</p></a>
-                    <button onclick="SignIn()" type="button" class="submit">Sign In</button>
+                    <button onclick="SignIn()" type="button" class="submit" id="buttonSignin">Sign In</button>
                 </form>
 
                 <button type="button" class="submit" style="background-color: #ac2925;" >
@@ -148,9 +148,14 @@
                                                 function SignIn()
 
                                                 {
+
+
                                                     var username = $("#user").val();
                                                     var password = $("#password").val();
                                                     var captcha = $("#captcha").val();
+
+
+
                                                     $.ajax({
                                                         type: "POST",
                                                         url: "login",
@@ -159,8 +164,10 @@
                                                             password: password,
                                                             capchaRespone: captcha
                                                         },
+
                                                         success: function (response) {
                                                             if (response === "success") {
+
                                                                 Swal.fire({
                                                                     position: "bot-end",
                                                                     icon: "success",
@@ -171,8 +178,12 @@
                                                                 setTimeout(function () {
                                                                     window.location.href = "home.jsp";
                                                                 }, 1000);
-                                                            } else {
+                                                                buttonClicked = true;
+                                                            } else if (response === "verify") {
 
+                                                                window.location.href = "verify.jsp";
+
+                                                            } else {
                                                                 refreshCaptcha();
 
                                                                 Swal.fire({
@@ -184,8 +195,6 @@
 
                                                             }
                                                         }
-
-
                                                     });
                                                 }
                                                 ;

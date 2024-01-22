@@ -106,7 +106,7 @@
                 <!-- is Admin Field -->
 
 
-                <a href="ChangePassword" > Change Password </a>
+                <a href="ChangePassword" style="text-decoration: none;"> Change Password </a>
                 <!-- Submit Button -->
                 <input type="submit" value="Update" style="border-radius: 20px; margin-top: 1em;">
                 <label style="color: green">${requestScope.done}</label><br/>

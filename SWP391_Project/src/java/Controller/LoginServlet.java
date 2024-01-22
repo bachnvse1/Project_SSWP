@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.Random;
 
 /**
  *
@@ -95,25 +96,31 @@ public class LoginServlet extends HttpServlet {
                         response.getWriter().write("ACCOUNT DOES NOT EXIT!");
                     } else if (us.isIs_Active() == false) {
                         response.getWriter().write("ACCOUNT HAS BANNED!");
-                    } else {
+                    } else if (us.isIs_verify() == true) {
                         HttpSession session = request.getSession();
                         session.setAttribute("user", us);
-                        session.setAttribute("displayname",us.getDisplay_name());
+                        session.setAttribute("displayname", us.getDisplay_name());
                         session.setAttribute("status", 0);
                         response.getWriter().write("success");
-                        
+                    } else {
+                        int code = GenOTP();
+                        SendEmail sm = new SendEmail();
+                        sm.Send(us.getEmail(), code);
+                        HttpSession session = request.getSession();
+                        session.setAttribute("otp", code);
+                        session.setAttribute("email", us.getEmail());
+                        response.getWriter().write("verify");
                     }
                 }
 
-            }else if(captcha.isEmpty()){
+            } else if (captcha.isEmpty()) {
                 response.getWriter().write("Captcha cannot be empty!");
-            }else{
+            } else {
                 response.getWriter().write("Captcha wrong!");
             }
 
-            }
-//            if(val.checkInput(pass, "\"^(?=.*[!@#$%^&*(),.?\\\":{}|<>]).*$\"", 3, 15))
-         catch (Exception e) {
+        } //            if(val.checkInput(pass, "\"^(?=.*[!@#$%^&*(),.?\\\":{}|<>]).*$\"", 3, 15))
+        catch (Exception e) {
             System.out.println("Error");
         }
     }
@@ -123,6 +130,15 @@ public class LoginServlet extends HttpServlet {
      *
      * @return a String containing servlet description
      */
+    public int GenOTP() {
+        int min = 10_000; // Số nguyên tối thiểu (bao gồm)
+        int max = 99_999; // Số nguyên tối đa (bao gồm)
+        Random random = new Random();
+        int randomNumber = random.nextInt(max - min + 1) + min;
+
+        return randomNumber;
+    }
+
     @Override
     public String getServletInfo() {
         return "Short description";
