@@ -83,6 +83,7 @@ public class LoginServlet extends HttpServlet {
         String sessionCaptcha = (String) request.getSession().getAttribute("captcha");
         DAO dal = new DAO();
         User us = dal.Login(user, pass);
+<<<<<<< HEAD
 
 //        validate val = new validate();
         try {
@@ -123,6 +124,35 @@ public class LoginServlet extends HttpServlet {
         catch (Exception e) {
             System.out.println("Error");
         }
+=======
+          if(captcha!=null && captcha.equals(sessionCaptcha)){
+              if(us==null){
+           
+            request.setAttribute("mess", "Wrong user or pass");
+            request.getRequestDispatcher("login.jsp").forward(request, response);  
+        }else if(us.isIs_Active()==false){
+            
+            request.setAttribute("mess", "Account has banned!");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+        }else if(us.isIs_Admin()==true){
+            
+            HttpSession session = request.getSession();
+            session.setAttribute("user", us);
+            response.sendRedirect("ManageAccount");
+        }else{
+             HttpSession session = request.getSession();
+            session.setAttribute("user", us);
+            response.sendRedirect("home.jsp");
+        }
+          }
+          else if(captcha.equals("")){
+              request.setAttribute("mess", "Captcha cannot be left blank!");
+            request.getRequestDispatcher("login.jsp").forward(request, response);  
+          }else{
+            request.setAttribute("mess", "Captcha is wrong!");
+            request.getRequestDispatcher("login.jsp").forward(request, response);  
+          }  
+>>>>>>> origin/branch-khoa
     }
 
     /**

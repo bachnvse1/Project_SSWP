@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
@@ -37,12 +38,14 @@ public class loginGoogleHandler extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         PrintWriter out = response.getWriter();
         response.setContentType("text/html;charset=UTF-8");
         String code = request.getParameter("code");
         String accessToken = getToken(code);
         userGoogle u = getUserInfo(accessToken);
         HttpSession session = request.getSession();
+<<<<<<< HEAD
         DAO dao = new DAO();
         userGoogle u_new = dao.getUserGoogle(u.getEmail());
         if (u_new == null) {
@@ -57,6 +60,10 @@ public class loginGoogleHandler extends HttpServlet {
             session.setAttribute("status", 1);
             response.sendRedirect("home.jsp");
         }
+=======
+        session.setAttribute("userGoogle", u);
+
+>>>>>>> origin/branch-khoa
     }
 
     public static String getToken(String code) throws ClientProtocolException, IOException {

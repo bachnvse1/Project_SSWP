@@ -21,14 +21,16 @@ public class DBContext {
     private static final String URL = "jdbc:mysql://localhost:3306/swp_demo";
     private static final String USER = "root";
     private static final String PASSWORD = "123456";
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/branch-khoa
 
     // Phương thức để lấy connection
     public DBContext() {
         try {
             // Load driver
             Class.forName("com.mysql.cj.jdbc.Driver");
-
             // Kết nối đến cơ sở dữ liệu và trả về connection
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (ClassNotFoundException | SQLException e) {

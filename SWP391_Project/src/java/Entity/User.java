@@ -121,10 +121,15 @@ public class User {
         this.is_verify = is_verify;
     }
 
+<<<<<<< HEAD
     
     
+=======
+>>>>>>> origin/branch-khoa
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", username=" + username + ", password=" + password + ", email=" + email + ", display_name=" + display_name + ", is_Admin=" + is_Admin + ", is_Active=" + is_Active + ", create_At=" + create_At + ", update_At=" + update_At + '}';
+        return "User{" + "id=" + id + ", username=" + username + ", password=" + password + ", email=" + email + ", display_name=" + display_name + ", is_Admin=" + is_Admin + ", is_verify=" + is_verify + ", is_Active=" + is_Active + ", create_At=" + create_At + ", update_At=" + update_At + '}';
     }
+
+    
 }
