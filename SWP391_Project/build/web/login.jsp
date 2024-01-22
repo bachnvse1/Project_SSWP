@@ -79,7 +79,7 @@
                                             </div>
                                             </div>
                                             <div class="form sign-up">
-                                                <form id="loginForm">
+                                                <form id="signupForm">
                                                     <h2>Create your Account</h2>
                                                     <label>
                                                         <span>User</span>
@@ -96,7 +96,7 @@
                                                         <input type="text" id="email" name="email" required=""/>
 
                                                     </label>
-                                                    <button type="submit" class="submit">Sign Up</button>
+                                                    <button type="submit" class="submit" id="signupButton">Sign Up</button>
                                                     <label>
                                                         <span id="mess-error" style="color: red;"></span>
                                                     </label>
@@ -108,8 +108,10 @@
                                             <script>
 
                         $(document).ready(function () {
-                            $('#loginForm').submit(function (e) {
+                            $('#signupForm').submit(function (e) {
                                 e.preventDefault(); // 
+
+                                $('#signupButton').prop('disabled', true);
 
                                 var formData = {
                                     user: $('#username').val(),
@@ -127,6 +129,7 @@
                                             window.location.href = "verify.jsp";
                                         } else {
                                             $("#mess-error").html(response);
+                                            $('#signupButton').prop('disabled', false);
                                         }
                                     },
                                     error: function (error) {
@@ -169,9 +172,9 @@
                                                                     window.location.href = "home.jsp";
                                                                 }, 1000);
                                                             } else {
-                                                                
+
                                                                 refreshCaptcha();
-                                                                
+
                                                                 Swal.fire({
                                                                     icon: "error",
                                                                     title: "Error...",

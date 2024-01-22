@@ -79,6 +79,7 @@ public class VerifyCode extends HttpServlet {
         PrintWriter out = response.getWriter();
         String code = request.getParameter("otp_code");
         String mess = "";
+        
         int code_give = (int) session.getAttribute("otp");
         try {
             int code_1 = Integer.parseInt(code);
