@@ -12,7 +12,7 @@ import java.sql.Timestamp;
  */
 public class userGoogle {
 
-    private String id;
+    private String idgg;
     private String email;
     private String name;
     public boolean is_Active;
@@ -24,7 +24,7 @@ public class userGoogle {
     }
 
     public userGoogle(String id, String email, String name, boolean is_Active, Timestamp create_At, Timestamp update_At) {
-        this.id = id;
+        this.idgg = id;
         this.email = email;
         this.name = name;
         this.is_Active = is_Active;
@@ -33,11 +33,11 @@ public class userGoogle {
     }
 
     public String getId() {
-        return id;
+        return idgg;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setId(String idgg) {
+        this.idgg = idgg;
     }
 
     public String getEmail() {
@@ -82,7 +82,7 @@ public class userGoogle {
 
     @Override
     public String toString() {
-        return "userGoogle{" + "id=" + id + ", email=" + email + ", name=" + name + ", is_Active=" + is_Active + ", create_At=" + create_At + ", update_At=" + update_At + '}';
+        return "userGoogle{" + "id=" + idgg + ", email=" + email + ", name=" + name + ", is_Active=" + is_Active + ", create_At=" + create_At + ", update_At=" + update_At + '}';
     }
 
 }

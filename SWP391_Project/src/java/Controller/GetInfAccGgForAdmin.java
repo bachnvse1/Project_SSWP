@@ -16,14 +16,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.List;
 
 /**
  *
  * @author Nguyen Minh Khoa
  */
-@WebServlet(name="GetInfAccountForAdmin", urlPatterns={"/GetInfAccountForAdmin"})
-public class GetInfAccountForAdmin extends HttpServlet {
+@WebServlet(name="GetInfAccGgForAdmin", urlPatterns={"/GetInfAccGgForAdmin"})
+public class GetInfAccGgForAdmin extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -35,19 +34,18 @@ public class GetInfAccountForAdmin extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
-        String idString = request.getParameter("id");
-        int id = Integer.parseInt(idString);
-        //String idgg = request.getParameter("idgg");
+        
+        String idgg = request.getParameter("idgg");
         
         DAO dao = new DAO();
         
-        User usa = dao.getUser(id);
-        request.setAttribute("user", usa);
-        //userGoogle us = dao.getUserGg(idgg);
-        //request.setAttribute("userGoogle", us);
-        request.getRequestDispatcher("EditAccountByAdmin.jsp").forward(request, response);
-    } 
+        
+        userGoogle us = dao.getUserGg(idgg);
+        request.setAttribute("userGoogle", us);
+        request.getRequestDispatcher("EditAccGgByAdmin.jsp").forward(request, response);
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 

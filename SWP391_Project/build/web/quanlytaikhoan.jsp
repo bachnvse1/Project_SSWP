@@ -219,7 +219,7 @@
                                                 <td>${o.update_At}</td>
                                       
                                                 <td>
-                                                    <a class="btn btn-success edit-btn"
+                                                    <a href="GetInfAccGgForAdmin?idgg=${o.id}" class="btn btn-success edit-btn"
                                                                                                            
                                                        <i class="material-icons">&#9998;</i>
                                                     </a>

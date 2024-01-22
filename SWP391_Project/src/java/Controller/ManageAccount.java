@@ -19,15 +19,14 @@ public class ManageAccount extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
-        User us = (User) session.getAttribute("user");
+        //HttpSession session = request.getSession();
+        
 
-        int id = us.getId();
 
         DAO dao = new DAO();
         List<User> list = dao.getAllUser();
         request.setAttribute("listA", list);
-        userGoogle u = (userGoogle) session.getAttribute("userGoogle");
+        
 
         List<userGoogle> lists = dao.getAllUserGoogle();
         request.setAttribute("listB", lists);

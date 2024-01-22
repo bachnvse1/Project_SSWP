@@ -26,21 +26,21 @@
                             <h4 class="modal-title">Chỉnh sửa tài khoản</h4>
                         </div>
                         <div class="card-body">
-                            <form id="editAccountByAdmin" action="EditAccountByAdmin" method="post">
+                            <form id="editAccGgByAdmin" action="EditAccGgByAdmin" method="post">
                                
                                 <div class="form-group">
                                     <label for="id">ID</label>
-                                    <input value="${user.id}" type="text" class="form-control" id="ids" name="ids" readonly>
+                                    <input value="${userGoogle.id}" type="text" class="form-control" id="ids" name="ids" readonly>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="id">Username</label>
-                                    <input value="${user.username}" type="text" class="form-control" id="username" name="username" readonly>
+                                    <label for="id">Name</label>
+                                    <input value="${userGoogle.name}" type="text" class="form-control" id="username" name="username" readonly>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="id">Email</label>
-                                    <input value="${user.email}" type="text" class="form-control" id="email" name="email" readonly>
+                                    <input value="${userGoogle.email}" type="text" class="form-control" id="email" name="email" readonly>
                                 </div>
 
                                 <label for="is_Active">Is_Active</label>
@@ -67,6 +67,7 @@
 
 
 </html>
+
 
 
 

@@ -5,8 +5,6 @@
 
 package Controller;
 
-import Entity.User;
-import Entity.userGoogle;
 import dao.DAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,15 +13,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.util.List;
 
 /**
  *
  * @author Nguyen Minh Khoa
  */
-@WebServlet(name="GetInfAccountForAdmin", urlPatterns={"/GetInfAccountForAdmin"})
-public class GetInfAccountForAdmin extends HttpServlet {
+@WebServlet(name="EditAccGgByAdmin", urlPatterns={"/EditAccGgByAdmin"})
+public class EditAccGgByAdmin extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -35,18 +31,15 @@ public class GetInfAccountForAdmin extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
-        String idString = request.getParameter("id");
-        int id = Integer.parseInt(idString);
-        //String idgg = request.getParameter("idgg");
+        response.setContentType("text/html;charset=UTF-8");
+        String ids = request.getParameter("ids");
         
+        String isActiveValue = request.getParameter("isActiveValue");
+        boolean is_Active = Boolean.parseBoolean(isActiveValue);
+
         DAO dao = new DAO();
-        
-        User usa = dao.getUser(id);
-        request.setAttribute("user", usa);
-        //userGoogle us = dao.getUserGg(idgg);
-        //request.setAttribute("userGoogle", us);
-        request.getRequestDispatcher("EditAccountByAdmin.jsp").forward(request, response);
+        dao.editUserGgByAdmin(ids,is_Active);
+        response.sendRedirect("ManageAccount");
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

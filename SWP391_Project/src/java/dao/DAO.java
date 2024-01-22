@@ -263,6 +263,28 @@ public class DAO {
         return null;
     }
     
+    public userGoogle getUserGg(String id) {
+        
+        String query = "select * from swp_demo.userGoogle where id = ?";
+        try {
+            con = new DBContext().connection; //connect sql
+            ps = con.prepareStatement(query);
+            ps.setString(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return new userGoogle(rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getBoolean(4),
+                        rs.getTimestamp(5),
+                        rs.getTimestamp(6));
+            }
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
+    
     public List<userGoogle> getAllUserGoogle() {
         List<userGoogle> list = new ArrayList<>();
         String query = "select * from swp_demo.userGoogle";
@@ -291,6 +313,22 @@ public class DAO {
             ps = con.prepareStatement(sql);
             ps.setBoolean(1, is_Active);
             ps.setInt(2, id);
+       ps.executeUpdate();
+                   
+        } 
+        catch (Exception e) {
+        }
+
+      
+    }
+    
+    public void editUserGgByAdmin(String  id, boolean is_Active ) {
+        String sql = "Update userGoogle set is_active=? where id =? ";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(sql);
+            ps.setBoolean(1, is_Active);
+            ps.setString(2, id);
        ps.executeUpdate();
                    
         } 
