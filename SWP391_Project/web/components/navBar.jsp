@@ -24,6 +24,10 @@
                         <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
                     </ul>
                 </li>
+                <c:if test="${user.is_Admin}">
+                    <li class="nav-item"><a class="nav-link" href="ManageAccount">Manager Account</a></li>
+                </c:if>
+                 
             </ul>
             <form class="d-flex">
                 <button class="btn btn-outline-dark" type="button">

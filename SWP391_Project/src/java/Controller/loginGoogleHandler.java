@@ -47,19 +47,23 @@ public class loginGoogleHandler extends HttpServlet {
         HttpSession session = request.getSession();
         DAO dao = new DAO();
         userGoogle u_new = dao.getUserGoogle(u.getEmail());
-        if (u_new == null) {
+       
+        if (u_new == null && u_new.is_active) {
             dao.signupGoogle(u.getIdgg(), u.getGiven_name(), u.getEmail());
             userGoogle u_login = dao.getUserGoogle(u.getEmail());
             session.setAttribute("user", u_login);
             session.setAttribute("displayname", u.getGiven_name());
             response.sendRedirect("home.jsp");
-        } else {
+        } else if(u_new != null && u_new.is_active) {
             session.setAttribute("user", u_new);
             session.setAttribute("displayname", u.getGiven_name());
             session.setAttribute("status", 1);
             response.sendRedirect("home.jsp");
+        } else {
+            session.setAttribute("userGoogle", u);
+            response.getWriter().write("ACCOUNT HAS BANNED!");
         }
-        session.setAttribute("userGoogle", u);
+        
 
     }
 

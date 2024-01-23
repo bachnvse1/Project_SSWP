@@ -82,7 +82,7 @@
                                                 <form id="signupForm">
                                                     <h2>Create your Account</h2>
                                                     <label>
-                                                        <span>User</span>
+                                                        <span>Username</span>
                                                         <input type="text" id="username" name="user" required=""/>
 
                                                     </label>

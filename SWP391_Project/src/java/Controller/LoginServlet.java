@@ -100,6 +100,8 @@ public class LoginServlet extends HttpServlet {
                         if (us.isIs_Admin() == true) {
                             HttpSession session = request.getSession();
                             session.setAttribute("user", us);
+                            session.setAttribute("displayname", us.getDisplay_name());
+                            session.setAttribute("status", 0);
                             response.getWriter().write("admin");
                         } else {
                             HttpSession session = request.getSession();
