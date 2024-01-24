@@ -81,32 +81,41 @@ public class VerifyUser extends HttpServlet {
         DAO dao = new DAO();
         String mess = "";
         PrintWriter out = response.getWriter();
+
         String username = request.getParameter("user");
         String password = request.getParameter("pass");
+        String confirmPass = request.getParameter("confirmPass");
         String email = request.getParameter("email");
-        if (validate.checkInput(username, "^[^@,!#$%&*]*$", 5, 20)
-                && dao.getUsername(username) == null) {
-            if (validate.checkInput(password, "^(?=.*[!@#$%^&*(),.?\":{}|<>]).*$", 6, 15)) {
-                if (validate.checkInput(email, "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", 0, 50)
-                        && dao.getEmail(email) == null) {
-                    int code = GenOTP();
-                    SendEmail sm = new SendEmail();
-                    sm.Send(email, code);
-                    HttpSession session = request.getSession();
-                    session.setAttribute("otp", code);
-                    session.setAttribute("email", email);
-                    dao.signup(username, password, email);
-                    response.getWriter().write("success");
+        String captcha = request.getParameter("capchaRespone");
+        String sessionCaptcha = (String) request.getSession().getAttribute("captcha");
+        if (captcha != null && captcha.equals(sessionCaptcha)) {
+            if (validate.checkInput(username, "^[^@,!#$%&*]*$", 5, 20)
+                    && dao.getUsername(username) == null) {
+                if (validate.checkInput(password, "^(?=.*[!@#$%^&*(),.?\":{}|<>]).*$", 6, 15) && password.equals(confirmPass)) {
+                    if (validate.checkInput(email, "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", 0, 50)
+                            && dao.getEmail(email) == null) {
+                        int code = GenOTP();
+                        SendEmail sm = new SendEmail();
+                        sm.Send(email, code);
+                        HttpSession session = request.getSession();
+                        session.setAttribute("otp", code);
+                        session.setAttribute("email", email);
+                        dao.signup(username, password, email);
+                        response.getWriter().write("success");
+                    } else {
+                        mess = "Email: abc@xyz.com and CAN NOT DUPLICATE EMAIL!";
+                        out.print(mess);
+                    }
                 } else {
-                    mess = "Email: abc@xyz.com and CAN NOT DUPLICATE EMAIL!";
+                    mess = "Password: must CONTAIN special CHARACTERS and DIGIT\nConfirm password must be the same password!";
                     out.print(mess);
                 }
             } else {
-                mess = "Password: must CONTAIN special CHARACTERS and DIGIT";
+                mess = "Username can not duplicate and not cantain CHARACTERS!";
                 out.print(mess);
             }
         } else {
-            mess = "Username can not duplicate and not cantain CHARACTERS!";
+            mess = "Invalid Captcha";
             out.print(mess);
         }
     }
