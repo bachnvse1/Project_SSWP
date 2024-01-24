@@ -5,7 +5,6 @@
 package Controller;
 
 import Entity.User;
-import Entity.userGoogle;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -60,10 +59,9 @@ public class LogoutServlet extends HttpServlet {
             throws ServletException, IOException {
         //processRequest(request, response);
         HttpSession session = request.getSession();
-        PrintWriter out = response.getWriter();
         session.removeAttribute("user");
         session.removeAttribute("displayname");
-        response.sendRedirect("login.jsp");
+        response.sendRedirect("landingPage.html");
     }
 
     /**

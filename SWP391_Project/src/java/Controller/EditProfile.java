@@ -112,28 +112,27 @@ public class EditProfile extends HttpServlet {
             dispatcher.forward(request, response);
             return;
         }
-        
+
         validate s = new validate();
-        
+
         DAO d = new DAO();
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("user");
-        if (email.equals(u.getEmail()) ) {
+        if (email.equals(u.getEmail()) && u.isIs_verify()) {
             d.updateProfile(email, displayName, u.getId());
             u.setDisplay_name(displayName);
             String mess = "Edit profile success";
             request.setAttribute("done", mess);
             request.getRequestDispatcher("editprofile.jsp").forward(request, response);
-        } else if(s.checkInput(email, "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", 0, 50)){
+        } else if (s.checkInput(email, "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", 0, 50)) {
             int code = GenOTP();
-            SendEmail sm = new SendEmail();
-            sm.Send(email, code);
-            u.setEmail(email);
-            d.updateProfile(email, displayName, u.getId());
+            d.updateProfile(u.getEmail(), displayName, u.getId());
             session.setAttribute("otp", code);
             session.setAttribute("email", email);
             session.setAttribute("displayname", displayName);
             response.sendRedirect("verifyEmailUpdate.jsp");
+            SendEmail sm = new SendEmail();
+            new Thread(() -> sm.Send(email, code)).start();
         } else {
             String mess = "Email not correct form";
             request.setAttribute("errorMsg4", mess);

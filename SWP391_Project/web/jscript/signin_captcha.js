@@ -68,8 +68,7 @@ function SignIn()
             }
         }
     });
-}
-;
+};
 
 function refreshCaptcha()
 {
@@ -80,21 +79,6 @@ function refreshCaptcha()
     });
 }
 ;
-
-
-//function showPass()
-//
-//{
-//    var passwordfield = document.getElementById("password");
-//    var icon = document.querySelector(".show-password");
-//    if (passwordfield.type === "password") {
-//        passwordfield.type = "text";
-//        icon.innerHTML = '<i class="fa fa-eye"></i>';
-//    } else {
-//        passwordfield.type = "password";
-//        icon.innerHTML = '<i class="fa fa-eye-slash"></i>';
-//    }
-//}
 
 
 

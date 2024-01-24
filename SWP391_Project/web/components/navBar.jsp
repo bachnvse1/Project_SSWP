@@ -1,67 +1,141 @@
 <%-- 
-    Document   : navBar
-    Created on : Jan 17, 2024, 9:59:34 AM
+    Document   : navbar
+    Created on : Jan 24, 2024, 11:52:14 PM
     Author     : ADMIN
 --%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" href="home.jsp">Ong Ban Tat</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                <li class="nav-item"><a class="nav-link active" aria-current="page" href="home.jsp"><i class="fa fa-home"></i>Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">All Products</a></li>
-                        <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="#!">Popular Items</a></li>
-                        <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>JSP Page</title>
+    </head>
+    <body>
+        <header>
+            <!-- TOP HEADER -->
+            <div id="top-header">
+                <div class="container">
+                    <ul class="header-links pull-left">
+                        <li><a href="#"><i class="fa fa-phone"></i> +021-95-51-84</a></li>
+                        <li><a href="#"><i class="fa fa-envelope-o"></i> email@email.com</a></li>
+                        <li><a href="#"><i class="fa fa-map-marker"></i>xxx</a></li>
                     </ul>
-                </li>
-                <c:if test="${user.is_Admin}">
-                    <li class="nav-item"><a class="nav-link" href="ManageAccount">Manager Account</a></li>
-                </c:if>
-                 
-            </ul>
-            <form class="d-flex">
-                <button class="btn btn-outline-dark" type="button">
-                    <i class="bi-cart-fill me-1"></i>
-                    Cart
-                    <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                </button>         
+                    <ul class="header-links pull-right">
+                        <li>
+                            <a><i class="fa fa-dollar"></i> 100.000</a></li>
+                            <c:if test="${sessionScope.user != null}">
+                            <li id="info-Button"><a><i class="fa fa-user-o"></i>${user.display_name}</a></li>
+                            </c:if>
+                            <c:if test="${sessionScope.user == null}">
+                            <li><a><i class="fa fa-user-o"></i></a></li>
+                            </c:if>
+                        <c:if test="${sessionScope.user == null}">
+                            <li ><button style="color:red; border: 0; background-color: #1E1F29;" id="signin-Button">Login</button></li>
+                            </c:if>
+                            <c:if test="${sessionScope.user != null}">
+                            <li><button style="color:red; border: 0; background-color: #1E1F29;" ><a href="logout">Logout</a></button></li>
+                            </c:if>
 
+                    </ul>
+                </div>
+            </div>
+            <!-- /TOP HEADER -->
 
+            <!-- MAIN HEADER -->
+            <div id="header">
+                <!-- container -->
+                <div class="container">
+                    <!-- row -->
+                    <div class="row">
+                        <!-- LOGO -->
+                        <div class="col-md-3">
+                            <div class="header-logo">
+                                <a href="#" class="logo">
+                                    <img src="./img/logo.png" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <!-- /LOGO -->
 
-                <c:if test="${sessionScope.user == null}">
-                    <button class="btn btn-outline-dark" type="button" style="margin-left: 20px;" id="loginButton">
-                        Login
-                    </button>
-                </c:if>
-                <c:if test="${sessionScope.user != null}">
-                    <c:if test="${sessionScope.status == 0}">
-                        <button class="btn btn-outline-dark" type="button" style="margin-left: 20px;">
-                            <a href="EditProfile" target="_blank"><i class="fa fa-user" style="color: black;"> ${sessionScope.displayname}</i></a>
-                        </button>
-                    </c:if>
-                    
-                    <c:if test="${sessionScope.status == 1}">
-                        <button class="btn btn-outline-dark" type="button" style="margin-left: 20px;">
-                            <a target="_blank"><i class="fa fa-user" style="color: black;"> ${sessionScope.displayname}</i></a>
-                        </button>
-                    </c:if>
-                    
-                    <button class="btn btn-outline-dark" type="button" style="margin-left: 20px;" id="logoutButton">
-                        Logout
-                    </button>
-                </c:if>
-            </form>
-        </div>
-    </div>
-</nav>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+                        <!-- SEARCH BAR -->
+                        <div class="col-md-6">
+                            <div class="header-search">
+                                <form>
+                                    <select class="input-select">
+                                        <option value="0">All Categories</option>
+                                        <option value="1">Category 01</option>
+                                        <option value="1">Category 02</option>
+                                    </select>
+                                    <input class="input" placeholder="Search here">
+                                    <button class="search-btn">Search</button>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- /SEARCH BAR -->
+
+                        <!-- ACCOUNT -->
+                        <div class="col-md-3 clearfix">
+                            <div class="header-ctn">
+                                <!-- Wishlist -->
+                                <div>
+                                    <a href="#">
+                                        <i class="fa fa-heart-o"></i>
+                                        <span>Your Wishlist</span>
+                                        <div class="qty">2</div>
+                                    </a>
+                                </div>
+                                <!-- /Wishlist -->
+
+                                <!-- Cart -->
+                                <div class="row">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                        <i class="fa fa-shopping-cart"></i>
+                                        <span>Your Cart</span>
+                                        <div class="qty">3</div>
+                                    </a>
+                                </div>
+                                <!-- /Cart -->
+
+                            </div>
+                        </div>
+                        <!-- /ACCOUNT -->
+                    </div>
+                    <!-- row -->
+                </div>
+                <!-- container -->
+            </div>
+            <!-- /MAIN HEADER -->
+        </header>
+        <!-- /HEADER -->
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <!-- jQuery Plugins -->
+        <script src="js1/jquery.min.js"></script>
+        <script src="js1/bootstrap.min.js"></script>
+        <script src="js1/slick.min.js"></script>
+        <script src="js1/nouislider.min.js"></script>
+        <script src="js1/jquery.zoom.min.js"></script>
+        <script src="js1/main.js"></script>
+        <script src="jscript/signin_captcha.js"></script>
+        <script>
+            $(document).ready(function () {
+                $("#info-Button").click(function () {
+                    $.ajax({
+                        type: 'GET',
+                        url: "editprofile.jsp",
+                        success: function (response) {
+                            window.location.href = "editprofile.jsp";
+                        },
+                        error: function () {
+                            // Xử lý lỗi nếu có
+                            alert("Đã xảy ra lỗi khi tải trang");
+                        }
+                    });
+                });
+            });
+
+        </script>
+    </body>
+</html>

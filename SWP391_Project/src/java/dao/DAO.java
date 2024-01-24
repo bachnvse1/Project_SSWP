@@ -6,7 +6,6 @@ package dao;
 
 import Context.DBContext;
 import Entity.User;
-import Entity.userGoogle;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -147,30 +146,6 @@ public class DAO extends DBContext {
         return null;
     }
 
-    public userGoogle getUserGoogle(String email) {
-
-        String query = "select * from swp_demo.usergoogle where email = ?";
-        try {
-            con = new DBContext().connection; //connect sql
-            ps = con.prepareStatement(query);
-            ps.setString(1, email);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-
-                return new userGoogle(
-                        rs.getString(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getBoolean(4),
-                        rs.getTimestamp(5),
-                        rs.getTimestamp(6));
-            }
-        } catch (Exception e) {
-
-        }
-        return null;
-
-    }
 
     public User getEmail(String email) {
         String query = "select * from swp_demo.users where email = ?";
@@ -213,27 +188,6 @@ public class DAO extends DBContext {
         return null;
     }
 
-    public List<userGoogle> getAllUserGoogle() {
-        List<userGoogle> list = new ArrayList<>();
-        String query = "select * from swp_demo.usergoogle";
-        try {
-            con = new DBContext().connection; //connect sql
-            ps = con.prepareStatement(query);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                list.add(new userGoogle(
-                        rs.getString(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getBoolean(4),
-                        rs.getTimestamp(5),
-                        rs.getTimestamp(6)));
-            }
-        } catch (Exception e) {
-
-        }
-        return list;
-    }
 
     //HUY
     public User Login(String username, String pass) {
@@ -347,28 +301,6 @@ public class DAO extends DBContext {
         //CHIEN
     }
 
-    public userGoogle getUserGg(String id) {
-
-        String query = "select * from swp_demo.userGoogle where id = ?";
-        try {
-            con = new DBContext().connection; //connect sql
-            ps = con.prepareStatement(query);
-            ps.setString(1, id);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                return new userGoogle(
-                        rs.getString(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getBoolean(4),
-                        rs.getTimestamp(5),
-                        rs.getTimestamp(6));
-            }
-        } catch (Exception e) {
-
-        }
-        return null;
-    }
 
     public void editUserByAdmin(int id, boolean is_Active) {
         String sql = "Update users set is_Active=? where id =? ";
@@ -455,13 +387,5 @@ public class DAO extends DBContext {
         return false;
     }
 
-    //CHIEN
-    public static void main(String[] args) {
-        DAO dao = new DAO();
-        //dao.signup("bach", "1234", "bach@gmil.com");
-        List<userGoogle> list = dao.getAllUserGoogle();
-        for (userGoogle google : list) {
-            System.out.println(google.toString());
-        }
-    }
+    //CHI
 }

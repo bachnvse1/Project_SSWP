@@ -1,7 +1,6 @@
 package Controller;
 
 import Entity.User;
-import Entity.userGoogle;
 import dao.DAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -20,16 +19,11 @@ public class ManageAccount extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         //HttpSession session = request.getSession();
-        
-
 
         DAO dao = new DAO();
         List<User> list = dao.getAllUser();
         request.setAttribute("listA", list);
-        
 
-        List<userGoogle> lists = dao.getAllUserGoogle();
-        request.setAttribute("listB", lists);
         request.getRequestDispatcher("quanlytaikhoan.jsp").forward(request, response);
     }
 

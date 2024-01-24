@@ -27,20 +27,20 @@
                         </div>
                         <div class="card-body">
                             <form id="editAccountByAdmin" action="EditAccountByAdmin" method="post">
-                               
+
                                 <div class="form-group">
                                     <label for="id">ID</label>
-                                    <input value="${user.id}" type="text" class="form-control" id="ids" name="ids" readonly>
+                                    <input value="${userA.id}" type="text" class="form-control" id="ids" name="ids" readonly>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="id">Username</label>
-                                    <input value="${user.username}" type="text" class="form-control" id="username" name="username" readonly>
+                                    <input value="${userA.username}" type="text" class="form-control" id="username" name="username" readonly>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="id">Email</label>
-                                    <input value="${user.email}" type="text" class="form-control" id="email" name="email" readonly>
+                                    <input value="${userA.email}" type="text" class="form-control" id="email" name="email" readonly>
                                 </div>
 
                                 <label for="is_Active">Is_Active</label>
@@ -52,20 +52,19 @@
                                     <input type="radio" class="form-check-input" id="deactiveRadio" name="isActiveValue" value="false">
                                     <label class="form-check-label" for="deactiveRadio">Deactive</label>
                                 </div>
+
+                                <div class="modal-footer">
+                                    <a class="btn btn-secondary" href="ManageAccount">Cancel</a>
+                                    <button type="submit" class="btn btn-success"> Save</button>
+                                </div>
+                            </form>
                         </div>
-                        <div class="modal-footer">
-                            <a class="btn btn-secondary" href="ManageAccount">Cancel</a>
-                            <button type="submit" class="btn btn-success"> Save</button>
-                        </div>
-                        </form>
                     </div>
                 </div>
             </div>
         </div>
-    
-</body>
 
-
+    </body>
 </html>
 
 

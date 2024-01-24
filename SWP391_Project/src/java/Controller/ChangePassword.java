@@ -87,23 +87,23 @@ public class ChangePassword extends HttpServlet {
                 if (confirmPassword.equals(newPass)) {
                     c.changePassword(newPass, user);
                     String mess = "Change password success";
-                    request.setAttribute("done", mess);
-                    request.getRequestDispatcher("password.jsp").forward(request, response);
+                    request.setAttribute("done1", mess);
+                    request.getRequestDispatcher("editprofile.jsp").forward(request, response);
                 } else {
                     String mess = "New pass and confirm new pass must be the same";
                     request.setAttribute("fail", mess);
-                    request.getRequestDispatcher("password.jsp").forward(request, response);
+                    request.getRequestDispatcher("editprofile.jsp").forward(request, response);
                 }
 
             } else{
                 String mess = "New pass not correct form!";
                 request.setAttribute("fail", mess);
-                request.getRequestDispatcher("password.jsp").forward(request, response);
+                request.getRequestDispatcher("editprofile.jsp").forward(request, response);
             }
         } else {
             String mess = "Old password not correct";
             request.setAttribute("fail", mess);
-            request.getRequestDispatcher("password.jsp").forward(request, response);
+            request.getRequestDispatcher("editprofile.jsp").forward(request, response);
         }
 
     }

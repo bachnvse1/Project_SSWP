@@ -19,7 +19,7 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <!------ Include the above in your HEAD tag ------>
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-        <link href="css/style.css" rel="stylesheet" type="text/css"/> 
+        <link href="css/styles.css" rel="stylesheet" type="text/css"/> 
 
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
@@ -38,9 +38,13 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <!------ Include the above in your HEAD tag ------>
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-        <link href="css/style.css" rel="stylesheet" type="text/css"/> 
+        <link href="css/styles.css" rel="stylesheet" type="text/css"/> 
         <link href="css/manager.css" rel="stylesheet" type="text/css"/>
 
+        <!--           <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round"> -->
+        <!--         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> -->
+        <!--       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+        <!--     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">  -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
@@ -92,15 +96,21 @@
     </head>
     <body>
 
+        <!--Main Navigation-->
         <header>
             <jsp:include page="LeftAdmin.jsp"></jsp:include>
 
 
             </header>
+            <!--Main Navigation-->
 
+            <!--Main layout-->
+
+            <!-- QUẢN LÝ USER THƯỜNG -->
             <main>
                 <div class="container pt-4">
 
+                    <!--Section: Quan Ly tai Khoan-->
                     <section class="mb-4">
                         <div class="card">
                             <div class="card-header py-3 row">
@@ -137,16 +147,37 @@
                                                 <td>${o.username}</td>
                                                 <td>${o.password}</td>
                                                 <td>${o.email}</td>
-                                                <td>${o.display_name}</td>
-                                                <td>${o.is_Admin}</td>
-                                                <td style="color: ${o.is_Active ? 'blue' : 'red'}">${o.is_Active}</td>
+                                                <td>${o.display_name}</td>                                            
+                                                <td style="color: ${o.is_Admin ? 'blue' : 'red'}">
+                                                    <c:choose>
+                                                        <c:when test="${o.is_Admin}">
+                                                            TRUE
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            FALSE
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </td>
+
+                                                <td style="color: ${o.is_Active ? 'blue' : 'red'}">
+                                                    <c:choose>
+                                                        <c:when test="${o.is_Active}">
+                                                            TRUE
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            FALSE
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </td>
                                                 <td>${o.create_At}</td>
                                                 <td>${o.update_At}</td>
 
                                                 <td>
-                                                    <a href="GetInfAccountForAdmin?id=${o.id}" class="btn btn-success edit-btn">
-                                                        <i class="material-icons">&#9998;</i>
-                                                    </a>
+                                                    <c:if test="${o.is_Admin != true}">
+                                                        <a href="GetInfAccountForAdmin?id=${o.id}" class="btn btn-success edit-btn">
+                                                            <i class="material-icons">&#9998;</i>
+                                                        </a>
+                                                    </c:if>
 
                                                 </td>
 
@@ -163,6 +194,10 @@
 
 
         </main>
+
+
+
+
 
         <script src="js/manager.js" type="text/javascript"></script>
 

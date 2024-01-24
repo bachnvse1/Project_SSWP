@@ -6,7 +6,6 @@
 package Controller;
 
 import Entity.User;
-import Entity.userGoogle;
 import dao.DAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,7 +15,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.List;
 
 /**
  *
@@ -38,12 +36,11 @@ public class GetInfAccountForAdmin extends HttpServlet {
         HttpSession session = request.getSession();
         String idString = request.getParameter("id");
         int id = Integer.parseInt(idString);
-        //String idgg = request.getParameter("idgg");
         
         DAO dao = new DAO();
         
         User usa = dao.getUserById(id);
-        request.setAttribute("user", usa);
+        request.setAttribute("userA", usa);
         //userGoogle us = dao.getUserGg(idgg);
         //request.setAttribute("userGoogle", us);
         request.getRequestDispatcher("EditAccountByAdmin.jsp").forward(request, response);

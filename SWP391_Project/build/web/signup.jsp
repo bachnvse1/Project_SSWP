@@ -32,10 +32,9 @@
                     <div class="col-md-6 col-lg-4" style="background-color: rgba(0,0,0,0.7); padding: 3%;border-radius: 20px">
                         <div class="login-wrap p-0">
                             <div style="display: flex;text-align: center;margin-bottom: 3%;">
-                                <a style="height: 40px" href="landingPage.html">
-                                    <button style="border-radius: 100%;width:40px;height: 40px">
+                                <a style="height: 40px">
+                                    <button style="border-radius: 100%;width:40px;height: 40px" id="backHome">
                                         <i class="fas fa-home"></i>
-
                                     </button>
                                 </a>
                                 <h3 style="font-weight: bold; margin-left: 25%">Sign Up</h3>
@@ -72,6 +71,7 @@
                                     <button type="submit" class="form-control btn btn-primary submit px-3">Sign Up</button>
                                 </div>
                             </form>
+                            <p class="w-100 text-center">&mdash; You have an account ? &mdash;</p>
                             <div class="social d-flex text-center" style="justify-content:center">
                                 <a class="px-2 py-2 mr-md-1" style="border-radius: 40px" id="signin-Button">SIGN IN</a>
                             </div>
@@ -88,5 +88,6 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="jscript/signin_captcha.js"></script>
         <script src="jscript/signup.js"></script>
+  
     </body>
 </html>

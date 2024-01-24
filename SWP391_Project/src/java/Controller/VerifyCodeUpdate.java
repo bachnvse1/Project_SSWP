@@ -86,7 +86,7 @@ public class VerifyCodeUpdate extends HttpServlet {
         try {
             int code_1 = Integer.parseInt(code);
             if (code_1 == code_give) {
-                dao.setVerifyTrue(email);
+                dao.updateProfile(email, u.getDisplay_name(), u.getId());
                 response.getWriter().write("success");
             } else {
                 response.getWriter().write("error");

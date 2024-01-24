@@ -32,13 +32,13 @@ public class EditAccountByAdmin extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String ids = request.getParameter("ids");
+         String ids = request.getParameter("ids");
         int id = Integer.parseInt(ids);
         String isActiveValue = request.getParameter("isActiveValue");
         boolean is_Active = Boolean.parseBoolean(isActiveValue);
 
         DAO dao = new DAO();
-        dao.editUserByAdmin(id,is_Active);
+        dao.editUserByAdmin(id, is_Active);
         response.sendRedirect("ManageAccount");
 
     }
@@ -69,7 +69,7 @@ public class EditAccountByAdmin extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+       processRequest(request, response);
     }
 
     /**
