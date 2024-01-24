@@ -95,13 +95,14 @@ public class VerifyUser extends HttpServlet {
                     if (validate.checkInput(email, "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", 0, 50)
                             && dao.getEmail(email) == null) {
                         int code = GenOTP();
-                        SendEmail sm = new SendEmail();
-                        sm.Send(email, code);
+
                         HttpSession session = request.getSession();
                         session.setAttribute("otp", code);
                         session.setAttribute("email", email);
                         dao.signup(username, password, email);
                         response.getWriter().write("success");
+                        SendEmail sm = new SendEmail();
+                        new Thread(() -> sm.Send(email, code)).start();
                     } else {
                         mess = "Email: abc@xyz.com and CAN NOT DUPLICATE EMAIL!";
                         out.print(mess);

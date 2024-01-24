@@ -6,7 +6,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-         <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -28,7 +28,7 @@
                         <h2 class="heading-section">Online Digital Information Transactions System</h2>
                     </div>
                 </div>
-            <div class="row justify-content-center">
+                <div class="row justify-content-center">
                     <div class="col-md-6 col-lg-4" style="background-color: rgba(0,0,0,0.7); padding: 3%;border-radius: 20px">
                         <div class="login-wrap p-0">
                             <div style="display: flex;text-align: center;margin-bottom: 3%;">
@@ -38,7 +38,7 @@
 
                                     </button>
                                 </a>
-                                <h3 style="font-weight: bold; margin-left: 25%">Sign in</h3>
+                                <h3 style="font-weight: bold; margin-left: 25%">Sign Up</h3>
                             </div>
                             <form id="loginForm">
                                 <div class="form-group">
@@ -47,11 +47,13 @@
                                 <div class="form-group">
                                     <input id="password-signup" type="password" class="form-control" placeholder="Password"
                                            required>
+                                    <span toggle="#password-signup" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+
                                 </div>
                                 <div class="form-group">
                                     <input id="confirm-Pass" type="password" class="form-control"
                                            placeholder="Confirm password" required>
-
+                                    <span toggle="#confirm-Pass" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                 </div>
 
                                 <div class="form-group">
@@ -82,9 +84,9 @@
         <script src="js/popper.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/main.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="jscript/signin_captcha.js"></script>
         <script src="jscript/signup.js"></script>
     </body>
-
 </html>

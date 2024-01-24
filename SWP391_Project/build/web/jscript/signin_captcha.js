@@ -50,10 +50,11 @@ function SignIn()
                 setTimeout(function () {
                     window.location.href = "home.jsp"; // thế cái này chạy tới đâu home, cai nay la dang nhap tk cus ? ho
                 }, 1000);
-            } else if(response ==="admin"){
+            } else if (response === "admin") {
                 window.location.href = "ManageAccount"; // cai nay dnhap tk admin 
-            }
-            else{
+            } else if (response === "verify") {
+                window.location.href = "verify.jsp"; // cai nay dnhap tk admin 
+            } else {
 
                 refreshCaptcha();
 
@@ -81,16 +82,19 @@ function refreshCaptcha()
 ;
 
 
-function showPass()
+//function showPass()
+//
+//{
+//    var passwordfield = document.getElementById("password");
+//    var icon = document.querySelector(".show-password");
+//    if (passwordfield.type === "password") {
+//        passwordfield.type = "text";
+//        icon.innerHTML = '<i class="fa fa-eye"></i>';
+//    } else {
+//        passwordfield.type = "password";
+//        icon.innerHTML = '<i class="fa fa-eye-slash"></i>';
+//    }
+//}
 
-{
-    var passwordfield = document.getElementById("password");
-    var icon = document.querySelector(".show-password");
-    if (passwordfield.type === "password") {
-        passwordfield.type = "text";
-        icon.innerHTML = '<i class="fa fa-eye"></i>';
-    } else {
-        passwordfield.type = "password";
-        icon.innerHTML = '<i class="fa fa-eye-slash"></i>';
-    }
-}
+
+

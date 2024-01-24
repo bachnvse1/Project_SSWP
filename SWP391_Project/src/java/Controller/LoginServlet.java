@@ -15,6 +15,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  *
@@ -71,6 +73,8 @@ public class LoginServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -113,12 +117,12 @@ public class LoginServlet extends HttpServlet {
 
                     } else {
                         int code = GenOTP();
-                        SendEmail sm = new SendEmail();
-                        sm.Send(us.getEmail(), code);
                         HttpSession session = request.getSession();
                         session.setAttribute("otp", code);
                         session.setAttribute("email", us.getEmail());
                         response.getWriter().write("verify");
+                        SendEmail sm = new SendEmail();
+                        new Thread(() -> sm.Send(us.getEmail(), code)).start();
                     }
                 }
 

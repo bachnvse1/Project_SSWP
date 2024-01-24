@@ -30,8 +30,8 @@
                     <div class="col-md-6 col-lg-4" style="background-color: rgba(0,0,0,0.7); padding: 3%;border-radius: 20px">
                         <div class="login-wrap p-0">
                             <div style="display: flex;text-align: center;margin-bottom: 3%;">
-                                <a style="height: 40px" href="home.jsp">
-                                    <button style="border-radius: 100%;width:40px;height: 40px">
+                                <a style="height: 40px">
+                                    <button style="border-radius: 100%;width:40px;height: 40px" onclick="backHome()">
                                         <i class="fas fa-home"></i>
                                     </button>
                                 </a>
@@ -62,8 +62,8 @@
                                 </div>
                             </form>
                             <p class="w-100 text-center">&mdash; Do not have an account ? &mdash;</p>
-                            <div class="social d-flex text-center" style="justify-content:center;">
-                                <button><a class="px-2 py-2 mr-md-1" style="border-radius: 40px" id="signup-Button">SIGN UP</a></button>
+                           <div class="social d-flex text-center" style="justify-content:center;">
+                                <button class="w-100 px-2 py-2 mr-md-1" style="border-radius: 40px;" id="signup-Button">SIGN UP</button>
                             </div>
                         </div>
                     </div>
@@ -77,7 +77,8 @@
         <script src="js/main.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="jscript/signin_captcha.js.js"></script>
         <script src="jscript/signup.js"></script>
+        <script src="jscript/signin_captcha.js.js"></script>
+
     </body>
 </html>

@@ -34,6 +34,7 @@
 
     </div>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
                         $(document).ready(function () {
                             $('#VerifyForm').submit(function (e) {
@@ -49,7 +50,16 @@
                                     data: formData,
                                     success: function (response) {
                                         if (response === "success") {
-                                            alert("Verify code success!");
+                                            Swal.fire({
+                                            position: "bot-end",
+                                            icon: "success",
+                                            title: "Verify success!",
+                                            showConfirmButton: false,
+                                            timer: 1000
+                                        });
+                                        setTimeout(function () {
+                                            window.location.href = "signin.jsp";
+                                        }, 1000);
 
                                         } else {
                                             alert("OTP error!!!\nPlease input again!");
@@ -73,7 +83,16 @@
                                 data: formData,
                                 success: function (response) {
                                     if (response === "success") {
-                                        alert("Verify code success!");
+                                        Swal.fire({
+                                            position: "bot-end",
+                                            icon: "success",
+                                            title: "Verify success!",
+                                            showConfirmButton: false,
+                                            timer: 1000
+                                        });
+                                        setTimeout(function () {
+                                            window.location.href = "signin.jsp";
+                                        }, 1000);
 
                                     } else {
                                         alert(response);
@@ -86,5 +105,6 @@
                             });
                         }
     </script>
+
 </body>
 </html>
