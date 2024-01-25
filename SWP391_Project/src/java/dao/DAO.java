@@ -122,7 +122,7 @@ public class DAO extends DBContext {
 
     public User getUserById(int id) {
 
-        String query = "select * from swp_demo.users where username = ?";
+        String query = "select * from swp_demo.users where id = ?";
         try {
             con = new DBContext().connection; //connect sql
             ps = con.prepareStatement(query);
