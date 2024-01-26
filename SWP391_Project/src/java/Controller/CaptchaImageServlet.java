@@ -8,10 +8,12 @@ package Controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -23,6 +25,7 @@ import javax.imageio.ImageIO;
  *
  * @author tudo7
  */
+@WebServlet(name = "CaptchaImageServlet", urlPatterns = {"/captchaimage"})
 public class CaptchaImageServlet extends HttpServlet {
    
     /** 
@@ -63,42 +66,55 @@ public class CaptchaImageServlet extends HttpServlet {
       //  processRequest(request, response);
         Random random = new Random();
         String capchaString = generateCapchaString();
-        BufferedImage img = new BufferedImage(100,40, BufferedImage.TYPE_INT_RGB);
+        BufferedImage img = new BufferedImage(120, 40, BufferedImage.TYPE_INT_RGB);
         Graphics2D g2D = img.createGraphics();
         //Ve chuoi so len anh
         g2D.setFont(new Font("SansSerif", Font.PLAIN, 25));
         g2D.setColor(Color.WHITE);
-        g2D.drawString(capchaString, 10, 25);
-        
+        g2D.drawString(capchaString, 5+random.nextInt(10), 25+random.nextInt(10));
+
         //Luu chuoi so vao session de kiem tra sau
         request.getSession().setAttribute("captcha", capchaString);
         // vẽ các đường gạch ngang
-       
+        // Đặt kích thước của đường gạch
+        float kichThuocDuongGach = 1.5f;  // Đặt kích thước của đường gạch ở đây
+        g2D.setStroke(new BasicStroke(kichThuocDuongGach));
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 3; i++) {
             g2D.setColor(new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)));
-            int x = (int) (5 + random.nextInt(3));
-            int y = random.nextInt(img.getHeight());
-            int width = 100 + random.nextInt(31);
-            int height = random.nextInt(img.getHeight() / 2); // Độ cao của đường cong
+            int x = (int) (10 + random.nextInt(10));
+            int y = (int) (8 + random.nextInt(15));
+            int width = 55 + random.nextInt(30);
+            int height = random.nextInt(15); // Độ cao của đường cong
             int startAngle = 180;
             int arcAngle = 150 + random.nextInt(30);
 
             g2D.drawArc(x, y, width, height, startAngle, arcAngle);
         }
-        // Gui anh ve client
+  
         ImageIO.write(img, "png", response.getOutputStream());
-       
-//        g2D.dispose();
-              
+
     }
-    
- public static String generateCapchaString(){
+
+    public static String generateCapchaString() {
         Random random = new Random();
-        // Sinh số từ 100000 đến 999999;
-        int number = random.nextInt(900000)+100000;
-        return String.valueOf(number);
-    }
+        StringBuilder captcha = new StringBuilder();
+        for (int i = 0; i < 6; i++) {
+            // random 1 so int bat ki tu  0-9, a-z , A - Z (9 + 26 + 26 ) so
+            int randomCaptcha = random.nextInt(61);
+            if (randomCaptcha <= 25) {
+                //Neu la chu cai thuong thi random ra 1 chu cai tu a-z
+                captcha.append((char) (randomCaptcha + 'a'));
+            }else if(randomCaptcha <=51){
+                //Neu la chu cai in hoa thi random ra 1 chu cai tu A-Z
+                captcha.append((char) (randomCaptcha - 26 + 'A'));
+            }else{
+                // Con neu la so
+                captcha.append((char) (randomCaptcha - 52 + '0'));
+                }
+                }   
+        return captcha.toString();
+            }
     /** 
      * Handles the HTTP <code>POST</code> method.
      * @param request servlet request

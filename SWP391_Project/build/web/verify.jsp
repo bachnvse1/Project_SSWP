@@ -16,53 +16,98 @@
     </head>
     <body>
         <div class="otp-box">
-            <form id="loginForm">
+            <form id="VerifyForm">
                 <div class="img">
-                    <img src="https://t.ly/7CuFm" alt="" width="100px">
+                    <img src="https://apps.uk/wp-content/uploads/2022/11/verification-codes.png" alt="" width="300px">
                 </div>
-                <div class="content-box">
-                    <h2>Verification code</h2>
-                    <p>We just send a Verification code to your email</p>
-                </div>
+
                 <div class="inputs">
                     <input type="text" maxlength="5" id="Otp_code" required="">
                     <div class="verify-button">
                         <button type="submit">Verify</button></br></br>
-                        <button type="button"><a href="home.jsp" target="target" style="text-decoration: none; color: white;">Home</a></button>
-                    </div>
+                        <button type="button">Login</button>
+                    </div></br>
+                    <div
+                        
+                    <button onclick="resendMail()" style="">Resend Email</button>
+                    
                 </div>
             </form>
         </div>
 
     </div>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        $(document).ready(function () {
-            $('#loginForm').submit(function (e) {
-                e.preventDefault(); // Prevents the default form submission
+                        $(document).ready(function () {
+                            $('#VerifyForm').submit(function (e) {
+                                e.preventDefault(); // Prevents the default form submission
 
-                var formData = {
-                    otp_code: $('#Otp_code').val()
-                };
+                                var formData = {
+                                    otp_code: $('#Otp_code').val()
+                                };
 
-                $.ajax({
-                    type: 'POST',
-                    url: 'VerifyCode',
-                    data: formData,
-                    success: function (response) {
-                        if (response === "success") {
-                            alert("Sign up success!!!");
+                                $.ajax({
+                                    type: 'POST',
+                                    url: 'VerifyCode',
+                                    data: formData,
+                                    success: function (response) {
+                                        if (response === "success") {
+                                            Swal.fire({
+                                                position: "bot-end",
+                                                icon: "success",
+                                                title: "Verify success!",
+                                                showConfirmButton: false,
+                                                timer: 1000
+                                            });
+                                            setTimeout(function () {
+                                                window.location.href = "signin.jsp";
+                                            }, 1000);
 
-                        } else {
-                            alert("OTP error!!!\nPlease input again!");
+                                        } else {
+                                            alert("OTP error!!!\nPlease input again!");
+                                        }
+                                    },
+                                    error: function (error) {
+                                        console.log(error);
+                                    }
+                                });
+                            });
+                        });
+
+                        function resendMail() {
+                            var formData = {
+                                otp_code: $('#Otp_code').val()
+                            };
+
+                            $.ajax({
+                                type: 'GET',
+                                url: "VerifyCode",
+                                data: formData,
+                                success: function (response) {
+                                    if (response === "success") {
+                                        Swal.fire({
+                                            position: "bot-end",
+                                            icon: "success",
+                                            title: "Verify success!",
+                                            showConfirmButton: false,
+                                            timer: 1000
+                                        });
+                                        setTimeout(function () {
+                                            window.location.href = "signin.jsp";
+                                        }, 1000);
+
+                                    } else {
+                                        alert(response);
+                                    }
+                                },
+                                error: function (error) {
+                                    console.log(error);
+                                }
+
+                            });
                         }
-                    },
-                    error: function (error) {
-                        console.log(error);
-                    }
-                });
-            });
-        });
     </script>
+
 </body>
 </html>

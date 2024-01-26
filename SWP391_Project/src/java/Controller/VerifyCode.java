@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import Entity.*;
 import dao.DAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,6 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.Random;
 
 /**
  *
@@ -57,7 +59,40 @@ public class VerifyCode extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
+        long currentTime = System.currentTimeMillis();
+        long lastSentTime = 0;
+        PrintWriter out = response.getWriter();
+        int code = GenOTP();
+        HttpSession session = request.getSession();
+        String email = (String) session.getAttribute("email");
+        
+        if (session.getAttribute("lastSentTime") != null) {
+            lastSentTime = (Long) session.getAttribute("lastSentTime");
+            long elapsedTime = currentTime - lastSentTime;
+
+            // Set a time threshold (e.g., 1 minute = 60000 milliseconds)
+            long timeThreshold = 60000;
+
+            if (elapsedTime < timeThreshold) {
+                // Notify the user that they need to wait before requesting another OTP
+                out.println("Please wait before requesting another OTP.");
+
+                // You may want to handle this case gracefully in your front-end/UI
+            } else {
+                // Send the new OTP
+                SendEmail sm = new SendEmail();
+                sm.Send(email, code);
+                session.setAttribute("otp", code);
+                session.setAttribute("lastSentTime", currentTime);
+            }
+        } else {
+            // If it's the first time, set the last sent time and send the OTP
+            SendEmail sm = new SendEmail();
+            sm.Send(email, code);
+            session.setAttribute("otp", code);
+            session.setAttribute("lastSentTime", currentTime);
+        }
     }
 
     /**
@@ -74,20 +109,17 @@ public class VerifyCode extends HttpServlet {
         DAO dao = new DAO();
         //processRequest(request, response);
         HttpSession session = request.getSession();
-        String user = (String) session.getAttribute("user");
-        String pass = (String) session.getAttribute("pass");
         String email = (String) session.getAttribute("email");
         PrintWriter out = response.getWriter();
         String code = request.getParameter("otp_code");
         String mess = "";
+
         int code_give = (int) session.getAttribute("otp");
         try {
             int code_1 = Integer.parseInt(code);
             if (code_1 == code_give) {
-                dao.signup(user, pass, email);
-                //mess += "Sign up success!!!";
-//                request.setAttribute("messSuccess", mess);
-//                request.getRequestDispatcher("verify.jsp").forward(request, response);
+                dao.setVerifyTrue(email);
+                 session.invalidate();
                 response.getWriter().write("success");
             } else {
                 response.getWriter().write("error");
@@ -96,9 +128,18 @@ public class VerifyCode extends HttpServlet {
 //            mess += "OTP error, input again!!!";
 //            request.setAttribute("messError", mess);
 //            request.getRequestDispatcher("verify.jsp").forward(request, response);
-              response.getWriter().write("error");
+            response.getWriter().write("error");
         }
 
+    }
+
+    public int GenOTP() {
+        int min = 10_000; // Số nguyên tối thiểu (bao gồm)
+        int max = 99_999; // Số nguyên tối đa (bao gồm)
+        Random random = new Random();
+        int randomNumber = random.nextInt(max - min + 1) + min;
+
+        return randomNumber;
     }
 
     /**

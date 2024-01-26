@@ -5,6 +5,7 @@
 package Controller;
 
 import Entity.User;
+import util.Encryption;
 import dao.DAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,6 +14,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  *
@@ -69,41 +73,65 @@ public class LoginServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-        String user = request.getParameter("user");
+        String user = request.getParameter("username");
         String pass = request.getParameter("password");
         request.setAttribute("username", user);
         request.setAttribute("pass", pass);
         String captcha = request.getParameter("capchaRespone");
         String sessionCaptcha = (String) request.getSession().getAttribute("captcha");
         DAO dal = new DAO();
+        pass = Encryption.toSHA1(pass);
         User us = dal.Login(user, pass);
-        if (captcha != null && captcha.equals(sessionCaptcha)) {
-            if (us == null) {
+        HttpSession session = request.getSession();
+//        validate val = new validate();
+        try {
+            if (captcha != null && captcha.equals(sessionCaptcha)) {
+                if (user.equals("")) {
+                    response.getWriter().write("Username cannot be empty!");
+                } else if (pass.equals("")) {
+                    response.getWriter().write("Password cannot be empty!");
+                } else {
+                    if (us == null) {
+                        response.getWriter().write("ACCOUNT DOES NOT EXIT!");
+                    } else if (us.isIs_Active() == false) {
+                        response.getWriter().write("ACCOUNT HAS BANNED!");
+                    } else if (us.isIs_verify() == true) {
+                        if (us.isIs_Admin() == true) {
+                            session.removeAttribute("captcha");
+                            session.setAttribute("user", us);
+                            response.getWriter().write("admin");
+                        } else {
+                            session.removeAttribute("captcha");
+                            session.setAttribute("user", us);
+                            response.getWriter().write("success");
+                        }
 
-                request.setAttribute("mess", "Wrong user or pass");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
-            } else if (us.isIs_Active() == false) {
+                    } else {
+                        int code = GenOTP();
+                        session.setAttribute("otp", code);
+                        session.setAttribute("email", us.getEmail());
+                        session.removeAttribute("captcha");
+                        response.getWriter().write("verify");
+                        SendEmail sm = new SendEmail();
+                        new Thread(() -> sm.Send(us.getEmail(), code)).start();
+                    }
+                }
 
-                request.setAttribute("mess", "Account has banned!");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
+            } else if (captcha.isEmpty()) {
+                response.getWriter().write("Captcha cannot be empty!");
             } else {
-                HttpSession session = request.getSession();
-                session.setAttribute("user", us);
-                session.setAttribute("displayname", us.getDisplay_name());
-                response.sendRedirect("home.jsp");
+                response.getWriter().write("Captcha wrong!");
             }
-        } else if (captcha.equals("")) {
-            request.setAttribute("mess", "Captcha cannot be left blank!");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        } else {
-            request.setAttribute("mess", "Captcha is wrong!");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+        } //            if(val.checkInput(pass, "\"^(?=.*[!@#$%^&*(),.?\\\":{}|<>]).*$\"", 3, 15))
+        catch (Exception e) {
+            System.out.println("Error");
         }
-
     }
 
     /**
@@ -111,6 +139,15 @@ public class LoginServlet extends HttpServlet {
      *
      * @return a String containing servlet description
      */
+    public int GenOTP() {
+        int min = 10_000; // Số nguyên tối thiểu (bao gồm)
+        int max = 99_999; // Số nguyên tối đa (bao gồm)
+        Random random = new Random();
+        int randomNumber = random.nextInt(max - min + 1) + min;
+
+        return randomNumber;
+    }
+
     @Override
     public String getServletInfo() {
         return "Short description";

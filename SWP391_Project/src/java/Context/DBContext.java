@@ -27,7 +27,6 @@ public class DBContext {
         try {
             // Load driver
             Class.forName("com.mysql.cj.jdbc.Driver");
-
             // Kết nối đến cơ sở dữ liệu và trả về connection
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (ClassNotFoundException | SQLException e) {
