@@ -27,7 +27,7 @@
                         <button type="submit">Verify</button></br></br>
                         <button type="button"><a href="home.jsp" target="target" style="text-decoration: none; color: white;">Home</a></button>
                     </div></br>
-                    <p style="color: #084298;" onclick="resendMail()">Resend Email</p>
+                   <p style="color: #084298;" onclick="resendMail()">Resend Email</p>
                 </div>
             </form>
         </div>

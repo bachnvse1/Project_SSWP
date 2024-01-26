@@ -73,9 +73,11 @@ public class Forgotpassword extends HttpServlet {
         String email = request.getParameter("email");
         User user = dao.isEmail(email);
         if (dao.isEmailExists(email)) {
-            SendEmail sm = new SendEmail();
+
             int code = GenOTP();
-            sm.Send(email, code);
+            SendEmail sm = new SendEmail();
+            new Thread(() -> sm.Send(email, code)).start();
+
             HttpSession session = request.getSession();
             session.setAttribute("code", code);
             session.setAttribute("email1", email);

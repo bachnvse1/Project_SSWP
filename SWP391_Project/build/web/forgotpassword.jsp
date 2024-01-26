@@ -7,6 +7,10 @@
 <html>
     <head>
         <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Verify OTP</title>
@@ -54,14 +58,14 @@
                                                                 <div class="d-grid">
                                                                     <button class="btn btn-dark btn-lg" id="resetButton" type="submit">Reset Password</button>
                                                                 </div>
-                                                                <p style="color: red;text-align: center">${requestScope.msg}</p>
+
                                                             </div>
                                                         </div>
                                                     </form>
                                                     <div class="row">
                                                         <div class="col-12">
                                                             <div class="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-md-center mt-5">
-                                                                <a href="login.jsp" class="link-secondary text-decoration-none">Login</a>
+                                                                <p class="mb-0 mt-5 text-secondary text-center">Already have an account? <a href="signin.jsp" class="link-primary text-decoration-none">Sign in</a></p>
 
                                                             </div>
                                                         </div>
@@ -89,16 +93,24 @@
                         <p>We just send a Verification code to your email</p>
                     </div>
                     <div class="inputs">
-                        <input type="text" maxlength="5" name="otp" required="">
+                        <input type="text" maxlength="5" id="Otp_code" name="otp" required="">
                     </div>
+                    <p style="color: red;text-align: center">${requestScope.msg}</p>
                     <div class="verify-button">
                         <button type="submit">Verify</button>
-                    </div>           
+                    </div>    
+
+                    <p style="color: #084298;" onclick="resendMail()">Resend Email</p>
+
+
+                    <p class="mb-0 mt-5 text-secondary text-center">Already have an account? <a href="signin.jsp" class="link-primary text-decoration-none">Sign in</a></p>
+
                 </div>
             </form> 
         </c:if>
 
         <c:if test="${flag == 3}">
+
             <form action="reset" method="post">
                 <!-- Registration 8 - Bootstrap Brain Component -->
                 <section class="bg-light p-3 p-md-4 p-xl-5">
@@ -125,21 +137,27 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="row">                              
-                                                    </div>
+                                                   
                                                     <form action="#!">
                                                         <div class="row gy-3 overflow-hidden">
                                                             <div class="col-12">
                                                                 <div class="form-floating mb-3">
-                                                                    <input type="password" class="form-control" name="password"  >
+                                                                    <input type="password" value="${password}" class="form-control" name="password"  required>
                                                                     <label for="firstName" class="form-label">Password</label>
                                                                 </div>
                                                             </div>
                                                             <div class="col-12">
                                                                 <div class="form-floating mb-3">
-                                                                    <input type="password" class="form-control" name="cpassword">
+                                                                    <input type="password" class="form-control" value="${password}" name="cpassword" required>
                                                                     <label for="lastName" class="form-label">Confirm Password </label>
                                                                 </div>
+                                                            </div>
+                                                            <div class="form-group" style="display: flex">
+                                                                <img style="border-radius: 40px" id="captchaImage" src="captchaimage" alt="CAPTCHA image">
+                                                                <input type="text" class="form-control" placeholder="Captcha" name="capchaRespone" id="captcha">
+                                                                <button type="button" onclick="refreshCaptcha()" style="width: 100px; background-color: white; border-radius:100%">
+                                                                    <i class="fa fa-refresh" style="color: black;"></i>
+                                                                </button>
                                                             </div>
                                                             <p style="color: red;text-align: center">${requestScope.error}</p>
                                                         </div>
@@ -149,7 +167,7 @@
                                                                 <p style="color: red;text-align: center">${requestScope.msg}</p>
                                                                 <div class="row">
                                                                     <div class="col-12">
-                                                                        <p class="mb-0 mt-5 text-secondary text-center">Already have an account? <a href="login.jsp" class="link-primary text-decoration-none">Sign in</a></p>
+                                                                        <p class="mb-0 mt-5 text-secondary text-center">Already have an account? <a href="signin.jsp" class="link-primary text-decoration-none">Sign in</a></p>
 
                                                                     </div>
                                                                 </div>
@@ -171,20 +189,60 @@
 
 
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
-        let isButtonClicked = false;
+                                                                    let isButtonClicked = false;
 
-        document.getElementById('resetButton').addEventListener('click', function (event) {
-            if (!isButtonClicked) {
-                // Thực hiện hành động
-                isButtonClicked = true;
+                                                                    document.getElementById('resetButton').addEventListener('click', function (event) {
+                                                                        if (!isButtonClicked) {
+                                                                            // Thực hiện hành động
+                                                                            isButtonClicked = true;
 
-                // Tùy chọn: Thêm loader hoặc thông báo
-            } else {
-                // Ngăn không cho hành động xảy ra lần nữa
-                event.preventDefault();
+                                                                            // Tùy chọn: Thêm loader hoặc thông báo
+                                                                        } else {
+                                                                            // Ngăn không cho hành động xảy ra lần nữa
+                                                                            event.preventDefault();
+                                                                        }
+                                                                    });
+    </script>
+    <script>
+        function refreshCaptcha() {
+            // Refresh CAPTCHA image
+            document.getElementById('captchaImage').src = 'captchaimage?' + Math.random();
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const resetButton = document.getElementById('resetButton');
+            if (resetButton) {
+                resetButton.addEventListener('click', handleResetButtonClick);
             }
+            window.isResetButtonClicked = false; // Initialize click tracker
         });
+    </script>
+    <script>
+        function resendMail() {
+            var formData = {
+                otp_code: $('#Otp_code').val()
+            };
+
+            $.ajax({
+                type: 'GET',
+                url: "VerifyReset",
+                data: formData,
+                success: function (response) {
+                    if (response === "success") {
+                        alert("Verify code success!");
+
+                    } else {
+                        alert(response);
+                    }
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+
+            });
+        }
     </script>
 </body>
 </html>

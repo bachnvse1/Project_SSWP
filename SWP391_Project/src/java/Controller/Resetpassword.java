@@ -18,8 +18,6 @@ import jakarta.servlet.http.HttpSession;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
- 
-
 /**
  *
  * @author My pc
@@ -31,7 +29,7 @@ public class Resetpassword extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -58,22 +56,41 @@ public class Resetpassword extends HttpServlet {
             throws ServletException, IOException {
         //processRequest(request, response);
         String msg = "";
+        HttpSession session = request.getSession();
+
         try {
             String otp = request.getParameter("otp");
             int otp_1 = Integer.parseInt(otp);
-            HttpSession session = request.getSession();
+
             int code = (int) session.getAttribute("code");
+
             if (otp_1 == code) {
+                // Remove the session attribute
+                session.removeAttribute("code");
+
+                // Set attributes for successful OTP verification
                 request.setAttribute("flag", 3);
                 request.getRequestDispatcher("forgotpassword.jsp").forward(request, response);
             } else {
                 throw new NumberFormatException();
             }
         } catch (NumberFormatException e) {
-            msg = "Reset PassWord Fail!";
+            // Handle NumberFormatException by setting error message
+            msg = "OTP not same";
             request.setAttribute("msg", msg);
-            request.setAttribute("flag", 1);
+            request.setAttribute("flag", 2);
             request.getRequestDispatcher("forgotpassword.jsp").forward(request, response);
+        } finally {
+            // This block will be executed regardless of whether an exception is thrown or not.
+
+            // Check if the email is not provided and display a message:
+            String email = request.getParameter("email"); // Assuming "email" is the parameter name
+            if (email == null || email.isEmpty()) {
+                msg = "Please input email!";
+                request.setAttribute("msg", msg);
+                request.setAttribute("flag", 2);
+                request.getRequestDispatcher("forgotpassword.jsp").forward(request, response);
+            }
         }
 
     }
@@ -89,51 +106,54 @@ public class Resetpassword extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String pas = request.getParameter("password");
-        String cpass = request.getParameter("cpassword");
+
         String msg = "";
         String error = "";
         validate val = new validate();
+        String userEnteredCaptcha = request.getParameter("capchaRespone");
+        String sessionCaptcha = (String) request.getSession().getAttribute("captcha");
+        HttpSession session = request.getSession();
+          String pas = request.getParameter("password");
+            String cpass = request.getParameter("cpassword");
+        if (userEnteredCaptcha != null && userEnteredCaptcha.equalsIgnoreCase(sessionCaptcha)) {
+          
+            // CAPTCHA is correct
+            // Proceed with the rest of form processing
+            if (val.checkInput(pas, "^(?=.*[!@#$%^&*(),.?\\\":{}|<>]).*$", 6, 16)
+                    && val.checkInput(cpass, "^(?=.*[!@#$%^&*(),.?\\\":{}|<>]).*$", 6, 16)) {
+                if (pas.equals(cpass)) {
 
-        if (val.checkInput(pas, "^(?=.*[!@#$%^&*(),.?\\\":{}|<>]).*$", 6, 16)
-                && val.checkInput(cpass, "^(?=.*[!@#$%^&*(),.?\\\":{}|<>]).*$", 6, 16)) {
-            if (pas.equals(cpass)) {
-                HttpSession session = request.getSession();
-                String Email = (String) session.getAttribute("email1");
-                DAO dao = new DAO();
-                User user = dao.isEmail(Email);
-                dao.updatePassword(pas, user.id);
-                msg += "Reset password Success";
-                request.setAttribute("msg", msg);
-                request.setAttribute("flag", 3);
-                request.getRequestDispatcher("forgotpassword.jsp").forward(request, response);
+                    String Email = (String) session.getAttribute("email1");
+                    DAO dao = new DAO();
+                    User user = dao.isEmail(Email);
+                    dao.updatePassword(pas, user.id);
+                    msg += "Reset password Success";
+                    request.setAttribute("msg", msg);
+                    session.removeAttribute("email1");
+                    request.getRequestDispatcher("signin.jsp").forward(request, response);
+
+                } else {
+                    error += "Password not same";
+                    request.setAttribute("error", error); // Change from msg to error here
+                    request.setAttribute("flag", 3);
+                    request.getRequestDispatcher("forgotpassword.jsp").forward(request, response);
+                }
 
             } else {
-                error += "Password not same";
-                request.setAttribute("error", error); // Change from msg to error here
+                error += "The length of Password should be 6-16 characters and 1 charater special!";
+                request.setAttribute("error", error);
                 request.setAttribute("flag", 3);
                 request.getRequestDispatcher("forgotpassword.jsp").forward(request, response);
             }
-
         } else {
-            error += "The length of Password should be 6-16 characters and 1 charater special!";
-            request.setAttribute("error", error);
+            request.setAttribute("password", pas);
+             request.setAttribute("password", cpass);
+
+            request.setAttribute("error", "Invalid CAPTCHA. Please try again.");
             request.setAttribute("flag", 3);
             request.getRequestDispatcher("forgotpassword.jsp").forward(request, response);
         }
 
-//        if (pas.equals(cpass)) {
-//             dao.updatePassword(pas, user.id);
-//            msg = "Reset password Success";
-//            request.setAttribute("msg", msg);
-//            request.setAttribute("flag", 3);
-//            request.getRequestDispatcher("forgotpassword.jsp").forward(request, response);
-//        } else {
-//            msg = "Reset password fail";
-//            request.setAttribute("msg", msg);
-//            request.setAttribute("flag", 3);
-//            request.getRequestDispatcher("forgotpassword.jsp").forward(request, response);
-//        }
     }
 
     /**
