@@ -5,7 +5,7 @@
 package Controller;
 
 import Entity.User;
-import Validate.validate;
+import util.Encryption;
 import dao.DAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -86,8 +86,9 @@ public class LoginServlet extends HttpServlet {
         String captcha = request.getParameter("capchaRespone");
         String sessionCaptcha = (String) request.getSession().getAttribute("captcha");
         DAO dal = new DAO();
+        pass = Encryption.toSHA1(pass);
         User us = dal.Login(user, pass);
-
+        HttpSession session = request.getSession();
 //        validate val = new validate();
         try {
             if (captcha != null && captcha.equals(sessionCaptcha)) {
@@ -102,24 +103,20 @@ public class LoginServlet extends HttpServlet {
                         response.getWriter().write("ACCOUNT HAS BANNED!");
                     } else if (us.isIs_verify() == true) {
                         if (us.isIs_Admin() == true) {
-                            HttpSession session = request.getSession();
+                            session.removeAttribute("captcha");
                             session.setAttribute("user", us);
-                            session.setAttribute("displayname", us.getDisplay_name());
-                            session.setAttribute("status", 0);
                             response.getWriter().write("admin");
                         } else {
-                            HttpSession session = request.getSession();
+                            session.removeAttribute("captcha");
                             session.setAttribute("user", us);
-                            session.setAttribute("displayname", us.getDisplay_name());
-                            session.setAttribute("status", 0);
                             response.getWriter().write("success");
                         }
 
                     } else {
                         int code = GenOTP();
-                        HttpSession session = request.getSession();
                         session.setAttribute("otp", code);
                         session.setAttribute("email", us.getEmail());
+                        session.removeAttribute("captcha");
                         response.getWriter().write("verify");
                         SendEmail sm = new SendEmail();
                         new Thread(() -> sm.Send(us.getEmail(), code)).start();

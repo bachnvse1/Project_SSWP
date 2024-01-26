@@ -129,7 +129,6 @@ public class EditProfile extends HttpServlet {
             d.updateProfile(u.getEmail(), displayName, u.getId());
             session.setAttribute("otp", code);
             session.setAttribute("email", email);
-            session.setAttribute("displayname", displayName);
             response.sendRedirect("verifyEmailUpdate.jsp");
             SendEmail sm = new SendEmail();
             new Thread(() -> sm.Send(email, code)).start();
@@ -139,12 +138,6 @@ public class EditProfile extends HttpServlet {
             request.getRequestDispatcher("editprofile.jsp").forward(request, response);
         }
 
-//        d.updateProfile(id, username, email, displayName);
-//        String mess = "Edit profile success";
-//        request.setAttribute("done", mess);
-//        u.setDisplay_name(displayName);
-//        u.setEmail(email);
-//        request.getRequestDispatcher("editprofile.jsp").forward(request, response);
     }
 
     private boolean isValidEmail(String email) {

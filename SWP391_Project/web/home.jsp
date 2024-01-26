@@ -29,7 +29,9 @@
         <!-- Font Awesome Icon -->
         <link rel="stylesheet" href="css/font-awesome.min.css">
         <!-- Custom stlylesheet -->
+
         <link type="text/css" rel="stylesheet" href="css/style.css" />
+
 
     </head>
 
@@ -137,6 +139,7 @@
         <%@include file="components/footer.jsp" %>
         <!-- /FOOTER -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="jscript/signin_captcha.js"></script>
         <!-- jQuery Plugins -->
         <script src="js1/jquery.min.js"></script>
         <script src="js1/bootstrap.min.js"></script>
@@ -144,7 +147,7 @@
         <script src="js1/nouislider.min.js"></script>
         <script src="js1/jquery.zoom.min.js"></script>
         <script src="js1/main.js"></script>
-        <script src="jscript/signin_captcha.js"></script>
+
     </body>
 </html>
 

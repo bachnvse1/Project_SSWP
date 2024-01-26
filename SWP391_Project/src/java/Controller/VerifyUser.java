@@ -5,7 +5,6 @@
 package Controller;
 
 import Validate.validate;
-import Entity.User;
 import dao.DAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,7 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import static java.lang.System.out;
+import util.Encryption;
 import java.util.Random;
 
 /**
@@ -95,10 +94,10 @@ public class VerifyUser extends HttpServlet {
                     if (validate.checkInput(email, "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", 0, 50)
                             && dao.getEmail(email) == null) {
                         int code = GenOTP();
-
                         HttpSession session = request.getSession();
                         session.setAttribute("otp", code);
                         session.setAttribute("email", email);
+                        password = Encryption.toSHA1(password);
                         dao.signup(username, password, email);
                         response.getWriter().write("success");
                         SendEmail sm = new SendEmail();

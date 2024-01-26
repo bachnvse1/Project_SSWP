@@ -131,7 +131,7 @@
                                                         <div class="row gy-3 overflow-hidden">
                                                             <div class="col-12">
                                                                 <div class="form-floating mb-3">
-                                                                    <input type="password" class="form-control" name="password"  >
+                                                                    <input type="password" class="form-control" name="password" >
                                                                     <label for="firstName" class="form-label">Password</label>
                                                                 </div>
                                                             </div>
@@ -149,7 +149,7 @@
                                                                 <p style="color: red;text-align: center">${requestScope.msg}</p>
                                                                 <div class="row">
                                                                     <div class="col-12">
-                                                                        <p class="mb-0 mt-5 text-secondary text-center">Already have an account? <a href="login.jsp" class="link-primary text-decoration-none">Sign in</a></p>
+                                                                        <p class="mb-0 mt-5 text-secondary text-center">Already have an account? <a href="signin.jsp" class="link-primary text-decoration-none">Sign in</a></p>
 
                                                                     </div>
                                                                 </div>

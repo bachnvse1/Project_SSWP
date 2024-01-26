@@ -21,9 +21,9 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-    $('#loginForm').submit(function (e) {
+    $('#signupForm').submit(function (e) {
         e.preventDefault(); // 
-
+        $("signup-button2").prop("disable", true);
         var formData = {
             user: $('#username').val(),
             pass: $('#password-signup').val(),
@@ -40,8 +40,11 @@ $(document).ready(function () {
             success: function (response) {
                 if (response === "success") {
                     window.location.href = "verify.jsp";
+                    $("signup-button2").prop("disable", false);
+                    refreshCaptcha();
                 } else {
                     refreshCaptcha();
+                    $("signup-button2").prop("disable", false);
                     alert(response);
                 }
             },

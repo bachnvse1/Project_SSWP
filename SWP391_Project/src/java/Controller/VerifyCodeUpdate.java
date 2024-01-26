@@ -39,7 +39,7 @@ public class VerifyCodeUpdate extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet VerifyCodeUpdate</title>");            
+            out.println("<title>Servlet VerifyCodeUpdate</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet VerifyCodeUpdate at " + request.getContextPath() + "</h1>");
@@ -87,6 +87,7 @@ public class VerifyCodeUpdate extends HttpServlet {
             int code_1 = Integer.parseInt(code);
             if (code_1 == code_give) {
                 dao.updateProfile(email, u.getDisplay_name(), u.getId());
+                session.invalidate();
                 response.getWriter().write("success");
             } else {
                 response.getWriter().write("error");
@@ -95,7 +96,7 @@ public class VerifyCodeUpdate extends HttpServlet {
 //            mess += "OTP error, input again!!!";
 //            request.setAttribute("messError", mess);
 //            request.getRequestDispatcher("verify.jsp").forward(request, response);
-              response.getWriter().write("error");
+            response.getWriter().write("error");
         }
     }
 

@@ -119,6 +119,7 @@ public class VerifyCode extends HttpServlet {
             int code_1 = Integer.parseInt(code);
             if (code_1 == code_give) {
                 dao.setVerifyTrue(email);
+                 session.invalidate();
                 response.getWriter().write("success");
             } else {
                 response.getWriter().write("error");

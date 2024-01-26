@@ -25,9 +25,12 @@
                     <input type="text" maxlength="5" id="Otp_code" required="">
                     <div class="verify-button">
                         <button type="submit">Verify</button></br></br>
-                        <button type="button"><a href="home.jsp" target="target" style="text-decoration: none; color: white;">Home</a></button>
+                        <button type="button">Login</button>
                     </div></br>
-                    <p style="color: #084298;" onclick="resendMail()">Resend Email</p>
+                    <div
+                        
+                    <button onclick="resendMail()" style="">Resend Email</button>
+                    
                 </div>
             </form>
         </div>
@@ -51,15 +54,15 @@
                                     success: function (response) {
                                         if (response === "success") {
                                             Swal.fire({
-                                            position: "bot-end",
-                                            icon: "success",
-                                            title: "Verify success!",
-                                            showConfirmButton: false,
-                                            timer: 1000
-                                        });
-                                        setTimeout(function () {
-                                            window.location.href = "signin.jsp";
-                                        }, 1000);
+                                                position: "bot-end",
+                                                icon: "success",
+                                                title: "Verify success!",
+                                                showConfirmButton: false,
+                                                timer: 1000
+                                            });
+                                            setTimeout(function () {
+                                                window.location.href = "signin.jsp";
+                                            }, 1000);
 
                                         } else {
                                             alert("OTP error!!!\nPlease input again!");

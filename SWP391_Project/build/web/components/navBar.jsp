@@ -25,17 +25,17 @@
                     <ul class="header-links pull-right">
                         <li>
                             <a><i class="fa fa-dollar"></i> 100.000</a></li>
-                            <c:if test="${sessionScope.user != null}">
+                            <c:if test="${user != null}">
                             <li id="info-Button"><a><i class="fa fa-user-o"></i>${user.display_name}</a></li>
-                            </c:if>
-                            <c:if test="${sessionScope.user == null}">
+                                    </c:if>
+                                    <c:if test="${user == null}">
                             <li><a><i class="fa fa-user-o"></i></a></li>
-                            </c:if>
-                        <c:if test="${sessionScope.user == null}">
+                                    </c:if>
+                                    <c:if test="${user == null}">
                             <li ><button style="color:red; border: 0; background-color: #1E1F29;" id="signin-Button">Login</button></li>
                             </c:if>
-                            <c:if test="${sessionScope.user != null}">
-                            <li><button style="color:red; border: 0; background-color: #1E1F29;" ><a href="logout">Logout</a></button></li>
+                            <c:if test="${user != null}">
+                            <li><button style="color:red; border: 0; background-color: #1E1F29;" id="logout-Button">Logout</button></li>
                             </c:if>
 
                     </ul>
@@ -135,6 +135,27 @@
                     });
                 });
             });
+
+            $(document).ready(function () {
+                $("#logout-Button").click(function () {
+                    $.ajax({
+                        type: 'POST',
+                        url: "logout",
+                        success: function (response) {
+                            $("body").html(response);
+                        },
+                        error: function () {
+                            // Xử lý lỗi nếu có
+                            alert("Đã xảy ra lỗi khi tải trang");
+                        }
+                    });
+                });
+            });
+
+            window.history.replaceState(null, null, 'signin.jsp');
+            
+            
+            
 
         </script>
     </body>

@@ -57,11 +57,8 @@ public class LogoutServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
-        HttpSession session = request.getSession();
-        session.removeAttribute("user");
-        session.removeAttribute("displayname");
-        response.sendRedirect("landingPage.html");
+        //processRequest(request, response)
+
     }
 
     /**
@@ -75,7 +72,17 @@ public class LogoutServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        // Xóa session
+        session.invalidate();
+
+        // Gửi các HTTP headers để hướng dẫn trình duyệt không lưu trang vào cache
+        response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
+        response.setHeader("Pragma", "no-cache");
+        response.setHeader("Expires", "0");
+
+        // Chuyển hướng người dùng đến trang signin.jsp
+        response.sendRedirect("signin.jsp");
     }
 
     /**

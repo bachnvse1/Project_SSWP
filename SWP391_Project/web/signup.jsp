@@ -39,7 +39,7 @@
                                 </a>
                                 <h3 style="font-weight: bold; margin-left: 25%">Sign Up</h3>
                             </div>
-                            <form id="loginForm">
+                            <form id="signupForm">
                                 <div class="form-group">
                                     <input type="text" class="form-control" id="username" placeholder="Username" required>
                                 </div>
@@ -68,7 +68,7 @@
                                     </button>
                                 </div>
                                 <div class="form-group">
-                                    <button type="submit" class="form-control btn btn-primary submit px-3">Sign Up</button>
+                                    <button type="submit" class="form-control btn btn-primary submit px-3" id="signup-button2">Sign Up</button>
                                 </div>
                             </form>
                             <p class="w-100 text-center">&mdash; You have an account ? &mdash;</p>

@@ -40,7 +40,8 @@ public class GetInfAccountForAdmin extends HttpServlet {
         DAO dao = new DAO();
         
         User usa = dao.getUserById(id);
-        request.setAttribute("userA", usa);
+        session.setAttribute("userA", usa);
+        
         //userGoogle us = dao.getUserGg(idgg);
         //request.setAttribute("userGoogle", us);
         request.getRequestDispatcher("EditAccountByAdmin.jsp").forward(request, response);
