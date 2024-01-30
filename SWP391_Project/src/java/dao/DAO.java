@@ -5,6 +5,7 @@
 package dao;
 
 import Context.DBContext;
+import Entity.Product;
 import Entity.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -92,7 +93,10 @@ public class DAO extends DBContext {
 
         }
         return list;
+       
     }
+    
+    
 
     public User getUser(String username) {
 
@@ -388,4 +392,8 @@ public class DAO extends DBContext {
     }
 
     //CHI
+    
+    public List<Product> getAllProduct() {
+        return null;
+    }
 }
