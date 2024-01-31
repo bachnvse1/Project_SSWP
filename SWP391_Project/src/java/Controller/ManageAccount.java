@@ -23,7 +23,7 @@ public class ManageAccount extends HttpServlet {
         DAO dao = new DAO();
         List<User> list = dao.getAllUser();
         request.setAttribute("listA", list);
-
+        
         request.getRequestDispatcher("quanlytaikhoan.jsp").forward(request, response);
     }
 

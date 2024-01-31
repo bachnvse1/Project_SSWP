@@ -152,11 +152,6 @@
                 });
             });
 
-            window.history.replaceState(null, null, 'signin.jsp');
-
-
-
-
         </script>
     </body>
 </html>

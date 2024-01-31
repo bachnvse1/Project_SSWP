@@ -5,6 +5,7 @@
 package dao;
 
 import Context.DBContext;
+import Entity.Category;
 import Entity.Product;
 import Entity.User;
 import java.sql.Connection;
@@ -392,8 +393,5 @@ public class DAO extends DBContext {
     }
 
     //CHI
-    
-    public List<Product> getAllProduct() {
-        return null;
-    }
+
 }

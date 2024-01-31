@@ -82,7 +82,7 @@
                                         <!-- product -->
                                         <div class="product">
                                             <div class="product-img">
-                                                <img src="./img/product06.png" alt="">
+                                                <img src="https://image.nhandan.vn/Uploaded/2024/unqxwpejw/2023_09_24/anh-dep-giao-thong-1626.jpg" alt="">
 
                                             </div>
                                             <div class="product-body">
