@@ -93,7 +93,16 @@ add foreign key (create_by) references users(id);
 alter table intermediate_Orders
 add foreign key (updated_by) references users(id);
 
+INSERT INTO Category (name, is_delete) VALUES ('Electronics', 0);
+INSERT INTO Category (name, is_delete) VALUES ('Clothing', 0);
+INSERT INTO Category (name, is_delete) VALUES ('Books', 0);
 
+INSERT INTO users (username, password, email, display_name, is_admin, is_verify, is_active) 
+VALUES ('bach', '123', 'example@example.com', 'Example User', 1, 1, 1);
 
+delete from product
+INSERT INTO Product (name, price, categoryID, description, image, create_by, updated_by) 
+VALUES ('Product 1', 50.00, 1, 'Description of Product 1', 'https://image.baophapluat.vn/1200x630/Uploaded/2024/qxcqdcqdh/2016_06_09/a0_ds_NKIX.jpg', 1, 1);
 
-
+INSERT INTO Product (name, price, categoryID, description, image, create_by, updated_by) 
+VALUES ('Product 2', 51.00, 1, 'Description of Product 2', 'https://image.baophapluat.vn/1200x630/Uploaded/2024/qxcqdcqdh/2016_06_09/a0_ds_NKIX.jpg', 1, 1);

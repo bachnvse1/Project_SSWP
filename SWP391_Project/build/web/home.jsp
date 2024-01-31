@@ -62,10 +62,9 @@
                             <h3 class="title">Product</h3>
                             <div class="section-nav">
                                 <ul class="section-tab-nav tab-nav">
-                                    <li class="active"><a data-toggle="tab" href="#tab2">Laptops</a></li>
-                                    <li><a data-toggle="tab" href="#tab2">Smartphones</a></li>
-                                    <li><a data-toggle="tab" href="#tab2">Cameras</a></li>
-                                    <li><a data-toggle="tab" href="#tab2">Accessories</a></li>
+                                    <c:forEach items="${listCategory}" var="c">
+                                        <li><a data-toggle="tab" href="">${c.name}</a></li>
+                                        </c:forEach>
                                 </ul>
                             </div>
                         </div>
@@ -78,36 +77,41 @@
                             <div class="products-tabs">
                                 <!-- tab -->
                                 <div id="tab2" class="tab-pane fade in active">
-                                    <div class="col-md-3">
-                                        <!-- product -->
-                                        <div class="product">
-                                            <div class="product-img">
-                                                <img src="https://image.nhandan.vn/Uploaded/2024/unqxwpejw/2023_09_24/anh-dep-giao-thong-1626.jpg" alt="">
+                                    <c:forEach items="${listProduct}" var="p">
+                                        <div class="col-md-3">
+                                            <!-- product -->
 
-                                            </div>
-                                            <div class="product-body">
-                                                <p class="product-category">Category</p>
-                                                <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                                <h4 class="product-price">$980.00 <del
-                                                        class="product-old-price">$990.00</del></h4>
+                                            <div class="product">
+                                                <div class="product-img">
+                                                    <img src="${p.image}" alt="">
 
-                                                <div class="product-btns">
-                                                    <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span
-                                                            class="tooltipp">add to wishlist</span></button>
-                                                    <button class="add-to-compare"><i class="fa fa-exchange"></i><span
-                                                            class="tooltipp">add to compare</span></button>
-                                                    <button class="quick-view"><i class="fa fa-eye"></i><span
-                                                            class="tooltipp">quick view</span></button>
+                                                </div>
+                                                <div class="product-body">
+                                                    <p class="product-category">Category</p>
+                                                    <h3 class="product-name"><a href="#">${p.name}</a></h3>
+                                                    <h4 class="product-price">${p.price} <del
+                                                            class="product-old-price">$990.00</del></h4>
+
+                                                    <div class="product-btns">
+                                                        <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span
+                                                                class="tooltipp">add to wishlist</span></button>
+                                                        <button class="add-to-compare"><i class="fa fa-exchange"></i><span
+                                                                class="tooltipp">add to compare</span></button>
+                                                        <button class="quick-view"><i class="fa fa-eye"></i><span
+                                                                class="tooltipp">quick view</span></button>
+                                                    </div>
+                                                </div>
+                                                <div class="add-to-cart">
+                                                    <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to
+                                                        cart</button>
                                                 </div>
                                             </div>
-                                            <div class="add-to-cart">
-                                                <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to
-                                                    cart</button>
-                                            </div>
-                                        </div>
-                                        <!-- /product -->
 
-                                    </div>
+
+                                            <!-- /product -->
+
+                                        </div>
+                                    </c:forEach>
                                 </div>
                                 <!-- /tab -->
                             </div>
