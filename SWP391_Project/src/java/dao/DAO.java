@@ -5,6 +5,8 @@
 package dao;
 
 import Context.DBContext;
+import Entity.Category;
+import Entity.Product;
 import Entity.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -92,7 +94,10 @@ public class DAO extends DBContext {
 
         }
         return list;
+       
     }
+    
+    
 
     public User getUser(String username) {
 
@@ -386,6 +391,120 @@ public class DAO extends DBContext {
         }
         return false;
     }
+    
+    
+    
 
-    //CHI
+    //BINH
+    
+    public List<Product> getAllProduct() {
+        List<Product> list = new ArrayList<>();
+        String sql = "SELECT * FROM swp_demo.product";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Product(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getDouble(3),
+                        rs.getInt(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getInt(7),
+                        rs.getTimestamp(8),
+                          rs.getInt(9),
+                        rs.getTimestamp(10),
+                      
+                        rs.getBoolean(11)));
+            }
+
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return list;
+    }
+
+    public List<Category> getAllCategory() {
+        List<Category> list = new ArrayList<>();
+        String sql = "SELECT * FROM swp_demo.category";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Category(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getTimestamp(3),
+                        rs.getTimestamp(4),
+                        rs.getBoolean(5)));
+
+            }
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return list;
+    }
+
+    public List<Product> getAllProductbyCategory(int cid) {
+        List<Product> list = new ArrayList<>();
+        String sql = "SELECT * FROM swp_demo.product\n"
+                + "where categoryID=?;";
+        try {
+            con = new DBContext().connection;
+        
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, cid);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Product(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getDouble(3),
+                        rs.getInt(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getInt(7),
+                        rs.getTimestamp(8),
+                           rs.getInt(10),
+                        rs.getTimestamp(9),
+                     
+                        rs.getBoolean(11)));
+            }
+
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return list;
+    }
+
+    public Category getCategoryById(int cid) {
+        String sql = "SELECT * FROM swp_demo.category\n"
+                + "where id=?;";
+        try {
+            con = new DBContext().connection;
+        
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, cid);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return new Category(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getTimestamp(3),
+                        rs.getTimestamp(4),
+                        rs.getBoolean(5));
+            }
+
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return null;
+    }
+    public static void main(String[] args) {
+        DAO dao = new DAO();
+        List<Product> list = dao.getAllProduct();
+        for (Product product : list) {
+            System.out.println(product.toString());
+        }
+    }
+
 }

@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package Controller;
 
 import java.io.IOException;
@@ -27,34 +26,37 @@ import javax.imageio.ImageIO;
  */
 @WebServlet(name = "CaptchaImageServlet", urlPatterns = {"/captchaimage"})
 public class CaptchaImageServlet extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CaptchaImageServlet</title>");  
+            out.println("<title>Servlet CaptchaImageServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CaptchaImageServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet CaptchaImageServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    } 
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -62,8 +64,8 @@ public class CaptchaImageServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-      //  processRequest(request, response);
+            throws ServletException, IOException {
+        //  processRequest(request, response);
         Random random = new Random();
         String capchaString = generateCapchaString();
         BufferedImage img = new BufferedImage(120, 40, BufferedImage.TYPE_INT_RGB);
@@ -71,7 +73,7 @@ public class CaptchaImageServlet extends HttpServlet {
         //Ve chuoi so len anh
         g2D.setFont(new Font("SansSerif", Font.PLAIN, 25));
         g2D.setColor(Color.WHITE);
-        g2D.drawString(capchaString, 5+random.nextInt(10), 25+random.nextInt(10));
+        g2D.drawString(capchaString, 5 + random.nextInt(10), 25 + random.nextInt(10));
 
         //Luu chuoi so vao session de kiem tra sau
         request.getSession().setAttribute("captcha", capchaString);
@@ -91,32 +93,20 @@ public class CaptchaImageServlet extends HttpServlet {
 
             g2D.drawArc(x, y, width, height, startAngle, arcAngle);
         }
-  
+
         ImageIO.write(img, "png", response.getOutputStream());
 
     }
 
     public static String generateCapchaString() {
         Random random = new Random();
-        StringBuilder captcha = new StringBuilder();
-        for (int i = 0; i < 6; i++) {
-            // random 1 so int bat ki tu  0-9, a-z , A - Z (9 + 26 + 26 ) so
-            int randomCaptcha = random.nextInt(61);
-            if (randomCaptcha <= 25) {
-                //Neu la chu cai thuong thi random ra 1 chu cai tu a-z
-                captcha.append((char) (randomCaptcha + 'a'));
-            }else if(randomCaptcha <=51){
-                //Neu la chu cai in hoa thi random ra 1 chu cai tu A-Z
-                captcha.append((char) (randomCaptcha - 26 + 'A'));
-            }else{
-                // Con neu la so
-                captcha.append((char) (randomCaptcha - 52 + '0'));
-                }
-                }   
-        return captcha.toString();
-            }
-    /** 
+        int captcha = random.nextInt(9000) + 1000;
+        return String.valueOf(captcha);
+    }
+
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -124,13 +114,14 @@ public class CaptchaImageServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
-        
+
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override

@@ -36,6 +36,10 @@
         <servlet-name>sendEmailServlet</servlet-name>
         <servlet-class>Controller.sendEmailServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>homeServ</servlet-name>
+        <servlet-class>Controller.homeServ</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SendEmail</servlet-name>
         <url-pattern>/send</url-pattern>
@@ -63,5 +67,9 @@
     <servlet-mapping>
         <servlet-name>sendEmailServlet</servlet-name>
         <url-pattern>/sendEmailServ</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>homeServ</servlet-name>
+        <url-pattern>/home</url-pattern>
     </servlet-mapping>
 </web-app>

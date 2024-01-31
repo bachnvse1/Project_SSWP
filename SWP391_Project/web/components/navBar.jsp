@@ -108,7 +108,7 @@
             </div>
             <!-- /MAIN HEADER -->
         </header>
-        <!-- /HEADER -->
+        
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <!-- jQuery Plugins -->
@@ -151,11 +151,6 @@
                     });
                 });
             });
-
-            window.history.replaceState(null, null, 'signin.jsp');
-            
-            
-            
 
         </script>
     </body>

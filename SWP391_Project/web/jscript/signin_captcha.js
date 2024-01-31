@@ -48,7 +48,7 @@ function SignIn()
                     timer: 1000
                 });
                 setTimeout(function () {
-                    window.location.href = "home.jsp"; // thế cái này chạy tới đâu home, cai nay la dang nhap tk cus ? ho
+                    window.location.href = "home"; // thế cái này chạy tới đâu home, cai nay la dang nhap tk cus ? ho
                 }, 1000);
             } else if (response === "admin") {
                 window.location.href = "ManageAccount"; // cai nay dnhap tk admin 
@@ -64,7 +64,6 @@ function SignIn()
                     text: response
 
                 });
-
             }
         }
     });
