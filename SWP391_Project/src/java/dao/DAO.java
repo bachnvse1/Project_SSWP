@@ -94,10 +94,8 @@ public class DAO extends DBContext {
 
         }
         return list;
-       
+
     }
-    
-    
 
     public User getUser(String username) {
 
@@ -151,7 +149,6 @@ public class DAO extends DBContext {
         return null;
     }
 
-
     public User getEmail(String email) {
         String query = "select * from swp_demo.users where email = ?";
         try {
@@ -192,7 +189,6 @@ public class DAO extends DBContext {
         }
         return null;
     }
-
 
     //HUY
     public User Login(String username, String pass) {
@@ -306,7 +302,6 @@ public class DAO extends DBContext {
         //CHIEN
     }
 
-
     public void editUserByAdmin(int id, boolean is_Active) {
         String sql = "Update users set is_Active=? where id =? ";
         try {
@@ -391,12 +386,8 @@ public class DAO extends DBContext {
         }
         return false;
     }
-    
-    
-    
 
     //BINH
-    
     public List<Product> getAllProduct() {
         List<Product> list = new ArrayList<>();
         String sql = "SELECT * FROM swp_demo.product";
@@ -411,12 +402,17 @@ public class DAO extends DBContext {
                         rs.getInt(4),
                         rs.getString(5),
                         rs.getString(6),
-                        rs.getInt(7),
-                        rs.getTimestamp(8),
-                          rs.getInt(9),
-                        rs.getTimestamp(10),
-                      
-                        rs.getBoolean(11)));
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getBoolean(10),
+                        rs.getString(11),
+                        rs.getInt(12),
+                        rs.getString(13),
+                        rs.getTimestamp(14),
+                        rs.getInt(15),
+                        rs.getTimestamp(16),
+                        rs.getBoolean(17)));
             }
 
         } catch (Exception ex) {
@@ -452,7 +448,7 @@ public class DAO extends DBContext {
                 + "where categoryID=?;";
         try {
             con = new DBContext().connection;
-        
+
             ps = con.prepareStatement(sql);
             ps.setInt(1, cid);
             rs = ps.executeQuery();
@@ -463,12 +459,17 @@ public class DAO extends DBContext {
                         rs.getInt(4),
                         rs.getString(5),
                         rs.getString(6),
-                        rs.getInt(7),
-                        rs.getTimestamp(8),
-                           rs.getInt(10),
-                        rs.getTimestamp(9),
-                     
-                        rs.getBoolean(11)));
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getBoolean(10),
+                        rs.getString(11),
+                        rs.getInt(12),
+                        rs.getString(13),
+                        rs.getTimestamp(14),
+                        rs.getInt(15),
+                        rs.getTimestamp(16),
+                        rs.getBoolean(17)));
             }
 
         } catch (Exception ex) {
@@ -482,7 +483,7 @@ public class DAO extends DBContext {
                 + "where id=?;";
         try {
             con = new DBContext().connection;
-        
+
             ps = con.prepareStatement(sql);
             ps.setInt(1, cid);
             rs = ps.executeQuery();
@@ -499,6 +500,44 @@ public class DAO extends DBContext {
         }
         return null;
     }
+
+    public List<Product> getProductbyCategoryID(int id) {
+        List<Product> list = new ArrayList<>();
+        String sql = "Select * from product as p inner join category as c\n"
+                + "on p.categoryID=c.id where p.categoryID=?";
+        try {
+            con = new DBContext().connection;
+
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+         while (rs.next()) {
+     
+                list.add(new Product(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getDouble(3),
+                        rs.getInt(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getBoolean(10),
+                        rs.getString(11),
+                        rs.getInt(12),
+                        rs.getString(13),
+                        rs.getTimestamp(14),
+                        rs.getInt(15),
+                        rs.getTimestamp(16),
+                        rs.getBoolean(17)));
+            }
+            
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return list;
+    }
+
     public static void main(String[] args) {
         DAO dao = new DAO();
         List<Product> list = dao.getAllProduct();

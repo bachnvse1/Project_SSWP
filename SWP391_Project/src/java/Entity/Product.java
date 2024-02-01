@@ -11,34 +11,58 @@ import java.sql.Timestamp;
  * @author ADMIN
  */
 public class Product {
+
     public int id;
     public String name;
     public double price;
     public int CategoryID;
     public String Description;
-    public String image;
+    public String image1;
+    public String image2;
+    public String image3;
+    public String image4;
+    public boolean Transaction_fee;
+    public String Contact_Method;
     public int create_by;
-    public int update_by;
+    public String hidden_content;
     public Timestamp create_At;
+    public int update_by;
+
     public Timestamp update_At;
     public boolean is_delete;
 
     public Product() {
     }
 
-    public Product(int id, String name, double price, int CategoryID, String Description, String image, int create_by,  Timestamp create_At, int update_by, Timestamp update_At, boolean is_delete) {
+    public Product(int id, String name, double price, int CategoryID, String Description, String image1, String image2, String image3, String image4, boolean Transaction_fee, String Contact_Method, int create_by, String hidden_content, Timestamp create_At, int update_by, Timestamp update_At, boolean is_delete) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.CategoryID = CategoryID;
         this.Description = Description;
-        this.image = image;
+        this.image1 = image1;
+        this.image2 = image2;
+        this.image3 = image3;
+        this.image4 = image4;
+        this.Transaction_fee = Transaction_fee;
+        this.Contact_Method = Contact_Method;
         this.create_by = create_by;
-        this.update_by = update_by;
+        this.hidden_content = hidden_content;
         this.create_At = create_At;
+        this.update_by = update_by;
         this.update_At = update_At;
         this.is_delete = is_delete;
     }
+
+    public String getContact_Method() {
+        return Contact_Method;
+    }
+
+    public void setContact_Method(String Contact_Method) {
+        this.Contact_Method = Contact_Method;
+    }
+
+    
 
     public int getId() {
         return id;
@@ -80,12 +104,44 @@ public class Product {
         this.Description = Description;
     }
 
-    public String getImage() {
-        return image;
+    public String getImage1() {
+        return image1;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImage1(String image1) {
+        this.image1 = image1;
+    }
+
+    public String getImage2() {
+        return image2;
+    }
+
+    public void setImage2(String image2) {
+        this.image2 = image2;
+    }
+
+    public String getImage3() {
+        return image3;
+    }
+
+    public void setImage3(String image3) {
+        this.image3 = image3;
+    }
+
+    public String getImage4() {
+        return image4;
+    }
+
+    public void setImage4(String image4) {
+        this.image4 = image4;
+    }
+
+    public boolean isTransaction_fee() {
+        return Transaction_fee;
+    }
+
+    public void setTransaction_fee(boolean Transaction_fee) {
+        this.Transaction_fee = Transaction_fee;
     }
 
     public int getCreate_by() {
@@ -96,12 +152,12 @@ public class Product {
         this.create_by = create_by;
     }
 
-    public int getUpdate_by() {
-        return update_by;
+    public String getHidden_content() {
+        return hidden_content;
     }
 
-    public void setUpdate_by(int update_by) {
-        this.update_by = update_by;
+    public void setHidden_content(String hidden_content) {
+        this.hidden_content = hidden_content;
     }
 
     public Timestamp getCreate_At() {
@@ -110,6 +166,14 @@ public class Product {
 
     public void setCreate_At(Timestamp create_At) {
         this.create_At = create_At;
+    }
+
+    public int getUpdate_by() {
+        return update_by;
+    }
+
+    public void setUpdate_by(int update_by) {
+        this.update_by = update_by;
     }
 
     public Timestamp getUpdate_At() {
@@ -130,11 +194,7 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product{" + "id=" + id + ", name=" + name + ", price=" + price + ", CategoryID=" + CategoryID + ", Description=" + Description + ", image=" + image + ", create_by=" + create_by + ", update_by=" + update_by + ", create_At=" + create_At + ", update_At=" + update_At + ", is_delete=" + is_delete + '}';
+        return "Product{" + "id=" + id + ", name=" + name + ", price=" + price + ", CategoryID=" + CategoryID + ", Description=" + Description + ", image=" + image1 + image2 + image3 + image4 + ", create_by=" + create_by + ", update_by=" + update_by + ", create_At=" + create_At + ", update_At=" + update_At + ", is_delete=" + is_delete + '}';
     }
-    
-    
-    
+
 }
-
-

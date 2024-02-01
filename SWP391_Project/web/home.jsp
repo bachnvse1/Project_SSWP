@@ -46,7 +46,7 @@
 
     <body>
         <!-- HEADER -->
-        <%@include file="components/navbar.jsp" %>
+        <%@include file="components/navBar.jsp" %>
         <!-- /NAVIGATION -->
         <!-- /NAVIGATION -->
         <!-- SECTION -->
@@ -63,7 +63,7 @@
                             <div class="section-nav">
                                 <ul class="section-tab-nav tab-nav">
                                     <c:forEach items="${listCategory}" var="c">
-                                        <li><a data-toggle="tab" href="">${c.name}</a></li>
+                                        <li><a data-toggle="tab" href="" value="${c.id}">${c.name}</a></li>
                                         </c:forEach>
                                 </ul>
                             </div>
@@ -83,8 +83,8 @@
 
                                             <div class="product">
                                                 <div class="product-img">
-                                                    <img src="${p.image}" alt="">
-
+                                                    <img src="${p.image1}" alt="">
+                                                    
                                                 </div>
                                                 <div class="product-body">
                                                     <p class="product-category">Category</p>
