@@ -24,7 +24,7 @@ public class Encryption {
         try {
             byte [] dataBytes = password.getBytes("UTF-8");
             MessageDigest md = MessageDigest.getInstance("SHA-1");
-            result= Base64.encodeBase64String(md.digest(dataBytes));
+            result = Base64.encodeBase64String(md.digest(dataBytes));
         } catch(Exception e) {
             e.printStackTrace();
         }
