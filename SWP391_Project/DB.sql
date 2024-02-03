@@ -98,11 +98,16 @@ INSERT INTO Category (name, is_delete) VALUES ('Clothing', 0);
 INSERT INTO Category (name, is_delete) VALUES ('Books', 0);
 
 INSERT INTO users (username, password, email, display_name, is_admin, is_verify, is_active) 
-VALUES ('bach', '123', 'example@example.com', 'Example User', 1, 1, 1);
+VALUES ('bach', 'UPdqztViNgyMw0QyGVTpe0ud+dw=', 'example@example.com', 'Example User', 1, 1, 1);
+
 
 delete from product
-INSERT INTO Product (name, price, categoryID, description, image, create_by, updated_by) 
-VALUES ('Product 1', 50.00, 1, 'Description of Product 1', 'https://image.baophapluat.vn/1200x630/Uploaded/2024/qxcqdcqdh/2016_06_09/a0_ds_NKIX.jpg', 1, 1);
+INSERT INTO Product (name, price, categoryID, description, image, create_by, updated_by, is_delete) VALUES
+('Product 1', 50.99, 1, 'Description for Product 1', 'https://i.imgur.com/YxPwb7X.jpg', 1, 1, 0),
+('Product 2', 39.95, 2, 'Description for Product 2', 'https://i.imgur.com/YxPwb7X.jpg', 1, 1, 0),
+('Product 3', 99.50, 1, 'Description for Product 3', 'https://i.imgur.com/YxPwb7X.jpg', 1, 1, 0),
+('Product 4', 149.75, 3, 'Description for Product 4', 'https://i.imgur.com/YxPwb7X.jpg', 1, 1, 0);
 
-INSERT INTO Product (name, price, categoryID, description, image, create_by, updated_by) 
-VALUES ('Product 2', 51.00, 1, 'Description of Product 2', 'https://image.baophapluat.vn/1200x630/Uploaded/2024/qxcqdcqdh/2016_06_09/a0_ds_NKIX.jpg', 1, 1);
+
+
+select * from user
