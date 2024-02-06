@@ -80,10 +80,10 @@
                             <div class="header-ctn">
                                 <!-- Wishlist -->
                                 <div>
-                                    <a href="#">
+                                    <a id="oder-Button" href="#">
                                         <i class="fa fa-heart-o"></i>
-                                        <span>Your Wishlist</span>
-                                        <div class="qty">2</div>
+                                        <span>My Order</span>
+                                        <div class="qty">10</div>
                                     </a>
                                 </div>
                                 <!-- /Wishlist -->
@@ -127,6 +127,21 @@
                         url: "editprofile.jsp",
                         success: function (response) {
                             window.location.href = "editprofile.jsp";
+                        },
+                        error: function () {
+                            // Xử lý lỗi nếu có
+                            alert("Đã xảy ra lỗi khi tải trang");
+                        }
+                    });
+                });
+            });
+ $(document).ready(function () {
+                $("#oder-Button").click(function () {
+                    $.ajax({
+                        type: 'GET',
+                        url: "MyOrder.jsp",
+                        success: function (response) {
+                            window.location.href = "MyOrder.jsp";
                         },
                         error: function () {
                             // Xử lý lỗi nếu có

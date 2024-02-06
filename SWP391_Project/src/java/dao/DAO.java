@@ -8,6 +8,7 @@ import Context.DBContext;
 import Entity.Category;
 import Entity.Product;
 import Entity.User;
+import Entity.intermediateOrders;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -284,6 +285,91 @@ public class DAO extends DBContext {
     }
 
     //HUY
+    public void insertProduct(Product product) {
+        String sql = "INSERT INTO swp_demo.Product (name,"
+                + " price, "
+                + "categoryID, "
+                + "description, "
+                + "image1, "
+                + "image2, "
+                + "image3, "
+                + "image4, "
+                + "transaction_Fees,"
+                + "contact_Method, "
+                + "create_by, "
+                + "hidden_content, "
+                + "updated_by, "
+                + "is_delete) "
+                + "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,0)";
+        try {
+            con = new DBContext().connection; //connect sql
+            ps = con.prepareStatement(sql);
+            ps.setString(1, product.getName());
+            ps.setDouble(2, product.getPrice());
+            ps.setInt(3, product.getCategoryID());
+            ps.setString(4, product.getDescription());
+            ps.setString(5, product.getImage1());
+            ps.setString(6, product.getImage2());
+            ps.setString(7, product.getImage3());
+            ps.setString(8, product.getImage4());
+            ps.setBoolean(9, product.isTransaction_fee());
+            ps.setString(10, product.getContact_Method());
+            ps.setInt(11, product.getCreate_by());
+            ps.setString(12, product.getHidden_content());
+            ps.setInt(13, product.getCreate_by());
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+
+        }
+
+    }
+
+    public void insertOrder(intermediateOrders order) {
+        String sql = "INSERT INTO swp_demo.intermediate_Orders (code, "
+                + "productID, "
+                + "total_received_amount, "
+                + "total_paid_amount, "
+                + "intermediary_fee, "
+                + "status,"
+                + " create_by, "
+                + "updated_by, "
+                + "is_delete) \n"
+                + "VALUES \n"
+                + "(?, ?, ?, ?, ?, ?, ?, ?, 0)";
+        try {
+            con = new DBContext().connection; //connect sql
+            ps = con.prepareStatement(sql);
+            ps.setString(1, order.getCode());
+            ps.setInt(2, order.getProductId());
+            ps.setDouble(3, order.getTotal_received_amount());
+            ps.setDouble(4, order.getTotal_paid_amount());
+            ps.setDouble(5, order.getIntermediary_fee());
+            ps.setString(6, order.getStatus());
+            ps.setInt(7, order.getCreate_by());
+            ps.setInt(8, order.getUpdate_by());
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+
+        }
+    }
+    public int getIdProduct(){
+          String query = "SELECT MAX(id) AS max_id FROM swp_demo.Product";
+        try {
+            con = new DBContext().connection; //connect sql
+            ps = con.prepareStatement(query);
+            rs = ps.executeQuery();
+              while (rs.next()) {
+            int id = rs.getInt("max_id"); // Lấy giá trị id từ cột max_id trong ResultSet
+            return id;
+        }
+        } catch (Exception e) {
+
+        }   
+        return 0;
+    }
+
     //BINH
     //HUE
     public void updateProfile(String email, String displayName, int id) {
@@ -511,8 +597,8 @@ public class DAO extends DBContext {
             ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             rs = ps.executeQuery();
-         while (rs.next()) {
-     
+            while (rs.next()) {
+
                 list.add(new Product(rs.getInt(1),
                         rs.getString(2),
                         rs.getDouble(3),
@@ -531,7 +617,7 @@ public class DAO extends DBContext {
                         rs.getTimestamp(16),
                         rs.getBoolean(17)));
             }
-            
+
         } catch (Exception ex) {
             System.out.println(ex);
         }
