@@ -84,7 +84,6 @@
                                             <div class="product">
                                                 <div class="product-img">
                                                     <img src="${p.image1}" alt="">
-                                                    
                                                 </div>
                                                 <div class="product-body">
                                                     <p class="product-category">Category</p>
