@@ -27,64 +27,14 @@
 
         <!-- Custom stlylesheet -->
         <link type="text/css" rel="stylesheet" href="css/style.css"/>
-
+        <link type="text/css" rel="stylesheet" href="css/myorder.css"/>
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
           <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 0;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
-                background-color: #f4f4f4;
-            }
-
-            .management {
-                background-color: #fff;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-                width: 300px;
-                transition: background-color 0.3s ease; /* Thêm hiệu ứng chuyển đổi màu nền */
-            }
-
-            .title-bar {
-                padding: 10px;
-                border-bottom: 1px solid #ddd;
-                cursor: pointer;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-
-            .title-bar:hover {
-                background-color: #e6e6e6; /* Màu nền khi di chuột vào */
-            }
-
-            .options {
-                display: none;
-            }
-
-            .options ul {
-                list-style: none;
-                margin: 0;
-                padding: 0;
-            }
-
-            .options li {
-                padding: 10px;
-                border-bottom: 1px solid #ddd;
-            }
-
-            .options li:last-child {
-                border-bottom: none;
-            }
-
-        </style>
+        
     </head>
     <body>
         <%@include file="components/navBar.jsp" %>
@@ -131,6 +81,7 @@
             </div>
             <div class="table-responsive" style="margin-left: 5%">
 
+<<<<<<< HEAD
                 <div class="container mt-5">
         <div class="d-flex justify-content-center row">
             <div class="col-md-10">
@@ -212,6 +163,39 @@
             </div>
         </div>
     </div>
+=======
+                <table id="ProductDisplay" class="text-nowrap mb-0 table" border="1">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Code</th>
+                            <th>Product Name</th>
+                            <th>Price</th>                        
+                            <th>Total amount received</th>
+                            <th>Total payment</th>
+                            <th>Transaction fees</th>
+                            <th>Status</th>
+                            <th>Party bears the fee</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        <c:forEach items="${productOrderPairs}" var="o">
+                        <tr>
+                            <td>${o.getOrder().getCode()}</td>
+                            <td>okkk</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                         </tr>
+                      </c:forEach>
+                    </tbody>
+                </table>
+>>>>>>> origin/branch-15
                 <div id="addProductForm" class="addProduct">
                     <h2>Add Product</h2>
 

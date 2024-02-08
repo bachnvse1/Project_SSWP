@@ -7,8 +7,10 @@ package dao;
 import Context.DBContext;
 import Entity.Category;
 import Entity.Product;
+import Entity.ProductOrderPair;
 import Entity.User;
 import Entity.intermediateOrders;
+import jakarta.servlet.http.HttpSession;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -394,6 +396,69 @@ public class DAO extends DBContext {
         return 0;
     }
 
+    public List<Product> getProductByUserID(int id) {
+        List<Product> list = new ArrayList<>();
+        String sql = "SELECT * FROM swp_demo.product where create_by = ?";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Product(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getDouble(3),
+                        rs.getInt(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getBoolean(10),
+                        rs.getString(11),
+                        rs.getInt(12),
+                        rs.getString(13),
+                        rs.getTimestamp(14),
+                        rs.getInt(15),
+                        rs.getTimestamp(16),
+                        rs.getBoolean(17)));
+            }
+
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return list;
+    }
+
+    public intermediateOrders getOrderByProductID(int id) {
+        String sql = "SELECT * FROM swp_demo.intermediate_orders\n"
+                + "where productID =? ;";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return new intermediateOrders(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getInt(3),
+                        rs.getDouble(4),
+                        rs.getDouble(5),
+                        rs.getDouble(6),
+                        rs.getString(7),
+                        rs.getInt(8),
+                        rs.getTimestamp(9),
+                        rs.getInt(10),
+                         rs.getTimestamp(11),
+                        rs.getBoolean(12));
+            }
+        } catch (Exception e) {
+
+        }
+        return null;
+
+    }
+
     //BINH
     //HUE
     public void updateProfile(String email, String displayName, int id) {
@@ -650,10 +715,11 @@ public class DAO extends DBContext {
 
     public static void main(String[] args) {
         DAO dao = new DAO();
-        List<Product> list = dao.getAllProduct();
-        for (Product product : list) {
-            System.out.println(product.toString());
-        }
+        List<Product> listProduct = dao.getProductByUserID(1);
+        List<ProductOrderPair> productOrderPairs = new ArrayList<>();
+        intermediateOrders order = dao.getOrderByProductID(15);
+        System.out.println(order.toString());
+
     }
 
 }
