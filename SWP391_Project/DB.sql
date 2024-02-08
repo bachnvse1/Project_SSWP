@@ -1,3 +1,5 @@
+
+use swp_demo
 CREATE TABLE users (
     id INT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(255) NOT NULL,
@@ -47,12 +49,14 @@ Create table Product (
     is_delete bit
 );
 
-
+drop table intermediate_Orders
+drop table Order_Detail
 
 create table intermediate_Orders(
 	id INT PRIMARY KEY AUTO_INCREMENT,
     code varchar(255),
     productID int,
+    buyer_id int,
 	total_received_amount float(10,2),
     total_paid_amount float(10,2),
 	intermediary_fee float(10,2),
@@ -124,3 +128,13 @@ INSERT INTO Product (name, price, categoryID, description, image1, image2, image
 
 INSERT INTO users (username, password, email, display_name, is_admin, is_verify, is_active) 
 VALUES ('bach', 'UPdqztViNgyMw0QyGVTpe0ud+dw=', 'example@example.com', 'Example User', 1, 1, 1);
+
+INSERT INTO intermediate_Orders (code, productID, buyer_id,total_received_amount, total_paid_amount, intermediary_fee, status, create_by, updated_by, is_delete) 
+VALUES 
+('ORD123', 1, 100.50, 95.00, 5.50, 'đang kiểm tra hàng', 1, 1, 0);
+
+
+
+select * from Product
+select * from users
+select * from intermediate_Orders

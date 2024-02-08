@@ -27,7 +27,7 @@ public class DAO extends DBContext {
     public PreparedStatement ps = null; //ném câu lệnh query sang sql
     public ResultSet rs = null; //nhận kết quả trả về
 
-    // Bach + Sign up
+    // Bach 
     public void signup(String user, String pass, String email) {
         String query = "INSERT users (username, password, email, display_Name, is_admin, is_verify, is_active) VALUES (?, ?, ?, ?, 0, 0, 1)";
         try {
@@ -189,6 +189,29 @@ public class DAO extends DBContext {
 
         }
         return null;
+    }
+
+    public void updateOrder(int buyer_id, String status, int updated_by, int id) {
+        String query = "UPDATE intermediate_Orders\n"
+                + "SET \n"
+                + "    buyer_id = ?,\n"
+                + "    status = ?,\n"
+                + "    updated_by = ?,\n"
+                + "    updated_at = CURRENT_TIMESTAMP\n"
+                + "WHERE\n"
+                + "    productID = ?;";
+         try {
+            con = new DBContext().connection; //connect sql
+            ps = con.prepareStatement(query);
+            ps.setInt(1, buyer_id);
+            ps.setString(2, status);
+            ps.setInt(3, updated_by);
+            ps.setInt(4, id);
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+
+        }
     }
 
     //HUY
@@ -354,19 +377,20 @@ public class DAO extends DBContext {
 
         }
     }
-    public int getIdProduct(){
-          String query = "SELECT MAX(id) AS max_id FROM swp_demo.Product";
+
+    public int getIdProduct() {
+        String query = "SELECT MAX(id) AS max_id FROM swp_demo.Product";
         try {
             con = new DBContext().connection; //connect sql
             ps = con.prepareStatement(query);
             rs = ps.executeQuery();
-              while (rs.next()) {
-            int id = rs.getInt("max_id"); // Lấy giá trị id từ cột max_id trong ResultSet
-            return id;
-        }
+            while (rs.next()) {
+                int id = rs.getInt("max_id"); // Lấy giá trị id từ cột max_id trong ResultSet
+                return id;
+            }
         } catch (Exception e) {
 
-        }   
+        }
         return 0;
     }
 

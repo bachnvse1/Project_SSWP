@@ -42,6 +42,58 @@
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
 
+        <style>
+            .container-2 {
+                position: relative;
+            }
+
+            .cookiesContent {
+                text-align: center;
+                display: none;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: #fff;
+                padding: 20px;
+                border: 1px solid #ccc;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                text-align: center;
+                z-index: 9999; /* Đặt z-index để thẻ luôn hiển thị trên cùng */
+            }
+
+            .show {
+                display: block !important;
+            }
+
+            .button-buy {
+                position: relative;
+                display: inline-block;
+                margin: 15px;
+                padding: 15px 15px;
+                text-align: center;
+                font-size: 18px;
+                letter-spacing: 1px;
+                text-decoration: none;
+                color: #725AC1;
+                background: transparent;
+                cursor: pointer;
+                transition: ease-out 0.5s;
+                border: 2px solid #725AC1;
+                border-radius: 10px;
+                box-shadow: inset 0 0 0 0 #725AC1;
+            }
+
+            .button-buy:hover {
+                color: white;
+                box-shadow: inset 0 -100px 0 0 #725AC1;
+            }
+
+            .button-buy:active {
+                transform: scale(0.9);
+            }
+        </style>
+
     </head>
 
     <body>
@@ -101,11 +153,18 @@
                                                     </div>
                                                 </div>
                                                 <div class="add-to-cart">
-                                                    <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to
+                                                    <button class="add-to-cart-btn" id="buyButton"><i class="fa fa-shopping-cart"></i> add to
                                                         cart</button>
                                                 </div>
                                             </div>
-
+                                            <div class="container-2">
+                                                <div class="cookiesContent" id="cookiesPopup">
+                                                    <button class="close">✖</button>
+                                                    <img src="https://dichthuatmientrung.com.vn/wp-content/uploads/2022/06/important-sticky-note.jpg" alt="cookies-img" style="width: 50%;"/>
+                                                    <p style="color:red; margin-top: 5%;">We will hold your intermediary funds and wait until you confirm the transaction is completely successful</p>
+                                                    <button class="button-buy" id="button-buy-product" data-id="${p.id}">BUY</button>
+                                                </div>
+                                            </div>               
                                             <!-- /product -->
 
                                         </div>
@@ -146,6 +205,18 @@
         </div>
         <!-- /NEWSLETTER -->
 
+
+
+        <script>
+            document.querySelector('#buyButton').addEventListener('click', function () {
+                document.getElementById('cookiesPopup').style.display = 'block';
+            });
+
+            document.querySelector('.close').addEventListener('click', function () {
+                document.getElementById('cookiesPopup').style.display = 'none';
+            });
+        </script>
+
         <!-- FOOTER -->
         <%@include file="components/footer.jsp" %>
         <!-- /FOOTER -->
@@ -158,7 +229,26 @@
         <script src="js1/nouislider.min.js"></script>
         <script src="js1/jquery.zoom.min.js"></script>
         <script src="js1/main.js"></script>
+        <script>
+            $(document).ready(function () {
+                $("#button-buy-product").click(function () {
+                    var productId = $(this).data("id");
+                    $.ajax({
+                        type: 'post',
+                        url: "buy",
+                        data: {id: productId},
+                        success: function (response) {
+                            alert(response);
+                        },
+                        error: function () {
+                            // Xử lý lỗi nếu có
+                            alert("Đã xảy ra lỗi khi tải trang");
+                        }
+                    });
+                });
+            });
 
+        </script>
     </body>
 </html>
 

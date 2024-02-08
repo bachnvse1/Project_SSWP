@@ -40,6 +40,10 @@
         <servlet-name>homeServ</servlet-name>
         <servlet-class>Controller.homeServ</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>buyServ</servlet-name>
+        <servlet-class>Controller.buyServ</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SendEmail</servlet-name>
         <url-pattern>/send</url-pattern>
@@ -71,5 +75,9 @@
     <servlet-mapping>
         <servlet-name>homeServ</servlet-name>
         <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>buyServ</servlet-name>
+        <url-pattern>/buy</url-pattern>
     </servlet-mapping>
 </web-app>
