@@ -691,12 +691,18 @@ public class DAO extends DBContext {
     }
 
     public static void main(String[] args) {
-        DAO dao = new DAO();
+      DAO dao = new DAO();
+       
         List<Product> listProduct = dao.getProductByUserID(1);
         List<ProductOrderPair> productOrderPairs = new ArrayList<>();
-        intermediateOrders order = dao.getOrderByProductID(15);
-        System.out.println(order.toString());
 
+        for (Product product : listProduct) {
+            intermediateOrders order = dao.getOrderByProductID(product.getId());
+            productOrderPairs.add(new ProductOrderPair(product, order));
+        }
+        for (ProductOrderPair o : productOrderPairs) {
+            System.out.println(o.getOrder().getCode());
+        }
     }
 
 }
