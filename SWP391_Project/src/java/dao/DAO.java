@@ -329,7 +329,7 @@ public class DAO extends DBContext {
 
     public void insertOrder(intermediateOrders order) {
         String sql = "INSERT INTO swp_demo.intermediate_Orders (code, "
-                + "productID, "
+                + "productID,"
                 + "total_received_amount, "
                 + "total_paid_amount, "
                 + "intermediary_fee, "
@@ -343,7 +343,7 @@ public class DAO extends DBContext {
             con = new DBContext().connection; //connect sql
             ps = con.prepareStatement(sql);
             ps.setString(1, order.getCode());
-            ps.setInt(2, order.getProductId());
+            ps.setInt(2, order.getProductId());           
             ps.setDouble(3, order.getTotal_received_amount());
             ps.setDouble(4, order.getTotal_paid_amount());
             ps.setDouble(5, order.getIntermediary_fee());
@@ -419,15 +419,16 @@ public class DAO extends DBContext {
                 return new intermediateOrders(rs.getInt(1),
                         rs.getString(2),
                         rs.getInt(3),
-                        rs.getDouble(4),
+                        rs.getInt(4),
                         rs.getDouble(5),
                         rs.getDouble(6),
-                        rs.getString(7),
-                        rs.getInt(8),
-                        rs.getTimestamp(9),
-                        rs.getInt(10),
-                         rs.getTimestamp(11),
-                        rs.getBoolean(12));
+                        rs.getDouble(7),
+                        rs.getString(8),
+                        rs.getInt(9),
+                        rs.getTimestamp(10),
+                        rs.getInt(11),
+                         rs.getTimestamp(12),
+                        rs.getBoolean(13));
             }
         } catch (Exception e) {
 

@@ -14,6 +14,7 @@ public class intermediateOrders {
     private int id;
     private String code;
     private int productId;
+    private int buyer_id;
     private double  total_received_amount,total_paid_amount,intermediary_fee;
     private String status;
     private int create_by;
@@ -25,10 +26,11 @@ public class intermediateOrders {
     public intermediateOrders() {
     }
 
-    public intermediateOrders(int id, String code, int productId, double total_received_amount, double total_paid_amount, double intermediary_fee, String status, int create_by, Timestamp create_at, int update_by, Timestamp update_at, boolean is_delete) {
+    public intermediateOrders(int id, String code, int productId, int buyer_id, double total_received_amount, double total_paid_amount, double intermediary_fee, String status, int create_by, Timestamp create_at, int update_by, Timestamp update_at, boolean is_delete) {
         this.id = id;
         this.code = code;
         this.productId = productId;
+        this.buyer_id = buyer_id;
         this.total_received_amount = total_received_amount;
         this.total_paid_amount = total_paid_amount;
         this.intermediary_fee = intermediary_fee;
@@ -62,6 +64,14 @@ public class intermediateOrders {
 
     public void setProductId(int productId) {
         this.productId = productId;
+    }
+
+    public int getBuyer_id() {
+        return buyer_id;
+    }
+
+    public void setBuyer_id(int buyer_id) {
+        this.buyer_id = buyer_id;
     }
 
     public double getTotal_received_amount() {
@@ -138,8 +148,10 @@ public class intermediateOrders {
 
     @Override
     public String toString() {
-        return "intermediateOrders{" + "id=" + id + ", code=" + code + ", productId=" + productId + ", total_received_amount=" + total_received_amount + ", total_paid_amount=" + total_paid_amount + ", intermediary_fee=" + intermediary_fee + ", status=" + status + ", create_by=" + create_by + ", create_at=" + create_at + ", update_by=" + update_by + ", update_at=" + update_at + ", is_delete=" + is_delete + '}';
+        return "intermediateOrders{" + "id=" + id + ", code=" + code + ", productId=" + productId + ", buyer_id=" + buyer_id + ", total_received_amount=" + total_received_amount + ", total_paid_amount=" + total_paid_amount + ", intermediary_fee=" + intermediary_fee + ", status=" + status + ", create_by=" + create_by + ", create_at=" + create_at + ", update_by=" + update_by + ", update_at=" + update_at + ", is_delete=" + is_delete + '}';
     }
+
+   
     
     
 }

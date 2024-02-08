@@ -114,6 +114,7 @@ public class AddProdcutServlet extends HttpServlet {
       order.setCreate_by(u.getId());
       order.setUpdate_by(u.getId());
       dal.insertOrder(order);
+      response.getWriter().write("success");
     }
 public String randomCode(){
      

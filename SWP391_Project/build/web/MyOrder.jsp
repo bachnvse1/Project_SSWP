@@ -96,11 +96,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
-                        <c:forEach items="${productOrderPairs}" var="o">
+                         <tr>
+                            <td>${a}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                         </tr>
+                      <c:forEach items="${productOrderPairs}" var="p">
                         <tr>
-                            <td>${o.getOrder().getCode()}</td>
-                            <td>okkk</td>
+                            <td>${p.getOrder().getCode()}</td>
+                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -115,7 +125,7 @@
                 <div id="addProductForm" class="addProduct">
                     <h2>Add Product</h2>
 
-                    <form  action="addProduct" method="post">                     
+                    <form id="addForm">                     
                         <label for="name">Name:</label>
                         <input type="text" name="nameProduct" required><br>
 
@@ -131,7 +141,7 @@
                         </select><br>
 
                         <label for="description">Description:</label>
-                        <textarea id="description" name="Description" rows="4" required></textarea><br>
+                        <input id="description" name="Description" rows="4" required></input><br>
 
                         <label for="image1">Image 1:</label>
                         <input type="text" id="image" name="image1"><br>
@@ -160,24 +170,7 @@
 
         </div>
 
-        <script>
-               $(document).ready(function(){
-            // Ẩn form khi trang được tải
-             $("#addProductForm").hide();
-            // Xử lý sự kiện khi nhấn nút "Add Product"
-            $("#addProductButton").click(function(){
-                $("#addProductForm").show();
-                $("#ProductDisplay").hide();
-            });
-            $("#allProductButton").click(function(){
-                $("#addProductForm").hide();
-                $("#ProductDisplay").show();
-            });
-        });
-            function toggleOptions(productId) {
-                const options = document.getElementById(productId).querySelector('.options');
-                options.style.display = options.style.display === 'block' ? 'none' : 'block';
-            }
-        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+          <script src="jscript/myorder.js"></script>
     </body>
 </html>

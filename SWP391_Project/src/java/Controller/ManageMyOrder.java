@@ -65,12 +65,13 @@ public class ManageMyOrder extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                response.setContentType("text/html;charset=UTF-8");
+             response.setContentType("text/html;charset=UTF-8");
 
         //processRequest(request, response);
         DAO dao = new DAO();
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("user");
+       
         List<Product> listProduct = dao.getProductByUserID(u.getId());
         List<ProductOrderPair> productOrderPairs = new ArrayList<>();
 
@@ -78,7 +79,7 @@ public class ManageMyOrder extends HttpServlet {
             intermediateOrders order = dao.getOrderByProductID(product.getId());
             productOrderPairs.add(new ProductOrderPair(product, order));
         }
-
+        request.setAttribute("a", "bach");
         request.setAttribute("productOrderPairs", productOrderPairs);
         request.getRequestDispatcher("MyOrder.jsp").forward(request, response);
     }
