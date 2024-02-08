@@ -442,15 +442,16 @@ public class DAO extends DBContext {
                 return new intermediateOrders(rs.getInt(1),
                         rs.getString(2),
                         rs.getInt(3),
-                        rs.getDouble(4),
+                        rs.getInt(4),
                         rs.getDouble(5),
                         rs.getDouble(6),
-                        rs.getString(7),
-                        rs.getInt(8),
-                        rs.getTimestamp(9),
-                        rs.getInt(10),
-                         rs.getTimestamp(11),
-                        rs.getBoolean(12));
+                        rs.getDouble(7),
+                        rs.getString(8),
+                        rs.getInt(9),
+                        rs.getTimestamp(10),
+                        rs.getInt(11),
+                         rs.getTimestamp(12),
+                        rs.getBoolean(13));
             }
         } catch (Exception e) {
 
@@ -715,10 +716,7 @@ public class DAO extends DBContext {
 
     public static void main(String[] args) {
         DAO dao = new DAO();
-        List<Product> listProduct = dao.getProductByUserID(1);
-        List<ProductOrderPair> productOrderPairs = new ArrayList<>();
-        intermediateOrders order = dao.getOrderByProductID(15);
-        System.out.println(order.toString());
+       
 
     }
 

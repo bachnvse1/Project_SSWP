@@ -138,7 +138,6 @@ public class intermediateOrders {
         this.is_delete = is_delete;
     }
 
-<<<<<<< HEAD
     public int getBuyer_id() {
         return buyer_id;
     }
@@ -151,14 +150,5 @@ public class intermediateOrders {
     public String toString() {
         return "intermediateOrders{" + "id=" + id + ", code=" + code + ", productId=" + productId + ", buyer_id=" + buyer_id + ", total_received_amount=" + total_received_amount + ", total_paid_amount=" + total_paid_amount + ", intermediary_fee=" + intermediary_fee + ", status=" + status + ", create_by=" + create_by + ", create_at=" + create_at + ", update_by=" + update_by + ", update_at=" + update_at + ", is_delete=" + is_delete + '}';
     }
-    
-    
-=======
-    @Override
-    public String toString() {
-        return "intermediateOrders{" + "id=" + id + ", code=" + code + ", productId=" + productId + ", total_received_amount=" + total_received_amount + ", total_paid_amount=" + total_paid_amount + ", intermediary_fee=" + intermediary_fee + ", status=" + status + ", create_by=" + create_by + ", create_at=" + create_at + ", update_by=" + update_by + ", update_at=" + update_at + ", is_delete=" + is_delete + '}';
-    }
-    
->>>>>>> origin/branch-15
     
 }

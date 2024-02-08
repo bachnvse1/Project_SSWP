@@ -34,7 +34,7 @@
           <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
-        
+
     </head>
     <body>
         <%@include file="components/navBar.jsp" %>
@@ -81,121 +81,87 @@
             </div>
             <div class="table-responsive" style="margin-left: 5%">
 
-<<<<<<< HEAD
+                <<<<<<< HEAD
                 <div class="container mt-5">
-        <div class="d-flex justify-content-center row">
-            <div class="col-md-10">
-                <div class="rounded">
-                    <div class="table-responsive table-borderless">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th class="text-center">
-                                        <div class="toggle-btn">
-                                            <div class="inner-circle"></div>
-                                        </div>
-                                    </th>
-                                    <th>Order #</th>
-                                    <th>Company name</th>
-                                    <th>status</th>
-                                    <th>Total</th>
-                                    <th>Created</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody class="table-body">
-                                <tr class="cell-1">
-                                    <td class="text-center">
-                                        <div class="toggle-btn">
-                                            <div class="inner-circle"></div>
-                                        </div>
-                                    </td>
-                                    <td>#SO-13487</td>
-                                    <td>Gasper Antunes</td>
-                                    <td><span class="badge badge-success">Fullfilled</span></td>
-                                    <td>$2674.00</td>
-                                    <td>Today</td>
-                                    <td><i class="fa fa-ellipsis-h text-black-50"></i></td>
-                                </tr>
-                                <tr class="cell-1">
-                                    <td class="text-center">
-                                        <div class="toggle-btn">
-                                            <div class="inner-circle"></div>
-                                        </div>
-                                    </td>
-                                    <td>#SO-13453</td>
-                                    <td>Aartsen van</td>
-                                    <td><span class="badge badge-info">Confirmed</span></td>
-                                    <td>$3454.00</td>
-                                    <td>Yesterday</td>
-                                    <td><i class="fa fa-ellipsis-h text-black-50"></i></td>
-                                </tr>
-                                <tr class="cell-1">
-                                    <td class="text-center">
-                                        <div class="toggle-btn">
-                                            <div class="inner-circle"></div>
-                                        </div>
-                                    </td>
-                                    <td>#SO-13498</td>
-                                    <td>Trashes Habard</td>
-                                    <td><span class="badge badge-danger">Partially shipped</span></td>
-                                    <td>$6274.00</td>
-                                    <td>May 12,2020</td>
-                                    <td><i class="fa fa-ellipsis-h text-black-50"></i></td>
-                                </tr>
-                                <tr class="cell-1">
-                                    <td class="text-center">
-                                        <div class="toggle-btn">
-                                            <div class="inner-circle"></div>
-                                        </div>
-                                    </td>
-                                    <td>#SO-16499</td>
-                                    <td>Samban Hubart</td>
-                                    <td><span class="badge badge-success">Fullfilled</span></td>
-                                    <td>$6375.00</td>
-                                    <td>May 11,2020</td>
-                                    <td><i class="fa fa-ellipsis-h text-black-50"></i></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="d-flex justify-content-center row">
+                        <div class="col-md-10">
+                            <div class="rounded">
+                                <div class="table-responsive table-borderless">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Code</th>
+                                                <th>Product Name</th>
+                                                <th>Price</th>                        
+                                                <th>Total amount received</th>
+                                                <th>Total payment</th>
+                                                <th>Transaction fees</th>
+                                                <th>Status</th>
+                                                <th>Party bears the fee</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="table-body">
+                                            <tr class="cell-1">
+                                                <td class="text-center">
+                                                    <div class="toggle-btn">
+                                                        <div class="inner-circle"></div>
+                                                    </div>
+                                                </td>
+                                                <td>#SO-13487</td>
+                                                <td>Gasper Antunes</td>
+                                                <td><span class="badge badge-success">Fullfilled</span></td>
+                                                <td>$2674.00</td>
+                                                <td>Today</td>
+                                                <td><i class="fa fa-ellipsis-h text-black-50"></i></td>
+                                            </tr>
+                                            <tr class="cell-1">
+                                                <td class="text-center">
+                                                    <div class="toggle-btn">
+                                                        <div class="inner-circle"></div>
+                                                    </div>
+                                                </td>
+                                                <td>#SO-13453</td>
+                                                <td>Aartsen van</td>
+                                                <td><span class="badge badge-info">Confirmed</span></td>
+                                                <td>$3454.00</td>
+                                                <td>Yesterday</td>
+                                                <td><i class="fa fa-ellipsis-h text-black-50"></i></td>
+                                            </tr>
+                                            <tr class="cell-1">
+                                                <td class="text-center">
+                                                    <div class="toggle-btn">
+                                                        <div class="inner-circle"></div>
+                                                    </div>
+                                                </td>
+                                                <td>#SO-13498</td>
+                                                <td>Trashes Habard</td>
+                                                <td><span class="badge badge-danger">Partially shipped</span></td>
+                                                <td>$6274.00</td>
+                                                <td>May 12,2020</td>
+                                                <td><i class="fa fa-ellipsis-h text-black-50"></i></td>
+                                            </tr>
+                                            <tr class="cell-1">
+                                                <td class="text-center">
+                                                    <div class="toggle-btn">
+                                                        <div class="inner-circle"></div>
+                                                    </div>
+                                                </td>
+                                                <td>#SO-16499</td>
+                                                <td>Samban Hubart</td>
+                                                <td><span class="badge badge-success">Fullfilled</span></td>
+                                                <td>$6375.00</td>
+                                                <td>May 11,2020</td>
+                                                <td><i class="fa fa-ellipsis-h text-black-50"></i></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-=======
-                <table id="ProductDisplay" class="text-nowrap mb-0 table" border="1">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Code</th>
-                            <th>Product Name</th>
-                            <th>Price</th>                        
-                            <th>Total amount received</th>
-                            <th>Total payment</th>
-                            <th>Transaction fees</th>
-                            <th>Status</th>
-                            <th>Party bears the fee</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        
-                        <c:forEach items="${productOrderPairs}" var="o">
-                        <tr>
-                            <td>${o.getOrder().getCode()}</td>
-                            <td>okkk</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                         </tr>
-                      </c:forEach>
-                    </tbody>
-                </table>
->>>>>>> origin/branch-15
+
                 <div id="addProductForm" class="addProduct">
                     <h2>Add Product</h2>
 
@@ -209,9 +175,9 @@
                         <label for="category">Category:</label>
                         <select name="categoryID">
                             <option value="1">Account</option>
-                             <option value="2">Keys</option>
-                              <option value="3">Document</option>
-                               <option value="4">Others</option>
+                            <option value="2">Keys</option>
+                            <option value="3">Document</option>
+                            <option value="4">Others</option>
                         </select><br>
 
                         <label for="description">Description:</label>
@@ -235,33 +201,33 @@
                         <label for="contactMethod">Contact Method:</label>
                         <input type="text" id="contactMethod" name="Contact_Method" required><br>
                         <label for="hiddenContent">Hidden Content:</lahidden_contentbel>
-                        <input type="text" id="hiddenContent" name="hidden_content" required><br>
+                            <input type="text" id="hiddenContent" name="hidden_content" required><br>
 
-                        <input type="submit" value="ADD">
-                    </form>
-                </div>
-            </div>
+                            <input type="submit" value="ADD">
+                            </form>
+                            </div>
+                            </div>
 
-        </div>
+                            </div>
 
-        <script>
-               $(document).ready(function(){
-            // Ẩn form khi trang được tải
-             $("#addProductForm").hide();
-            // Xử lý sự kiện khi nhấn nút "Add Product"
-            $("#addProductButton").click(function(){
-                $("#addProductForm").show();
-                $("#ProductDisplay").hide();
-            });
-            $("#allProductButton").click(function(){
-                $("#addProductForm").hide();
-                $("#ProductDisplay").show();
-            });
-        });
-            function toggleOptions(productId) {
-                const options = document.getElementById(productId).querySelector('.options');
-                options.style.display = options.style.display === 'block' ? 'none' : 'block';
-            }
-        </script>
-    </body>
-</html>
+                            <script>
+                                $(document).ready(function () {
+                                    // Ẩn form khi trang được tải
+                                    $("#addProductForm").hide();
+                                    // Xử lý sự kiện khi nhấn nút "Add Product"
+                                    $("#addProductButton").click(function () {
+                                        $("#addProductForm").show();
+                                        $("#ProductDisplay").hide();
+                                    });
+                                    $("#allProductButton").click(function () {
+                                        $("#addProductForm").hide();
+                                        $("#ProductDisplay").show();
+                                    });
+                                });
+                                function toggleOptions(productId) {
+                                    const options = document.getElementById(productId).querySelector('.options');
+                                    options.style.display = options.style.display === 'block' ? 'none' : 'block';
+                                }
+                            </script>
+                            </body>
+                            </html>
