@@ -73,6 +73,7 @@ public class orderBuyChecking extends HttpServlet {
         for (Product product : listProduct) {
             intermediateOrders order = dao.getOrderByProductID(product.getId());
             productOrderPairs.add(new ProductOrderPair(product, order));
+
         }
         String s = "";
         double total = 0;
@@ -91,9 +92,13 @@ public class orderBuyChecking extends HttpServlet {
                         + "                                                    <td>" + dao.getCategoryById(o.getProduct().getCategoryID()).getName() + "</td>\n"
                         + "                                                    <td>" + o.getProduct().getContact_Method() + "</td>\n"
                         + "                                                    <td>" + o.getProduct().price + " VND" + "</td>\n"
-                        + "                                                    <td>" + o.getOrder().getIntermediary_fee()+ " VND" + "</td>\n"
+                        + "                                                    <td>" + o.getOrder().getIntermediary_fee() + " VND" + "</td>\n"
                         + "                                                    <td><span class=\"badge badge-success\">" + s + "</span></td>\n"
                         + "                                                    <td>" + o.getOrder().getTotal_paid_amount() + " VND" + "</td>\n"
+                        + "                                                    <td> <div class=\"buttonContainer\">\n"
+                        + "        <button class=\"reportButton\"><a href=\"report?"+o.getOrder().getId()+"\"><i class=\"fas fa-exclamation-circle\"></i></a></button>\n"
+                        + "        <button class=\"reportButton\"><a href=\"#\"><i class=\"fas fa-check-circle\"></i></a></button>\n"
+                        + "      </div></td>\n"
                         + " </tr>");
             }
         }

@@ -10,6 +10,9 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
 
         <!-- Bootstrap -->
@@ -24,17 +27,51 @@
 
         <!-- Font Awesome Icon -->
         <link rel="stylesheet" href="css/font-awesome.min.css">
-
         <!-- Custom stlylesheet -->
-        <link type="text/css" rel="stylesheet" href="css/style.css"/>
-        <link type="text/css" rel="stylesheet" href="css/myorder.css"/>
+        <link type="text/css" rel="stylesheet" href="css/style.css" />
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
           <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
+        <style>
+            .reportButton {
+                display: inline-block;
+                padding: 10px 20px;
+                background-color: #4CAF50;
+                color: white;
+                text-align: center;
+                text-decoration: none;
+                font-size: 16px;
+                margin: 4px 2px;
+                cursor: pointer;
+                border: none;
+                border-radius: 8px;
+                display: inline-block; /* Hiển thị các button cạnh nhau */
+                margin-right: 5px;
+            }
+            .buttonContainer {
+                white-space: nowrap; /* Ngăn chặn button từ việc xuống dòng */
+            }
 
+            .table {
+                width: 100%; /* Đảm bảo bảng chiếm toàn bộ chiều rộng của container */
+                border-collapse: collapse; /* Gộp viền của các ô */
+            }
+
+            .table th, .table td {
+                text-align: center; /* Căn giữa nội dung trong các ô */
+                vertical-align: middle; /* Căn giữa nội dung theo chiều dọc trong các ô */
+                padding: 8px; /* Thêm khoảng cách giữa nội dung và viền của các ô */
+                border: 1px solid #dddddd; /* Tạo viền cho các ô */
+            }
+
+            .table th {
+                line-height: 10;
+                background-color: #f2f2f2; /* Màu nền cho tiêu đề */
+            }
+        </style>
     </head>
     <body>
         <%@include file="components/navBar.jsp" %>
@@ -87,26 +124,25 @@
                             <div class="rounded">
                                 <div class="table-responsive table-borderless">
 
-                                    <table class="table">
+                                    <table class="table" id="orderBuy">
                                         <thead>
                                             <tr>
                                                 <th>Code</th>
                                                 <th>Status</th>
                                                 <th>Seller</th>                        
                                                 <th>Category</th>
-                                                <th>Contact Method</th>
+                                                <th>Contact</th>
                                                 <th>Price</th>
                                                 <th>Transaction Fees</th>
                                                 <th>Intermediary payers</th>
                                                 <th>Total paid amount</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody class="table-body" id="cell-info">
-                                                
+
                                         </tbody>
                                     </table>
-
-
                                 </div>
                             </div>
                         </div>
@@ -151,21 +187,22 @@
                         <input type="radio" value="buyer" name="Transaction_fee">Buyer<br>
                         <label for="contactMethod">Contact Method:</label>
                         <input type="text" id="contactMethod" name="Contact_Method" required><br>
-                        <label for="hiddenContent">Hidden Content:</lahidden_contentbel>
-                            <input type="text" id="hiddenContent" name="hidden_content" required><br>
+                        <label for="hiddenContent">Hidden Content:</label>
+                        <input type="text" id="hiddenContent" name="hidden_content" required><br>
 
-                            <input type="submit" value="ADD">
-                            </form>
-                            </div>
-                            </div>
+                        <input type="submit" value="ADD">
+                    </form>
+                </div>
+            </div>
 
-                            </div>
-                            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-                            <script>
-                                
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script>
+
                         $(document).ready(function () {
                             // Ẩn form khi trang được tải
                             $("#addProductForm").hide();
+                            $("#orderBuy").hide();
                             // Xử lý sự kiện khi nhấn nút "Add Product"
                             $("#addProductButton").click(function () {
                                 $("#addProductForm").show();
@@ -183,6 +220,7 @@
 
                         $(document).ready(function () {
                             $("#order-checking").click(function () {
+                                $("#orderBuy").show();
                                 $.ajax({
                                     type: 'GET',
                                     url: "orderChecking",
@@ -198,6 +236,6 @@
                         });
 
 
-                            </script>
-                            </body>
-                            </html>
+        </script>
+    </body>
+</html>

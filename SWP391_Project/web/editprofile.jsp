@@ -181,7 +181,6 @@
                     <input type="submit" value="Update" style="border-radius: 20px; margin-top: 1em;">
                 </div>
             </form>
-
         </div>
         <%@include file="components/footer.jsp" %>
         <!-- Bootstrap core JS-->

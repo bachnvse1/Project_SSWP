@@ -83,7 +83,6 @@
                                     <a id="oder-Button" href="#">
                                         <i class="fa fa-heart-o"></i>
                                         <span>My Order</span>
-                                        <div class="qty">10</div>
                                     </a>
                                 </div>
                                 <!-- /Wishlist -->

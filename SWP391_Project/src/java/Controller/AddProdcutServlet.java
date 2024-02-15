@@ -87,7 +87,7 @@ public class AddProdcutServlet extends HttpServlet {
         product.setImage2(request.getParameter("image2"));
         product.setImage3(request.getParameter("image3"));
         product.setImage4(request.getParameter("image4"));
-        if (request.getParameter("Transaction_fee").equals("Seller")) {
+        if (request.getParameter("Transaction_fee").equals("seller")) {
             product.setTransaction_fee(true);
         } else {
             product.setTransaction_fee(false);

@@ -48,6 +48,10 @@
         <servlet-name>orderBuyChecking</servlet-name>
         <servlet-class>Controller.orderBuyChecking</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>reportServ</servlet-name>
+        <servlet-class>Controller.reportServ</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SendEmail</servlet-name>
         <url-pattern>/send</url-pattern>
@@ -83,5 +87,9 @@
     <servlet-mapping>
         <servlet-name>orderBuyChecking</servlet-name>
         <url-pattern>/orderChecking</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>reportServ</servlet-name>
+        <url-pattern>/report</url-pattern>
     </servlet-mapping>
 </web-app>
