@@ -10,7 +10,6 @@ import Entity.Product;
 import Entity.ProductOrderPair;
 import Entity.User;
 import Entity.intermediateOrders;
-import jakarta.servlet.http.HttpSession;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -57,21 +56,7 @@ public class DAO extends DBContext {
         } catch (Exception e) {
 
         }
-    }
 
-    public void signupGoogle(String id, String name, String email) {
-        String query = "INSERT userGoogle (id, name, email, is_active) VALUES (?, ?, ?, 1)";
-        try {
-            con = new DBContext().connection; //connect sql
-            ps = con.prepareStatement(query);
-            ps.setString(1, id);
-            ps.setString(2, name);
-            ps.setString(3, email);
-            ps.executeUpdate();
-
-        } catch (Exception e) {
-
-        }
     }
 
     public List<User> getAllUser() {
@@ -202,7 +187,7 @@ public class DAO extends DBContext {
                 + "    updated_at = CURRENT_TIMESTAMP\n"
                 + "WHERE\n"
                 + "    productID = ?;";
-         try {
+        try {
             con = new DBContext().connection; //connect sql
             ps = con.prepareStatement(query);
             ps.setInt(1, buyer_id);
@@ -214,6 +199,40 @@ public class DAO extends DBContext {
         } catch (Exception e) {
 
         }
+    }
+
+    public Product getProductByID(int id) {
+
+        String sql = "SELECT * FROM swp_demo.product where id = ?";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return new Product(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getDouble(3),
+                        rs.getInt(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getBoolean(10),
+                        rs.getString(11),
+                        rs.getInt(12),
+                        rs.getString(13),
+                        rs.getTimestamp(14),
+                        rs.getInt(15),
+                        rs.getTimestamp(16),
+                        rs.getBoolean(17));
+            }
+
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return null;
     }
 
     //HUY
@@ -450,7 +469,7 @@ public class DAO extends DBContext {
                         rs.getInt(9),
                         rs.getTimestamp(10),
                         rs.getInt(11),
-                         rs.getTimestamp(12),
+                        rs.getTimestamp(12),
                         rs.getBoolean(13));
             }
         } catch (Exception e) {
@@ -489,20 +508,6 @@ public class DAO extends DBContext {
 
         } catch (Exception e) {
 
-        }
-
-    }
-
-    public void editUserGgByAdmin(String id, boolean is_Active) {
-        String sql = "Update userGoogle set is_active=? where id =? ";
-        try {
-            con = new DBContext().connection;
-            ps = con.prepareStatement(sql);
-            ps.setBoolean(1, is_Active);
-            ps.setString(2, id);
-            ps.executeUpdate();
-
-        } catch (Exception e) {
         }
 
     }
@@ -716,7 +721,18 @@ public class DAO extends DBContext {
 
     public static void main(String[] args) {
         DAO dao = new DAO();
-       
+        List<Product> listProduct = dao.getProductByUserID(1);
+        List<ProductOrderPair> productOrderPairs = new ArrayList<>();
+
+        for (Product product : listProduct) {
+            intermediateOrders order = dao.getOrderByProductID(product.getId());
+            productOrderPairs.add(new ProductOrderPair(product, order));
+        }
+
+        for (ProductOrderPair o : productOrderPairs) {
+            System.out.println(o.getProduct().getCreate_by());
+
+        }
 
     }
 

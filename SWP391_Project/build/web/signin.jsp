@@ -77,8 +77,8 @@
         <script src="js/popper.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/main.js"></script>
-        <script src="jscript/signup.js"></script>
         <script src="jscript/signin_captcha.js"></script>
+        <script src="jscript/signup.js"></script>
         
     </body>
 </html>

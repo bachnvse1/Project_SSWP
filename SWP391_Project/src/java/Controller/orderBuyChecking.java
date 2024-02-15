@@ -4,27 +4,26 @@
  */
 package Controller;
 
-import Entity.Category;
 import Entity.Product;
+import Entity.ProductOrderPair;
 import Entity.User;
 import Entity.intermediateOrders;
 import dao.DAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
  * @author ADMIN
  */
-@WebServlet(name="buyServ", urlPatterns={"/buy"})
-public class buyServ extends HttpServlet {
+public class orderBuyChecking extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,10 +42,10 @@ public class buyServ extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet buyServ</title>");
+            out.println("<title>Servlet orderBuyChecking</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet buyServ at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet orderBuyChecking at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,7 +63,40 @@ public class buyServ extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
+        PrintWriter out = response.getWriter();
+        DAO dao = new DAO();
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("user");
+        List<Product> listProduct = dao.getProductByUserID(u.getId());
+        List<ProductOrderPair> productOrderPairs = new ArrayList<>();
+        for (Product product : listProduct) {
+            intermediateOrders order = dao.getOrderByProductID(product.getId());
+            productOrderPairs.add(new ProductOrderPair(product, order));
+        }
+        String s = "";
+        double total = 0;
+        for (ProductOrderPair o : productOrderPairs) {
+            if (o.getOrder().getStatus().equals("Checking")) {
+                if (o.getProduct().isTransaction_fee() == true) {
+                    s = "Seller";
+                } else {
+                    s = "Buyer";
+                }
+                out.print("\n"
+                        + "<tr class=\"cell-1\">\n"
+                        + "                                                    <td>" + o.getOrder().getCode() + "</td>\n"
+                        + "                                                    <td>" + o.getOrder().getStatus() + "</td>\n"
+                        + "                                                    <td>" + dao.getUserById(o.getProduct().getCreate_by()).getDisplay_name() + "</td>\n"
+                        + "                                                    <td>" + dao.getCategoryById(o.getProduct().getCategoryID()).getName() + "</td>\n"
+                        + "                                                    <td>" + o.getProduct().getContact_Method() + "</td>\n"
+                        + "                                                    <td>" + o.getProduct().price + " VND" + "</td>\n"
+                        + "                                                    <td>" + o.getOrder().getIntermediary_fee()+ " VND" + "</td>\n"
+                        + "                                                    <td><span class=\"badge badge-success\">" + s + "</span></td>\n"
+                        + "                                                    <td>" + o.getOrder().getTotal_paid_amount() + " VND" + "</td>\n"
+                        + " </tr>");
+            }
+        }
     }
 
     /**
@@ -78,22 +110,7 @@ public class buyServ extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String id = request.getParameter("id");
-        int idx = Integer.parseInt(id);
-        DAO dao = new DAO();
-        HttpSession session = request.getSession();
-        User u = (User) session.getAttribute("user");
-        intermediateOrders order = new intermediateOrders();
-        order = dao.getOrderByProductID(idx);
-        dao.updateOrder(u.id, "Checking", u.id, idx);
-        Product p = dao.getProductByID(idx);
-        if(p.isTransaction_fee() == true) {
-            order.setTotal_paid_amount(p.getPrice());
-        } 
-        order.setTotal_paid_amount(p.getPrice() + p.getPrice() * 0.05);
-        
-      
-        response.getWriter().print("You just buy product, please checking order!");
+        processRequest(request, response);
     }
 
     /**

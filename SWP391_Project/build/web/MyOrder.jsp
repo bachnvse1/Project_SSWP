@@ -60,11 +60,12 @@
                     <div class="options">
                         <ul>
                             <li><a href="#">Đã hoàn thành</a></li>
-                            <li><a href="#">Đang xử lí</a></li>
+                            <li><a id="order-checking">Đang xử lí</a></li>
                             <li><a href="#">Đã hủy</a></li>
                         </ul>
                     </div>
                 </div>
+
                 <div class="management" id="mysale">
                     <div class="title-bar" onclick="toggleOptions('mysale')">
                         <h5>Quản lí đơn bán</h5>
@@ -73,89 +74,39 @@
                     <div class="options">
                         <ul>
                             <li><a href="#">Đã hoàn thành</a></li>
-                            <li><a href="#">Đang xử lí</a></li>
+                            <li><a>Đang xử lí</a></li>
                             <li><a href="#">Đã hủy</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="table-responsive" style="margin-left: 5%">
-
-                <<<<<<< HEAD
                 <div class="container mt-5">
                     <div class="d-flex justify-content-center row">
                         <div class="col-md-10">
                             <div class="rounded">
                                 <div class="table-responsive table-borderless">
+
                                     <table class="table">
                                         <thead>
                                             <tr>
                                                 <th>Code</th>
-                                                <th>Product Name</th>
-                                                <th>Price</th>                        
-                                                <th>Total amount received</th>
-                                                <th>Total payment</th>
-                                                <th>Transaction fees</th>
                                                 <th>Status</th>
-                                                <th>Party bears the fee</th>
-                                                <th>Action</th>
+                                                <th>Seller</th>                        
+                                                <th>Category</th>
+                                                <th>Contact Method</th>
+                                                <th>Price</th>
+                                                <th>Transaction Fees</th>
+                                                <th>Intermediary payers</th>
+                                                <th>Total paid amount</th>
                                             </tr>
                                         </thead>
-                                        <tbody class="table-body">
-                                            <tr class="cell-1">
-                                                <td class="text-center">
-                                                    <div class="toggle-btn">
-                                                        <div class="inner-circle"></div>
-                                                    </div>
-                                                </td>
-                                                <td>#SO-13487</td>
-                                                <td>Gasper Antunes</td>
-                                                <td><span class="badge badge-success">Fullfilled</span></td>
-                                                <td>$2674.00</td>
-                                                <td>Today</td>
-                                                <td><i class="fa fa-ellipsis-h text-black-50"></i></td>
-                                            </tr>
-                                            <tr class="cell-1">
-                                                <td class="text-center">
-                                                    <div class="toggle-btn">
-                                                        <div class="inner-circle"></div>
-                                                    </div>
-                                                </td>
-                                                <td>#SO-13453</td>
-                                                <td>Aartsen van</td>
-                                                <td><span class="badge badge-info">Confirmed</span></td>
-                                                <td>$3454.00</td>
-                                                <td>Yesterday</td>
-                                                <td><i class="fa fa-ellipsis-h text-black-50"></i></td>
-                                            </tr>
-                                            <tr class="cell-1">
-                                                <td class="text-center">
-                                                    <div class="toggle-btn">
-                                                        <div class="inner-circle"></div>
-                                                    </div>
-                                                </td>
-                                                <td>#SO-13498</td>
-                                                <td>Trashes Habard</td>
-                                                <td><span class="badge badge-danger">Partially shipped</span></td>
-                                                <td>$6274.00</td>
-                                                <td>May 12,2020</td>
-                                                <td><i class="fa fa-ellipsis-h text-black-50"></i></td>
-                                            </tr>
-                                            <tr class="cell-1">
-                                                <td class="text-center">
-                                                    <div class="toggle-btn">
-                                                        <div class="inner-circle"></div>
-                                                    </div>
-                                                </td>
-                                                <td>#SO-16499</td>
-                                                <td>Samban Hubart</td>
-                                                <td><span class="badge badge-success">Fullfilled</span></td>
-                                                <td>$6375.00</td>
-                                                <td>May 11,2020</td>
-                                                <td><i class="fa fa-ellipsis-h text-black-50"></i></td>
-                                            </tr>
+                                        <tbody class="table-body" id="cell-info">
+                                                
                                         </tbody>
                                     </table>
+
+
                                 </div>
                             </div>
                         </div>
@@ -209,25 +160,44 @@
                             </div>
 
                             </div>
-
+                            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
                             <script>
-                                $(document).ready(function () {
-                                    // Ẩn form khi trang được tải
-                                    $("#addProductForm").hide();
-                                    // Xử lý sự kiện khi nhấn nút "Add Product"
-                                    $("#addProductButton").click(function () {
-                                        $("#addProductForm").show();
-                                        $("#ProductDisplay").hide();
-                                    });
-                                    $("#allProductButton").click(function () {
-                                        $("#addProductForm").hide();
-                                        $("#ProductDisplay").show();
-                                    });
+                                
+                        $(document).ready(function () {
+                            // Ẩn form khi trang được tải
+                            $("#addProductForm").hide();
+                            // Xử lý sự kiện khi nhấn nút "Add Product"
+                            $("#addProductButton").click(function () {
+                                $("#addProductForm").show();
+                                $("#ProductDisplay").hide();
+                            });
+                            $("#allProductButton").click(function () {
+                                $("#addProductForm").hide();
+                                $("#ProductDisplay").show();
+                            });
+                        });
+                        function toggleOptions(productId) {
+                            const options = document.getElementById(productId).querySelector('.options');
+                            options.style.display = options.style.display === 'block' ? 'none' : 'block';
+                        }
+
+                        $(document).ready(function () {
+                            $("#order-checking").click(function () {
+                                $.ajax({
+                                    type: 'GET',
+                                    url: "orderChecking",
+                                    success: function (response) {
+                                        $("#cell-info").html(response);
+                                    },
+                                    error: function () {
+                                        // Xử lý lỗi nếu có
+                                        alert("Đã xảy ra lỗi khi tải trang");
+                                    }
                                 });
-                                function toggleOptions(productId) {
-                                    const options = document.getElementById(productId).querySelector('.options');
-                                    options.style.display = options.style.display === 'block' ? 'none' : 'block';
-                                }
+                            });
+                        });
+
+
                             </script>
                             </body>
                             </html>

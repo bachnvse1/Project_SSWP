@@ -129,7 +129,7 @@
                             <div class="products-tabs">
                                 <!-- tab -->
                                 <div id="tab2" class="tab-pane fade in active">
-                                    <c:forEach items="${listProduct}" var="p">
+                                    <c:forEach items="${listProduct}" var="p" varStatus="loop">
                                         <div class="col-md-3">
                                             <!-- product -->
 
@@ -153,16 +153,18 @@
                                                     </div>
                                                 </div>
                                                 <div class="add-to-cart">
-                                                    <button class="add-to-cart-btn" id="buyButton"><i class="fa fa-shopping-cart"></i> add to
-                                                        cart</button>
+                                                    <!-- Thêm một ID động cho nút "Thêm vào giỏ hàng" -->
+                                                    <button class="add-to-cart-btn" id="buyButton_${loop.index}" data-target="cookiesPopup_${loop.index}">
+                                                        <i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng
+                                                    </button>
                                                 </div>
                                             </div>
                                             <div class="container-2">
-                                                <div class="cookiesContent" id="cookiesPopup">
+                                                <div class="cookiesContent" id="cookiesPopup_${loop.index}">
                                                     <button class="close">✖</button>
                                                     <img src="https://dichthuatmientrung.com.vn/wp-content/uploads/2022/06/important-sticky-note.jpg" alt="cookies-img" style="width: 50%;"/>
                                                     <p style="color:red; margin-top: 5%;">We will hold your intermediary funds and wait until you confirm the transaction is completely successful</p>
-                                                    <button class="button-buy" id="button-buy-product" data-id="${p.id}">BUY</button>
+                                                    <button class="button-buy" data-id="${p.id}">BUY</button>
                                                 </div>
                                             </div>               
                                             <!-- /product -->
@@ -208,13 +210,21 @@
 
 
         <script>
-            document.querySelector('#buyButton').addEventListener('click', function () {
-                document.getElementById('cookiesPopup').style.display = 'block';
+            <c:forEach items="${listProduct}" var="p" varStatus="loop">
+            document.querySelector('#buyButton_${loop.index}').addEventListener('click', function () {
+                document.getElementById('cookiesPopup_${loop.index}').style.display = 'block';
             });
 
-            document.querySelector('.close').addEventListener('click', function () {
-                document.getElementById('cookiesPopup').style.display = 'none';
+            // Lấy tất cả các nút đóng của popup tương ứng và thêm trình nghe sự kiện
+            var closeButtons_${loop.index} = document.querySelectorAll('#cookiesPopup_${loop.index} .close');
+            closeButtons_${loop.index}.forEach(function (button) {
+                button.addEventListener('click', function () {
+                    // Tìm popup chứa nút đóng và ẩn nó
+                    var popup = this.closest('.cookiesContent');
+                    popup.style.display = 'none';
+                });
             });
+            </c:forEach>
         </script>
 
         <!-- FOOTER -->
@@ -231,7 +241,7 @@
         <script src="js1/main.js"></script>
         <script>
             $(document).ready(function () {
-                $("#button-buy-product").click(function () {
+                $(".button-buy").click(function () {
                     var productId = $(this).data("id");
                     $.ajax({
                         type: 'post',

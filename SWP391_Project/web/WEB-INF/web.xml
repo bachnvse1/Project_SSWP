@@ -44,6 +44,10 @@
         <servlet-name>buyServ</servlet-name>
         <servlet-class>Controller.buyServ</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>orderBuyChecking</servlet-name>
+        <servlet-class>Controller.orderBuyChecking</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SendEmail</servlet-name>
         <url-pattern>/send</url-pattern>
@@ -56,10 +60,10 @@
         <servlet-name>loginGoogleHandler</servlet-name>
         <url-pattern>/loginGoogleHandler</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
+    <!--    <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping>-->
     <servlet-mapping>
         <servlet-name>RefreshCaptchaServlet</servlet-name>
         <url-pattern>/refreshcaptcha</url-pattern>
@@ -77,7 +81,7 @@
         <url-pattern>/home</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>buyServ</servlet-name>
-        <url-pattern>/buy</url-pattern>
+        <servlet-name>orderBuyChecking</servlet-name>
+        <url-pattern>/orderChecking</url-pattern>
     </servlet-mapping>
 </web-app>
