@@ -68,8 +68,10 @@
                                         <option value="1">Category 01</option>
                                         <option value="1">Category 02</option>
                                     </select>
-                                    <input class="input" placeholder="Search here">
+                                       <form action="home" method="get">
+                                    <input type="" class="input" placeholder="Search here" name="searchproductname">
                                     <button class="search-btn">Search</button>
+                                        </form>
                                 </form>
                             </div>
                         </div>

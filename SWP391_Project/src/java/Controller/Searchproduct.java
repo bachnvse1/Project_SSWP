@@ -4,6 +4,9 @@
  */
 package Controller;
 
+import Entity.Category;
+import Entity.Product;
+import dao.DAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -11,6 +14,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  *
@@ -36,7 +40,7 @@ public class Searchproduct extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Searchproduct</title>");            
+            out.println("<title>Servlet Searchproduct</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet Searchproduct at " + request.getContextPath() + "</h1>");
@@ -57,9 +61,7 @@ public class Searchproduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
     }
-
     /**
      * Handles the HTTP <code>POST</code> method.
      *

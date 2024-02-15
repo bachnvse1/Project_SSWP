@@ -8,11 +8,11 @@ import Entity.Category;
 import Entity.Product;
 import dao.DAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
 import java.util.List;
 
 /**
@@ -38,13 +38,14 @@ public class homeServ extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet homeServ</title>");
+            out.println("<title>Servlet Searchproduct</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet homeServ at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet Searchproduct at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -60,37 +61,53 @@ public class homeServ extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         DAO dao = new DAO();
-
-        List<Product> listProduct = dao.getAllProduct();
+        List<Product> listProduct = null;
+        List<Product> listProductPage = null;
         List<Category> listCategory = dao.getAllCategory();
+        String page = request.getParameter("page");
+        int pageSize = 8;
+        int Count = 0;
+
+        if (page == null) {
+            page = "1";
+        }
+
         request.setAttribute("listProduct", listProduct);
         request.setAttribute("listCategory", listCategory);
-        request.setAttribute("dao", dao);
+        String pramCategoryId = request.getParameter("categoryId");
+        String search = request.getParameter("searchproductname");
+        if (pramCategoryId != null && !pramCategoryId.equals("all")) {
+            listProduct = dao.getProductbyCategoryID(pramCategoryId);
+        } else if (search != null && !search.isEmpty()) {
+            listProduct = dao.getAllProductbyName(search);
+        } else {
+            listProduct = dao.getAllProduct();
+        }
+        int start = (Integer.parseInt(page) - 1) * pageSize;
+        int end = Math.min(start + pageSize, listProduct.size());
+
+        if ((listProduct.size() % pageSize) == 0) {
+            Count = listProduct.size() / pageSize;
+        } else {
+            Count = listProduct.size() / pageSize + 1;
+        }
+        listProductPage = listProduct.subList(start, end);
+        request.setAttribute("Count", Count);
+        request.setAttribute("page", page);   
+        request.setAttribute("listProductPage", listProductPage);
+        request.setAttribute("listCategory", listCategory);
         request.getRequestDispatcher("home.jsp").forward(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }

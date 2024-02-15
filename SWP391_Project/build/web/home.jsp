@@ -50,67 +50,94 @@
         <!-- /NAVIGATION -->
         <!-- /NAVIGATION -->
         <!-- SECTION -->
-        <div class="section">
+        <div class="section" >
             <!-- container -->
-            <div class="container">
+            <div  class="container">
                 <!-- row -->
                 <div class="row">
 
                     <!-- section title -->
-                    <div class="col-md-12">
+                    <div class="col-md-12"  >
                         <div class="section-title">
                             <h3 class="title">Product</h3>
-                            <div class="section-nav">
-                                <ul class="section-tab-nav tab-nav">
-                                    <c:forEach items="${listCategory}" var="c">
-                                        <li><a data-toggle="tab" href="" value="${c.id}">${c.name}</a></li>
-                                        </c:forEach>
-                                </ul>
+                            <div class="section-title">
+                                <h3 class="title">Products</h3>
+                                <div class="section-nav">
+                                    <ul class="section-tab-nav tab-nav">
+                                        <!-- Correctly setting 'All' category selection -->
+                                        <li><a href="javascript:void(0);" onclick="redirectToController('all')">All</a></li>
+                                            <c:forEach items="${listCategory}" var="category">
+                                            <!-- Pass category.id to the redirectToController function -->
+                                            <li><a href="javascript:void(0);" onclick="redirectToController('${category.id}')">${category.name}</a></li>
+                                            </c:forEach>
+                                    </ul>
+                                </div>
                             </div>
+
                         </div>
                     </div>
                     <!-- /section title -->
-
                     <!-- Products tab & slick -->
+
                     <div class="col-md-12">
                         <div class="row">
                             <div class="products-tabs">
                                 <!-- tab -->
-                                <div id="tab2" class="tab-pane fade in active">
-                                    <c:forEach items="${listProduct}" var="p">
-                                        <div class="col-md-3">
-                                            <!-- product -->
+                                <div>
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination justify-content-end">
 
-                                            <div class="product">
-                                                <div class="product-img">
-                                                    <img src="${p.image1}" alt="">
-                                                    
-                                                </div>
-                                                <div class="product-body">
-                                                    <p class="product-category">Category</p>
-                                                    <h3 class="product-name"><a href="#">${p.name}</a></h3>
-                                                    <h4 class="product-price">${p.price} <del
-                                                            class="product-old-price">$990.00</del></h4>
+                                            <li class="page-item">  <c:forEach var="i" begin="1" end="${requestScope.Count}">
+                                                    <a onclick="loadProducts(${i})"  id="page-link" style="${requestScope.page == i ? "background-color: red; border:1px solid #000;padding-right : 10px; padding-left : 10px" : ""}" adding-right : 25px href="home?page=${i}">
+                                                        ${i}
+                                                    </a>
+                                                </c:forEach></li>
 
-                                                    <div class="product-btns">
-                                                        <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span
-                                                                class="tooltipp">add to wishlist</span></button>
-                                                        <button class="add-to-compare"><i class="fa fa-exchange"></i><span
-                                                                class="tooltipp">add to compare</span></button>
-                                                        <button class="quick-view"><i class="fa fa-eye"></i><span
-                                                                class="tooltipp">quick view</span></button>
+
+                                        </ul>
+                                    </nav>
+                                </div>
+
+                                <div class="Load">
+
+
+                                    <div id="Listproduct" class="tab-pane fade in active">
+                                        <c:forEach items="${listProductPage}" var="p">
+                                            <div class="col-md-3">
+                                                <!-- product -->
+
+                                                <div class="product">
+                                                    <div class="product-img">
+                                                        <img src="${p.image1}" alt="">
+
+                                                    </div>
+                                                    <div class="product-body">
+
+                                                        <h3 class="product-name"><a href="#">${p.name}</a></h3>
+                                                        <h4 class="product-price">${p.price} <del
+                                                                class="product-old-price">$990.00</del></h4>
+
+                                                        <div class="product-btns">
+                                                            <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span
+                                                                    class="tooltipp">add to wishlist</span></button>
+                                                            <button class="add-to-compare"><i class="fa fa-exchange"></i><span
+                                                                    class="tooltipp">add to compare</span></button>
+                                                            <button class="quick-view"><i class="fa fa-eye"></i><span
+                                                                    class="tooltipp">quick view</span></button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="add-to-cart">
+                                                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to
+                                                            cart</button>
                                                     </div>
                                                 </div>
-                                                <div class="add-to-cart">
-                                                    <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to
-                                                        cart</button>
-                                                </div>
+
+                                                <!-- /product -->
+
                                             </div>
+                                        </c:forEach>
 
-                                            <!-- /product -->
-
-                                        </div>
-                                    </c:forEach>
+                                    </div>
                                 </div>
                                 <!-- /tab -->
                             </div>
@@ -159,7 +186,18 @@
         <script src="js1/nouislider.min.js"></script>
         <script src="js1/jquery.zoom.min.js"></script>
         <script src="js1/main.js"></script>
+        <script>
+                                                        function redirectToController(categoryId) {
+                                                            // Construct the URL based on whether a categoryId is provided
+                                                            var url = "home"; // Assuming 'home' is the endpoint handled by your servlet
+                                                            if (categoryId !== 'all') {
+                                                                url += "?categoryId=" + categoryId;
+                                                            }
+                                                            window.location.href = url;
+                                                        }
+        </script>
 
     </body>
+
 </html>
 
