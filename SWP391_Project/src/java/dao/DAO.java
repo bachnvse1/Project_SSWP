@@ -751,15 +751,14 @@ public class DAO extends DBContext {
         return list;
     }
 
-    public List<Product> getAllProductbyCategory(int cid) {
+    public List<Product> getAllProductbyName(String name) {
         List<Product> list = new ArrayList<>();
-        String sql = "SELECT * FROM swp_demo.product\n"
-                + "where categoryID=?;";
+        String sql = "SELECT * FROM swp_demo.product where name like ?";
         try {
             con = new DBContext().connection;
 
             ps = con.prepareStatement(sql);
-            ps.setInt(1, cid);
+            ps.setString(1, "%" + name + "%");
             rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(new Product(rs.getInt(1),
@@ -810,7 +809,7 @@ public class DAO extends DBContext {
         return null;
     }
 
-    public List<Product> getProductbyCategoryID(int id) {
+    public List<Product> getProductbyCategoryID(String id) {
         List<Product> list = new ArrayList<>();
         String sql = "Select * from product as p inner join category as c\n"
                 + "on p.categoryID=c.id where p.categoryID=?";
@@ -818,7 +817,7 @@ public class DAO extends DBContext {
             con = new DBContext().connection;
 
             ps = con.prepareStatement(sql);
-            ps.setInt(1, id);
+            ps.setString(1, id);
             rs = ps.executeQuery();
             while (rs.next()) {
 
