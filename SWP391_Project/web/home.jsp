@@ -135,7 +135,7 @@
 
                                             <div class="product">
                                                 <div class="product-img">
-                                                    <img src="${p.image1}" alt="">
+                                                    <img src="${p.image1}" alt="" style="height: 150px;">
                                                 </div>
                                                 <div class="product-body">
                                                     <p class="product-category">Category</p>

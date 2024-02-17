@@ -69,11 +69,12 @@
         <%@include file="components/navBar.jsp" %>
         <div class="container-complain">
             <form action="report" method="post">
-
-                <label for="fname">Complaint title</label>
-                <input type="text" name="title">
+                <label for="fname">ID</label>
+                <input type="text" name="id" value="${id}" readonly="">
+                <label for="fname">Intermediate Orders Code</label>
+                <input type="text" name="code" value="${code}" readonly="">
                 <label for="subject">Description</label>
-                <textarea name="desciption" placeholder="Write something, as detailed as possible..." style="height:200px"></textarea>
+                <textarea name="desciption" placeholder="Write something, as detailed as possible..." style="height:200px" required=""></textarea>
                 <input type="submit" value="Submit">
             </form>
         </div>

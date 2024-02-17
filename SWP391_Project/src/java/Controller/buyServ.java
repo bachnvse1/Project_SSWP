@@ -23,7 +23,7 @@ import java.util.List;
  *
  * @author ADMIN
  */
-@WebServlet(name="buyServ", urlPatterns={"/buy"})
+@WebServlet(name = "buyServ", urlPatterns = {"/buy"})
 public class buyServ extends HttpServlet {
 
     /**
@@ -79,25 +79,31 @@ public class buyServ extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         DAO dao = new DAO();
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("user");
         String id = request.getParameter("id");
         int idx = Integer.parseInt(id);
         Product p = dao.getProductByID(idx);
-        if(p.isIs_delete() == true) {
-            
+        if(dao.getWallet(u.getId()).getBalance() < p.getPrice()) {
+            response.getWriter().print("Your balance is not enough to purchase the product!");
+            return;
         }
-        HttpSession session = request.getSession();
-        User u = (User) session.getAttribute("user");
-        intermediateOrders order = new intermediateOrders();
-        order = dao.getOrderByProductID(idx);
-        dao.updateOrder(u.id, "Checking", u.id, idx);
-        
-        if(p.isTransaction_fee() == true) {
-            order.setTotal_paid_amount(p.getPrice());
-        } 
-        order.setTotal_paid_amount(p.getPrice() + p.getPrice() * 0.05);
-        p.setIs_delete(true);
-      
-        response.getWriter().print("You just buy product, please checking order!");
+        if (p.getCreate_by() != u.getId()) {
+            if (p.isIs_delete() == true) {
+                response.getWriter().print("The product has been sold and is being traded!");
+            } else {
+                dao.updateOrder(u.id, "Checking", u.id, idx);
+                dao.deleteProduct(idx, true);
+                response.getWriter().print("You just buy product, please checking order!");
+            }
+        } else {
+            response.getWriter().print("Can not buy product yourself!");
+        }
+
+//        if(p.isTransaction_fee() == true) {
+//            order.setTotal_paid_amount(p.getPrice());
+//        } 
+//        order.setTotal_paid_amount(p.getPrice() + p.getPrice() * 0.05);
     }
 
     /**

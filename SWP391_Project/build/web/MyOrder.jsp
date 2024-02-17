@@ -9,12 +9,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>My Order</title>
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
-
         <!-- Bootstrap -->
         <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
 
@@ -28,7 +27,9 @@
         <!-- Font Awesome Icon -->
         <link rel="stylesheet" href="css/font-awesome.min.css">
         <!-- Custom stlylesheet -->
+
         <link type="text/css" rel="stylesheet" href="css/style.css" />
+        <link rel="stylesheet" href="css/myorder.css"/>
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -68,7 +69,7 @@
             }
 
             .table th {
-                line-height: 10;
+                line-height: 1.5;
                 background-color: #f2f2f2; /* Màu nền cho tiêu đề */
             }
         </style>
@@ -161,9 +162,9 @@
 
                         <label for="category">Category:</label>
                         <select name="categoryID">
-                            <option value="1">Account</option>
-                            <option value="2">Keys</option>
-                            <option value="3">Document</option>
+                            <option value="7">Account</option>
+                            <option value="8">Keys</option>
+                            <option value="9">Document</option>
                             <option value="4">Others</option>
                         </select><br>
 

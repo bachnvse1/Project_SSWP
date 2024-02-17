@@ -93,6 +93,47 @@ CREATE TABLE Order_Detail (
 );
 
 
+create table Report(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    type_report int,
+    orderID int,
+    status bit,
+    description VARCHAR(255) CHARACTER SET UTF8MB4,
+    create_by int,
+    /*FOREIGN KEY (create_by) REFERENCES users(id),*/
+    create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_by int,
+    /*FOREIGN KEY (updated_by) REFERENCES users(id),*/
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    is_delete bit
+);
+
+create table Wallet (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    balance float(10,2),
+    create_by int,
+    /*FOREIGN KEY (create_by) REFERENCES users(id),*/
+    create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_by int,
+    /*FOREIGN KEY (updated_by) REFERENCES users(id),*/
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+
+drop table Report
+
+alter table Report
+add foreign key (orderID) references intermediate_Orders(id);
+alter table Report
+add foreign key (create_by) references users(id);
+alter table Report
+add foreign key (updated_by) references users(id);
+
+alter table Wallet
+add foreign key (create_by) references users(id);
+alter table Wallet
+add foreign key (updated_by) references users(id);
+
 alter table Product
 add foreign key (categoryID) references Category(id);
 alter table Product
@@ -116,38 +157,37 @@ add foreign key (create_by) references users(id);
 alter table Order_Detail
 add foreign key (updated_by) references users(id);
 
-INSERT INTO Category (name, is_delete) VALUES ('Electronics', 0);
-INSERT INTO Category (name, is_delete) VALUES ('Clothing', 0);
-INSERT INTO Category (name, is_delete) VALUES ('Books', 0);
+INSERT INTO Category (name, is_delete) VALUES ('Account', 0);
+INSERT INTO Category (name, is_delete) VALUES ('Quizlet', 0);
+INSERT INTO Category (name, is_delete) VALUES ('Netflix', 0);
 
-INSERT INTO Product (name, price, categoryID, description, image1, image2, image3, image4, transaction_Fees, contact_Method, create_by, hidden_content, updated_by, is_delete) VALUES
-('Product 1', 50.99, 1, 'Description for Product 1', 'https://i.imgur.com/YxPwb7X.jpg', 'product1_2.jpg', 'product1_3.jpg', 'product1_4.jpg', 1, 'Contact Method for Product 1', 1, 'Hidden content for Product 1', 1, 0),
-('Product 2', 39.95, 2, 'Description for Product 2', 'https://i.imgur.com/YxPwb7X.jpg', 'product2_2.jpg', 'product2_3.jpg', 'product2_4.jpg', 0, 'Contact Method for Product 2', 1, 'Hidden content for Product 2', 1, 0),
-('Product 3', 99.50, 1, 'Description for Product 3', 'https://i.imgur.com/YxPwb7X.jpg', 'product3_2.jpg', 'product3_3.jpg', 'product3_4.jpg', 1, 'Contact Method for Product 3', 1, 'Hidden content for Product 3', 1, 0),
-('Product 4', 149.75, 3, 'Description for Product 4', 'https://i.imgur.com/YxPwb7X.jpg', 'product4_2.jpg', 'product4_3.jpg', 'product4_4.jpg', 0, 'Contact Method for Product 4', 1, 'Hidden content for Product 4', 1, 0);
+delete from swp_demo.category
+
 
 INSERT INTO users (username, password, email, display_name, is_admin, is_verify, is_active) 
 VALUES ('bach', 'UPdqztViNgyMw0QyGVTpe0ud+dw=', 'example@example.com', 'Example User', 1, 1, 1);
 
-INSERT INTO intermediate_Orders (code, productID, total_received_amount, total_paid_amount, intermediary_fee, status, create_by, updated_by, is_delete) 
-VALUES 
-('ORD123', 1, 100.50, 95.00, 5.50, 'đang kiểm tra hàng', 1, 1, 0);
+INSERT INTO users (username, password, email, display_name, is_admin, is_verify, is_active) 
+VALUES ('bach2', 'UPdqztViNgyMw0QyGVTpe0ud+dw=', 'example@example.com', 'buyer', 0, 1, 1);
 
-INSERT INTO intermediate_Orders (code, productID, total_received_amount, total_paid_amount, intermediary_fee, status, create_by, updated_by, is_delete) 
-VALUES 
-('ORD123', 2, 100.50, 95.00, 5.50, 'Sẵn sàng giao dịch', 1, 1, 0);
-INSERT INTO intermediate_Orders (code, productID, total_received_amount, total_paid_amount, intermediary_fee, status, create_by, updated_by, is_delete) 
-VALUES 
-('ORD123', 3, 100.50, 95.00, 5.50, 'Sẵn sàng giao dịch', 1, 1, 0);
-INSERT INTO intermediate_Orders (code, productID, total_received_amount, total_paid_amount, intermediary_fee, status, create_by, updated_by, is_delete) 
-VALUES 
-('ORD123', 4, 100.50, 95.00, 5.50, 'Sẵn sàng giao dịch', 1, 1, 0);
+INSERT INTO Wallet (balance, create_by, updated_by)
+VALUES (10000000.00, 1, 1),
+       (50000000.50, 2, 2);
+       
+update  Wallet 
+set balance = 123
+where create_by = 1 
+
 
 delete from swp_demo.product where product.id = 5;
 delete from swp_demo.intermediate_Orders where product.id = 5;
 delete  from swp_demo.Order_Detail
 
-
+select * from Category
 select * from Product
 select * from users
 select * from intermediate_Orders where productID = 2
+select * from Wallet where create_by = 2
+
+select * from Product join intermediate_Orders
+on Product.id = intermediate_Orders.productID

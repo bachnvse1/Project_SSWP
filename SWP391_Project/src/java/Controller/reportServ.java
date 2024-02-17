@@ -4,12 +4,15 @@
  */
 package Controller;
 
+import Entity.User;
+import dao.DAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
@@ -56,7 +59,13 @@ public class reportServ extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-        response.sendRedirect("Complain.jsp");
+        //response.sendRedirect("Complain.jsp");
+        DAO dao = new DAO();
+        String xid = request.getParameter("id");
+        int id = Integer.parseInt(xid);
+        String code = dao.getOrderByID(id).getCode();
+        request.setAttribute("code", code);
+        request.getRequestDispatcher("Complain.jsp").forward(request, response);
     }
 
     /**
@@ -70,7 +79,16 @@ public class reportServ extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
+        String xid = request.getParameter("id");
+        int id = Integer.parseInt(xid);
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("user");
+        DAO dao = new DAO();
+        String desciption = request.getParameter("description");
+        dao.insertReport(1, id, false , desciption, u.getId(), false);
+        
+        
     }
 
     /**

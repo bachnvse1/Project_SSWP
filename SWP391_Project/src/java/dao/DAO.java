@@ -7,8 +7,8 @@ package dao;
 import Context.DBContext;
 import Entity.Category;
 import Entity.Product;
-import Entity.ProductOrderPair;
 import Entity.User;
+import Entity.Wallet;
 import Entity.intermediateOrders;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -235,6 +235,70 @@ public class DAO extends DBContext {
         return null;
     }
 
+    public void insertReport(int type, int orderID, boolean status, String description, int userID, boolean is_delete) {
+        String query = "INSERT INTO Report (type_report, orderID, status, description, create_by, updated_by, is_delete) \n"
+                + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        try {
+            con = new DBContext().connection; //connect sql
+            ps = con.prepareStatement(query);
+            ps.setInt(1, type);
+            ps.setInt(2, orderID);
+            ps.setBoolean(3, status);
+            ps.setString(4, description);
+            ps.setInt(5, userID);
+            ps.setInt(6, userID);
+            ps.setBoolean(7, is_delete);
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+
+        }
+    }
+
+    public void deleteProduct(int id, boolean is_delete) {
+        String query = "Update Product set is_delete = ? where id =? ";
+        try {
+            con = new DBContext().connection; //connect sql
+            ps = con.prepareStatement(query);
+            ps.setBoolean(1, is_delete);
+            ps.setInt(2, id);
+            ps.executeUpdate();
+        } catch (Exception e) {
+
+        }
+    }
+
+    public List<intermediateOrders> getOrderBuy(int bid) {
+        List<intermediateOrders> list = new ArrayList<>();
+        String sql = "SELECT * FROM swp_demo.intermediate_orders\n"
+                + "where buyer_id =? ;";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, bid);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new intermediateOrders(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getDouble(5),
+                        rs.getDouble(6),
+                        rs.getDouble(7),
+                        rs.getString(8),
+                        rs.getInt(9),
+                        rs.getTimestamp(10),
+                        rs.getInt(11),
+                        rs.getTimestamp(12),
+                        rs.getBoolean(13)));
+            }
+        } catch (Exception e) {
+
+        }
+        return list;
+
+    }
+
     //HUY
     public User Login(String username, String pass) {
 
@@ -449,9 +513,73 @@ public class DAO extends DBContext {
         return list;
     }
 
+    public List<Product> getProductByBuyerID(int bid) {
+        List<Product> list = new ArrayList<>();
+        String sql = "SELECT * FROM swp_demo.product where buyer_id = ?";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, bid);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Product(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getDouble(3),
+                        rs.getInt(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getBoolean(10),
+                        rs.getString(11),
+                        rs.getInt(12),
+                        rs.getString(13),
+                        rs.getTimestamp(14),
+                        rs.getInt(15),
+                        rs.getTimestamp(16),
+                        rs.getBoolean(17)));
+            }
+
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return list;
+    }
+
     public intermediateOrders getOrderByProductID(int id) {
         String sql = "SELECT * FROM swp_demo.intermediate_orders\n"
                 + "where productID =? ;";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return new intermediateOrders(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getDouble(5),
+                        rs.getDouble(6),
+                        rs.getDouble(7),
+                        rs.getString(8),
+                        rs.getInt(9),
+                        rs.getTimestamp(10),
+                        rs.getInt(11),
+                        rs.getTimestamp(12),
+                        rs.getBoolean(13));
+            }
+        } catch (Exception e) {
+
+        }
+        return null;
+
+    }
+
+    public intermediateOrders getOrderByID(int id) {
+        String sql = "SELECT * FROM swp_demo.intermediate_orders\n"
+                + "where id =? ;";
         try {
             con = new DBContext().connection;
             ps = con.prepareStatement(sql);
@@ -719,20 +847,31 @@ public class DAO extends DBContext {
         return list;
     }
 
+    public Wallet getWallet(int uid) {
+        String query = "Select * from Wallet where create_by = ?";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(query);
+            ps.setInt(1, uid);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return new Wallet(rs.getInt(1),
+                        rs.getDouble(2),
+                        rs.getInt(3),
+                        rs.getTimestamp(4),
+                        rs.getInt(5),
+                        rs.getTimestamp(6));
+            }
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
         DAO dao = new DAO();
-        List<Product> listProduct = dao.getProductByUserID(1);
-        List<ProductOrderPair> productOrderPairs = new ArrayList<>();
-
-        for (Product product : listProduct) {
-            intermediateOrders order = dao.getOrderByProductID(product.getId());
-            productOrderPairs.add(new ProductOrderPair(product, order));
-        }
-
-        for (ProductOrderPair o : productOrderPairs) {
-            System.out.println(o.getProduct().getCreate_by());
-
-        }
+        Wallet w = dao.getWallet(2);
+        System.out.println(w.getBalance());
 
     }
 

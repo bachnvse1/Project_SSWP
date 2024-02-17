@@ -68,15 +68,14 @@ public class orderBuyChecking extends HttpServlet {
         DAO dao = new DAO();
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("user");
-        List<Product> listProduct = dao.getProductByUserID(u.getId());
+        List<intermediateOrders> listOrderBuy = dao.getOrderBuy(u.getId());
         List<ProductOrderPair> productOrderPairs = new ArrayList<>();
-        for (Product product : listProduct) {
-            intermediateOrders order = dao.getOrderByProductID(product.getId());
-            productOrderPairs.add(new ProductOrderPair(product, order));
+        for (intermediateOrders o : listOrderBuy) {
+            Product product = dao.getProductByID(o.getProductId());
+            productOrderPairs.add(new ProductOrderPair(product, o));
 
         }
         String s = "";
-        double total = 0;
         for (ProductOrderPair o : productOrderPairs) {
             if (o.getOrder().getStatus().equals("Checking")) {
                 if (o.getProduct().isTransaction_fee() == true) {
@@ -95,10 +94,16 @@ public class orderBuyChecking extends HttpServlet {
                         + "                                                    <td>" + o.getOrder().getIntermediary_fee() + " VND" + "</td>\n"
                         + "                                                    <td><span class=\"badge badge-success\">" + s + "</span></td>\n"
                         + "                                                    <td>" + o.getOrder().getTotal_paid_amount() + " VND" + "</td>\n"
-                        + "                                                    <td> <div class=\"buttonContainer\">\n"
-                        + "        <button class=\"reportButton\"><a href=\"report?"+o.getOrder().getId()+"\"><i class=\"fas fa-exclamation-circle\"></i></a></button>\n"
-                        + "        <button class=\"reportButton\"><a href=\"#\"><i class=\"fas fa-check-circle\"></i></a></button>\n"
-                        + "      </div></td>\n"
+                        + "                                                    <td>\n"
+                        + "  <div class=\"buttonContainer\">\n"
+                        + "    <a class=\"reportButton\" href=\"report?id=" + o.getOrder().getId()+ "\">\n"
+                        + "      <i class=\"fa fa-exclamation\"></i>\n"
+                        + "    </a>\n"
+                        + "    <a class=\"reportButton\" href=\"#\">\n"
+                        + "      <i class=\"fa fa-check\"></i>\n"
+                        + "    </a>\n"
+                        + "  </div>\n"
+                        + "</td>\n"
                         + " </tr>");
             }
         }
