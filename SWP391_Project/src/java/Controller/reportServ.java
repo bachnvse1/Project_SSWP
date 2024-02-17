@@ -67,6 +67,7 @@ public class reportServ extends HttpServlet {
         int id = Integer.parseInt(xid);
         String code = dao.getOrderByID(id).getCode();
         request.setAttribute("code", code);
+        request.setAttribute("id", id);
         request.getRequestDispatcher("Complain.jsp").forward(request, response);
     }
 
@@ -87,9 +88,9 @@ public class reportServ extends HttpServlet {
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("user");
         DAO dao = new DAO();
-        String desciption = request.getParameter("description");
+        String desciption = request.getParameter("desciption");
         dao.insertReport(1, id, false , desciption, u.getId(), false);
-        
+        // 1 la khieu nai don hang
         
     }
 

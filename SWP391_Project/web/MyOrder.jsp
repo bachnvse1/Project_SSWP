@@ -193,7 +193,7 @@
                         </tr>
                     </thead>
                     <tbody>
-
+                        
                         <c:forEach items="${productOrderPairs}" var="p">
                             <tr>
                                 <td>${p.getOrder().getCode()}</td>

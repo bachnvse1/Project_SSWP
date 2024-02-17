@@ -90,6 +90,8 @@ $(document).ready(function () {
             }
         });
     });
+    
+    
     $('.updateproduct').click(function (event) {
         event.preventDefault();
         var productId = $(this).data('product-id');

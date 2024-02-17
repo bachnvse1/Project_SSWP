@@ -119,6 +119,23 @@ create table Wallet (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
+CREATE TABLE feedback (
+    id INT PRIMARY KEY auto_increment,
+    title VARCHAR(100),
+    content VARCHAR(500),
+    create_at DATETIME,
+    user_id INT,
+    intermediary_order_id INT,
+    FOREIGN KEY (user_id) REFERENCES users (id)
+    
+    
+);
+INSERT INTO swp_demo.feedback (id, title, content, create_at, user_id, intermediary_order_id)
+VALUES (1, 'Feedback Title', 'Feedback Content', '2024-02-08 12:00:00', 1, 1);
+INSERT INTO swp_demo.feedback (id, title, content, create_at, user_id, intermediary_order_id)
+VALUES (2, 'huehuehue', 'quaxinhgai', '2024-02-07 12:00:00', 1, 1);
+
+
 
 drop table Report
 
@@ -188,6 +205,7 @@ select * from Product
 select * from users
 select * from intermediate_Orders where productID = 2
 select * from Wallet where create_by = 2
+select * from Report
 
 select * from Product join intermediate_Orders
 on Product.id = intermediate_Orders.productID
