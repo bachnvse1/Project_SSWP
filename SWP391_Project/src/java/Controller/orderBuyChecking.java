@@ -12,6 +12,7 @@ import dao.DAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -23,6 +24,7 @@ import java.util.List;
  *
  * @author ADMIN
  */
+@WebServlet(name = "orderBuyChecking", urlPatterns = {"/orderChecking"})
 public class orderBuyChecking extends HttpServlet {
 
     /**
@@ -90,7 +92,7 @@ public class orderBuyChecking extends HttpServlet {
                         + "                                                    <td>" + dao.getUserById(o.getProduct().getCreate_by()).getDisplay_name() + "</td>\n"
                         + "                                                    <td>" + dao.getCategoryById(o.getProduct().getCategoryID()).getName() + "</td>\n"
                         + "                                                    <td>" + o.getProduct().getContact_Method() + "</td>\n"
-                        + "                                                    <td>" + o.getProduct().price + " VND" + "</td>\n"
+                        + "                                                    <td>" + o.getProduct().getPrice() + " VND" + "</td>\n"
                         + "                                                    <td>" + o.getOrder().getIntermediary_fee() + " VND" + "</td>\n"
                         + "                                                    <td><span class=\"badge badge-success\">" + s + "</span></td>\n"
                         + "                                                    <td>" + o.getOrder().getTotal_paid_amount() + " VND" + "</td>\n"

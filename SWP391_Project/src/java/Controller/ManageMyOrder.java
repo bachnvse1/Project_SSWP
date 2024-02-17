@@ -66,32 +66,23 @@ public class ManageMyOrder extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-<<<<<<< HEAD
-                response.setContentType("text/html;charset=UTF-8");
-=======
-        response.setContentType("text/html;charset=UTF-8");
->>>>>>> origin/branch-huy
 
-        //processRequest(request, response);
+        response.setContentType("text/html;charset=UTF-8");
         DAO dao = new DAO();
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("user");
-<<<<<<< HEAD
-=======
+
         List<Category> category = dao.getAllCategory();
->>>>>>> origin/branch-huy
+
         List<Product> listProduct = dao.getProductByUserID(u.getId());
         List<ProductOrderPair> productOrderPairs = new ArrayList<>();
-        
+
         for (Product product : listProduct) {
             intermediateOrders order = dao.getOrderByProductID(product.getId());
             productOrderPairs.add(new ProductOrderPair(product, order));
         }
-<<<<<<< HEAD
 
-=======
         request.setAttribute("category", category);
->>>>>>> origin/branch-huy
         request.setAttribute("productOrderPairs", productOrderPairs);
         request.getRequestDispatcher("MyOrder.jsp").forward(request, response);
     }
@@ -109,8 +100,8 @@ public class ManageMyOrder extends HttpServlet {
             throws ServletException, IOException {
         // processRequest(request, response);
         DAO dao = new DAO();
-       // HttpSession session = request.getSession();
-      //  User u = (User) session.getAttribute("user");
+        // HttpSession session = request.getSession();
+        //  User u = (User) session.getAttribute("user");
         int id = Integer.parseInt(request.getParameter("pid"));
         Product product = dao.getProductById(id);
         intermediateOrders order = dao.getOrderByProductID(product.getId());
@@ -136,13 +127,8 @@ public class ManageMyOrder extends HttpServlet {
         response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(data);
-        
-       
-        
 
     }
-
-    
 
     /**
      * Returns a short description of the servlet.

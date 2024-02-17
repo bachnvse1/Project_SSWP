@@ -55,6 +55,7 @@ body {
 .options li:last-child {
     border-bottom: none;
 }
+
 .overlay {
             position: fixed;
             top: 0;

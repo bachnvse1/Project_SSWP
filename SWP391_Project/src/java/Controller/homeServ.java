@@ -72,8 +72,6 @@ public class homeServ extends HttpServlet {
             page = "1";
         }
 
-        request.setAttribute("listProduct", listProduct);
-        request.setAttribute("listCategory", listCategory);
         String pramCategoryId = request.getParameter("categoryId");
         String search = request.getParameter("searchproductname");
         if (pramCategoryId != null && !pramCategoryId.equals("all")) {

@@ -88,16 +88,4 @@
         <servlet-name>homeServ</servlet-name>
         <url-pattern>/home</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>orderBuyChecking</servlet-name>
-        <url-pattern>/orderChecking</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>reportServ</servlet-name>
-        <url-pattern>/report</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>VerifyOrder</servlet-name>
-        <url-pattern>/verifyOrder</url-pattern>
-    </servlet-mapping>
 </web-app>

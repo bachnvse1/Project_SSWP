@@ -32,6 +32,7 @@ public class Product {
     public boolean is_delete;
 
     public Product() {
+        
     }
 
     public Product(int id, String name, double price, int CategoryID, String Description, String image1, String image2, String image3, String image4, boolean Transaction_fee, String Contact_Method, int create_by, String hidden_content, Timestamp create_At, int update_by, Timestamp update_At, boolean is_delete) {

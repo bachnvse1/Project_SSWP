@@ -27,7 +27,6 @@
         <!-- Font Awesome Icon -->
         <link rel="stylesheet" href="css/font-awesome.min.css">
         <!-- Custom stlylesheet -->
-<<<<<<< HEAD
 
         <link type="text/css" rel="stylesheet" href="css/style.css" />
         <link rel="stylesheet" href="css/myorder.css"/>
@@ -74,14 +73,9 @@
                 background-color: #f2f2f2; /* Màu nền cho tiêu đề */
             }
 
-           
+
 
         </style>
-=======
-        <link type="text/css" rel="stylesheet" href="css/style.css"/>
-        <link type="text/css" rel="stylesheet" href="css/myorder.css"/>
-
->>>>>>> origin/branch-huy
     </head>
     <body>
         <%@include file="components/navBar.jsp" %>
@@ -112,7 +106,6 @@
                         </ul>
                     </div>
                 </div>
-
                 <div class="management" id="mysale">
                     <div class="title-bar" onclick="toggleOptions('mysale')">
                         <h5>Quản lí đơn bán</h5>
@@ -121,14 +114,14 @@
                     <div class="options">
                         <ul>
                             <li><a href="#">Đã hoàn thành</a></li>
-                            <li><a>Đang xử lí</a></li>
+                            <li><a href="#">Đang xử lí</a></li>
                             <li><a href="#">Đã hủy</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="table-responsive" style="margin-left: 5%">
-<<<<<<< HEAD
+                
                 <div class="container mt-5">
                     <div class="d-flex justify-content-center row">
                         <div class="col-md-10">
@@ -159,10 +152,9 @@
                         </div>
                     </div>
                 </div>
-
-=======
+                
                 <table id="Filter" class="text-nowrap mb-0 table" border="1">
-                     <tr>
+                    <tr>
                         <th>Filter by code</th>
                         <th>Filter by Name</th>
                         <th>Filter by Price</th>
@@ -219,11 +211,10 @@
                         </c:forEach>
                     </tbody>
                 </table>
->>>>>>> origin/branch-huy
                 <div id="addProductForm" class="addProduct">
                     <h2>Add Product</h2>
 
-                    <form  action="addProduct" method="post">                     
+                    <form id="addForm">                     
                         <label for="name">Name:</label>
                         <input type="text" name="nameProduct" required><br>
 
@@ -233,20 +224,13 @@
                         <label for="category">Category:</label>
 
                         <select name="categoryID">
-<<<<<<< HEAD
-                            <option value="7">Account</option>
-                            <option value="8">Keys</option>
-                            <option value="9">Document</option>
-                            <option value="4">Others</option>
-=======
                             <c:forEach items="${category}" var="c">
                                 <option value="${c.getId()}">${c.getName()}</option>
                             </c:forEach>
->>>>>>> origin/branch-huy
                         </select><br>
 
                         <label for="description">Description:</label>
-                        <textarea id="description" name="Description" rows="4" required></textarea><br>
+                        <input id="description" name="Description" rows="4" required></input><br>
 
                         <label for="image1">Image 1:</label>
                         <input type="text" id="image" name="image1"><br>
@@ -265,62 +249,6 @@
                         <input type="radio" value="buyer" name="Transaction_fee">Buyer<br>
                         <label for="contactMethod">Contact Method:</label>
                         <input type="text" id="contactMethod" name="Contact_Method" required><br>
-<<<<<<< HEAD
-                        <label for="hiddenContent">Hidden Content:</label>
-                        <input type="text" id="hiddenContent" name="hidden_content" required><br>
-
-                        <input type="submit" value="ADD">
-                    </form>
-                </div>
-            </div>
-            
-
-        </div>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script>
-
-                        $(document).ready(function () {
-                            // Ẩn form khi trang được tải
-                            $("#addProductForm").hide();
-                            $("#orderBuy").hide();
-                            // Xử lý sự kiện khi nhấn nút "Add Product"
-                            $("#addProductButton").click(function () {
-                                $("#addProductForm").show();
-                                $("#ProductDisplay").hide();
-                            });
-                            $("#allProductButton").click(function () {
-                                $("#addProductForm").hide();
-                                $("#ProductDisplay").show();
-                            });
-                        });
-                        function toggleOptions(productId) {
-                            const options = document.getElementById(productId).querySelector('.options');
-                            options.style.display = options.style.display === 'block' ? 'none' : 'block';
-                        }
-
-                        $(document).ready(function () {
-                            $("#order-checking").click(function () {
-                                $("#orderBuy").show();
-                                $.ajax({
-                                    type: 'GET',
-                                    url: "orderChecking",
-                                    success: function (response) {
-                                        $("#cell-info").html(response);
-                                    },
-                                    error: function () {
-                                        // Xử lý lỗi nếu có
-                                        alert("Đã xảy ra lỗi khi tải trang");
-                                    }
-                                });
-                            });
-                        });
-
-
-
-        </script>
-    </body>
-</html>
-=======
                         <label for="hiddenContent">Hidden Content:</lahidden_contentbel>
                             <input type="text" id="hiddenContent" name="hidden_content" required><br>
 
@@ -454,4 +382,4 @@
                             <script src="jscript/myorder.js"></script>
                             </body>
                             </html>
->>>>>>> origin/branch-huy
+
