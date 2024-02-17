@@ -72,6 +72,9 @@
                 line-height: 1.5;
                 background-color: #f2f2f2; /* Màu nền cho tiêu đề */
             }
+
+           
+
         </style>
     </head>
     <body>
@@ -195,6 +198,7 @@
                     </form>
                 </div>
             </div>
+            
 
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -235,6 +239,7 @@
                                 });
                             });
                         });
+
 
 
         </script>

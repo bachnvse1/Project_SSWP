@@ -52,6 +52,10 @@
         <servlet-name>reportServ</servlet-name>
         <servlet-class>Controller.reportServ</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>VerifyOrder</servlet-name>
+        <servlet-class>Controller.VerifyOrder</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SendEmail</servlet-name>
         <url-pattern>/send</url-pattern>
@@ -91,5 +95,9 @@
     <servlet-mapping>
         <servlet-name>reportServ</servlet-name>
         <url-pattern>/report</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VerifyOrder</servlet-name>
+        <url-pattern>/verifyOrder</url-pattern>
     </servlet-mapping>
 </web-app>

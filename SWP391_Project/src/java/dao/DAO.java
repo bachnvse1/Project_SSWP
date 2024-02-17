@@ -872,6 +872,7 @@ public class DAO extends DBContext {
         DAO dao = new DAO();
         Wallet w = dao.getWallet(2);
         System.out.println(w.getBalance());
+        System.out.println(dao.getOrderByID(20).getCode());
 
     }
 
