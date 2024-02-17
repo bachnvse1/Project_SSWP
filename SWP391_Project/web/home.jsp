@@ -112,19 +112,19 @@
                     <div class="col-md-12"  >
                         <div class="section-title">
                             <h3 class="title">Product</h3>
-                                <div class="section-nav">
-                                    <ul class="section-tab-nav tab-nav">
-                                        <!-- Correctly setting 'All' category selection -->
-                                        <li><a href="javascript:void(0);" onclick="redirectToController('all')">All</a></li>
-                                            <c:forEach items="${listCategory}" var="category">
-                                            
-                                            <li><a href="javascript:void(0);" onclick="redirectToController('${category.id}')">${category.name}</a></li>
-                                            </c:forEach>
-                                    </ul>
-                                </div>
-                            </div>
+                            <div class="section-nav">
+                                <ul class="section-tab-nav tab-nav">
+                                    <!-- Correctly setting 'All' category selection -->
+                                    <li><a href="javascript:void(0);" onclick="redirectToController('all')">All</a></li>
+                                        <c:forEach items="${listCategory}" var="category">
 
+                                        <li><a href="javascript:void(0);" onclick="redirectToController('${category.id}')">${category.name}</a></li>
+                                        </c:forEach>
+                                </ul>
+                            </div>
                         </div>
+
+                    </div>
                     <!-- /section title -->
                     <!-- Products tab & slick -->
 
@@ -155,14 +155,9 @@
 
                                                 </div>
                                                 <div class="product-body">
-<<<<<<< HEAD
 
-                                                    <h3 class="product-name"><a href="#">${p.name}</a></h3>
-=======
-                                                   
                                                     <p class="product-category">Category</p>
                                                     <h3 class="product-name"><a href="ProductDetail?id=${p.id}">${p.name}</a></h3>
->>>>>>> origin/branch-hue
                                                     <h4 class="product-price">${p.price} <del
                                                             class="product-old-price">$990.00</del></h4>
 
@@ -204,91 +199,91 @@
                 </div>
             </div>
         </div>
-    <!-- /SECTION -->
+        <!-- /SECTION -->
 
-    <!-- NEWSLETTER -->
-    <div id="newsletter" class="section">
-        <!-- container -->
-        <div class="container">
-            <!-- row -->
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="newsletter">
-                        <p>Sign Up for the <strong>NEWSLETTER</strong></p>
-                        <form>
-                            <input class="input" type="email" placeholder="Enter Your Email">
-                            <button class="newsletter-btn"><i class="fa fa-envelope"></i> Subscribe</button>
-                        </form>
+        <!-- NEWSLETTER -->
+        <div id="newsletter" class="section">
+            <!-- container -->
+            <div class="container">
+                <!-- row -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="newsletter">
+                            <p>Sign Up for the <strong>NEWSLETTER</strong></p>
+                            <form>
+                                <input class="input" type="email" placeholder="Enter Your Email">
+                                <button class="newsletter-btn"><i class="fa fa-envelope"></i> Subscribe</button>
+                            </form>
 
+                        </div>
                     </div>
                 </div>
+                <!-- /row -->
             </div>
-            <!-- /row -->
+            <!-- /container -->
         </div>
-        <!-- /container -->
-    </div>
-    <!-- /NEWSLETTER -->
+        <!-- /NEWSLETTER -->
 
 
 
-    <script>
-        <c:forEach items="${listProductPage}" var="p" varStatus="loop">
-        document.querySelector('#buyButton_${loop.index}').addEventListener('click', function () {
-            document.getElementById('cookiesPopup_${loop.index}').style.display = 'block';
-        });
-
-        // Lấy tất cả các nút đóng của popup tương ứng và thêm trình nghe sự kiện
-        var closeButtons_${loop.index} = document.querySelectorAll('#cookiesPopup_${loop.index} .close');
-        closeButtons_${loop.index}.forEach(function (button) {
-            button.addEventListener('click', function () {
-                // Tìm popup chứa nút đóng và ẩn nó
-                var popup = this.closest('.cookiesContent');
-                popup.style.display = 'none';
+        <script>
+            <c:forEach items="${listProductPage}" var="p" varStatus="loop">
+            document.querySelector('#buyButton_${loop.index}').addEventListener('click', function () {
+                document.getElementById('cookiesPopup_${loop.index}').style.display = 'block';
             });
-        });
-        </c:forEach>
-    </script>
 
-    <!-- FOOTER -->
-    <%@include file="components/footer.jsp" %>
-    <!-- /FOOTER -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="jscript/signin_captcha.js"></script>
-    <!-- jQuery Plugins -->
-    <script src="js1/jquery.min.js"></script>
-    <script src="js1/bootstrap.min.js"></script>
-    <script src="js1/slick.min.js"></script>
-    <script src="js1/nouislider.min.js"></script>
-    <script src="js1/jquery.zoom.min.js"></script>
-    <script src="js1/main.js"></script>
-    <script>
-        $(document).ready(function () {
-            $(".button-buy").click(function () {
-                var productId = $(this).data("id");
-                $.ajax({
-                    type: 'post',
-                    url: "buy",
-                    data: {id: productId},
-                    success: function (response) {
-                        alert(response);
-                    },
-                    error: function () {
-                        // Xử lý lỗi nếu có
-                        alert("Đã xảy ra lỗi khi tải trang");
-                    }
+            // Lấy tất cả các nút đóng của popup tương ứng và thêm trình nghe sự kiện
+            var closeButtons_${loop.index} = document.querySelectorAll('#cookiesPopup_${loop.index} .close');
+            closeButtons_${loop.index}.forEach(function (button) {
+                button.addEventListener('click', function () {
+                    // Tìm popup chứa nút đóng và ẩn nó
+                    var popup = this.closest('.cookiesContent');
+                    popup.style.display = 'none';
                 });
             });
-        });
-        function redirectToController(categoryId) {
-            // Construct the URL based on whether a categoryId is provided
-            var url = "home"; // Assuming 'home' is the endpoint handled by your servlet
-            if (categoryId !== 'all') {
-                url += "?categoryId=" + categoryId;
-            }
-            window.location.href = url;
-        }
-    </script>
+            </c:forEach>
+        </script>
 
-</body>
+        <!-- FOOTER -->
+        <%@include file="components/footer.jsp" %>
+        <!-- /FOOTER -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="jscript/signin_captcha.js"></script>
+        <!-- jQuery Plugins -->
+        <script src="js1/jquery.min.js"></script>
+        <script src="js1/bootstrap.min.js"></script>
+        <script src="js1/slick.min.js"></script>
+        <script src="js1/nouislider.min.js"></script>
+        <script src="js1/jquery.zoom.min.js"></script>
+        <script src="js1/main.js"></script>
+        <script>
+            $(document).ready(function () {
+                $(".button-buy").click(function () {
+                    var productId = $(this).data("id");
+                    $.ajax({
+                        type: 'post',
+                        url: "buy",
+                        data: {id: productId},
+                        success: function (response) {
+                            alert(response);
+                        },
+                        error: function () {
+                            // Xử lý lỗi nếu có
+                            alert("Đã xảy ra lỗi khi tải trang");
+                        }
+                    });
+                });
+            });
+            function redirectToController(categoryId) {
+                // Construct the URL based on whether a categoryId is provided
+                var url = "home"; // Assuming 'home' is the endpoint handled by your servlet
+                if (categoryId !== 'all') {
+                    url += "?categoryId=" + categoryId;
+                }
+                window.location.href = url;
+            }
+        </script>
+
+    </body>
 </html>
 

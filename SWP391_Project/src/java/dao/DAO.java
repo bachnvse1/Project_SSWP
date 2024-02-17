@@ -721,18 +721,19 @@ public class DAO extends DBContext {
         } catch (SQLException e) {
             System.out.println(e);
         }
-      
+
     }
-    public Product getProductDetailsById(int id){
-        Product p=null;
+
+    public Product getProductDetailsById(int id) {
+        Product p = null;
         String sql = "SELECT * FROM swp_demo.product\n"
                 + "where id=?;";
         try {
-             PreparedStatement st = connection.prepareStatement(sql);
+            PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-               p= (new Product(rs.getInt(1),
+                p = (new Product(rs.getInt(1),
                         rs.getString(2),
                         rs.getDouble(3),
                         rs.getInt(4),
@@ -751,12 +752,12 @@ public class DAO extends DBContext {
                         rs.getBoolean(17)));
             }
         } catch (Exception e) {
-             System.out.println(e);
-        }return p;
-}
-    
-    
-    public ArrayList<Feedback> getFeedbackList()  {
+            System.out.println(e);
+        }
+        return p;
+    }
+
+    public ArrayList<Feedback> getFeedbackList() {
         ArrayList<Feedback> list = new ArrayList<>();
         try {
             String sql = "SELECT f.*, u.username FROM swp_demo.feedback f JOIN swp_demo.users u ON f.user_id = u.id";
@@ -764,9 +765,11 @@ public class DAO extends DBContext {
 //            st.setInt(1, userId);
             ResultSet rs = st.executeQuery();
             while (true) {
-               if(rs.next()){
-                    list.add(new Feedback(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getTimestamp(4), rs.getInt(5),rs.getInt(6),rs.getString(7)));
-                }else break;
+                if (rs.next()) {
+                    list.add(new Feedback(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getTimestamp(4), rs.getInt(5), rs.getInt(6), rs.getString(7)));
+                } else {
+                    break;
+                }
             }
         } catch (SQLException e) {
             System.out.println(e);
@@ -776,13 +779,13 @@ public class DAO extends DBContext {
 
     public void createFeedback(int user_id, String title, String content) {
         try {
-           String sql = "INSERT INTO swp_demo.feedback (user_id, title, content, create_at) VALUES (?, ?, ?, NOW());";
+            String sql = "INSERT INTO swp_demo.feedback (user_id, title, content, create_at) VALUES (?, ?, ?, NOW());";
 
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, user_id);
             st.setString(2, title);
             st.setString(3, content);
-            
+
             st.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
@@ -791,14 +794,12 @@ public class DAO extends DBContext {
 
     public void updateFeedback(int id, int user_id, String title, String content) {
         try {
-          String sql = "UPDATE swp_demo.feedback\n"
-           + "SET user_id = ?\n"
-           + "    ,title = ?\n"
-              
-          
-           + "    ,content = ?\n"
-                   + "    ,create_at = NOW() \n"
-           + "WHERE id = ?";
+            String sql = "UPDATE swp_demo.feedback\n"
+                    + "SET user_id = ?\n"
+                    + "    ,title = ?\n"
+                    + "    ,content = ?\n"
+                    + "    ,create_at = NOW() \n"
+                    + "WHERE id = ?";
 
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, user_id);
@@ -1044,7 +1045,6 @@ public class DAO extends DBContext {
         return list;
     }
 
-<<<<<<< HEAD
     public Wallet getWallet(int uid) {
         String query = "Select * from Wallet where create_by = ?";
         try {
@@ -1064,12 +1064,6 @@ public class DAO extends DBContext {
 
         }
         return null;
-=======
-    public static void main(String[] args) {
-        DAO dao = new DAO();
-       Product u = dao.getProductDetailsById(1);
-        System.out.println(dao.getCategoryById(u.getCategoryID()).getName());
->>>>>>> origin/branch-hue
-    }
 
+    }
 }
