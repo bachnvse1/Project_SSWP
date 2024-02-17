@@ -50,7 +50,7 @@
                     <!-- row -->
                     <div class="row">
                         <!-- LOGO -->
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <div class="header-logo">
                                 <a href="#" class="logo">
                                     <img src="./img/logo.png" alt="">
@@ -76,7 +76,7 @@
                         <!-- /SEARCH BAR -->
 
                         <!-- ACCOUNT -->
-                        <div class="col-md-3 clearfix">
+                        <div class="col-md-4 clearfix">
                             <div class="header-ctn">
                                 <!-- Wishlist -->
                                 <div>
@@ -97,6 +97,16 @@
                                     </a>
                                 </div>
                                 <!-- /Cart -->
+                                
+                                 <!-- Feedback -->
+                                <div class="row">
+                                    <a  href="Feedback" >
+                                        <i class="fa fa-comments"></i>
+                                        <span>Feedback</span>
+                                        
+                                    </a>
+                                </div>
+                                <!-- /Feedback -->
 
                             </div>
                         </div>
