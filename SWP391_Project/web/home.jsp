@@ -60,20 +60,16 @@
                     <div class="col-md-12"  >
                         <div class="section-title">
                             <h3 class="title">Product</h3>
-                            <div class="section-title">
-                                <h3 class="title">Products</h3>
-                                <div class="section-nav">
-                                    <ul class="section-tab-nav tab-nav">
-                                        <!-- Correctly setting 'All' category selection -->
-                                        <li><a href="javascript:void(0);" onclick="redirectToController('all')">All</a></li>
-                                            <c:forEach items="${listCategory}" var="category">
-                                            <!-- Pass category.id to the redirectToController function -->
-                                            <li><a href="javascript:void(0);" onclick="redirectToController('${category.id}')">${category.name}</a></li>
-                                            </c:forEach>
-                                    </ul>
-                                </div>
+                            <div class="section-nav">
+                                <ul class="section-tab-nav tab-nav">
+                                    <!-- Correctly setting 'All' category selection -->
+                                    <li><a href="javascript:void(0);" onclick="redirectToController('all')">All</a></li>
+                                        <c:forEach items="${listCategory}" var="category">
+                                        <!-- Pass category.id to the redirectToController function -->
+                                        <li><a href="javascript:void(0);" onclick="redirectToController('${category.id}')">${category.name}</a></li>
+                                        </c:forEach>
+                                </ul>
                             </div>
-
                         </div>
                     </div>
                     <!-- /section title -->
