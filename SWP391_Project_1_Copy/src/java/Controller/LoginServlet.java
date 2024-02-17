@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import Entity.Cart;
 import Entity.User;
 import util.Encryption;
 import dao.DAO;
@@ -90,6 +91,10 @@ public class LoginServlet extends HttpServlet {
         User us = dal.Login(user, pass);
         HttpSession session = request.getSession();
 //        validate val = new validate();
+
+        // Xóa session cũ trước khi đăng nhập mới
+        session.invalidate();
+        session = request.getSession(true);
         try {
             if (captcha != null && captcha.equals(sessionCaptcha)) {
                 if (user.equals("")) {
@@ -108,6 +113,18 @@ public class LoginServlet extends HttpServlet {
                             response.getWriter().write("admin");
                         } else {
                             session.removeAttribute("captcha");
+
+                            // Kiểm tra xem giỏ hàng có sẵn trong session không
+                            Cart cart = (Cart) session.getAttribute("cart");
+                            if (cart != null) {
+                                // Kiểm tra xem giỏ hàng đã có thuộc tính "user" hay chưa
+                                if (cart.getUser() == null) {
+                                    // Nếu chưa có, đặt "user" cho giỏ hàng
+                                    cart.setUser(us);
+                                    session.setAttribute("cart", cart);
+                                }
+                            }
+
                             session.setAttribute("user", us);
                             response.getWriter().write("success");
                         }

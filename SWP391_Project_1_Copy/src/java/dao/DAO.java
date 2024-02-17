@@ -501,7 +501,7 @@ public class DAO extends DBContext {
         return null;
     }
 
-    public List<Product> getProductbyCategoryID(int id) {
+    public List<Product> getProductbyCategoryID(int cid) {
         List<Product> list = new ArrayList<>();
         String sql = "Select * from product as p inner join category as c\n"
                 + "on p.categoryID=c.id where p.categoryID=?";
@@ -509,7 +509,7 @@ public class DAO extends DBContext {
             con = new DBContext().connection;
 
             ps = con.prepareStatement(sql);
-            ps.setInt(1, id);
+            ps.setInt(1, cid);
             rs = ps.executeQuery();
          while (rs.next()) {
      
@@ -536,6 +536,41 @@ public class DAO extends DBContext {
             System.out.println(ex);
         }
         return list;
+    }
+    
+    public Product getProductById(int id) {
+        String sql = "SELECT * FROM swp_demo.product\n"
+                + "where id=?;";
+        try {
+            con = new DBContext().connection;
+
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return new Product(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getDouble(3),
+                        rs.getInt(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getBoolean(10),
+                        rs.getString(11),
+                        rs.getInt(12),
+                        rs.getString(13),
+                        rs.getTimestamp(14),
+                        rs.getInt(15),
+                        rs.getTimestamp(16),
+                        rs.getBoolean(17));
+            }
+
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return null;
     }
 
     public static void main(String[] args) {

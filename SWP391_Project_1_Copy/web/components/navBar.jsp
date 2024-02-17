@@ -90,10 +90,10 @@
 
                                 <!-- Cart -->
                                 <div class="row">
-                                    <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                    <a id="cart-link" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                         <i class="fa fa-shopping-cart"></i>
                                         <span>Your Cart</span>
-                                        <div class="qty">3</div>
+                                        <div class="qty">X</div>
                                     </a>
                                 </div>
                                 <!-- /Cart -->
@@ -108,7 +108,7 @@
             </div>
             <!-- /MAIN HEADER -->
         </header>
-        
+
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <!-- jQuery Plugins -->
@@ -150,6 +150,10 @@
                         }
                     });
                 });
+            });
+
+            $("#cart-link").click(function () {
+                window.location.href = "Cart.jsp";
             });
 
         </script>

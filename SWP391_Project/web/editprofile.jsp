@@ -105,7 +105,7 @@
     </head>
     <body>
         <!-- Navigation-->
-        <%@include file="components/navbar.jsp" %>
+        <%@include file="components/navBar.jsp" %>
 
         <div class="container px-4 px-lg-5 mt-5">
             <nav style="margin-top: 5em;">
@@ -189,7 +189,6 @@
         <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-        <script src="jscript/login_logout.js">
-        </script>
+        <script src="jscript/login_logout.js"></script>
     </body>
 </html>

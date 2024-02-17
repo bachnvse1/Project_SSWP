@@ -84,7 +84,7 @@
                                             <div class="product">
                                                 <div class="product-img">
                                                     <img src="${p.image1}" alt="">
-                                                    
+
                                                 </div>
                                                 <div class="product-body">
                                                     <p class="product-category">Category</p>
@@ -101,10 +101,13 @@
                                                                 class="tooltipp">quick view</span></button>
                                                     </div>
                                                 </div>
+
                                                 <div class="add-to-cart">
-                                                    <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to
-                                                        cart</button>
+                                                    <button class="add-to-cart-btn" onclick="addToCart(${p.id})">
+                                                        <i class="fa fa-shopping-cart"></i> add to cart
+                                                    </button>
                                                 </div>
+
                                             </div>
 
                                             <!-- /product -->
@@ -159,6 +162,23 @@
         <script src="js1/nouislider.min.js"></script>
         <script src="js1/jquery.zoom.min.js"></script>
         <script src="js1/main.js"></script>
+        <script>
+                                                        function addToCart(productId) {
+                                                            // Gửi giá trị productId đến servlet bằng Ajax
+                                                            $.ajax({
+                                                                type: "POST", // Hoặc "GET" tùy thuộc vào yêu cầu của bạn
+                                                                url: "AddToCartController", // Thay thế bằng URL của servlet của bạn
+                                                                data: {productId: productId},
+                                                                success: function (response) {
+                                                                    // Xử lý kết quả từ servlet nếu cần
+                                                                    console.log(response);
+                                                                },
+                                                                error: function (error) {
+                                                                    console.log("Error:", error);
+                                                                }
+                                                            });
+                                                        }
+        </script>
 
     </body>
 </html>

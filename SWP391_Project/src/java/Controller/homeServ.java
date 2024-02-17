@@ -67,6 +67,7 @@ public class homeServ extends HttpServlet {
         request.setAttribute("listCategory", listCategory);
         request.setAttribute("dao", dao);
         request.getRequestDispatcher("home.jsp").forward(request, response);
+        
     }
 
     /**

@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import Entity.Cart;
 import Entity.User;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -73,8 +74,16 @@ public class LogoutServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
+
+        // Lấy giỏ hàng từ session
+        Cart cart = (Cart) session.getAttribute("cart");
+        // Nếu giỏ hàng không null, bạn có thể lưu giỏ hàng lại vào session sau khi đăng xuất
+        if (cart != null) {
+            session = request.getSession(true);
+            session.setAttribute("cart", cart);
+        }
         // Xóa session
-        session.invalidate();
+        //session.invalidate();
 
         // Gửi các HTTP headers để hướng dẫn trình duyệt không lưu trang vào cache
         response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
@@ -83,6 +92,7 @@ public class LogoutServlet extends HttpServlet {
 
         // Chuyển hướng người dùng đến trang signin.jsp
         response.sendRedirect("signin.jsp");
+        
     }
 
     /**
