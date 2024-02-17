@@ -75,6 +75,7 @@ public class AddProdcutServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
+<<<<<<< HEAD
             throws ServletException, IOException {
         // processRequest(request, response);
         response.setContentType("text/html;charset=UTF-8");
@@ -87,6 +88,20 @@ public class AddProdcutServlet extends HttpServlet {
         product.setImage2(request.getParameter("image2"));
         product.setImage3(request.getParameter("image3"));
         product.setImage4(request.getParameter("image4"));
+=======
+    throws ServletException, IOException {
+       // processRequest(request, response);
+      response.setContentType("text/html;charset=UTF-8");
+      Product product = new Product();
+      product.setName(request.getParameter("nameProduct"));
+      product.setPrice(Double.parseDouble(request.getParameter("priceProduct")));
+      product.setCategoryID(Integer.parseInt(request.getParameter("categoryID")));
+      product.setDescription(request.getParameter("Description"));
+      product.setImage1(request.getParameter("image1"));
+      product.setImage2(request.getParameter("image2"));
+      product.setImage3(request.getParameter("image3"));
+      product.setImage4(request.getParameter("image4"));
+>>>>>>> origin/branch-huy
         if (request.getParameter("Transaction_fee").equals("seller")) {
             product.setTransaction_fee(true);
         } else {

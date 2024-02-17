@@ -513,6 +513,7 @@ public class DAO extends DBContext {
         return list;
     }
 
+<<<<<<< HEAD
     public List<Product> getProductByBuyerID(int bid) {
         List<Product> list = new ArrayList<>();
         String sql = "SELECT * FROM swp_demo.product where buyer_id = ?";
@@ -523,6 +524,18 @@ public class DAO extends DBContext {
             rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(new Product(rs.getInt(1),
+=======
+    public Product getProductById(int id) {
+        String sql = "SELECT * FROM swp_demo.product\n"
+                + "where id =? ;";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return new Product(rs.getInt(1),
+>>>>>>> origin/branch-huy
                         rs.getString(2),
                         rs.getDouble(3),
                         rs.getInt(4),
@@ -538,6 +551,7 @@ public class DAO extends DBContext {
                         rs.getTimestamp(14),
                         rs.getInt(15),
                         rs.getTimestamp(16),
+<<<<<<< HEAD
                         rs.getBoolean(17)));
             }
 
@@ -545,6 +559,16 @@ public class DAO extends DBContext {
             System.out.println(ex);
         }
         return list;
+=======
+                        rs.getBoolean(17));
+            }
+
+        } catch (Exception e) {
+
+        }
+        return null;
+
+>>>>>>> origin/branch-huy
     }
 
     public intermediateOrders getOrderByProductID(int id) {
@@ -568,6 +592,7 @@ public class DAO extends DBContext {
                         rs.getTimestamp(10),
                         rs.getInt(11),
                         rs.getTimestamp(12),
+<<<<<<< HEAD
                         rs.getBoolean(13));
             }
         } catch (Exception e) {
@@ -598,6 +623,8 @@ public class DAO extends DBContext {
                         rs.getTimestamp(10),
                         rs.getInt(11),
                         rs.getTimestamp(12),
+=======
+>>>>>>> origin/branch-huy
                         rs.getBoolean(13));
             }
         } catch (Exception e) {
@@ -605,6 +632,69 @@ public class DAO extends DBContext {
         }
         return null;
 
+    }
+
+    public void UpdateProductByProductID(int pid, Product product) {
+        String sql = "UPDATE swp_demo.Product\n"
+                + "SET \n"
+                + "    name = ?,\n"
+                + "    price = ?,\n"
+                + "    categoryID = ?,\n"
+                + "    description = ?,\n"
+                + "    image1 = ?,\n"
+                + "    image2 = ?,\n"
+                + "    image3 =?,\n"
+                + "    image4 = ?,\n"
+                + "    transaction_Fees = ?,\n"
+                + "    contact_Method = ?,\n"
+                + "    hidden_content = ?,\n"
+                + "    updated_by = ?,\n"
+                + "    updated_at = CURRENT_TIMESTAMP,\n"
+                + "WHERE \n"
+                + "    id = ?;";
+        try {
+            ps = con.prepareStatement(sql);
+
+            ps.setString(1, product.getName());
+            ps.setDouble(2, product.getPrice());
+            ps.setInt(3, product.getCategoryID());
+            ps.setString(4, product.getDescription());
+            ps.setString(5, product.getImage1());
+            ps.setString(6, product.getImage2());
+            ps.setString(7, product.getImage3());
+            ps.setString(8, product.getImage4());
+            ps.setBoolean(9, product.isTransaction_fee());
+            ps.setString(10, product.getContact_Method());
+            ps.setString(11, product.getHidden_content());
+            ps.setInt(12, product.getUpdate_by());
+            ps.setInt(13, pid);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+        }
+       
+
+    }
+
+    public void UpdateOrdersById(int id, intermediateOrders Order) {
+        String sql = "UPDATE swp_demo.intermediate_Orders\n"
+                + "SET\n"
+                + "    total_received_amount = ?, \n"
+                + "    total_paid_amount = ?, \n"
+                + "    intermediary_fee = ?, \n"
+                + "    updated_by = ?,\n"
+                + "    updated_at = CURRENT_TIMESTAMP \n"
+                + "WHERE\n"
+                + "    id = ?;";
+          try {
+            ps = con.prepareStatement(sql);
+            ps.setDouble(1, Order.getTotal_received_amount());
+            ps.setDouble(2, Order.getTotal_paid_amount());
+            ps.setDouble(3, Order.getIntermediary_fee());
+            ps.setInt(4, Order.getUpdate_by());
+            ps.setInt(5, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+        }
     }
 
     //BINH
@@ -846,6 +936,7 @@ public class DAO extends DBContext {
         return list;
     }
 
+<<<<<<< HEAD
     public Wallet getWallet(int uid) {
         String query = "Select * from Wallet where create_by = ?";
         try {
@@ -873,6 +964,16 @@ public class DAO extends DBContext {
         System.out.println(w.getBalance());
         System.out.println(dao.getOrderByID(20).getCode());
 
+=======
+    public static void main(String[] args) {
+        DAO dao = new DAO();
+
+        Product product = dao.getProductById(1);
+        intermediateOrders order = dao.getOrderByProductID(product.getId());
+        ProductOrderPair productOrderPair = new ProductOrderPair(product, order);
+
+        System.out.println(productOrderPair.getOrder().toString() + productOrderPair.getProduct().toString());
+>>>>>>> origin/branch-huy
     }
 
 }

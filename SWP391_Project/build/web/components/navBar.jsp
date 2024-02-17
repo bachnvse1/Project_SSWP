@@ -136,9 +136,9 @@
                 $("#oder-Button").click(function () {
                     $.ajax({
                         type: 'GET',
-                        url: "MyOrder.jsp",
+                        url: "manageMyOrder",
                         success: function (response) {
-                            window.location.href = "MyOrder.jsp";
+                            window.location.href = "manageMyOrder";
                         },
                         error: function () {
                             // Xử lý lỗi nếu có
