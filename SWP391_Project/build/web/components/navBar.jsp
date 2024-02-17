@@ -62,21 +62,12 @@
                         <!-- SEARCH BAR -->
                         <div class="col-md-6">
                             <div class="header-search">
-                                <form>
-<<<<<<< HEAD
 
-                                    <input class="input" placeholder="Search here">
-=======
-                                    <select class="input-select">
-                                        <option value="0">All Categories</option>
-                                        <option value="1">Category 01</option>
-                                        <option value="1">Category 02</option>
-                                    </select>
-                                       <form action="home" method="get">
+                                <form action="home" method="get">
                                     <input type="" class="input" placeholder="Search here" name="searchproductname">
->>>>>>> origin/Branch-Binh
+
                                     <button class="search-btn">Search</button>
-                                        </form>
+                                </form>
                                 </form>
                             </div>
                         </div>

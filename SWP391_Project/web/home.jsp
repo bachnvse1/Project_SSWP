@@ -112,14 +112,12 @@
                     <div class="col-md-12"  >
                         <div class="section-title">
                             <h3 class="title">Product</h3>
-                            <div class="section-title">
-                                <h3 class="title">Products</h3>
                                 <div class="section-nav">
                                     <ul class="section-tab-nav tab-nav">
                                         <!-- Correctly setting 'All' category selection -->
                                         <li><a href="javascript:void(0);" onclick="redirectToController('all')">All</a></li>
                                             <c:forEach items="${listCategory}" var="category">
-                                            <!-- Pass category.id to the redirectToController function -->
+                                            
                                             <li><a href="javascript:void(0);" onclick="redirectToController('${category.id}')">${category.name}</a></li>
                                             </c:forEach>
                                     </ul>
@@ -127,80 +125,50 @@
                             </div>
 
                         </div>
-                    </div>
                     <!-- /section title -->
                     <!-- Products tab & slick -->
 
                     <div class="col-md-12">
                         <div class="row">
                             <div class="products-tabs">
+                                <div>
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination justify-content-end">
+                                            <li class="page-item">
+                                                <c:forEach var="i" begin="1" end="${requestScope.Count}">
+                                                    <a onclick="loadProducts(${i})"  id="page-link" style="${requestScope.page == i ? "background-color: red; border:1px solid #000;padding-right : 10px; padding-left : 10px" : ""}" adding-right : 25px href="home?page=${i}">
+                                                        ${i}
+                                                    </a>
+                                                </c:forEach></li>                   
+                                        </ul>
+                                    </nav>
+                                </div>
                                 <!-- tab -->
-<<<<<<< HEAD
-                                <div id="tab2" class="tab-pane fade in active">
-                                    <c:forEach items="${listProduct}" var="p" varStatus="loop">
+                                <div id="Listproduct" class="tab-pane fade in active">
+                                    <c:forEach items="${listProductPage}" var="p" varStatus="loop">
                                         <div class="col-md-3">
                                             <!-- product -->
 
                                             <div class="product">
                                                 <div class="product-img">
                                                     <img src="${p.image1}" alt="" style="height: 150px;">
+
                                                 </div>
                                                 <div class="product-body">
-                                                    <p class="product-category">Category</p>
+
                                                     <h3 class="product-name"><a href="#">${p.name}</a></h3>
                                                     <h4 class="product-price">${p.price} <del
                                                             class="product-old-price">$990.00</del></h4>
-=======
-                                <div>
-                                    <nav aria-label="Page navigation example">
-                                        <ul class="pagination justify-content-end">
 
-                                            <li class="page-item">  <c:forEach var="i" begin="1" end="${requestScope.Count}">
-                                                    <a onclick="loadProducts(${i})"  id="page-link" style="${requestScope.page == i ? "background-color: red; border:1px solid #000;padding-right : 10px; padding-left : 10px" : ""}" adding-right : 25px href="home?page=${i}">
-                                                        ${i}
-                                                    </a>
-                                                </c:forEach></li>
->>>>>>> origin/Branch-Binh
-
-
-                                        </ul>
-                                    </nav>
-                                </div>
-
-                                <div class="Load">
-
-
-                                    <div id="Listproduct" class="tab-pane fade in active">
-                                        <c:forEach items="${listProductPage}" var="p">
-                                            <div class="col-md-3">
-                                                <!-- product -->
-
-                                                <div class="product">
-                                                    <div class="product-img">
-                                                        <img src="${p.image1}" alt="">
-
-                                                    </div>
-                                                    <div class="product-body">
-
-                                                        <h3 class="product-name"><a href="#">${p.name}</a></h3>
-                                                        <h4 class="product-price">${p.price} <del
-                                                                class="product-old-price">$990.00</del></h4>
-
-                                                        <div class="product-btns">
-                                                            <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span
-                                                                    class="tooltipp">add to wishlist</span></button>
-                                                            <button class="add-to-compare"><i class="fa fa-exchange"></i><span
-                                                                    class="tooltipp">add to compare</span></button>
-                                                            <button class="quick-view"><i class="fa fa-eye"></i><span
-                                                                    class="tooltipp">quick view</span></button>
-                                                        </div>
-                                                    </div>
-                                                    <div class="add-to-cart">
-                                                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to
-                                                            cart</button>
+                                                    <div class="product-btns">
+                                                        <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span
+                                                                class="tooltipp">add to wishlist</span></button>
+                                                        <button class="add-to-compare"><i class="fa fa-exchange"></i><span
+                                                                class="tooltipp">add to compare</span></button>
+                                                        <button class="quick-view"><i class="fa fa-eye"></i><span
+                                                                class="tooltipp">quick view</span></button>
                                                     </div>
                                                 </div>
-<<<<<<< HEAD
                                                 <div class="add-to-cart">
                                                     <!-- Thêm một ID động cho nút "Thêm vào giỏ hàng" -->
                                                     <button class="add-to-cart-btn" id="buyButton_${loop.index}" data-target="cookiesPopup_${loop.index}">
@@ -217,119 +185,104 @@
                                                 </div>
                                             </div>               
                                             <!-- /product -->
-
                                         </div>
                                     </c:forEach>
-=======
 
-                                                <!-- /product -->
-
-                                            </div>
-                                        </c:forEach>
-
-                                    </div>
->>>>>>> origin/Branch-Binh
                                 </div>
-                                <!-- /tab -->
+
                             </div>
-                        </div>
-                    </div>
-                    <!-- /Products tab & slick -->
-                </div>
-                <!-- /row -->
-            </div>
-            <!-- /container -->
-        </div>
-        <!-- /SECTION -->
-
-        <!-- NEWSLETTER -->
-        <div id="newsletter" class="section">
-            <!-- container -->
-            <div class="container">
-                <!-- row -->
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="newsletter">
-                            <p>Sign Up for the <strong>NEWSLETTER</strong></p>
-                            <form>
-                                <input class="input" type="email" placeholder="Enter Your Email">
-                                <button class="newsletter-btn"><i class="fa fa-envelope"></i> Subscribe</button>
-                            </form>
 
                         </div>
                     </div>
+                    <!-- /tab -->
                 </div>
-                <!-- /row -->
             </div>
-            <!-- /container -->
         </div>
-        <!-- /NEWSLETTER -->
+    <!-- /SECTION -->
+
+    <!-- NEWSLETTER -->
+    <div id="newsletter" class="section">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="newsletter">
+                        <p>Sign Up for the <strong>NEWSLETTER</strong></p>
+                        <form>
+                            <input class="input" type="email" placeholder="Enter Your Email">
+                            <button class="newsletter-btn"><i class="fa fa-envelope"></i> Subscribe</button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+            <!-- /row -->
+        </div>
+        <!-- /container -->
+    </div>
+    <!-- /NEWSLETTER -->
 
 
 
-        <script>
-            <c:forEach items="${listProduct}" var="p" varStatus="loop">
-            document.querySelector('#buyButton_${loop.index}').addEventListener('click', function () {
-                document.getElementById('cookiesPopup_${loop.index}').style.display = 'block';
+    <script>
+        <c:forEach items="${listProductPage}" var="p" varStatus="loop">
+        document.querySelector('#buyButton_${loop.index}').addEventListener('click', function () {
+            document.getElementById('cookiesPopup_${loop.index}').style.display = 'block';
+        });
+
+        // Lấy tất cả các nút đóng của popup tương ứng và thêm trình nghe sự kiện
+        var closeButtons_${loop.index} = document.querySelectorAll('#cookiesPopup_${loop.index} .close');
+        closeButtons_${loop.index}.forEach(function (button) {
+            button.addEventListener('click', function () {
+                // Tìm popup chứa nút đóng và ẩn nó
+                var popup = this.closest('.cookiesContent');
+                popup.style.display = 'none';
             });
+        });
+        </c:forEach>
+    </script>
 
-            // Lấy tất cả các nút đóng của popup tương ứng và thêm trình nghe sự kiện
-            var closeButtons_${loop.index} = document.querySelectorAll('#cookiesPopup_${loop.index} .close');
-            closeButtons_${loop.index}.forEach(function (button) {
-                button.addEventListener('click', function () {
-                    // Tìm popup chứa nút đóng và ẩn nó
-                    var popup = this.closest('.cookiesContent');
-                    popup.style.display = 'none';
+    <!-- FOOTER -->
+    <%@include file="components/footer.jsp" %>
+    <!-- /FOOTER -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="jscript/signin_captcha.js"></script>
+    <!-- jQuery Plugins -->
+    <script src="js1/jquery.min.js"></script>
+    <script src="js1/bootstrap.min.js"></script>
+    <script src="js1/slick.min.js"></script>
+    <script src="js1/nouislider.min.js"></script>
+    <script src="js1/jquery.zoom.min.js"></script>
+    <script src="js1/main.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".button-buy").click(function () {
+                var productId = $(this).data("id");
+                $.ajax({
+                    type: 'post',
+                    url: "buy",
+                    data: {id: productId},
+                    success: function (response) {
+                        alert(response);
+                    },
+                    error: function () {
+                        // Xử lý lỗi nếu có
+                        alert("Đã xảy ra lỗi khi tải trang");
+                    }
                 });
             });
-            </c:forEach>
-        </script>
+        });
+        function redirectToController(categoryId) {
+            // Construct the URL based on whether a categoryId is provided
+            var url = "home"; // Assuming 'home' is the endpoint handled by your servlet
+            if (categoryId !== 'all') {
+                url += "?categoryId=" + categoryId;
+            }
+            window.location.href = url;
+        }
+    </script>
 
-        <!-- FOOTER -->
-        <%@include file="components/footer.jsp" %>
-        <!-- /FOOTER -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="jscript/signin_captcha.js"></script>
-        <!-- jQuery Plugins -->
-        <script src="js1/jquery.min.js"></script>
-        <script src="js1/bootstrap.min.js"></script>
-        <script src="js1/slick.min.js"></script>
-        <script src="js1/nouislider.min.js"></script>
-        <script src="js1/jquery.zoom.min.js"></script>
-        <script src="js1/main.js"></script>
-        <script>
-<<<<<<< HEAD
-            $(document).ready(function () {
-                $(".button-buy").click(function () {
-                    var productId = $(this).data("id");
-                    $.ajax({
-                        type: 'post',
-                        url: "buy",
-                        data: {id: productId},
-                        success: function (response) {
-                            alert(response);
-                        },
-                        error: function () {
-                            // Xử lý lỗi nếu có
-                            alert("Đã xảy ra lỗi khi tải trang");
-                        }
-                    });
-                });
-            });
-=======
-                                                        function redirectToController(categoryId) {
-                                                            // Construct the URL based on whether a categoryId is provided
-                                                            var url = "home"; // Assuming 'home' is the endpoint handled by your servlet
-                                                            if (categoryId !== 'all') {
-                                                                url += "?categoryId=" + categoryId;
-                                                            }
-                                                            window.location.href = url;
-                                                        }
-        </script>
->>>>>>> origin/Branch-Binh
-
-        </script>
-    </body>
-
+</body>
 </html>
 
