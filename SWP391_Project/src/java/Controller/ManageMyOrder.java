@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import Entity.Category;
 import Entity.Product;
 import Entity.ProductOrderPair;
 import Entity.User;
@@ -65,21 +66,21 @@ public class ManageMyOrder extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-             response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
 
         //processRequest(request, response);
         DAO dao = new DAO();
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("user");
-       
+        List<Category> category = dao.getAllCategory();
         List<Product> listProduct = dao.getProductByUserID(u.getId());
         List<ProductOrderPair> productOrderPairs = new ArrayList<>();
-
+        
         for (Product product : listProduct) {
             intermediateOrders order = dao.getOrderByProductID(product.getId());
             productOrderPairs.add(new ProductOrderPair(product, order));
         }
-        request.setAttribute("a", "bach");
+        request.setAttribute("category", category);
         request.setAttribute("productOrderPairs", productOrderPairs);
         request.getRequestDispatcher("MyOrder.jsp").forward(request, response);
     }
@@ -95,8 +96,42 @@ public class ManageMyOrder extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        // processRequest(request, response);
+        DAO dao = new DAO();
+       // HttpSession session = request.getSession();
+      //  User u = (User) session.getAttribute("user");
+        int id = Integer.parseInt(request.getParameter("pid"));
+        Product product = dao.getProductById(id);
+        intermediateOrders order = dao.getOrderByProductID(product.getId());
+        ProductOrderPair productOrderPair = new ProductOrderPair(product, order);
+        String data = productOrderPair.getOrder().getCode() + ";"
+                + productOrderPair.getProduct().getName() + ";"
+                + productOrderPair.getProduct().getPrice() + ";"
+                + productOrderPair.getOrder().getIntermediary_fee() + ";"
+                + (productOrderPair.getProduct().isTransaction_fee() ? "Bên bán" : "Bên mua") + ";"
+                + productOrderPair.getOrder().getTotal_received_amount() + ";"
+                + productOrderPair.getOrder().getTotal_paid_amount() + ";"
+                + productOrderPair.getProduct().getImage1() + ";"
+                + productOrderPair.getProduct().getImage2() + ";"
+                + productOrderPair.getProduct().getImage3() + ";"
+                + productOrderPair.getProduct().getImage4() + ";"
+                + productOrderPair.getProduct().getDescription() + ";"
+                + productOrderPair.getProduct().getHidden_content() + ";"
+                + productOrderPair.getProduct().getContact_Method() + ";"
+                + productOrderPair.getOrder().getStatus() + ";"
+                + productOrderPair.getOrder().getBuyer_id() + ";"
+                + productOrderPair.getOrder().getCreate_at() + ";"
+                + productOrderPair.getOrder().getUpdate_at();
+        response.setContentType("text/plain");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(data);
+        
+       
+        
+
     }
+
+    
 
     /**
      * Returns a short description of the servlet.

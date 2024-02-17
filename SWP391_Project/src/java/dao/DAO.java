@@ -343,7 +343,7 @@ public class DAO extends DBContext {
             con = new DBContext().connection; //connect sql
             ps = con.prepareStatement(sql);
             ps.setString(1, order.getCode());
-            ps.setInt(2, order.getProductId());           
+            ps.setInt(2, order.getProductId());
             ps.setDouble(3, order.getTotal_received_amount());
             ps.setDouble(4, order.getTotal_paid_amount());
             ps.setDouble(5, order.getIntermediary_fee());
@@ -407,6 +407,41 @@ public class DAO extends DBContext {
         return list;
     }
 
+    public Product getProductById(int id) {
+        String sql = "SELECT * FROM swp_demo.product\n"
+                + "where id =? ;";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return new Product(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getDouble(3),
+                        rs.getInt(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getBoolean(10),
+                        rs.getString(11),
+                        rs.getInt(12),
+                        rs.getString(13),
+                        rs.getTimestamp(14),
+                        rs.getInt(15),
+                        rs.getTimestamp(16),
+                        rs.getBoolean(17));
+            }
+
+        } catch (Exception e) {
+
+        }
+        return null;
+
+    }
+
     public intermediateOrders getOrderByProductID(int id) {
         String sql = "SELECT * FROM swp_demo.intermediate_orders\n"
                 + "where productID =? ;";
@@ -427,7 +462,7 @@ public class DAO extends DBContext {
                         rs.getInt(9),
                         rs.getTimestamp(10),
                         rs.getInt(11),
-                         rs.getTimestamp(12),
+                        rs.getTimestamp(12),
                         rs.getBoolean(13));
             }
         } catch (Exception e) {
@@ -435,6 +470,69 @@ public class DAO extends DBContext {
         }
         return null;
 
+    }
+
+    public void UpdateProductByProductID(int pid, Product product) {
+        String sql = "UPDATE swp_demo.Product\n"
+                + "SET \n"
+                + "    name = ?,\n"
+                + "    price = ?,\n"
+                + "    categoryID = ?,\n"
+                + "    description = ?,\n"
+                + "    image1 = ?,\n"
+                + "    image2 = ?,\n"
+                + "    image3 =?,\n"
+                + "    image4 = ?,\n"
+                + "    transaction_Fees = ?,\n"
+                + "    contact_Method = ?,\n"
+                + "    hidden_content = ?,\n"
+                + "    updated_by = ?,\n"
+                + "    updated_at = CURRENT_TIMESTAMP,\n"
+                + "WHERE \n"
+                + "    id = ?;";
+        try {
+            ps = con.prepareStatement(sql);
+
+            ps.setString(1, product.getName());
+            ps.setDouble(2, product.getPrice());
+            ps.setInt(3, product.getCategoryID());
+            ps.setString(4, product.getDescription());
+            ps.setString(5, product.getImage1());
+            ps.setString(6, product.getImage2());
+            ps.setString(7, product.getImage3());
+            ps.setString(8, product.getImage4());
+            ps.setBoolean(9, product.isTransaction_fee());
+            ps.setString(10, product.getContact_Method());
+            ps.setString(11, product.getHidden_content());
+            ps.setInt(12, product.getUpdate_by());
+            ps.setInt(13, pid);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+        }
+       
+
+    }
+
+    public void UpdateOrdersById(int id, intermediateOrders Order) {
+        String sql = "UPDATE swp_demo.intermediate_Orders\n"
+                + "SET\n"
+                + "    total_received_amount = ?, \n"
+                + "    total_paid_amount = ?, \n"
+                + "    intermediary_fee = ?, \n"
+                + "    updated_by = ?,\n"
+                + "    updated_at = CURRENT_TIMESTAMP \n"
+                + "WHERE\n"
+                + "    id = ?;";
+          try {
+            ps = con.prepareStatement(sql);
+            ps.setDouble(1, Order.getTotal_received_amount());
+            ps.setDouble(2, Order.getTotal_paid_amount());
+            ps.setDouble(3, Order.getIntermediary_fee());
+            ps.setInt(4, Order.getUpdate_by());
+            ps.setInt(5, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+        }
     }
 
     //BINH
@@ -692,18 +790,13 @@ public class DAO extends DBContext {
     }
 
     public static void main(String[] args) {
-      DAO dao = new DAO();
-       
-        List<Product> listProduct = dao.getProductByUserID(1);
-        List<ProductOrderPair> productOrderPairs = new ArrayList<>();
+        DAO dao = new DAO();
 
-        for (Product product : listProduct) {
-            intermediateOrders order = dao.getOrderByProductID(product.getId());
-            productOrderPairs.add(new ProductOrderPair(product, order));
-        }
-        for (ProductOrderPair o : productOrderPairs) {
-            System.out.println(o.getOrder().getCode());
-        }
+        Product product = dao.getProductById(1);
+        intermediateOrders order = dao.getOrderByProductID(product.getId());
+        ProductOrderPair productOrderPair = new ProductOrderPair(product, order);
+
+        System.out.println(productOrderPair.getOrder().toString() + productOrderPair.getProduct().toString());
     }
 
 }
