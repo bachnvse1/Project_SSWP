@@ -1125,6 +1125,7 @@ public class DAO extends DBContext {
     
     public static void main(String[] args) {
         DAO dao = new DAO();
-        System.out.println(dao.getReport(35).toString());
+        dao.insertReport(1, 35, false, "khog co gi", 1, false);
+        dao.getReport(35);
     }
 }

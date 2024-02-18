@@ -199,6 +199,7 @@ where create_by = 1
 delete from swp_demo.product where product.id = 5;
 delete from swp_demo.intermediate_Orders where product.id = 5;
 delete  from swp_demo.Order_Detail
+delete from Report
 
 select * from Category
 select * from Product
