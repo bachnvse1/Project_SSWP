@@ -86,7 +86,7 @@ public class DAO extends DBContext {
         return list;
 
     }
-    
+
     public Report getReport(int oid) {
         String query = "select * from swp_demo.Report where orderID = ?";
         try {
@@ -263,7 +263,7 @@ public class DAO extends DBContext {
     }
 
     public void insertReport(int type, int orderID, boolean status, String description, int userID, boolean is_delete) {
-        String query = "INSERT INTO Report (type_report, orderID, status, description, create_by, updated_by, is_delete) \n"
+        String query = "INSERT INTO Report (type_report, orderID, status, description, create_by, updated_by, is_delete)\n"
                 + "VALUES (?, ?, ?, ?, ?, ?, ?)";
         try {
             con = new DBContext().connection; //connect sql
@@ -325,7 +325,7 @@ public class DAO extends DBContext {
         return list;
 
     }
-    
+
     public intermediateOrders getOrderByUser(int uid) {
         String sql = "SELECT * FROM swp_demo.intermediate_orders\n"
                 + "where create_by = ? ;";
@@ -1122,10 +1122,10 @@ public class DAO extends DBContext {
         return null;
 
     }
-    
+
     public static void main(String[] args) {
         DAO dao = new DAO();
         dao.insertReport(1, 35, false, "khog co gi", 1, false);
-        dao.getReport(35);
+        System.out.println(dao.getReport(35).toString());
     }
 }

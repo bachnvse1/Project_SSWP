@@ -16,7 +16,7 @@ public class Report {
     private int type_report;
     private int orderID;
     private boolean status;
-    private String desciption;
+    private String description;
     private int create_by;
     private Timestamp create_At;
     private Timestamp update_At;
@@ -26,12 +26,12 @@ public class Report {
     public Report() {
     }
 
-    public Report(int id, int type_report, int orderID, boolean status, String desciption, int create_by, Timestamp create_At, int update_by, Timestamp update_At, boolean is_delete) {
+    public Report(int id, int type_report, int orderID, boolean status, String description, int create_by, Timestamp create_At, int update_by, Timestamp update_At, boolean is_delete) {
         this.id = id;
         this.type_report = type_report;
         this.orderID = orderID;
         this.status = status;
-        this.desciption = desciption;
+        this.description = description;
         this.create_by = create_by;
         this.create_At = create_At;
         this.update_At = update_At;
@@ -71,12 +71,12 @@ public class Report {
         this.status = status;
     }
 
-    public String getDesciption() {
-        return desciption;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesciption(String desciption) {
-        this.desciption = desciption;
+    public void setDesciption(String description) {
+        this.description = description;
     }
 
     public int getCreate_by() {
@@ -121,7 +121,7 @@ public class Report {
 
     @Override
     public String toString() {
-        return "Report{" + "id=" + id + ", type_report=" + type_report + ", orderID=" + orderID + ", status=" + status + ", desciption=" + desciption + ", create_by=" + create_by + ", create_At=" + create_At + ", update_At=" + update_At + ", update_by=" + update_by + ", is_delete=" + is_delete + '}';
+        return "Report{" + "id=" + id + ", type_report=" + type_report + ", orderID=" + orderID + ", status=" + status + ", desciption=" + description + ", create_by=" + create_by + ", create_At=" + create_At + ", update_At=" + update_At + ", update_by=" + update_by + ", is_delete=" + is_delete + '}';
     }
 
     
