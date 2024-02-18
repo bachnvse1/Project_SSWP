@@ -8,6 +8,7 @@ import Context.DBContext;
 import Entity.Category;
 import Entity.Feedback;
 import Entity.Product;
+import Entity.Report;
 import Entity.User;
 import Entity.Wallet;
 import Entity.intermediateOrders;
@@ -78,6 +79,32 @@ public class DAO extends DBContext {
                         rs.getBoolean(8),
                         rs.getTimestamp(9),
                         rs.getTimestamp(10)));
+            }
+        } catch (Exception e) {
+
+        }
+        return list;
+
+    }
+    
+    public List<Report> getAllReport() {
+        List<Report> list = new ArrayList<>();
+        String query = "select * from report";
+        try {
+            con = new DBContext().connection; //connect sql
+            ps = con.prepareStatement(query);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Report(rs.getInt(1),
+                    rs.getInt(2),
+                    rs.getInt(3),
+                    rs.getBoolean(4),
+                    rs.getString(5),
+                    rs.getInt(6),
+                    rs.getTimestamp(7),                    
+                    rs.getTimestamp(8),       
+                    rs.getInt(9),
+                    rs.getBoolean(10)));
             }
         } catch (Exception e) {
 

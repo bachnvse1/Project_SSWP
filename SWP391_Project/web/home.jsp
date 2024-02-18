@@ -173,7 +173,11 @@
                                                 <div class="add-to-cart">
                                                     <!-- Thêm một ID động cho nút "Thêm vào giỏ hàng" -->
                                                     <button class="add-to-cart-btn" id="buyButton_${loop.index}" data-target="cookiesPopup_${loop.index}">
-                                                        <i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng
+                                                        <i class="fa fa-shopping-cart"></i>BUY
+                                                    </button>
+                                                    <!-- Thêm nút "Buy" -->
+                                                    <button class="add-to-cart-btn" onclick="addToCart(${p.id})">
+                                                        <i class="fa fa-shopping-cart"></i>CART
                                                     </button>
                                                 </div>
                                             </div>
@@ -242,6 +246,23 @@
                 });
             });
             </c:forEach>
+        </script>
+        <script>
+            function addToCart(productId) {
+                // Gửi giá trị productId đến servlet bằng Ajax
+                $.ajax({
+                    type: "POST", // Hoặc "GET" tùy thuộc vào yêu cầu của bạn
+                    url: "AddToCartController", // Thay thế bằng URL của servlet của bạn
+                    data: {productId: productId},
+                    success: function (response) {
+                        // Xử lý kết quả từ servlet nếu cần
+                        console.log(response);
+                    },
+                    error: function (error) {
+                        console.log("Error:", error);
+                    }
+                });
+            }
         </script>
 
         <!-- FOOTER -->

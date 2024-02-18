@@ -85,22 +85,22 @@
                                 </div>
                                 <!-- /Wishlist -->
 
-                                <!-- Cart -->
+                                 <!-- Cart -->
                                 <div class="row">
-                                    <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                    <a id="your-cart-button" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                         <i class="fa fa-shopping-cart"></i>
                                         <span>Your Cart</span>
-                                        <div class="qty">3</div>
+                                        <!--<div class="qty">3</div> -->
                                     </a>
                                 </div>
                                 <!-- /Cart -->
-                                
-                                 <!-- Feedback -->
+
+                                <!-- Feedback -->
                                 <div class="row">
                                     <a  href="Feedback" >
                                         <i class="fa fa-comments"></i>
                                         <span>Feedback</span>
-                                        
+
                                     </a>
                                 </div>
                                 <!-- /Feedback -->
@@ -171,6 +171,13 @@
                             alert("Đã xảy ra lỗi khi tải trang");
                         }
                     });
+                });
+            });
+            $(document).ready(function () {
+                // Xử lý khi nhấp vào nút "Your Cart"
+                $("#your-cart-button").click(function () {
+                    // Thực hiện chuyển hướng đến trang mong muốn (thay "your-cart-page" bằng đường dẫn thực tế)
+                    window.location.href = "Cart.jsp";
                 });
             });
 

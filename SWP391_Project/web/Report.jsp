@@ -1,280 +1,200 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
 
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link rel="icon" sizes="" href="https://yt3.ggpht.com/a-/AN66SAzzGZByUtn6CpHHJVIEOuqQbvAqwgPiKy1RTw=s900-mo-c-c0xffffffff-rj-k-no" type="image/jpg" />
-        <title>Nofication</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="ISO-8859-1">
+        <title>Quản Lý report</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <!------ Include the above in your HEAD tag ------>
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <link href="css/styles.css" rel="stylesheet" type="text/css"/> 
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="https://mdbootstrap.com/previews/ecommerce-demo/css/bootstrap.min.css">
+        <!-- Material Design Bootstrap -->
+        <link rel="stylesheet" href="https://mdbootstrap.com/previews/ecommerce-demo/css/mdb-pro.min.css">
+        <!-- Material Design Bootstrap Ecommerce -->
+        <link rel="stylesheet" href="https://mdbootstrap.com/previews/ecommerce-demo/css/mdb.ecommerce.min.css">
+        <!-- Your custom styles (optional) -->
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <!------ Include the above in your HEAD tag ------>
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <link href="css/styles.css" rel="stylesheet" type="text/css"/> 
+        <link href="css/manager.css" rel="stylesheet" type="text/css"/>
+
+        <!--           <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round"> -->
+        <!--         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> -->
+        <!--       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+        <!--     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">  -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
         <style>
             body {
-                background-color: #f0f0f0;
-                font-family: Arial, sans-serif;
-                color: #404040;
-            }
-
-            .center {
-                text-align: center;
-            }
-
-            .tight {
-                padding: 15px 30px;
-            }
-
-            td {
-                padding: 20px 50px 30px 50px;
-            }
-
-            td.notification {
-                padding: 10px 50px 30px 50px;
-            }
-
-            small,
-            .small {
-                font-size: 12px;
-            }
-
-            .footer {
-                padding: 15px 30px;
-            }
-
-            .footer p {
-                font-size: 12px;
                 margin: 0;
-                color: #606060;
+                padding: 0;
+            }
+        </style>
+        <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css"><link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&amp;display=swap"><link rel="stylesheet" type="text/css" href="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/mdb5/3.8.1/compiled.min.css"><link rel="stylesheet" type="text/css" href="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/mdb-plugins-gathered.min.css"><style>body {
+                background-color: #fbfbfb;
+            }
+            @media (min-width: 991.98px) {
+                main {
+                    padding-left: 240px;
+                }
             }
 
-            a,
-            a:hover,
-            a:visited {
-                color: #000000;
-                text-decoration: underline;
+            /* Sidebar */
+            .sidebar {
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                padding: 58px 0 0; /* Height of navbar */
+                box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
+                width: 240px;
+                z-index: 600;
             }
 
-            h1,
-            h2 {
-                font-size: 22px;
-                color: #404040;
-                font-weight: normal;
-            }
-
-            p {
-                font-size: 15px;
-                color: #606060;
-            }
-
-            .general {
-                background-color: white;
-            }
-
-            .notification h1 {
-                font-size: 26px;
-                color: #000000;
-                font-weight: normal;
-            }
-
-            .notification p {
-                font-size: 18px;
-            }
-
-            .notification p.small {
-                font-size: 14px;
-            }
-
-            .icon {
-                width: 32px;
-                height: 32px;
-                line-height: 32px;
-                display: inline-block;
-                text-align: center;
-                border-radius: 16px;
-                margin-right: 10px;
-            }
-
-            .failure {
-                border-top: 20px #b02020 solid;
-                background-color: #db9c9b;
-            }
-
-            .critical {
-                border-top: 20px #c05050 solid;
-                background-color: #e2afae;
-            }
-
-            .warning {
-                border-top: 20px #c08040 solid;
-                background-color: #e0c4aa;
-            }
-
-            .healthy {
-                border-top: 20px #80c080 solid;
-                background-color: #c6e2c3;
-            }
-
-            .information {
-                border-top: 20px #50a0c0 solid;
-                background-color: #b5d5e2;
-            }
-
-            .failure p {
-                color: #3d120f;
-            }
-
-            .critical p {
-                color: #3d211f;
-            }
-
-            .warning p {
-                color: #44311c;
-            }
-
-            .healthy p {
-                color: #364731;
-            }
-
-            .information p {
-                color: #273c47;
-            }
-
-            .failure .icon {
-                background-color: #b02020;
-                color: #ffffff;
-            }
-
-            .critical .icon {
-                background-color: #c05050;
-                color: #ffffff;
-                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-            }
-
-            .warning .icon {
-                background-color: #c08040;
-                color: #ffffff;
-                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-            }
-
-            .healthy .icon {
-                background-color: #80c080;
-                color: #ffffff;
-            }
-
-            .information .icon {
-                background-color: #50a0c0;
-                color: #ffffff;
-                font-family: Georgia, "Times New Roman", Times, serif;
-                font-style: italic;
-            }
-
-            .content {
-                width: 600px;
-            }
-
-            @media only screen and (max-width: 600px) {
-                .content {
+            @media (max-width: 991.98px) {
+                .sidebar {
                     width: 100%;
                 }
             }
-
-            @media only screen and (max-width: 400px) {
-                td {
-                    padding: 15px 25px;
-                }
-
-                h1,
-                h2 {
-                    font-size: 20px;
-                }
-
-                p {
-                    font-size: 13px;
-                }
-
-                small,
-                .small {
-                    font-size: 11px;
-                }
-
-                td.notification {
-                    text-align: center;
-                    padding: 10px 25px 15px 25px;
-                }
-
-                .notification h1 {
-                    font-size: 22px;
-                }
-
-                .notification p {
-                    font-size: 16px;
-                }
-
-                .notification p.small {
-                    font-size: 12px;
-                }
-
-                .icon {
-                    display: block;
-                    margin: 0 auto 10px auto;
-                }
+            .sidebar .active {
+                border-radius: 5px;
+                box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
             }
-        </style>
+
+            .sidebar-sticky {
+                position: relative;
+                top: 0;
+                height: calc(100vh - 48px);
+                padding-top: 0.5rem;
+                overflow-x: hidden;
+                overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+            }</style>
     </head>
+    <body>
 
-    <body style="margin: 0; padding: 0">
-        <table style="border: none" cellpadding="0" cellspacing="0" width="100%">
-            <tr>
-                <td style="padding: 15px 0">
-                    <table style="border: none; margin-left: auto; margin-right: auto" cellpadding="0" cellspacing="0" width="600" class="content">
-                        <!-- Start: Small header text in pale grey email background -->
-                     
-                        <!-- End: Small header text in pale grey email background -->
+        <!--Main Navigation-->
+        <header>
+            <jsp:include page="LeftAdmin.jsp"></jsp:include>
 
-                        <!-- Start: White block with text content -->
-                        <tr>
-                            <td class="general center">
-                                <h1>Nofication</h1>  
-                            </td>
-                        </tr>
-                        <!-- End: White block with text content -->
 
-                        <!-- Start: Failure Notification -->
-                        <tr>
-                            <td class="failure notification">
-                                <h1><span class="icon">&times;</span>Complain</h1>
-                                <p class="small">Any supplementary information</p>
-                            </td>
-                        </tr>
-                        <!-- End: Failure Notification -->
+            </header>
+            <!--Main Navigation-->
 
-                        <!-- Start: Warning Notification -->
-                        <tr>
-                            <td class="warning notification">
-                                <h1><span class="icon">&quest;</span>Warning</h1>
-                                <p class="small">You just change password</p>
-                            </td>
-                        </tr>
-                        <!-- End: Warning Notification -->
+            <!--Main layout-->
 
-                        <!-- Start: Healthy Notification -->
-                        <tr>
-                            <td class="healthy notification">
-                                <h1><span class="icon">&check;</span>Verify Transaction</h1>
-                                <p class="small">You have just completed the transaction</p>
-                            </td>
-                        </tr>
-                        <!-- End: Healthy Notification -->
+            <!-- QUẢN LÝ  -->
+            <main>
+                <div class="container pt-4">
 
-                        <!-- Start: Information Notification -->
-                        <tr>
-                            <td class="information notification">
-                                <h1><span class="icon">i</span>Information</h1>
-                                <p>The "something or other" system information</p>
-                                <p class="small">Any supplementary information</p>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-        </table>
+                    <!--Section: Quan Ly -->
+                    <section class="mb-4">
+                        <div class="card">
+                            <div class="card-header py-3 row">
+                                <div class="col-sm-3">
+                                    <h5 class="mb-0 text-left" id="">
+                                        <strong>MANAGE REPORT</strong>
+                                    </h5>
+                                </div>
+
+                            </div>
+
+
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover text-nowrap">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">ID</th>
+                                                <th scope="col">Type_Report</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col">Description</th>
+                                                <th scope="col">Created_by</th>                                                
+                                                <th scope="col">Created_at</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <c:forEach items="${listR}" var="r">
+                                            <tr>
+
+                                                <td>${r.id}</td>
+                                                <td>${r.type_report}</td>
+                                                <td>${r.status}</td>
+                                                <td>${r.description}</td>
+                                                <td>${r.create_by}</td>
+                                                <td>${r.create_At}</td>
+                                                <td>
+                                                    <c:if test="${r.type_report == 1}">
+                                                        <a href="#?id=${r.id}" class="btn btn-success edit-btn">
+                                                            <i class="material-icons">&#9888;</i>
+                                                        </a>
+                                                    </c:if>
+
+                                                </td>
+
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!--Section: Quan Ly -->
+            </div>
+
+
+        </main>
+
+
+
+
+
+        <script src="js/manager.js" type="text/javascript"></script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!--Main layout-->
+        <!-- SCRIPTS -->
+        <!-- JQuery -->
+        <script src="https://mdbootstrap.com/previews/ecommerce-demo/js/jquery-3.4.1.min.js"></script>
+        <!-- Bootstrap tooltips -->
+        <script type="text/javascript" src="https://mdbootstrap.com/previews/ecommerce-demo/js/popper.min.js"></script>
+        <!-- Bootstrap core JavaScript -->
+        <script type="text/javascript" src="https://mdbootstrap.com/previews/ecommerce-demo/js/bootstrap.js"></script>
+        <!-- MDB core JavaScript -->
+        <script type="text/javascript" src="https://mdbootstrap.com/previews/ecommerce-demo/js/mdb.min.js"></script>
+        <!-- MDB Ecommerce JavaScript -->
+        <script type="text/javascript" src="https://mdbootstrap.com/previews/ecommerce-demo/js/mdb.ecommerce.min.js"></script>
+        <!-- MDB -->
+        <script type="text/javascript" src="js/mdb.min.js"></script>
+        <!-- Custom scripts -->
+        <script type="text/javascript" src="js/script.js"></script>
+        <script src="https://mdbootstrap.com/api/snippets/static/download/MDB5-Free_3.8.1/js/mdb.min.js"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+
+
+        <script type="text/javascript" src="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/js/plugins/mdb-plugins-gathered.min.js"></script>
+        <!-- MDB -->
+        <script type="text/javascript" src="js/mdb.min.js"></script>
+        <!-- Custom scripts -->
+        <script type="text/javascript" src="js/script.js"></script>
     </body>
-
 </html>
