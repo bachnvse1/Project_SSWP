@@ -3,21 +3,26 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/JavaScript.js to edit this template
  */
 
+/* global modal1 */
+
 $(document).ready(function () {
     // Ẩn form khi trang được tải
     $("#addProductForm").hide();
     $("#orderBuy").hide();
+    $("#myModalComplain").hide();
     // Xử lý sự kiện khi nhấn nút "Add Product"
     $("#addProductButton").click(function () {
         $("#addProductForm").show();
         $("#ProductDisplay").hide();
         $("#Filter").hide();
         $("#orderBuy").hide();
+        $("#myModalComplain").hide();
     });
     $("#allProductButton").click(function () {
         $("#addProductForm").hide();
         $("#ProductDisplay").show();
         $("#orderBuy").hide();
+        $("#myModalComplain").hide();
     });
 });
 function toggleOptions(productId) {
@@ -90,8 +95,8 @@ $(document).ready(function () {
             }
         });
     });
-    
-    
+
+
     $('.updateproduct').click(function (event) {
         event.preventDefault();
         var productId = $(this).data('product-id');
@@ -189,3 +194,56 @@ $(document).ready(function () {
         });
     });
 });
+
+$(document).ready(function () {
+    // Khi người dùng nhấn vào button, mở modal
+    $(document).on("click", ".reportButton", function (e) {
+        e.preventDefault();
+        var orderId = $(this).data("orderid");
+        var orderCode = $(this).data("ordercode");
+        var hiddenInfo = $(this).data("hiddeninfo");
+        $("#order_id").val(orderId); // Cập nhật giá trị của trường input
+        $("#order_code").val(orderCode); // Cập nhật giá trị của trường input
+        $("#hidden_info").val(hiddenInfo);
+        $("#myModalComplain").show();
+
+    });
+
+
+    // Khi người dùng nhấn vào nút đóng (×), đóng modal
+    $(".close").click(function () {
+        $("#myModalComplain").hide();
+    });
+
+    // Khi người dùng nhấp bất kỳ đâu ngoài modal, đóng modal
+    $(window).click(function (event) {
+        if (event.target === $("#myModalComplain")[0]) {
+            $("#myModalComplain").hide();
+        }
+    });
+
+
+    $("#complaintForm").submit(function (e) {
+        e.preventDefault(); // Ngăn chặn chuyển hướng mặc định khi nhấn nút submit
+        var formData = {
+            id: $("#order_id").val(),
+            description: $("#description").val()
+        };
+        $.ajax({
+            type: 'POST',
+            url: 'report', // Đường dẫn đến servlet xử lý
+            data: formData, // Gửi dữ liệu của form sang servlet
+            success: function (response) {
+                if(response === "success") {
+                    alert("Complain success! Please wainting response from system!");
+                } else{
+                     alert("You have already complained about this order");
+                }
+            },
+            error: function (xhr, status, error) {
+                alert("ưe");
+            }
+        });
+    });
+});
+

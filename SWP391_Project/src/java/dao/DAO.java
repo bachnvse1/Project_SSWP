@@ -8,6 +8,7 @@ import Context.DBContext;
 import Entity.Category;
 import Entity.Feedback;
 import Entity.Product;
+import Entity.Report;
 import Entity.User;
 import Entity.Wallet;
 import Entity.intermediateOrders;
@@ -84,6 +85,31 @@ public class DAO extends DBContext {
         }
         return list;
 
+    }
+    
+    public Report getReport(int oid) {
+        String query = "select * from swp_demo.Report where orderID = ?";
+        try {
+            con = new DBContext().connection; //connect sql
+            ps = con.prepareStatement(query);
+            ps.setInt(1, oid);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return new Report(rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        rs.getBoolean(4),
+                        rs.getString(5),
+                        rs.getInt(6),
+                        rs.getTimestamp(7),
+                        rs.getInt(8),
+                        rs.getTimestamp(9),
+                        rs.getBoolean(10));
+            }
+        } catch (Exception e) {
+
+        }
+        return null;
     }
 
     public User getUser(String username) {
@@ -297,6 +323,36 @@ public class DAO extends DBContext {
 
         }
         return list;
+
+    }
+    
+    public intermediateOrders getOrderByUser(int uid) {
+        String sql = "SELECT * FROM swp_demo.intermediate_orders\n"
+                + "where create_by = ? ;";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, uid);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return new intermediateOrders(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getDouble(5),
+                        rs.getDouble(6),
+                        rs.getDouble(7),
+                        rs.getString(8),
+                        rs.getInt(9),
+                        rs.getTimestamp(10),
+                        rs.getInt(11),
+                        rs.getTimestamp(12),
+                        rs.getBoolean(13));
+            }
+        } catch (Exception e) {
+
+        }
+        return null;
 
     }
 
@@ -1065,5 +1121,10 @@ public class DAO extends DBContext {
         }
         return null;
 
+    }
+    
+    public static void main(String[] args) {
+        DAO dao = new DAO();
+        System.out.println(dao.getReport(35).toString());
     }
 }

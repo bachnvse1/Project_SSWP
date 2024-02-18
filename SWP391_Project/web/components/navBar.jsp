@@ -24,7 +24,7 @@
                     </ul>
                     <ul class="header-links pull-right">
                         <li>
-                            <a><i class="fa fa-dollar"></i> 100.000</a></li>
+                            <a>${balance} VND</a></li>
                             <c:if test="${user != null}">
                             <li id="info-Button"><a><i class="fa fa-user-o"></i>${user.display_name}</a></li>
                                     </c:if>

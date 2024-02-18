@@ -37,7 +37,7 @@
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
         <style>
-            .reportButton {
+            .reportButton, .verifyButton {
                 display: inline-block;
                 padding: 10px 20px;
                 background-color: #4CAF50;
@@ -52,6 +52,7 @@
                 display: inline-block; /* Hiển thị các button cạnh nhau */
                 margin-right: 5px;
             }
+
             .buttonContainer {
                 white-space: nowrap; /* Ngăn chặn button từ việc xuống dòng */
             }
@@ -73,6 +74,67 @@
                 background-color: #f2f2f2; /* Màu nền cho tiêu đề */
             }
 
+            /* Modal */
+            /* Modal */
+            .modal3 {
+                position: fixed;
+                z-index: 1;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                overflow: auto;
+                background-color: rgba(0, 0, 0, 0.6); /* Màu nền mờ */
+                display: none; /* Ẩn modal ban đầu */
+            }
+
+            /* Modal Content */
+            .modal-content3 {
+                background-color: #fefefe;
+                margin: 10% auto; /* Độ cao từ trên xuống modal */
+                padding: 20px;
+                border: 1px solid #888;
+                width: 60%; /* Độ rộng của modal */
+                border-radius: 10px; /* Bo tròn các góc */
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Hiệu ứng đổ bóng */
+                display: flex; /* Sử dụng flexbox để sắp xếp các cột hàng dọc */
+                flex-direction: column; /* Sắp xếp các phần tử thành cột hàng dọc */
+            }
+
+            /* Close Button */
+            .close {
+                color: #aaa;
+                align-self: flex-end; /* Đẩy nút đóng về phía cuối cùng của modal */
+                font-size: 28px;
+                font-weight: bold;
+                margin-bottom: 10px; /* Khoảng cách giữa nút đóng và các phần tử khác */
+            }
+
+            .close:hover,
+            .close:focus {
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+            /* Các phần tử trong modal */
+            .modal-content3 label,
+            .modal-content3 input,
+            .modal-content3 textarea {
+                margin-bottom: 10px; /* Khoảng cách giữa các phần tử */
+            }
+
+            .modal-content3 input,
+            .modal-content3 textarea {
+                width: calc(100% - 40px); /* Độ rộng của input và textarea */
+                padding: 10px; /* Khoảng cách giữa nội dung và viền */
+                border-radius: 5px; /* Bo tròn các góc */
+                border: 1px solid #ccc; /* Viền */
+            }
+
+            .modal-content3 textarea {
+                height: 150px; /* Độ cao của textarea */
+            }
 
 
         </style>
@@ -121,7 +183,7 @@
                 </div>
             </div>
             <div class="table-responsive" style="margin-left: 5%">
-                
+
                 <div class="container mt-5">
                     <div class="d-flex justify-content-center row">
                         <div class="col-md-10">
@@ -152,7 +214,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <table id="Filter" class="text-nowrap mb-0 table" border="1">
                     <tr>
                         <th>Filter by code</th>
@@ -193,7 +255,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
+
                         <c:forEach items="${productOrderPairs}" var="p">
                             <tr>
                                 <td>${p.getOrder().getCode()}</td>
@@ -376,8 +438,27 @@
                                     <button style="background-color:  #34ce57 " id="updateButton">Update</button>
                                 </form>
                             </div>
-                            </div>
 
+                            <div id="myModalComplain" class="modal3">
+                                <div class="modal-content3">
+                                    <span class="close">&times;</span>
+                                    <div class="container-complain">
+                                        <form id="complaintForm">
+                                            <h2 style="text-align: center;">Complain Order</h2>
+                                            <input type="text" id="order_id" name="order_id" readonly="" hidden=""><br>
+                                            <label for="order_code">Intermediate Orders Code</label><br>
+                                            <input type="text" id="order_code" name="code" value="" readonly><br>
+                                            <label for="hidden_info">Hidden Information</label><br>
+                                            <input type="text" id="hidden_info" name="code" value="" readonly><br>
+                                            <label for="description">Description</label><br>
+                                            <textarea id="description" name="description" placeholder="Write something, as detailed as possible..." style="height:200px" required></textarea><br>
+                                            <input type="submit" value="Submit">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                                    
+                            </div>
                             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
                             <script src="jscript/myorder.js"></script>
                             </body>

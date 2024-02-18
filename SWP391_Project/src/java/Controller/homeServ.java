@@ -6,12 +6,14 @@ package Controller;
 
 import Entity.Category;
 import Entity.Product;
+import Entity.User;
 import dao.DAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.PrintWriter;
 import java.util.List;
 
@@ -89,9 +91,12 @@ public class homeServ extends HttpServlet {
         } else {
             Count = listProduct.size() / pageSize + 1;
         }
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("user");
         listProductPage = listProduct.subList(start, end);
         request.setAttribute("Count", Count);
-        request.setAttribute("page", page);   
+        request.setAttribute("page", page);
+        session.setAttribute("balance", dao.getWallet(u.getId()).getBalance());
         request.setAttribute("listProductPage", listProductPage);
         request.setAttribute("listCategory", listCategory);
         request.getRequestDispatcher("home.jsp").forward(request, response);

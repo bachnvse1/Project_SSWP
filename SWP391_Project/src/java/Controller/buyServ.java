@@ -94,6 +94,8 @@ public class buyServ extends HttpServlet {
             } else {
                 dao.updateOrder(u.id, "Checking", u.id, idx);
                 dao.deleteProduct(idx, true);
+                
+                
                 response.getWriter().print("You just buy product, please checking order!");
             }
         } else {

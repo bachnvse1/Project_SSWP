@@ -46,10 +46,11 @@
     </head>
 
     <body>
-        <div class="container-scroller">
+         <%@include file="components/navBar.jsp" %>
+         <div class="container-scroller" style="height: 80vh;">
             <div class="container-fluid page-body-wrapper">
                 <!-- HEADER -->
-                <%@include file="components/navBar.jsp" %>
+               
                 <div class="main-panel">
                     <div class="content-wrapper">
                         <div class="row">

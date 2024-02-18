@@ -6,6 +6,7 @@ package Controller;
 
 import Entity.User;
 import dao.DAO;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,7 +14,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 /**
  *
@@ -60,15 +60,7 @@ public class reportServ extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
-        //response.sendRedirect("Complain.jsp");
-        DAO dao = new DAO();
-        String xid = request.getParameter("id");
-        int id = Integer.parseInt(xid);
-        String code = dao.getOrderByID(id).getCode();
-        request.setAttribute("code", code);
-        request.setAttribute("id", id);
-        request.getRequestDispatcher("Complain.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -82,15 +74,16 @@ public class reportServ extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
-        String xid = request.getParameter("id");
+        String xid = request.getParameter("id").trim();
+        String description = request.getParameter("description");
         int id = Integer.parseInt(xid);
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("user");
         DAO dao = new DAO();
-        String desciption = request.getParameter("desciption");
-        dao.insertReport(1, id, false , desciption, u.getId(), false);
-        // 1 la khieu nai don hang
+        if(dao.getReport(id) == null) {
+            dao.insertReport(1, id, false , description, u.getId(), false);
+            response.getWriter().write("success");
+        }
         
     }
 
