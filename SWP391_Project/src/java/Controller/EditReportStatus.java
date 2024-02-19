@@ -5,7 +5,6 @@
 
 package Controller;
 
-import Entity.Report;
 import dao.DAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,14 +13,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  *
  * @author Nguyen Minh Khoa
  */
-@WebServlet(name="ReportServlet", urlPatterns={"/ReportServlet"})
-public class ReportServlet extends HttpServlet {
+@WebServlet(name="EditReportStatus", urlPatterns={"/EditReportStatus"})
+public class EditReportStatus extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -33,10 +31,14 @@ public class ReportServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String idr = request.getParameter("id");
+        int id = Integer.parseInt(idr);
+        String statusr = request.getParameter("status");
+        boolean status = Boolean.parseBoolean(statusr);
+
         DAO dao = new DAO();
-        List<Report> list = dao.getAllReport();
-        request.setAttribute("listR", list);
-        request.getRequestDispatcher("Report.jsp").forward(request, response);
+        dao.editReportStatus(id, status);
+        response.sendRedirect("ReportServlet");
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -63,7 +65,7 @@ public class ReportServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);        
+        processRequest(request, response);
     }
 
     /** 

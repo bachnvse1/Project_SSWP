@@ -50,7 +50,8 @@
                 padding: 0;
             }
         </style>
-        <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css"><link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&amp;display=swap"><link rel="stylesheet" type="text/css" href="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/mdb5/3.8.1/compiled.min.css"><link rel="stylesheet" type="text/css" href="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/mdb-plugins-gathered.min.css"><style>body {
+        <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css"><link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&amp;display=swap"><link rel="stylesheet" type="text/css" href="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/mdb5/3.8.1/compiled.min.css"><link rel="stylesheet" type="text/css" href="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/mdb-plugins-gathered.min.css"><style>
+            body {
                 background-color: #fbfbfb;
             }
             @media (min-width: 991.98px) {
@@ -81,6 +82,8 @@
                 box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
             }
 
+
+
             .sidebar-sticky {
                 position: relative;
                 top: 0;
@@ -88,22 +91,31 @@
                 padding-top: 0.5rem;
                 overflow-x: hidden;
                 overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-            }</style>
+            }
+
+
+
+        </style>
     </head>
     <body>
 
         <!--Main Navigation-->
         <header>
             <jsp:include page="LeftAdmin.jsp"></jsp:include>
-
-
             </header>
             <!--Main Navigation-->
 
             <!--Main layout-->
+            <!-- Modal -->
+
+
+
 
             <!-- QUẢN LÝ  -->
             <main>
+
+
+
                 <div class="container pt-4">
 
                     <!--Section: Quan Ly -->
@@ -118,13 +130,12 @@
 
                             </div>
 
-
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-hover text-nowrap">
                                         <thead>
                                             <tr>
-                                                <th scope="col">ID</th>
+                                                <th scope="col">Order_ID</th>
                                                 <th scope="col">Type_Report</th>
                                                 <th scope="col">Status</th>
                                                 <th scope="col">Description</th>
@@ -136,23 +147,54 @@
                                         <c:forEach items="${listR}" var="r">
                                             <tr>
 
-                                                <td>${r.id}</td>
+                                                <td>${r.orderID}</td>
                                                 <td>${r.type_report}</td>
                                                 <td>${r.status}</td>
                                                 <td>${r.description}</td>
                                                 <td>${r.create_by}</td>
                                                 <td>${r.create_At}</td>
+
                                                 <td>
                                                     <c:if test="${r.type_report == 1}">
-                                                        <a href="#?id=${r.id}" class="btn btn-success edit-btn">
-                                                            <i class="material-icons">&#9888;</i>
-                                                        </a>
+                                                        <c:choose>
+                                                            <c:when test="${r.status == true}">
+                                                                <a class="btn btn-success edit-btn" data-toggle="modal" data-target="#confirmationModal">
+                                                                    Done
+                                                                </a>
+                                                            </c:when>
+                                                            <c:when test="${r.status != true}">
+                                                                <a class= "btn btn-danger edit-btn" data-toggle="modal" data-target="#confirmationModal">
+                                                                    Pending
+                                                                </a>
+                                                            </c:when>
+                                                        </c:choose>
                                                     </c:if>
-
                                                 </td>
 
                                             </tr>
-                                        </c:forEach>
+                                        <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Manage Report</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>Have you processed this report yet?</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <div class="modal-footer">
+                                                            <a href="#" class="btn btn-secondary" onclick="updateReportStatus(${r.id}, false);" data-dismiss="modal">No</a>
+                                                            <a href="#" class="btn btn-primary" onclick="updateReportStatus(${r.id}, true);" data-dismiss="modal">Yes</a>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </c:forEach>
                                     </tbody>
                                 </table>
                             </div>
@@ -195,6 +237,12 @@
         <!-- MDB -->
         <script type="text/javascript" src="js/mdb.min.js"></script>
         <!-- Custom scripts -->
-        <script type="text/javascript" src="js/script.js"></script>
+        <script type="text/javascript" src="js/script.js"></script>  
+        <script>
+                                                                function updateReportStatus(id, status) {
+                                                                    // Gọi servlet với các tham số id và status
+                                                                    window.location.href = 'EditReportStatus?id=' + id + '&status=' + status;
+                                                                }
+        </script>
     </body>
 </html>

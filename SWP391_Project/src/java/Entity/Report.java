@@ -26,7 +26,7 @@ public class Report {
     public Report() {
     }
 
-    public Report(int id, int type_report, int orderID, boolean status, String description, int create_by, Timestamp create_At, Timestamp update_At, int update_by, boolean is_delete) {
+    public Report(int id, int type_report, int orderID, boolean status, String description, int create_by, Timestamp create_At, int update_by, Timestamp update_At, boolean is_delete) {
         this.id = id;
         this.type_report = type_report;
         this.orderID = orderID;
