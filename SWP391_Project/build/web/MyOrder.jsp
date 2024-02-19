@@ -214,7 +214,7 @@
                         </div>
                     </div>
                 </div>
-
+                <form>
                 <table id="Filter" class="text-nowrap mb-0 table" border="1">
                     <tr>
                         <th>Filter by code</th>
@@ -243,6 +243,7 @@
                         </td>
                     </tr>
                 </table>
+                    </form>
                 <table id="ProductDisplay" class="text-nowrap mb-0 table" border="1">
 
                     <thead class="table-light">
