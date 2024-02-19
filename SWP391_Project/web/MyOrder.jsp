@@ -340,21 +340,6 @@
                     <tbody>
 
                         <c:forEach items="${productOrderPairs}" var="p">
-<<<<<<< HEAD
-                            <tr>
-                                <td>${p.getOrder().getCode()}</td>
-                                <td>${p.getProduct().getName()}</td>
-                                <td>${p.getProduct().getPrice()}</td>
-                                <td>${p.getOrder().getTotal_received_amount()}</td>
-                                <td>${p.getOrder().getTotal_paid_amount()}</td>
-                                <td>${p.getOrder().getIntermediary_fee()}</td>
-                                <td>${p.getOrder().getStatus()}</td>
-                                <td>${p.getProduct().isTransaction_fee() ? "Bên bán" : "Bên mua"}</td>
-                                <td>  <a class="productInfo" data-action="view"  href="#" data-product-id="${p.getOrder().getId()}"> <i style="color: #0061f2" class="fa fa-info-circle"></i></a>  
-                                    <a class="updateproduct" data-action="update" href="#" data-product-id="${p.getProduct().getId()}">  <i style="color: #34ce57" class="fa fa-pencil"></i> </a>
-                                    <a><i style="color: red" class="fa fa-trash"></i></a>  </td>
-                            </tr>
-=======
                             <c:if test="${!p.getProduct().isIs_delete()}">
                                 <tr>
                                     <td>${p.getOrder().getCode()}</td>
@@ -378,7 +363,6 @@
                                     </td>
                                 </tr>
                             </c:if>
->>>>>>> origin/branch-22
                         </c:forEach>
                     </tbody>
                 </table>
@@ -418,15 +402,10 @@
                         <input type="radio" value="seller" name="Transaction_fee" required>Seller
                         <input type="radio" value="buyer" name="Transaction_fee">Buyer<br>
                         <label for="contactMethod">Contact Method:</label>
-<<<<<<< HEAD
                         <input type="text" id="contactMethod" name="Contact_Method" required><br>
                         <label for="hiddenContent">Hidden Content:</label>
                             <input type="text" id="hiddenContent" name="hidden_content" required><br>
-=======
-                        <input type="text" name="Contact_Method" required><br>
-                        <label for="hiddenContent">Hidden Content:</lahidden_contentbel>
-                            <input type="text" name="hidden_content" required><br>
->>>>>>> origin/branch-22
+
 
                             <input type="submit" value="ADD">
                             </form>
@@ -570,7 +549,6 @@
                                 </div>
                             </div>
 
-<<<<<<< HEAD
                             <div id="myModalVerify" class="modal4">
                                 <span class="close">&times;</span></br></br>
                                 <h3>Verify Order</h3>
@@ -584,8 +562,7 @@
                                     <div class="loader" id="loader"></div>
                                 </form>
                             </div>
-=======
->>>>>>> origin/branch-22
+
                             </div>
                             <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
                             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
