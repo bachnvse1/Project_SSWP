@@ -30,7 +30,7 @@
                             <li id="notification-Button"><a href="notification"><i class="fa fa-bell"></i>
                                     Notification</a></li>
                                     
-                            <li><a>${dao.getWallet(user.id).getBalance()} VND</a></li>
+                            <li><a>${balance} VND</a></li>
                             
                             <li id="info-Button"><a><i class="fa fa-user-o"></i>${user.display_name}</a></li>
                                     </c:if>
