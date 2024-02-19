@@ -29,9 +29,9 @@
                         <c:if test="${user != null}">
                             <li id="notification-Button"><a href="notification"><i class="fa fa-bell"></i>
                                     Notification</a></li>
-                                    
+
                             <li><a>${balance} VND</a></li>
-                            
+
                             <li id="info-Button"><a><i class="fa fa-user-o"></i>${user.display_name}</a></li>
                                     </c:if>
                                     <c:if test="${user == null}">
@@ -85,30 +85,30 @@
                                 <!-- Wishlist -->
                                 <c:if test="${user != null}">
                                     <div>
-                                    <a id="oder-Button" href="#">
-                                        <i class="fa fa-heart-o"></i>
-                                        <span>My Order</span>
-                                    </a>
-                                </div>
+                                        <a id="oder-Button" href="#">
+                                            <i class="fa fa-heart-o"></i>
+                                            <span>My Order</span>
+                                        </a>
+                                    </div>
                                 </c:if>
-                                
+
                                 <c:if test="${user == null}">
                                     <div>
-                                    <a href="#">
-                                        <i class="fa fa-heart-o"></i>
-                                        <span>My Order</span>
-                                    </a>
-                                </div>
+                                        <a href="#">
+                                            <i class="fa fa-heart-o"></i>
+                                            <span>My Order</span>
+                                        </a>
+                                    </div>
                                 </c:if>
-                                
+
                                 <!-- /Wishlist -->
 
                                 <!-- Cart -->
                                 <div class="row">
-                                    <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                    <a id="your-cart-button" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                         <i class="fa fa-shopping-cart"></i>
                                         <span>Your Cart</span>
-                                        <div class="qty">3</div>
+                                        <!--<div class="qty">3</div> -->
                                     </a>
                                 </div>
                                 <!-- /Cart -->
@@ -159,10 +159,10 @@
                         }
                     });
                 });
-              
+
             });
-            
-            
+
+
             $(document).ready(function () {
                 $("#oder-Button").click(function () {
                     $.ajax({
@@ -194,7 +194,13 @@
                     });
                 });
             });
-
+            $(document).ready(function () {
+                // Xử lý khi nhấp vào nút "Your Cart"
+                $("#your-cart-button").click(function () {
+                    // Thực hiện chuyển hướng đến trang mong muốn (thay "your-cart-page" bằng đường dẫn thực tế)
+                    window.location.href = "Cart.jsp";
+                });
+            });
         </script>
     </body>
 </html>

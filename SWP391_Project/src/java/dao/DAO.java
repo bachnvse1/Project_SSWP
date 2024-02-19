@@ -168,6 +168,45 @@ public static String removeDiacritics(String str) {
         }
         return list;
     }
+    
+    public List<Report> getAllReport() {
+        List<Report> list = new ArrayList<>();
+        String query = "select * from swp_demo.Report";
+        try {
+            con = new DBContext().connection; //connect sql
+            ps = con.prepareStatement(query);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Report(rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        rs.getBoolean(4),
+                        rs.getString(5),
+                        rs.getInt(6),
+                        rs.getTimestamp(7),
+                        rs.getInt(8),
+                        rs.getTimestamp(9),
+                        rs.getBoolean(10)));
+            }
+        } catch (Exception e) {
+
+        }
+        return list;
+    }
+    public void editReportStatus(int id, boolean status) {
+        String sql = "Update report set status=? where id =? ";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(sql);           
+            ps.setBoolean(1, status);
+            ps.setInt(2, id);
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+
+        }
+
+    }
 
     public User getUser(String username) {
 
@@ -1367,7 +1406,7 @@ public intermediateOrders getOrderByCode(String code) {
     public List<Product> getProductbyCategoryID(String id) {
         List<Product> list = new ArrayList<>();
         String sql = "Select * from product as p inner join category as c\n"
-                + "on p.categoryID=c.id where p.categoryID=?";
+                + "on p.categoryID=c.id where p.categoryID=? and p.is_delete = 0";
         try {
             con = new DBContext().connection;
 
@@ -1422,7 +1461,30 @@ public intermediateOrders getOrderByCode(String code) {
         return null;
 
     }
-
+ public void insertCategory(String name) {
+        String query = "INSERT INTO `swp_demo`.`category` (`name`) VALUES (?)";
+        try {
+            con = new DBContext().connection; //connect sql
+            ps = con.prepareStatement(query);
+            ps.setString(1, name);            
+            ps.executeUpdate();
+            
+        } catch (Exception e) {
+            
+        }
+    }
+public void DeleteCategory(String id) {
+        String query = "DELETE FROM `swp_demo`.`category` WHERE id = ?";
+        try {
+            con = new DBContext().connection; //connect sql
+            ps = con.prepareStatement(query);
+            ps.setString(1, id);            
+            ps.executeUpdate();
+            
+        } catch (Exception e) {
+            
+        }
+    }
     public static void main(String[] args) {
 
     }

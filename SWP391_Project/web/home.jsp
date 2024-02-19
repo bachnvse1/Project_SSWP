@@ -131,22 +131,11 @@
                     <div class="col-md-12">
                         <div class="row">
                             <div class="products-tabs">
-                                <div>
-                                    <nav aria-label="Page navigation example">
-                                        <ul class="pagination justify-content-end">
-                                            <li class="page-item">
-                                                <c:forEach var="i" begin="1" end="${requestScope.Count}">
-                                                    <a onclick="loadProducts(${i})"  id="page-link" style="${requestScope.page == i ? "background-color: red; border:1px solid #000;padding-right : 10px; padding-left : 10px" : ""}" adding-right : 25px href="home?page=${i}">
-                                                        ${i}
-                                                    </a>
-                                                </c:forEach></li>                   
-                                        </ul>
-                                    </nav>
-                                </div>
+
                                 <!-- tab -->
                                 <div id="Listproduct" class="tab-pane fade in active">
                                     <c:forEach items="${listProductPage}" var="p" varStatus="loop">
-                                        
+
                                         <div class="col-md-3">
                                             <!-- product -->
 
@@ -174,7 +163,11 @@
                                                 <div class="add-to-cart">
                                                     <!-- Thêm một ID động cho nút "Thêm vào giỏ hàng" -->
                                                     <button class="add-to-cart-btn" id="buyButton_${loop.index}" data-target="cookiesPopup_${loop.index}">
-                                                        <i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng
+                                                        <i class="fa fa-shopping-cart"></i>BUY
+                                                    </button>
+                                                    <!-- Thêm nút "Buy" -->
+                                                    <button class="add-to-cart-btn" onclick="addToCart(${p.id})">
+                                                        <i class="fa fa-shopping-cart"></i>CART
                                                     </button>
                                                 </div>
                                             </div>
@@ -199,6 +192,19 @@
                     <!-- /tab -->
                 </div>
             </div>
+        </div>
+        <div style="display: flex; justify-content: center; align-items: center;">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                        <c:forEach var="i" begin="1" end="${requestScope.Count}">
+                            <a  class="page-link" style="${requestScope.page == i ? "  color: black; border:1px solid #000;padding-right : 10px; padding-left : 10px" : ""}" adding-right : 25px href="home?page=${i}">
+                                ${i}
+                            </a>
+                        </c:forEach>
+                    </li>                   
+                </ul>
+            </nav>
         </div>
         <!-- /SECTION -->
 
@@ -244,7 +250,23 @@
             });
             </c:forEach>
         </script>
-
+        <script>
+            function addToCart(productId) {
+                // Gửi giá trị productId đến servlet bằng Ajax
+                $.ajax({
+                    type: "POST", // Hoặc "GET" tùy thuộc vào yêu cầu của bạn
+                    url: "AddToCartController", // Thay thế bằng URL của servlet của bạn
+                    data: {productId: productId},
+                    success: function (response) {
+                        // Xử lý kết quả từ servlet nếu cần
+                        console.log(response);
+                    },
+                    error: function (error) {
+                        console.log("Error:", error);
+                    }
+                });
+            }
+        </script>
         <!-- FOOTER -->
         <%@include file="components/footer.jsp" %>
         <!-- /FOOTER -->
@@ -258,32 +280,32 @@
         <script src="js1/jquery.zoom.min.js"></script>
         <script src="js1/main.js"></script>
         <script>
-            $(document).ready(function () {
-                $(".button-buy").click(function () {
-                    var productId = $(this).data("id");
-                    $.ajax({
-                        type: 'post',
-                        url: "buy",
-                        data: {id: productId},
-                        success: function (response) {
-                            alert(response);
-                            window.location.href = "home";
-                        },
-                        error: function () {
-                            // Xử lý lỗi nếu có
-                            alert("Đã xảy ra lỗi khi tải trang");
-                        }
-                    });
-                });
-            });
-            function redirectToController(categoryId) {
-                // Construct the URL based on whether a categoryId is provided
-                var url = "home"; // Assuming 'home' is the endpoint handled by your servlet
-                if (categoryId !== 'all') {
-                    url += "?categoryId=" + categoryId;
+    $(document).ready(function () {
+        $(".button-buy").click(function () {
+            var productId = $(this).data("id");
+            $.ajax({
+                type: 'post',
+                url: "buy",
+                data: {id: productId},
+                success: function (response) {
+                    alert(response);
+                    window.location.href = "home";
+                },
+                error: function () {
+                    // Xử lý lỗi nếu có
+                    alert("Đã xảy ra lỗi khi tải trang");
                 }
-                window.location.href = url;
-            }
+            });
+        });
+    });
+    function redirectToController(categoryId) {
+        // Construct the URL based on whether a categoryId is provided
+        var url = "home"; // Assuming 'home' is the endpoint handled by your servlet
+        if (categoryId !== 'all') {
+            url += "?categoryId=" + categoryId;
+        }
+        window.location.href = url;
+    }
         </script>
 
     </body>
