@@ -12,7 +12,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <!-- The above 3 meta tags must come first in the head; any other head content must come after these tags -->
 
         <title>Electro - HTML Ecommerce Template</title>
 
@@ -42,6 +42,58 @@
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
 
+        <style>
+            .container-2 {
+                position: relative;
+            }
+
+            .cookiesContent {
+                text-align: center;
+                display: none;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: #fff;
+                padding: 20px;
+                border: 1px solid #ccc;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                text-align: center;
+                z-index: 9999; /* Đặt z-index để thẻ luôn hiển thị trên cùng */
+            }
+
+            .show {
+                display: block !important;
+            }
+
+            .button-buy {
+                position: relative;
+                display: inline-block;
+                margin: 15px;
+                padding: 15px 15px;
+                text-align: center;
+                font-size: 18px;
+                letter-spacing: 1px;
+                text-decoration: none;
+                color: #725AC1;
+                background: transparent;
+                cursor: pointer;
+                transition: ease-out 0.5s;
+                border: 2px solid #725AC1;
+                border-radius: 10px;
+                box-shadow: inset 0 0 0 0 #725AC1;
+            }
+
+            .button-buy:hover {
+                color: white;
+                box-shadow: inset 0 -100px 0 0 #725AC1;
+            }
+
+            .button-buy:active {
+                transform: scale(0.9);
+            }
+        </style>
+
     </head>
 
     <body>
@@ -65,12 +117,13 @@
                                     <!-- Correctly setting 'All' category selection -->
                                     <li><a href="javascript:void(0);" onclick="redirectToController('all')">All</a></li>
                                         <c:forEach items="${listCategory}" var="category">
-                                        <!-- Pass category.id to the redirectToController function -->
+
                                         <li><a href="javascript:void(0);" onclick="redirectToController('${category.id}')">${category.name}</a></li>
                                         </c:forEach>
                                 </ul>
                             </div>
                         </div>
+
                     </div>
                     <!-- /section title -->
                     <!-- Products tab & slick -->
@@ -78,73 +131,77 @@
                     <div class="col-md-12">
                         <div class="row">
                             <div class="products-tabs">
+
                                 <!-- tab -->
-                                <div>
-                                    <nav aria-label="Page navigation example">
-                                        <ul class="pagination justify-content-end">
+                                <div id="Listproduct" class="tab-pane fade in active">
+                                    <c:forEach items="${listProductPage}" var="p" varStatus="loop">
+                                        <div class="col-md-3">
+                                            <!-- product -->
 
-                                            <li class="page-item">  <c:forEach var="i" begin="1" end="${requestScope.Count}">
-                                                    <a onclick="loadProducts(${i})"  id="page-link" style="${requestScope.page == i ? "background-color: red; border:1px solid #000;padding-right : 10px; padding-left : 10px" : ""}" adding-right : 25px href="home?page=${i}">
-                                                        ${i}
-                                                    </a>
-                                                </c:forEach></li>
+                                            <div class="product">
+                                                <div class="product-img">
+                                                    <img src="${p.image1}" alt="" style="height: 150px;">
 
+                                                </div>
+                                                <div class="product-body">
 
-                                        </ul>
-                                    </nav>
-                                </div>
+                                                    <h3 class="product-name"><a href="#">${p.name}</a></h3>
+                                                    <h4 class="product-price">${p.price} <del
+                                                            class="product-old-price">$990.00</del></h4>
 
-                                <div class="Load">
-
-
-                                    <div id="Listproduct" class="tab-pane fade in active">
-                                        <c:forEach items="${listProductPage}" var="p">
-                                            <div class="col-md-3">
-                                                <!-- product -->
-
-                                                <div class="product">
-                                                    <div class="product-img">
-                                                        <img src="${p.image1}" alt="">
-
-                                                    </div>
-                                                    <div class="product-body">
-
-                                                        <h3 class="product-name"><a href="#">${p.name}</a></h3>
-                                                        <h4 class="product-price">${p.price} <del
-                                                                class="product-old-price">$990.00</del></h4>
-
-                                                        <div class="product-btns">
-                                                            <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span
-                                                                    class="tooltipp">add to wishlist</span></button>
-                                                            <button class="add-to-compare"><i class="fa fa-exchange"></i><span
-                                                                    class="tooltipp">add to compare</span></button>
-                                                            <button class="quick-view"><i class="fa fa-eye"></i><span
-                                                                    class="tooltipp">quick view</span></button>
-                                                        </div>
-                                                    </div>
-                                                    <div class="add-to-cart">
-                                                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to
-                                                            cart</button>
+                                                    <div class="product-btns">
+                                                        <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span
+                                                                class="tooltipp">add to wishlist</span></button>
+                                                        <button class="add-to-compare"><i class="fa fa-exchange"></i><span
+                                                                class="tooltipp">add to compare</span></button>
+                                                        <button class="quick-view"><i class="fa fa-eye"></i><span
+                                                                class="tooltipp">quick view</span></button>
                                                     </div>
                                                 </div>
-
-                                                <!-- /product -->
-
+                                                <div class="add-to-cart">
+                                                    <!-- Thêm một ID động cho nút "Thêm vào giỏ hàng" -->
+                                                    <button class="add-to-cart-btn" id="buyButton_${loop.index}" data-target="cookiesPopup_${loop.index}">
+                                                        <i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng
+                                                    </button>
+                                                </div>
                                             </div>
-                                        </c:forEach>
+                                            <div class="container-2">
+                                                <div class="cookiesContent" id="cookiesPopup_${loop.index}">
+                                                    <button class="close">✖</button>
+                                                    <img src="https://dichthuatmientrung.com.vn/wp-content/uploads/2022/06/important-sticky-note.jpg" alt="cookies-img" style="width: 50%;"/>
+                                                    <p style="color:red; margin-top: 5%;">We will hold your intermediary funds and wait until you confirm the transaction is completely successful</p>
+                                                    <button class="button-buy" data-id="${p.id}">BUY</button>
+                                                </div>
+                                            </div>               
+                                            <!-- /product -->
+                                        </div>
+                                    </c:forEach>
 
-                                    </div>
                                 </div>
-                                <!-- /tab -->
+
                             </div>
+
                         </div>
                     </div>
-                    <!-- /Products tab & slick -->
+                    <!-- /tab -->
                 </div>
-                <!-- /row -->
             </div>
-            <!-- /container -->
         </div>
+        <div style="display: flex; justify-content: center; align-items: center;">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                        <c:forEach var="i" begin="1" end="${requestScope.Count}">
+                            <a  class="page-link" style="${requestScope.page == i ? "  color: black; border:1px solid #000;padding-right : 10px; padding-left : 10px" : ""}" adding-right : 25px href="home?page=${i}">
+                                ${i}
+                            </a>
+                        </c:forEach>
+                    </li>                   
+                </ul>
+            </nav>
+        </div>
+        <!-- /container -->
+
         <!-- /SECTION -->
 
         <!-- NEWSLETTER -->
@@ -170,6 +227,26 @@
         </div>
         <!-- /NEWSLETTER -->
 
+
+
+        <script>
+            <c:forEach items="${listProductPage}" var="p" varStatus="loop">
+        document.querySelector('#buyButton_${loop.index}').addEventListener('click', function () {
+            document.getElementById('cookiesPopup_${loop.index}').style.display = 'block';
+        });
+
+        // Lấy tất cả các nút đóng của popup tương ứng và thêm trình nghe sự kiện
+        var closeButtons_${loop.index} = document.querySelectorAll('#cookiesPopup_${loop.index} .close');
+        closeButtons_${loop.index}.forEach(function (button) {
+            button.addEventListener('click', function () {
+                // Tìm popup chứa nút đóng và ẩn nó
+                var popup = this.closest('.cookiesContent');
+                popup.style.display = 'none';
+            });
+        });
+            </c:forEach>
+        </script>
+
         <!-- FOOTER -->
         <%@include file="components/footer.jsp" %>
         <!-- /FOOTER -->
@@ -183,17 +260,33 @@
         <script src="js1/jquery.zoom.min.js"></script>
         <script src="js1/main.js"></script>
         <script>
-                                                        function redirectToController(categoryId) {
-                                                            // Construct the URL based on whether a categoryId is provided
-                                                            var url = "home"; // Assuming 'home' is the endpoint handled by your servlet
-                                                            if (categoryId !== 'all') {
-                                                                url += "?categoryId=" + categoryId;
-                                                            }
-                                                            window.location.href = url;
-                                                        }
+            $(document).ready(function () {
+                $(".button-buy").click(function () {
+                    var productId = $(this).data("id");
+                    $.ajax({
+                        type: 'post',
+                        url: "buy",
+                        data: {id: productId},
+                        success: function (response) {
+                            alert(response);
+                        },
+                        error: function () {
+                            // Xử lý lỗi nếu có
+                            alert("Đã xảy ra lỗi khi tải trang");
+                        }
+                    });
+                });
+            });
+            function redirectToController(categoryId) {
+                // Construct the URL based on whether a categoryId is provided
+                var url = "home";          
+                //// Assuming 'home' is the endpoint handled by your servlet
+                if (categoryId !== 'all') {
+                    url += "?categoryId=" + categoryId;
+                }
+                window.location.href = url;
+            }
         </script>
 
     </body>
-
 </html>
-

@@ -9,6 +9,7 @@ import Entity.Product;
 import dao.DAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,6 +20,7 @@ import java.util.List;
  *
  * @author ADMIN
  */
+@WebServlet(name = "homeServ", urlPatterns = {"/home"})
 public class homeServ extends HttpServlet {
 
     /**

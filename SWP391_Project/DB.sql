@@ -1,5 +1,5 @@
 
-
+use swp_demo
 CREATE TABLE users (
     id INT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(255) NOT NULL,
@@ -30,12 +30,16 @@ Create table Product (
     /*FOREIGN KEY (categoryID) REFERENCES category(id),*/
     
     description VARCHAR(255) CHARACTER SET UTF8MB4,
-    image varchar(500),
+    image1 varchar(500),
+    image2 varchar(500),
+    image3 varchar(500),
+    image4 varchar(500),
     
+	transaction_Fees bit,
+    contact_Method VARCHAR(255) CHARACTER SET UTF8MB4,
     create_by int,
-    
     /*FOREIGN KEY (create_by) REFERENCES users(id),*/
-    
+    hidden_content varchar(255),
     create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_by int,
     
@@ -45,25 +49,18 @@ Create table Product (
     is_delete bit
 );
 
-
+drop table intermediate_Orders
+drop table Order_Detail
 
 create table intermediate_Orders(
 	id INT PRIMARY KEY AUTO_INCREMENT,
     code varchar(255),
     productID int,
-   /* FOREIGN KEY (productID) REFERENCES Product(id),*/
-    categoryID int,
-   /* FOREIGN KEY (categoryID) REFERENCES Category(id),*/
-    sellerID int,
-    buyerID int,
+    buyer_id int,
 	total_received_amount float(10,2),
     total_paid_amount float(10,2),
 	intermediary_fee float(10,2),
-    contact_Method VARCHAR(255) CHARACTER SET UTF8MB4,
     status VARCHAR(255) CHARACTER SET UTF8MB4,
-    is_Public bit,
-    fee_Payer bit,
-    transaction_Fees bit,
     create_by int,
     /*FOREIGN KEY (create_by) REFERENCES users(id),*/
     create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -74,35 +71,123 @@ create table intermediate_Orders(
 	
 );
 
+CREATE TABLE Order_Detail (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    orderID INT,
+    /* FOREIGN KEY (orderID) REFERENCES Intermediate_Orders(id) */
+    productID INT,
+    /* FOREIGN KEY (productID) REFERENCES Product(id) */
+	price float(10,2),
+    /* FOREIGN KEY (user_id) REFERENCES Users(id) */
+    
+    seller_name VARCHAR(255) CHARACTER SET UTF8MB4,
+    buyer_name VARCHAR(255) CHARACTER SET UTF8MB4,
+    product_name VARCHAR(255) CHARACTER SET UTF8MB4,
+    create_by int,
+    /*FOREIGN KEY (create_by) REFERENCES users(id),*/
+    create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_by int,
+    /*FOREIGN KEY (updated_by) REFERENCES users(id),*/
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    is_delete bit
+);
+
+
+create table Report(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    type_report int,
+    orderID int,
+    status bit,
+    description VARCHAR(255) CHARACTER SET UTF8MB4,
+    create_by int,
+    /*FOREIGN KEY (create_by) REFERENCES users(id),*/
+    create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_by int,
+    /*FOREIGN KEY (updated_by) REFERENCES users(id),*/
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    is_delete bit
+);
+
+create table Wallet (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    balance float(10,2),
+    create_by int,
+    /*FOREIGN KEY (create_by) REFERENCES users(id),*/
+    create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_by int,
+    /*FOREIGN KEY (updated_by) REFERENCES users(id),*/
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+
+drop table Report
+
+alter table Report
+add foreign key (orderID) references intermediate_Orders(id);
+alter table Report
+add foreign key (create_by) references users(id);
+alter table Report
+add foreign key (updated_by) references users(id);
+
+alter table Wallet
+add foreign key (create_by) references users(id);
+alter table Wallet
+add foreign key (updated_by) references users(id);
+
 alter table Product
 add foreign key (categoryID) references Category(id);
 alter table Product
 add foreign key (create_by) references users(id);
 alter table Product
 add foreign key (updated_by) references users(id);
+
 alter table intermediate_Orders
 add foreign key (productID) references Product(id);
 alter table intermediate_Orders
-add foreign key (categoryID) references Category(id);
-alter table intermediate_Orders
-add foreign key (sellerID) references users(id);
-alter table intermediate_Orders
-add foreign key (buyerID) references users(id);
-alter table intermediate_Orders
 add foreign key (create_by) references users(id);
 alter table intermediate_Orders
 add foreign key (updated_by) references users(id);
 
-INSERT INTO Category (name, is_delete) VALUES ('Electronics', 0);
-INSERT INTO Category (name, is_delete) VALUES ('Clothing', 0);
-INSERT INTO Category (name, is_delete) VALUES ('Books', 0);
+alter table Order_Detail
+add foreign key (orderID) references intermediate_Orders(id);
+alter table Order_Detail
+add foreign key (productID) references Product(id);
+alter table Order_Detail
+add foreign key (create_by) references users(id);
+alter table Order_Detail
+add foreign key (updated_by) references users(id);
+
+INSERT INTO Category (name, is_delete) VALUES ('Account', 0);
+INSERT INTO Category (name, is_delete) VALUES ('Quizlet', 0);
+INSERT INTO Category (name, is_delete) VALUES ('Netflix', 0);
+
+delete from swp_demo.category
+
 
 INSERT INTO users (username, password, email, display_name, is_admin, is_verify, is_active) 
-VALUES ('bach', '123', 'example@example.com', 'Example User', 1, 1, 1);
+VALUES ('bach', 'UPdqztViNgyMw0QyGVTpe0ud+dw=', 'example@example.com', 'Example User', 1, 1, 1);
 
-delete from product
-INSERT INTO Product (name, price, categoryID, description, image, create_by, updated_by) 
-VALUES ('Product 1', 50.00, 1, 'Description of Product 1', 'https://image.baophapluat.vn/1200x630/Uploaded/2024/qxcqdcqdh/2016_06_09/a0_ds_NKIX.jpg', 1, 1);
+INSERT INTO users (username, password, email, display_name, is_admin, is_verify, is_active) 
+VALUES ('bach2', 'UPdqztViNgyMw0QyGVTpe0ud+dw=', 'example@example.com', 'buyer', 0, 1, 1);
 
-INSERT INTO Product (name, price, categoryID, description, image, create_by, updated_by) 
-VALUES ('Product 2', 51.00, 1, 'Description of Product 2', 'https://image.baophapluat.vn/1200x630/Uploaded/2024/qxcqdcqdh/2016_06_09/a0_ds_NKIX.jpg', 1, 1);
+INSERT INTO Wallet (balance, create_by, updated_by)
+VALUES (10000000.00, 1, 1),
+       (50000000.50, 2, 2);
+       
+update  Wallet 
+set balance = 123
+where create_by = 1 
+
+
+delete from swp_demo.product where product.id = 5;
+delete from swp_demo.intermediate_Orders where product.id = 5;
+delete  from swp_demo.Order_Detail
+
+select * from Category
+select * from Product
+select * from users
+select * from intermediate_Orders where productID = 2
+select * from Wallet where create_by = 2
+
+select * from Product join intermediate_Orders
+on Product.id = intermediate_Orders.productID

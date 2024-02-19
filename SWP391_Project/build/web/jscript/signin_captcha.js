@@ -67,7 +67,8 @@ function SignIn()
             }
         }
     });
-};
+}
+;
 
 function refreshCaptcha()
 {
@@ -78,6 +79,9 @@ function refreshCaptcha()
     });
 }
 ;
+
+
+
 
 
 
