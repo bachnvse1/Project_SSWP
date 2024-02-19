@@ -36,23 +36,53 @@ function toggleOptions(productId) {
 $(document).ready(function () {
     $('#addForm').submit(function (e) {
         e.preventDefault(); // Ngăn chặn hành động mặc định của form
-        var formData = $(this).serialize(); // Thu thập dữ liệu từ form
-        $.ajax({
-            url: 'addProduct', // Đường dẫn tới file xử lý form
-            type: 'POST', // Phương thức POST
-            data: formData, // Dữ liệu được thu thập từ form
-            success: function (response) {
-                // Xử lý phản hồi từ máy chủ nếu cần
-                if (response === "success") {
-                    window.location.href = 'manageMyOrder';
-                } else {
-                    alert("Loi");
-                }
-
-            },
-            error: function (xhr, status, error) {
-                // Xử lý lỗi nếu có
-                console.error(xhr.responseText);
+        
+        // Hiển thị hộp thoại xác nhận của SweetAlert2
+        Swal.fire({
+            title: "Are you sure?",
+            text: "Posting a product will cost 500 VND for the posting fee !",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, add it!",
+            width: 600 , // Độ rộng của hộp thoại
+            height: 600 , // Chiều cao của hộp thoại
+            
+        }).then((result) => {
+            // Nếu người dùng xác nhận
+            if (result.isConfirmed) {
+                var formData = $('#addForm').serialize(); // Thu thập dữ liệu từ form
+                $.ajax({
+                    url: 'addProduct', // Đường dẫn tới file xử lý form
+                    type: 'POST', // Phương thức POST
+                    data: formData, // Dữ liệu được thu thập từ form
+                    success: function (response) {
+                        // Xử lý phản hồi từ máy chủ nếu cần
+                        if (response === "success") {
+                            Swal.fire({
+                                title: "Success!",
+                                text: "Product has been added.",
+                                icon: "success"
+                            }).then(() => {
+                                window.location.href = 'manageMyOrder';
+                            });
+                        } else if(response === "Insufficient_balance") {
+                            Swal.fire({
+                                title: "Error!",
+                                text: "Insufficient balance.",
+                                icon: "error"
+                            }).then(() => {
+                                window.location.href = 'manageMyOrder';
+                            })
+                            ;
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        // Xử lý lỗi nếu có
+                        console.error(xhr.responseText);
+                    }
+                });
             }
         });
     });
@@ -77,11 +107,7 @@ $(document).ready(function () {
                 document.getElementById("productName").value = responseData[1];
                 document.getElementById("price").value = responseData[2];
                 document.getElementById("intermediaryFee").value = responseData[3];
-                if (responseData[4] === 'Bên bán') {
-                    document.getElementById("partySeller").checked = true;
-                } else if (responseData[4] === 'Bên mua') {
-                    document.getElementById("partyBuyer").checked = true;
-                }
+                document.getElementById("party").value = responseData[4];
                 document.getElementById("receivedAmount").value = responseData[5];
                 document.getElementById("paidAmount").value = responseData[6];
                 document.getElementById("img1").src = responseData[7];
@@ -145,6 +171,7 @@ $(document).ready(function () {
         // Thu thập dữ liệu từ form
         var formData = {
 
+            code: $('#orderCode_ud').val(),
             productName: $('#productName_ud').val(),
             price: $('#price_ud').val(),
             party: $('input[name=party]:checked').val(),
@@ -154,8 +181,7 @@ $(document).ready(function () {
             img4: $('#img4_ud').val(),
             description: $('#description_ud').val(),
             hiddenContent: $('#hiddenContent_ud').val(),
-            contactMethod: $('#contactMethod_ud').val(),
-            status: $('#status_ud').val()
+            contactMethod: $('#contactMethod_ud').val()
         };
 
         // Gửi dữ liệu đến servlet bằng AJAX
@@ -164,15 +190,79 @@ $(document).ready(function () {
             url: 'updateOrder',
             data: formData,
             success: function (response) {
-                alert("success");
+                if (response === 'success') {
+                    alert("success");
+                }else{
+                    alert("ngu");
+                }
             },
             error: function (xhr, status, error) {
                 // Xử lý lỗi (nếu có)
+                alert("loi");   
             }
         });
     });
 });
+const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger"
+    },
+    buttonsStyling: false
+});
+
+$('.deleteProductButton').click(function () {
+    // Thu thập dữ liệu từ form
+    var productId = $(this).data('product-id');
+
+    // Hiển thị hộp thoại xác nhận
+    swalWithBootstrapButtons.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Nếu người dùng chấp nhận xóa, thực hiện AJAX
+            $.ajax({
+                type: 'POST',
+                url: 'deleteProduct',
+                data: { pid: productId },
+                success: function (response) {
+                    if (response === "success") {
+                        swalWithBootstrapButtons.fire({
+                            title: "Deleted!",
+                            text: "Your file has been deleted.",
+                            icon: "success"
+                        }).then(() => {
+                            window.location.href = 'manageMyOrder';
+                        });
+                    }
+                },
+                error: function (xhr, status, error) {
+                    // Xử lý lỗi (nếu có)
+                    swalWithBootstrapButtons.fire({
+                        title: "Error!",
+                        text: "An error occurred while deleting the product.",
+                        icon: "error"
+                    });
+                }
+            });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+            // Nếu người dùng hủy bỏ xóa
+            swalWithBootstrapButtons.fire({
+                title: "Cancelled",
+                text: "Your imaginary file is safe :)",
+                icon: "error"
+            });
+        }
+    });
+});
 function hideProductModal() {
+    event.preventDefault();
     document.getElementById("overlay").style.display = "none";
     document.getElementById("modal").style.display = "none";
     document.getElementById("modal2").style.display = "none";
@@ -312,3 +402,36 @@ $(document).ready(function () {
     });
 });
 
+ $(document).ready(function(){
+        $(".filterBtn").click(function(e){
+            e.preventDefault(); // Ngăn chặn hành động mặc định của nút submit
+            sendData();
+        });
+
+        $("select").change(function(){
+            sendData();
+        });
+
+        function sendData() {
+            var formData = {
+                filter_code: $("#filter_code").val(),
+                filter_name: $("#filter_name").val(),
+                filter_price: $("#filter_price").val(),
+                filter_status: $("#filter_status").val(),
+                filter_party: $("#filter_party").val()
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "filtermyorder",
+                data: formData,
+                success: function(response){
+                    // Xử lý dữ liệu trả về nếu cần
+                    console.log(response);
+                },
+                error: function(xhr, status, error){
+                    console.error(xhr.responseText);
+                }
+            });
+        }
+    });

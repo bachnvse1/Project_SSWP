@@ -7,6 +7,19 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     Author     : tudo7
 */
 
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.close-button .fas {
+    color: #808080; /* Màu xám */
+    font-size: 20px; /* Kích thước icon */
+}
 body {
     font-family: Arial, sans-serif;
     margin: 0;
