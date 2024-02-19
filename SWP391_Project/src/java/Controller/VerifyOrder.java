@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import Entity.User;
 import dao.DAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
@@ -59,12 +61,6 @@ public class VerifyOrder extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-        String xid = request.getParameter("id");
-        int id = Integer.parseInt(xid);
-        DAO dao = new DAO();
-        request.setAttribute("dao", dao);
-        request.setAttribute("id", id);
-        request.getRequestDispatcher("VerifyOrder.jsp").forward(request, response);
     }
 
     /**
@@ -78,7 +74,18 @@ public class VerifyOrder extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
+        String xid = request.getParameter("id").trim();
+        String xproid = request.getParameter("pro_id").trim();
+        int proid = Integer.parseInt(xproid);
+        int id = Integer.parseInt(xid);
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("user");
+        DAO dao = new DAO();
+        dao.updateOrder(u.getId(), "Complete", u.getId(), proid);
+        dao.insertReport(4, id, true, "You have completed your purchase with order code is: " + dao.getOrderByID(id).getCode(), u.getId(), false);
+        response.getWriter().write("success");
+        
     }
 
     /**

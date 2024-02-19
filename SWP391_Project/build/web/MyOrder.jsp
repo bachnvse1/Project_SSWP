@@ -137,6 +137,63 @@
             }
 
 
+
+
+            #myModalVerify {
+                text-align: center;
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+            #titleorder {
+                margin-bottom: 20px;
+                color: #333;
+            }
+
+            .options1 {
+                display: flex;
+                justify-content: center;
+                margin-bottom: 20px;
+            }
+
+            .option1 {
+                padding: 10px 20px;
+                margin: 0 10px;
+                border: 2px solid #007bff;
+                border-radius: 20px;
+                background-color: transparent;
+                color: #007bff;
+                cursor: pointer;
+                transition: background-color 0.3s, color 0.3s;
+            }
+
+            .option1:hover {
+                background-color: #007bff;
+                color: white;
+            }
+
+            .hidden {
+                display: none;
+            }
+
+            .loader {
+                border: 4px solid #f3f3f3;
+                border-top: 4px solid #3498db;
+                border-radius: 50%;
+                width: 20px;
+                height: 20px;
+                display: none;
+                margin: 10px auto;
+                animation: spin 1s linear infinite;
+            }
+
+
         </style>
     </head>
     <body>
@@ -150,8 +207,8 @@
                     </div>
                     <div class="options">
                         <ul>
-                            <li><a id="allProductButton" href="#">All product</a></li>
-                            <li><a id="addProductButton" href="#">Add product</a></li>
+                            <li><a id="allProductButton" >All product</a></li>
+                            <li><a id="addProductButton" >Add product</a></li>
                         </ul>
                     </div>
                 </div>
@@ -162,9 +219,9 @@
                     </div>
                     <div class="options">
                         <ul>
-                            <li><a href="#">Đã hoàn thành</a></li>
+                            <li><a id="order-complete">Đã hoàn thành</a></li>
                             <li><a id="order-checking">Đang xử lí</a></li>
-                            <li><a href="#">Đã hủy</a></li>
+                            <li><a >Đã hủy</a></li>
                         </ul>
                     </div>
                 </div>
@@ -175,9 +232,9 @@
                     </div>
                     <div class="options">
                         <ul>
-                            <li><a href="#">Đã hoàn thành</a></li>
-                            <li><a href="#">Đang xử lí</a></li>
-                            <li><a href="#">Đã hủy</a></li>
+                            <li><a >Đã hoàn thành</a></li>
+                            <li><a >Đang xử lí</a></li>
+                            <li><a >Đã hủy</a></li>
                         </ul>
                     </div>
                 </div>
@@ -202,10 +259,31 @@
                                                 <th>Transaction Fees</th>
                                                 <th>Intermediary payers</th>
                                                 <th>Total paid amount</th>
+                                                <th>Time</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody class="table-body" id="cell-info">
+
+                                        </tbody>
+                                    </table>
+                                    
+                                    <table class="table" id="orderBuy-complete">
+                                        <thead>
+                                            <tr>
+                                                <th>Code</th>
+                                                <th>Status</th>
+                                                <th>Seller</th>                        
+                                                <th>Category</th>
+                                                <th>Contact</th>
+                                                <th>Price</th>
+                                                <th>Transaction Fees</th>
+                                                <th>Intermediary payers</th>
+                                                <th>Total paid amount</th>
+                                                <th>Time</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="table-body" id="cell-info1">
 
                                         </tbody>
                                     </table>
@@ -311,7 +389,7 @@
                         <input type="radio" value="buyer" name="Transaction_fee">Buyer<br>
                         <label for="contactMethod">Contact Method:</label>
                         <input type="text" id="contactMethod" name="Contact_Method" required><br>
-                        <label for="hiddenContent">Hidden Content:</lahidden_contentbel>
+                        <label for="hiddenContent">Hidden Content:</label>
                             <input type="text" id="hiddenContent" name="hidden_content" required><br>
 
                             <input type="submit" value="ADD">
@@ -449,15 +527,29 @@
                                             <label for="order_code">Intermediate Orders Code</label><br>
                                             <input type="text" id="order_code" name="code" value="" readonly><br>
                                             <label for="hidden_info">Hidden Information</label><br>
-                                            <input type="text" id="hidden_info" name="code" value="" readonly><br>
+                                            <input type="text" id="hidden_info" name="" value="" readonly><br>
                                             <label for="description">Description</label><br>
-                                            <textarea id="description" name="description" placeholder="Write something, as detailed as possible..." style="height:200px" required></textarea><br>
+                                            <textarea id="description1" name="description" placeholder="Write something, as detailed as possible..." style="height:200px" required></textarea><br>
                                             <input type="submit" value="Submit">
                                         </form>
                                     </div>
                                 </div>
                             </div>
-                                    
+
+                            <div id="myModalVerify" class="modal4">
+                                <span class="close">&times;</span></br></br>
+                                <h3>Verify Order</h3>
+                                <p>Order matches the description</p>
+                                <form id="authForm">
+                                    <input type="text" id="pro_id" name="pro_id" hidden="">
+                                    <div class="options1">
+                                        <button type="submit" class="option1 yes">Yes</button>
+                                        
+                                    </div>
+                                    <div class="loader" id="loader"></div>
+                                </form>
+                            </div>
+
                             </div>
                             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
                             <script src="jscript/myorder.js"></script>

@@ -96,12 +96,13 @@ public class orderBuyChecking extends HttpServlet {
                         + "                                                    <td>" + o.getOrder().getIntermediary_fee() + " VND" + "</td>\n"
                         + "                                                    <td><span class=\"badge badge-success\">" + s + "</span></td>\n"
                         + "                                                    <td>" + o.getOrder().getTotal_paid_amount() + " VND" + "</td>\n"
+                        + "                                                    <td>" + o.getOrder().getUpdate_at() + "</td>\n"
                         + "                                                    <td>\n"
                         + "  <div class=\"buttonContainer\">\n"
-                        + "    <a class=\"reportButton\" data-orderid=\" "+o.getOrder().getId()+"\" data-ordercode=\""+o.getOrder().getCode()+"\" data-hiddeninfo=\""+o.getProduct().getHidden_content()+"\">\n"
+                        + "    <a class=\"reportButton\" data-orderid=\" " + o.getOrder().getId() + "\" data-ordercode=\"" + o.getOrder().getCode() + "\" data-hiddeninfo=\"" + o.getProduct().getHidden_content() + "\">\n"
                         + "      <i class=\"fa fa-exclamation\"></i>\n"
                         + "    </a>\n"
-                        + "    <a class=\"verifyButton\"  href=\"verifyOrder?id=" + o.getOrder().getId() + "\">\n"
+                        + "    <a class=\"verifyButton\"  data-orderid=\" " + o.getOrder().getId() + "\" data-ordercode=\"" + o.getOrder().getCode() + "\" data-proid=\"" + o.getProduct().getId() + "\">\n"
                         + "  <i class=\"fa fa-check\"></i>\n"
                         + "</a>\n"
                         + "  </div>\n"
@@ -122,7 +123,40 @@ public class orderBuyChecking extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        PrintWriter out = response.getWriter();
+        DAO dao = new DAO();
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("user");
+        List<intermediateOrders> listOrderBuy = dao.getOrderBuy(u.getId());
+        List<ProductOrderPair> productOrderPairs = new ArrayList<>();
+        for (intermediateOrders o : listOrderBuy) {
+            Product product = dao.getProductByID(o.getProductId());
+            productOrderPairs.add(new ProductOrderPair(product, o));
+
+        }
+        String s = "";
+        for (ProductOrderPair o : productOrderPairs) {
+            if (o.getOrder().getStatus().equals("Complete")) {
+                if (o.getProduct().isTransaction_fee() == true) {
+                    s = "Seller";
+                } else {
+                    s = "Buyer";
+                }
+                out.print("\n"
+                        + "<tr class=\"cell-1\">\n"
+                        + "                                                    <td>" + o.getOrder().getCode() + "</td>\n"
+                        + "                                                    <td>" + o.getOrder().getStatus() + "</td>\n"
+                        + "                                                    <td>" + dao.getUserById(o.getProduct().getCreate_by()).getDisplay_name() + "</td>\n"
+                        + "                                                    <td>" + dao.getCategoryById(o.getProduct().getCategoryID()).getName() + "</td>\n"
+                        + "                                                    <td>" + o.getProduct().getContact_Method() + "</td>\n"
+                        + "                                                    <td>" + o.getProduct().getPrice() + " VND" + "</td>\n"
+                        + "                                                    <td>" + o.getOrder().getIntermediary_fee() + " VND" + "</td>\n"
+                        + "                                                    <td><span class=\"badge badge-success\">" + s + "</span></td>\n"
+                        + "                                                    <td>" + o.getOrder().getTotal_paid_amount() + " VND" + "</td>\n"
+                        + "                                                    <td>" + o.getOrder().getUpdate_at() + "</td>\n"
+                        + " </tr>");
+            }
+        }
     }
 
     /**

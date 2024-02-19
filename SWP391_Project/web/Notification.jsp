@@ -1,10 +1,11 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <link rel="icon" sizes="" href="https://yt3.ggpht.com/a-/AN66SAzzGZByUtn6CpHHJVIEOuqQbvAqwgPiKy1RTw=s900-mo-c-c0xffffffff-rj-k-no" type="image/jpg" />
-        <title>Nofication</title>
+        <title>Notification</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <style>
             body {
@@ -225,52 +226,75 @@
                 <td style="padding: 15px 0">
                     <table style="border: none; margin-left: auto; margin-right: auto" cellpadding="0" cellspacing="0" width="600" class="content">
                         <!-- Start: Small header text in pale grey email background -->
-                     
+
                         <!-- End: Small header text in pale grey email background -->
 
                         <!-- Start: White block with text content -->
                         <tr>
                             <td class="general center">
-                                <h1>Nofication</h1>  
+                                <h1>Notification</h1>  
                             </td>
                         </tr>
                         <!-- End: White block with text content -->
 
                         <!-- Start: Failure Notification -->
-                        <tr>
-                            <td class="failure notification">
-                                <h1><span class="icon">&times;</span>Complain</h1>
-                                <p class="small">Any supplementary information</p>
-                            </td>
-                        </tr>
+                        <c:forEach items="${listR}" var="r">
+                            <c:if test="${r.getType_report() == 1}">
+                                <tr>
+                                    <td class="failure notification">
+                                        <h1><span class="icon">&times;</span>Complain</h1>
+                                        <p class="small">${r.getDescription()}</p>
+                                    </td>
+                                </tr>
+                            </c:if>
+
+                            <c:if test="${r.getType_report() == 2}">
+                                <tr>
+                                    <td class="warning notification">
+                                        <h1><span class="icon">&quest;</span>Buy Product</h1>
+                                        <p class="small">${r.getDescription()}</p>
+                                    </td>
+                                </tr>
+                            </c:if>
+
+                            <c:if test="${r.getType_report() == 3}">
+                                <tr>
+                                    <td class="healthy notification">
+                                        <h1><span class="icon">&check;</span>Upload Order</h1>
+                                        <p class="small">${r.getDescription()}</p>
+                                    </td>
+                                </tr>
+                            </c:if>
+
+                            <c:if test="${r.getType_report() == 4}">
+                                <tr>
+                                    <td class="healthy notification">
+                                        <h1><span class="icon">&check;</span>Verify Transaction</h1>
+                                        <p class="small">${r.getDescription()}</p>
+                                    </td>
+                                </tr>
+                            </c:if>
+
+                        </c:forEach>
+
                         <!-- End: Failure Notification -->
 
                         <!-- Start: Warning Notification -->
-                        <tr>
-                            <td class="warning notification">
-                                <h1><span class="icon">&quest;</span>Warning</h1>
-                                <p class="small">You just change password</p>
-                            </td>
-                        </tr>
+
                         <!-- End: Warning Notification -->
 
                         <!-- Start: Healthy Notification -->
-                        <tr>
-                            <td class="healthy notification">
-                                <h1><span class="icon">&check;</span>Verify Transaction</h1>
-                                <p class="small">You have just completed the transaction</p>
-                            </td>
-                        </tr>
+
                         <!-- End: Healthy Notification -->
 
                         <!-- Start: Information Notification -->
-                        <tr>
+<!--                        <tr>
                             <td class="information notification">
                                 <h1><span class="icon">i</span>Information</h1>
                                 <p>The "something or other" system information</p>
                                 <p class="small">Any supplementary information</p>
                             </td>
-                        </tr>
+                        </tr>-->
                     </table>
                 </td>
             </tr>

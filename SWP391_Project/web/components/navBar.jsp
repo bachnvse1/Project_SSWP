@@ -23,9 +23,15 @@
                         <li><a href="#"><i class="fa fa-map-marker"></i>xxx</a></li>
                     </ul>
                     <ul class="header-links pull-right">
-                        <li>
-                            <a>${balance} VND</a></li>
-                            <c:if test="${user != null}">
+
+
+
+                        <c:if test="${user != null}">
+                            <li id="notification-Button"><a href="notification"><i class="fa fa-bell"></i>
+                                    Notification</a></li>
+                                    
+                            <li><a>${balance} VND</a></li>
+                            
                             <li id="info-Button"><a><i class="fa fa-user-o"></i>${user.display_name}</a></li>
                                     </c:if>
                                     <c:if test="${user == null}">
@@ -94,13 +100,13 @@
                                     </a>
                                 </div>
                                 <!-- /Cart -->
-                                
-                                 <!-- Feedback -->
+
+                                <!-- Feedback -->
                                 <div class="row">
                                     <a  href="Feedback" >
                                         <i class="fa fa-comments"></i>
                                         <span>Feedback</span>
-                                        
+
                                     </a>
                                 </div>
                                 <!-- /Feedback -->
@@ -141,7 +147,10 @@
                         }
                     });
                 });
+              
             });
+            
+            
             $(document).ready(function () {
                 $("#oder-Button").click(function () {
                     $.ajax({

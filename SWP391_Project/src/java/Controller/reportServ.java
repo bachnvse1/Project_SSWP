@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import Entity.Report;
 import Entity.User;
 import dao.DAO;
 import jakarta.servlet.http.HttpSession;
@@ -39,7 +40,7 @@ public class reportServ extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet reportServ</title>");            
+            out.println("<title>Servlet reportServ</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet reportServ at " + request.getContextPath() + "</h1>");
@@ -74,17 +75,23 @@ public class reportServ extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String xid = request.getParameter("id").trim();
+        String xid = request.getParameter("order_id").trim();
         String description = request.getParameter("description");
         int id = Integer.parseInt(xid);
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("user");
         DAO dao = new DAO();
-        if(dao.getReport(id) == null) {
-            dao.insertReport(1, id, false , description, u.getId(), false);
+        if (dao.getReportByType(1, id) == null) {
+            dao.insertReport(1, id, false, "Order code: " + dao.getOrderByID(id).getCode() + " " + description, u.getId(), false);
             response.getWriter().write("success");
+            //1 là khiếu nại
+            //2 là mua hàng
+            //3 là đăng đơn hàng
+            //4 là hoàn tất mua hàng
+            //5 là nạp tiền
+            //6 là rút tiền
         }
-        
+
     }
 
     /**

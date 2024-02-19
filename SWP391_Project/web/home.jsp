@@ -146,6 +146,7 @@
                                 <!-- tab -->
                                 <div id="Listproduct" class="tab-pane fade in active">
                                     <c:forEach items="${listProductPage}" var="p" varStatus="loop">
+                                        
                                         <div class="col-md-3">
                                             <!-- product -->
 
@@ -266,6 +267,7 @@
                         data: {id: productId},
                         success: function (response) {
                             alert(response);
+                            window.location.href = "home";
                         },
                         error: function () {
                             // Xử lý lỗi nếu có

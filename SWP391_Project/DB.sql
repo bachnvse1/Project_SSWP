@@ -108,6 +108,12 @@ create table Report(
     is_delete bit
 );
 
+CREATE EVENT delete_old_report_data
+ON SCHEDULE
+EVERY 5 MONTH
+DO
+    DELETE FROM Report WHERE create_at < NOW() - INTERVAL 5 MONTH;
+
 create table Wallet (
 	id INT PRIMARY KEY AUTO_INCREMENT,
     balance float(10,2),
@@ -202,10 +208,10 @@ delete  from swp_demo.Order_Detail
 delete from Report
 
 select * from Category
-select * from Product
+select * from Product where is_delete = true
 select * from users
 select * from intermediate_Orders where productID = 2
-select * from Wallet where create_by = 2
+select * from Wallet where create_by = 1
 select * from Report
 
 select * from Product join intermediate_Orders

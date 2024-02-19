@@ -112,6 +112,58 @@ public class DAO extends DBContext {
         return null;
     }
 
+    public Report getReportByType(int type, int oid) {
+        String query = "select * from swp_demo.Report where type_report = ? and orderID = ?";
+        try {
+            con = new DBContext().connection; //connect sql
+            ps = con.prepareStatement(query);
+            ps.setInt(1, type);
+            ps.setInt(2, oid);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return new Report(rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        rs.getBoolean(4),
+                        rs.getString(5),
+                        rs.getInt(6),
+                        rs.getTimestamp(7),
+                        rs.getInt(8),
+                        rs.getTimestamp(9),
+                        rs.getBoolean(10));
+            }
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
+
+    public List<Report> getListReport(int uid) {
+        List<Report> list = new ArrayList<>();
+        String query = "select * from swp_demo.Report where create_by = ?";
+        try {
+            con = new DBContext().connection; //connect sql
+            ps = con.prepareStatement(query);
+            ps.setInt(1, uid);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Report(rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        rs.getBoolean(4),
+                        rs.getString(5),
+                        rs.getInt(6),
+                        rs.getTimestamp(7),
+                        rs.getInt(8),
+                        rs.getTimestamp(9),
+                        rs.getBoolean(10)));
+            }
+        } catch (Exception e) {
+
+        }
+        return list;
+    }
+
     public User getUser(String username) {
 
         String query = "select * from swp_demo.users where username = ?";
@@ -205,7 +257,7 @@ public class DAO extends DBContext {
         return null;
     }
 
-    public void updateOrder(int buyer_id, String status, int updated_by, int id) {
+    public void updateOrder(int buyer_id, String status, int updated_by, int pid) {
         String query = "UPDATE intermediate_Orders\n"
                 + "SET \n"
                 + "    buyer_id = ?,\n"
@@ -220,7 +272,7 @@ public class DAO extends DBContext {
             ps.setInt(1, buyer_id);
             ps.setString(2, status);
             ps.setInt(3, updated_by);
-            ps.setInt(4, id);
+            ps.setInt(4, pid);
             ps.executeUpdate();
 
         } catch (Exception e) {
@@ -354,6 +406,20 @@ public class DAO extends DBContext {
         }
         return null;
 
+    }
+
+    public void updateAmount(double balance, int uid) {
+        String sql = "UPDATE Wallet SET balance = ? WHERE create_by =?";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(sql);
+            ps.setDouble(1, balance);
+            ps.setInt(2, uid);
+            ps.executeUpdate();
+            // Execute the update query         
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
     }
 
     //HUY
@@ -954,7 +1020,7 @@ public class DAO extends DBContext {
     //BINH
     public List<Product> getAllProduct() {
         List<Product> list = new ArrayList<>();
-        String sql = "SELECT * FROM swp_demo.product";
+        String sql = "SELECT * FROM swp_demo.product where is_delete = false";
         try {
             con = new DBContext().connection;
             ps = con.prepareStatement(sql);
@@ -1008,7 +1074,7 @@ public class DAO extends DBContext {
 
     public List<Product> getAllProductbyName(String name) {
         List<Product> list = new ArrayList<>();
-        String sql = "SELECT * FROM swp_demo.product where name like ?";
+        String sql = "SELECT * FROM swp_demo.product where name like ? and is_delete = false";
         try {
             con = new DBContext().connection;
 
@@ -1125,7 +1191,6 @@ public class DAO extends DBContext {
 
     public static void main(String[] args) {
         DAO dao = new DAO();
-        dao.insertReport(1, 35, false, "khog co gi", 1, false);
-        System.out.println(dao.getReport(35).toString());
+        dao.insertReport(1, 45, false, "khong dung mo ta", 2, false);
     }
 }

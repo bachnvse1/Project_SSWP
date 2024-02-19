@@ -112,10 +112,11 @@ public class AddProdcutServlet extends HttpServlet {
             order.setTotal_received_amount(product.getPrice());
         }
         order.setIntermediary_fee(product.getPrice() * 5 / 100);
-        order.setStatus("Đang giao bán");
+        order.setStatus("Ready");
         order.setCreate_by(u.getId());
         order.setUpdate_by(u.getId());
         dal.insertOrder(order);
+        dal.insertReport(3, dal.getOrderByProductID(dal.getIdProduct()).getId(), true, "You have just posted an order with the code is: " + dal.getOrderByProductID(dal.getIdProduct()).getCode(), u.getId(), false);
         response.getWriter().write("success");
     }
 

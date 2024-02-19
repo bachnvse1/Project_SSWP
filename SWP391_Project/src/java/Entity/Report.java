@@ -47,7 +47,7 @@ public class Report {
         this.id = id;
     }
 
-    public int isType_report() {
+    public int getType_report() {
         return type_report;
     }
 
@@ -114,7 +114,7 @@ public class Report {
     public boolean isIs_delete() {
         return is_delete;
     }
-
+    
     public void setIs_delete(boolean is_delete) {
         this.is_delete = is_delete;
     }

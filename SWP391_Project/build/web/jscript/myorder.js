@@ -10,6 +10,7 @@ $(document).ready(function () {
     $("#addProductForm").hide();
     $("#orderBuy").hide();
     $("#myModalComplain").hide();
+    $("#myModalVerify").hide();
     // Xử lý sự kiện khi nhấn nút "Add Product"
     $("#addProductButton").click(function () {
         $("#addProductForm").show();
@@ -17,12 +18,14 @@ $(document).ready(function () {
         $("#Filter").hide();
         $("#orderBuy").hide();
         $("#myModalComplain").hide();
+        $("#myModalVerify").hide();
     });
     $("#allProductButton").click(function () {
         $("#addProductForm").hide();
         $("#ProductDisplay").show();
         $("#orderBuy").hide();
         $("#myModalComplain").hide();
+        $("#myModalVerify").hide();
     });
 });
 function toggleOptions(productId) {
@@ -178,6 +181,7 @@ function hideProductModal() {
 $(document).ready(function () {
     $("#order-checking").click(function () {
         $("#orderBuy").show();
+        $("#orderBuy-complete").hide();
         $("#ProductDisplay").hide();
         $("#Filter").hide();
         $("#addProductForm").hide();
@@ -186,6 +190,27 @@ $(document).ready(function () {
             url: "orderChecking",
             success: function (response) {
                 $("#cell-info").html(response);
+            },
+            error: function () {
+                // Xử lý lỗi nếu có
+                alert("Đã xảy ra lỗi khi tải trang");
+            }
+        });
+    });
+});
+
+$(document).ready(function () {
+    $("#order-complete").click(function () {
+        $("#orderBuy-complete").show();
+        $("#orderBuy").hide();
+        $("#ProductDisplay").hide();
+        $("#Filter").hide();
+        $("#addProductForm").hide();
+        $.ajax({
+            type: 'POST',
+            url: "orderChecking",
+            success: function (response) {
+                $("#cell-info1").html(response);
             },
             error: function () {
                 // Xử lý lỗi nếu có
@@ -209,12 +234,24 @@ $(document).ready(function () {
 
     });
 
+    $(document).on("click", ".verifyButton", function (e) {
+        e.preventDefault();
+        var orderId = $(this).data("orderid");
+        var proid = $(this).data("proid");
+        $("#order_id").val(orderId); // Cập nhật giá trị của trường input // Cập nhật giá trị của trường input
+        $("#pro_id").val(proid);
+        $("#myModalVerify").show();
+    });
+
 
     // Khi người dùng nhấn vào nút đóng (×), đóng modal
     $(".close").click(function () {
         $("#myModalComplain").hide();
     });
 
+    $(".close").click(function () {
+        $("#myModalVerify").hide();
+    });
     // Khi người dùng nhấp bất kỳ đâu ngoài modal, đóng modal
     $(window).click(function (event) {
         if (event.target === $("#myModalComplain")[0]) {
@@ -226,18 +263,43 @@ $(document).ready(function () {
     $("#complaintForm").submit(function (e) {
         e.preventDefault(); // Ngăn chặn chuyển hướng mặc định khi nhấn nút submit
         var formData = {
-            id: $("#order_id").val(),
-            description: $("#description").val()
+            order_id: $("#order_id").val(),
+            description: $("#description1").val()
         };
         $.ajax({
             type: 'POST',
             url: 'report', // Đường dẫn đến servlet xử lý
             data: formData, // Gửi dữ liệu của form sang servlet
             success: function (response) {
-                if(response === "success") {
+                if (response === "success") {
                     alert("Complain success! Please wainting response from system!");
-                } else{
-                     alert("You have already complained about this order");
+                } else {
+                    alert("You have already complained about this order");
+                }
+            },
+            error: function (xhr, status, error) {
+                alert("ưe");
+            }
+        });
+    });
+
+    $("#authForm").submit(function (e) {
+        e.preventDefault(); // Ngăn chặn chuyển hướng mặc định khi nhấn nút submit
+        var formData = {
+            id: $("#order_id").val(),
+            pro_id: $("#pro_id").val()
+        };
+        $.ajax({
+            type: 'POST',
+            url: 'verifyOrder', // Đường dẫn đến servlet xử lý
+            data: formData, // Gửi dữ liệu của form sang servlet
+            success: function (response) {
+                if (response === "success") {
+                    $("#myModalVerify").hide();
+                    alert("Verify order sucess");
+
+                } else {
+                    alert("You have already verify this order!");
                 }
             },
             error: function (xhr, status, error) {
