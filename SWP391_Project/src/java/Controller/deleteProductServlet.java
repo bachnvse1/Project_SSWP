@@ -6,7 +6,6 @@
 package Controller;
 
 import Entity.Product;
-import Entity.intermediateOrders;
 import dao.DAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -20,8 +19,8 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author tudo7
  */
-@WebServlet(name="UpdateOrderServlet", urlPatterns={"/updateOrder"})
-public class UpdateOrderServlet extends HttpServlet {
+@WebServlet(name="deleteProductServlet", urlPatterns={"/deleteProduct"})
+public class deleteProductServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -38,10 +37,10 @@ public class UpdateOrderServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UpdateOrderServlet</title>");  
+            out.println("<title>Servlet deleteProductServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UpdateOrderServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet deleteProductServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -72,46 +71,10 @@ public class UpdateOrderServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
        // processRequest(request, response);
-    String code = request.getParameter("code");
-    String productName = request.getParameter("productName");
-    Double price = Double.valueOf(request.getParameter("price"));
-    String party = request.getParameter("party");
-    String img1 = request.getParameter("img1");
-    String img2 = request.getParameter("img2");
-    String img3 = request.getParameter("img3");
-    String img4 = request.getParameter("img4");
-    String description = request.getParameter("description");
-    String hiddenContent = request.getParameter("hiddenContent");
-    String contactMethod = request.getParameter("contactMethod");
-        DAO dao = new DAO();
-        intermediateOrders order = dao.getOrderByCode(code);
-       Product product = dao.getProductByID(order.getProductId());
-       product.setName(productName);
-       product.setPrice(price);
-       if(party.equals("seller")){
-           product.setTransaction_fee(true);
-       }else{
-           product.setTransaction_fee(false);
-       }
-       product.setImage1(img1);
-       product.setImage2(img2);
-       product.setImage3(img3);
-       product.setImage4(img4);
-       product.setDescription(description);
-       product.setContact_Method(contactMethod);
-       product.setHidden_content(hiddenContent);
-       dao.UpdateProductByProductID(product.getId(), product);
-       order.setIntermediary_fee((price*5)/100);
-       if(product.isTransaction_fee()==true){
-           order.setTotal_received_amount(price-order.getIntermediary_fee());
-           order.setTotal_paid_amount(price);
-       }else{
-           order.setTotal_paid_amount(price+order.getIntermediary_fee());
-           order.setTotal_received_amount(price);
-       }
-       dao.UpdateOrdersByID(order.getId(), order);
-       
-    
+       DAO dal = new DAO();
+       int pid = Integer.parseInt(request.getParameter("pid"));
+       dal.deleteProduct(pid, true);
+       response.getWriter().write("success");
     }
 
     /** 

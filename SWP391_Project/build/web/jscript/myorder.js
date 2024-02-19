@@ -33,23 +33,53 @@ function toggleOptions(productId) {
 $(document).ready(function () {
     $('#addForm').submit(function (e) {
         e.preventDefault(); // Ngăn chặn hành động mặc định của form
-        var formData = $(this).serialize(); // Thu thập dữ liệu từ form
-        $.ajax({
-            url: 'addProduct', // Đường dẫn tới file xử lý form
-            type: 'POST', // Phương thức POST
-            data: formData, // Dữ liệu được thu thập từ form
-            success: function (response) {
-                // Xử lý phản hồi từ máy chủ nếu cần
-                if (response === "success") {
-                    window.location.href = 'manageMyOrder';
-                } else {
-                    alert("Loi");
-                }
-
-            },
-            error: function (xhr, status, error) {
-                // Xử lý lỗi nếu có
-                console.error(xhr.responseText);
+        
+        // Hiển thị hộp thoại xác nhận của SweetAlert2
+        Swal.fire({
+            title: "Are you sure?",
+            text: "Posting a product will cost 500 VND for the posting fee !",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, add it!",
+            width: 600 , // Độ rộng của hộp thoại
+            height: 600 , // Chiều cao của hộp thoại
+            
+        }).then((result) => {
+            // Nếu người dùng xác nhận
+            if (result.isConfirmed) {
+                var formData = $('#addForm').serialize(); // Thu thập dữ liệu từ form
+                $.ajax({
+                    url: 'addProduct', // Đường dẫn tới file xử lý form
+                    type: 'POST', // Phương thức POST
+                    data: formData, // Dữ liệu được thu thập từ form
+                    success: function (response) {
+                        // Xử lý phản hồi từ máy chủ nếu cần
+                        if (response === "success") {
+                            Swal.fire({
+                                title: "Success!",
+                                text: "Product has been added.",
+                                icon: "success"
+                            }).then(() => {
+                                window.location.href = 'manageMyOrder';
+                            });
+                        } else if(response === "Insufficient_balance") {
+                            Swal.fire({
+                                title: "Error!",
+                                text: "Insufficient balance.",
+                                icon: "error"
+                            }).then(() => {
+                                window.location.href = 'manageMyOrder';
+                            })
+                            ;
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        // Xử lý lỗi nếu có
+                        console.error(xhr.responseText);
+                    }
+                });
             }
         });
     });
@@ -74,11 +104,7 @@ $(document).ready(function () {
                 document.getElementById("productName").value = responseData[1];
                 document.getElementById("price").value = responseData[2];
                 document.getElementById("intermediaryFee").value = responseData[3];
-                if (responseData[4] === 'Bên bán') {
-                    document.getElementById("partySeller").checked = true;
-                } else if (responseData[4] === 'Bên mua') {
-                    document.getElementById("partyBuyer").checked = true;
-                }
+                document.getElementById("party").value = responseData[4];
                 document.getElementById("receivedAmount").value = responseData[5];
                 document.getElementById("paidAmount").value = responseData[6];
                 document.getElementById("img1").src = responseData[7];
@@ -142,6 +168,7 @@ $(document).ready(function () {
         // Thu thập dữ liệu từ form
         var formData = {
 
+            code: $('#orderCode_ud').val(),
             productName: $('#productName_ud').val(),
             price: $('#price_ud').val(),
             party: $('input[name=party]:checked').val(),
@@ -151,8 +178,7 @@ $(document).ready(function () {
             img4: $('#img4_ud').val(),
             description: $('#description_ud').val(),
             hiddenContent: $('#hiddenContent_ud').val(),
-            contactMethod: $('#contactMethod_ud').val(),
-            status: $('#status_ud').val()
+            contactMethod: $('#contactMethod_ud').val()
         };
 
         // Gửi dữ liệu đến servlet bằng AJAX
@@ -161,15 +187,44 @@ $(document).ready(function () {
             url: 'updateOrder',
             data: formData,
             success: function (response) {
-                alert("success");
+                if (response === 'success') {
+                    alert("success");
+                }else{
+                    alert("ngu");
+                }
             },
             error: function (xhr, status, error) {
                 // Xử lý lỗi (nếu có)
+                alert("loi");   
+            }
+        });
+    });
+});
+$(document).ready(function () {
+    $('.deleteProductButton').click(function () {
+        // Thu thập dữ liệu từ form
+        var productId = $(this).data('product-id');
+
+        // Gửi dữ liệu đến servlet bằng AJAX
+        $.ajax({
+            type: 'POST',
+            url: 'deleteProduct',
+            data:{ pid : productId},
+            success: function (response) {
+                if (response === "success") {
+                    alert("success");
+                    window.location.href = 'manageMyOrder';
+                }
+            },
+            error: function (xhr, status, error) {
+                // Xử lý lỗi (nếu có)
+                alert("loi");
             }
         });
     });
 });
 function hideProductModal() {
+    event.preventDefault();
     document.getElementById("overlay").style.display = "none";
     document.getElementById("modal").style.display = "none";
     document.getElementById("modal2").style.display = "none";
@@ -234,10 +289,10 @@ $(document).ready(function () {
             url: 'report', // Đường dẫn đến servlet xử lý
             data: formData, // Gửi dữ liệu của form sang servlet
             success: function (response) {
-                if(response === "success") {
+                if (response === "success") {
                     alert("Complain success! Please wainting response from system!");
-                } else{
-                     alert("You have already complained about this order");
+                } else {
+                    alert("You have already complained about this order");
                 }
             },
             error: function (xhr, status, error) {
@@ -247,3 +302,31 @@ $(document).ready(function () {
     });
 });
 
+
+     $(document).ready(function() {
+            $('.filterBtn').click(function() {
+                var filterCode = $('#filter_code').val();
+                var filterName = $('#filter_name').val();
+                var filterPrice = $('#filter_price').val();
+                var filterStatus = $('#filter_status').val();
+                var filterParty = $('#filter_party').val();
+
+                $.ajax({
+                    url: 'filtermyorder',
+                    method: 'POST', // Sử dụng phương thức POST
+                    data: {
+                        filter_code: filterCode,
+                        filter_name: filterName,
+                        filter_price: filterPrice,
+                        filter_status: filterStatus,
+                        filter_party: filterParty
+                    },
+                    success: function(response) {
+                        console.log(response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            });
+        }); 

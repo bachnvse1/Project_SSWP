@@ -68,20 +68,23 @@ public class ManageMyOrder extends HttpServlet {
             throws ServletException, IOException {
 
         response.setContentType("text/html;charset=UTF-8");
+       
         DAO dao = new DAO();
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("user");
 
         List<Category> category = dao.getAllCategory();
-
-        List<Product> listProduct = dao.getProductByUserID(u.getId());
-        List<ProductOrderPair> productOrderPairs = new ArrayList<>();
-
-        for (Product product : listProduct) {
+                     List<ProductOrderPair> productOrderPairs = new ArrayList<>();
+       
+       
+             List<Product> listProduct = dao.getProductByUserID(u.getId());
+   
+            for (Product product : listProduct) {
             intermediateOrders order = dao.getOrderByProductID(product.getId());
             productOrderPairs.add(new ProductOrderPair(product, order));
         }
-
+        
+               
         request.setAttribute("category", category);
         request.setAttribute("productOrderPairs", productOrderPairs);
         request.getRequestDispatcher("MyOrder.jsp").forward(request, response);

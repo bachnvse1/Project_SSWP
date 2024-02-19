@@ -19,6 +19,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 import java.sql.Timestamp;
+import java.text.Normalizer;
 
 /**
  *
@@ -29,7 +30,11 @@ public class DAO extends DBContext {
     public Connection con = null; //connect to sql
     public PreparedStatement ps = null; //ném câu lệnh query sang sql
     public ResultSet rs = null; //nhận kết quả trả về
-
+public static String removeDiacritics(String str) {
+    str = Normalizer.normalize(str, Normalizer.Form.NFD);
+    str = str.replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+    return str;
+}
     // Bach 
     public void signup(String user, String pass, String email) {
         String query = "INSERT users (username, password, email, display_Name, is_admin, is_verify, is_active) VALUES (?, ?, ?, ?, 0, 0, 1)";
@@ -603,7 +608,143 @@ public class DAO extends DBContext {
         }
         return null;
     }
+    public List<Product> getProductByName(String name, int uid) {
+        List<Product> list = new ArrayList<>();
+        String sql = "SELECT * FROM swp_demo.product WHERE LOWER(REPLACE(name, ' ', '')) LIKE ? AND create_by = ?";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(sql);
+            ps.setString(1,  "%" + removeDiacritics(name.toLowerCase()) + "%");
+            ps.setInt(2, uid);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Product(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getDouble(3),
+                        rs.getInt(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getBoolean(10),
+                        rs.getString(11),
+                        rs.getInt(12),
+                        rs.getString(13),
+                        rs.getTimestamp(14),
+                        rs.getInt(15),
+                        rs.getTimestamp(16),
+                        rs.getBoolean(17)));
+            }
+        } catch (Exception ex) {
+            System.out.println(ex);
 
+        }
+        return list;
+    }    
+       public List<Product> getProductByFee(int fee, int uid) {
+        List<Product> list = new ArrayList<>();
+        String sql = "SELECT * FROM swp_demo.product WHERE transaction_Fees = ? AND create_by =?";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(sql);
+            ps.setInt(1,  fee);
+            ps.setInt(2, uid);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Product(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getDouble(3),
+                        rs.getInt(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getBoolean(10),
+                        rs.getString(11),
+                        rs.getInt(12),
+                        rs.getString(13),
+                        rs.getTimestamp(14),
+                        rs.getInt(15),
+                        rs.getTimestamp(16),
+                        rs.getBoolean(17)));
+            }
+        } catch (Exception ex) {
+            System.out.println(ex);
+
+        }
+        return list;
+    }
+     public List<Product> getProductByPrice(double price, int uid) {
+        List<Product> list = new ArrayList<>();
+        String sql = "SELECT * FROM swp_demo.product WHERE price <= ? AND create_by =?";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(sql);
+            ps.setDouble(1, price);
+            ps.setInt(2, uid);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Product(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getDouble(3),
+                        rs.getInt(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getBoolean(10),
+                        rs.getString(11),
+                        rs.getInt(12),
+                        rs.getString(13),
+                        rs.getTimestamp(14),
+                        rs.getInt(15),
+                        rs.getTimestamp(16),
+                        rs.getBoolean(17)));
+            }
+        } catch (Exception ex) {
+            System.out.println(ex);
+
+        }
+        return list;
+    }  
+       public List<Product> getProductByHigherPrice(double price , int uid) {
+        List<Product> list = new ArrayList<>();
+        String sql = "SELECT * FROM swp_demo.product WHERE price > ? AND create_by =?";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(sql);
+            ps.setDouble(1, price);
+            ps.setInt(2, uid);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Product(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getDouble(3),
+                        rs.getInt(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getBoolean(10),
+                        rs.getString(11),
+                        rs.getInt(12),
+                        rs.getString(13),
+                        rs.getTimestamp(14),
+                        rs.getInt(15),
+                        rs.getTimestamp(16),
+                        rs.getBoolean(17)));
+            }
+        } catch (Exception ex) {
+            System.out.println(ex);
+
+        }
+        return list;
+    }  
+       
     public Product getProductById(int id) {
         String sql = "SELECT * FROM swp_demo.product\n"
                 + "where id =? ;";
@@ -638,7 +779,72 @@ public class DAO extends DBContext {
         return null;
 
     }
+   public List<intermediateOrders> getListOrderByCode(String code, int uid) {
+          List<intermediateOrders> list = new ArrayList<>();
+        String sql = "SELECT * FROM swp_demo.intermediate_orders\n"
+                + "where code LIKE ? AND create_by =?";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(sql);
+            ps.setString(1,"%"+code+"%");
+            ps.setInt(2, uid);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+               list.add(new intermediateOrders(
+               rs.getInt(1),
+                        rs.getString(2),
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getDouble(5),
+                        rs.getDouble(6),
+                        rs.getDouble(7),
+                        rs.getString(8),
+                        rs.getInt(9),
+                        rs.getTimestamp(10),
+                        rs.getInt(11),
+                        rs.getTimestamp(12),
+                        rs.getBoolean(13)
+               ));
+            }
+        } catch (Exception e) {
 
+        }
+        return list;
+
+    }
+    public List<intermediateOrders> getOrderByStatus(String status, int uid) {
+          List<intermediateOrders> list = new ArrayList<>();
+        String sql = "SELECT * FROM swp_demo.intermediate_orders\n"
+                + "where status LIKE ? AND create_by =?";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(sql);
+            ps.setString(1,"%"+status+"%");
+            ps.setInt(2, uid);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+               list.add(new intermediateOrders(
+               rs.getInt(1),
+                        rs.getString(2),
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getDouble(5),
+                        rs.getDouble(6),
+                        rs.getDouble(7),
+                        rs.getString(8),
+                        rs.getInt(9),
+                        rs.getTimestamp(10),
+                        rs.getInt(11),
+                        rs.getTimestamp(12),
+                        rs.getBoolean(13)
+               ));
+            }
+        } catch (Exception e) {
+
+        }
+        return list;
+
+    }
     public intermediateOrders getOrderByProductID(int id) {
         String sql = "SELECT * FROM swp_demo.intermediate_orders\n"
                 + "where productID =? ;";
@@ -699,7 +905,35 @@ public class DAO extends DBContext {
         return null;
 
     }
+public intermediateOrders getOrderByCode(String code) {
+        String sql = "SELECT * FROM swp_demo.intermediate_orders\n"
+                + "where code =? ;";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(sql);
+            ps.setString(1, code);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return new intermediateOrders(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getDouble(5),
+                        rs.getDouble(6),
+                        rs.getDouble(7),
+                        rs.getString(8),
+                        rs.getInt(9),
+                        rs.getTimestamp(10),
+                        rs.getInt(11),
+                        rs.getTimestamp(12),
+                        rs.getBoolean(13));
+            }
+        } catch (Exception e) {
 
+        }
+        return null;
+
+    }
     public void UpdateProductByProductID(int pid, Product product) {
         String sql = "UPDATE swp_demo.Product\n"
                 + "SET \n"
@@ -740,7 +974,7 @@ public class DAO extends DBContext {
 
     }
 
-    public void UpdateOrdersById(int id, intermediateOrders Order) {
+    public void UpdateOrdersByID(int id, intermediateOrders Order) {
         String sql = "UPDATE swp_demo.intermediate_Orders\n"
                 + "SET\n"
                 + "    total_received_amount = ?, \n"
@@ -749,7 +983,7 @@ public class DAO extends DBContext {
                 + "    updated_by = ?,\n"
                 + "    updated_at = CURRENT_TIMESTAMP \n"
                 + "WHERE\n"
-                + "    id = ?;";
+                + "    code = ?;";
         try {
             ps = con.prepareStatement(sql);
             ps.setDouble(1, Order.getTotal_received_amount());
@@ -1125,7 +1359,10 @@ public class DAO extends DBContext {
     
     public static void main(String[] args) {
         DAO dao = new DAO();
-        dao.insertReport(1, 35, false, "khog co gi", 1, false);
-        dao.getReport(35);
+       List<intermediateOrders> orders = dao.getOrderByStatus("Đang giao bán",1);
+        for (intermediateOrders order : orders) {
+            System.out.println(order.toString());
+        }
+        
     }
 }

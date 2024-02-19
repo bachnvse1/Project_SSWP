@@ -6,6 +6,7 @@ package Controller;
 
 import Entity.Product;
 import Entity.User;
+import Entity.Wallet;
 import Entity.intermediateOrders;
 import dao.DAO;
 import java.io.IOException;
@@ -98,8 +99,10 @@ public class AddProdcutServlet extends HttpServlet {
         User u = (User) session.getAttribute("user");
         product.setCreate_by(u.getId());
         DAO dal = new DAO();
+      Wallet walet =  dal.getWallet(u.getId());
+        if(walet.getBalance()>500){
+            walet.setBalance(walet.getBalance()-500);
         dal.insertProduct(product);
-
         intermediateOrders order = new intermediateOrders();
         order.setCode("SP00" + dal.getIdProduct());
         order.setProductId(dal.getIdProduct());
@@ -117,13 +120,11 @@ public class AddProdcutServlet extends HttpServlet {
         order.setUpdate_by(u.getId());
         dal.insertOrder(order);
         response.getWriter().write("success");
+        }else{
+            response.getWriter().write("Insufficient_balance");
+        }
     }
-
-    public String randomCode() {
-
-        return null;
-
-    }
+       
 
     /**
      * Returns a short description of the servlet.
