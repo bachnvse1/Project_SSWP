@@ -63,15 +63,11 @@
                         <div class="col-md-6">
                             <div class="header-search">
                                 <form>
-                                    <select class="input-select">
-                                        <option value="0">All Categories</option>
-                                        <option value="1">Category 01</option>
-                                        <option value="1">Category 02</option>
-                                    </select>
-                                       <form action="home" method="get">
-                                    <input type="" class="input" placeholder="Search here" name="searchproductname">
-                                    <button class="search-btn">Search</button>
-                                        </form>
+
+                                    <form action="home" method="get">
+                                        <input type="" class="input" placeholder="Search here" name="searchproductname">
+                                        <button class="search-btn">Search</button>
+                                    </form>
                                 </form>
                             </div>
                         </div>

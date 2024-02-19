@@ -23,7 +23,7 @@ import java.sql.Timestamp;
  * @author ADMIN
  */
 public class DAO extends DBContext {
-
+    
     public Connection con = null; //connect to sql
     public PreparedStatement ps = null; //ném câu lệnh query sang sql
     public ResultSet rs = null; //nhận kết quả trả về
@@ -39,12 +39,12 @@ public class DAO extends DBContext {
             ps.setString(3, email);
             ps.setString(4, user);
             ps.executeUpdate();
-
+            
         } catch (Exception e) {
-
+            
         }
     }
-
+    
     public void setVerifyTrue(String email) {
         String query = "Update swp_demo.users set is_verify = 1 WHERE email = ?; ";
         try {
@@ -52,13 +52,13 @@ public class DAO extends DBContext {
             ps = con.prepareStatement(query);
             ps.setString(1, email);
             ps.executeUpdate();
-
+            
         } catch (Exception e) {
-
+            
         }
-
+        
     }
-
+    
     public List<User> getAllUser() {
         List<User> list = new ArrayList<>();
         String query = "select * from swp_demo.users";
@@ -79,14 +79,14 @@ public class DAO extends DBContext {
                         rs.getTimestamp(10)));
             }
         } catch (Exception e) {
-
+            
         }
         return list;
-
+        
     }
-
+    
     public User getUser(String username) {
-
+        
         String query = "select * from swp_demo.users where username = ?";
         try {
             con = new DBContext().connection; //connect sql
@@ -106,13 +106,13 @@ public class DAO extends DBContext {
                         rs.getTimestamp(10));
             }
         } catch (Exception e) {
-
+            
         }
         return null;
     }
-
+    
     public User getUserById(int id) {
-
+        
         String query = "select * from swp_demo.users where id = ?";
         try {
             con = new DBContext().connection; //connect sql
@@ -132,11 +132,11 @@ public class DAO extends DBContext {
                         rs.getTimestamp(10));
             }
         } catch (Exception e) {
-
+            
         }
         return null;
     }
-
+    
     public User getEmail(String email) {
         String query = "select * from swp_demo.users where email = ?";
         try {
@@ -157,11 +157,11 @@ public class DAO extends DBContext {
                         rs.getTimestamp(10));
             }
         } catch (Exception e) {
-
+            
         }
         return null;
     }
-
+    
     public String getUsername(String username) {
         String query = "select * from swp_demo.users where username = ?";
         try {
@@ -173,11 +173,11 @@ public class DAO extends DBContext {
                 return rs.getString(2);
             }
         } catch (Exception e) {
-
+            
         }
         return null;
     }
-
+    
     public void updateOrder(int buyer_id, String status, int updated_by, int id) {
         String query = "UPDATE intermediate_Orders\n"
                 + "SET \n"
@@ -195,14 +195,14 @@ public class DAO extends DBContext {
             ps.setInt(3, updated_by);
             ps.setInt(4, id);
             ps.executeUpdate();
-
+            
         } catch (Exception e) {
-
+            
         }
     }
-
+    
     public Product getProductByID(int id) {
-
+        
         String sql = "SELECT * FROM swp_demo.product where id = ?";
         try {
             con = new DBContext().connection;
@@ -228,13 +228,13 @@ public class DAO extends DBContext {
                         rs.getTimestamp(16),
                         rs.getBoolean(17));
             }
-
+            
         } catch (Exception ex) {
             System.out.println(ex);
         }
         return null;
     }
-
+    
     public void insertReport(int type, int orderID, boolean status, String description, int userID, boolean is_delete) {
         String query = "INSERT INTO Report (type_report, orderID, status, description, create_by, updated_by, is_delete) \n"
                 + "VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -249,12 +249,12 @@ public class DAO extends DBContext {
             ps.setInt(6, userID);
             ps.setBoolean(7, is_delete);
             ps.executeUpdate();
-
+            
         } catch (Exception e) {
-
+            
         }
     }
-
+    
     public void deleteProduct(int id, boolean is_delete) {
         String query = "Update Product set is_delete = ? where id =? ";
         try {
@@ -264,10 +264,10 @@ public class DAO extends DBContext {
             ps.setInt(2, id);
             ps.executeUpdate();
         } catch (Exception e) {
-
+            
         }
     }
-
+    
     public List<intermediateOrders> getOrderBuy(int bid) {
         List<intermediateOrders> list = new ArrayList<>();
         String sql = "SELECT * FROM swp_demo.intermediate_orders\n"
@@ -293,15 +293,15 @@ public class DAO extends DBContext {
                         rs.getBoolean(13)));
             }
         } catch (Exception e) {
-
+            
         }
         return list;
-
+        
     }
 
     //HUY
     public User Login(String username, String pass) {
-
+        
         String query = "select * from swp_demo.users where username = ? and password = ?";
         try {
             con = new DBContext().connection; //connect sql
@@ -322,7 +322,7 @@ public class DAO extends DBContext {
                         rs.getTimestamp(10));
             }
         } catch (Exception e) {
-
+            
         }
         return null;
     }
@@ -330,26 +330,26 @@ public class DAO extends DBContext {
     //BINH
     public boolean isEmailExists(String email) {
         boolean emailExists = false;
-
+        
         String sql = "SELECT COUNT(*) FROM users WHERE email = ?";
         try {
             con = new DBContext().connection; //connect sql
             ps = con.prepareStatement(sql);
             ps.setString(1, email);
-
+            
             rs = ps.executeQuery();
             if (rs.next()) {
                 int count = rs.getInt(1);
                 emailExists = count > 0;
             }
-
+            
         } catch (Exception e) {
-
+            
         }
-
+        
         return emailExists;
     }
-
+    
     public User isEmail(String email) {
         String sql = "select * from users where email = ?";
         try {
@@ -369,13 +369,13 @@ public class DAO extends DBContext {
                         rs.getTimestamp(9),
                         rs.getTimestamp(10));
             }
-
+            
         } catch (SQLException ex) {
             System.out.println(ex);
         }
         return null;
     }
-
+    
     public User updatePassword(String pass, int id) {
         String sql = "Update users set password=? where id =? ";
         try {
@@ -384,12 +384,12 @@ public class DAO extends DBContext {
             ps.setString(1, pass);
             ps.setInt(2, id);
             ps.executeUpdate();
-
+            
         } catch (SQLException ex) {
             System.out.println(ex);
         }
         return null;
-
+        
     }
 
     //HUY
@@ -426,13 +426,13 @@ public class DAO extends DBContext {
             ps.setString(12, product.getHidden_content());
             ps.setInt(13, product.getCreate_by());
             ps.executeUpdate();
-
+            
         } catch (Exception e) {
-
+            
         }
-
+        
     }
-
+    
     public void insertOrder(intermediateOrders order) {
         String sql = "INSERT INTO swp_demo.intermediate_Orders (code, "
                 + "productID, "
@@ -457,12 +457,12 @@ public class DAO extends DBContext {
             ps.setInt(7, order.getCreate_by());
             ps.setInt(8, order.getUpdate_by());
             ps.executeUpdate();
-
+            
         } catch (Exception e) {
-
+            
         }
     }
-
+    
     public int getIdProduct() {
         String query = "SELECT MAX(id) AS max_id FROM swp_demo.Product";
         try {
@@ -474,11 +474,11 @@ public class DAO extends DBContext {
                 return id;
             }
         } catch (Exception e) {
-
+            
         }
         return 0;
     }
-
+    
     public List<Product> getProductByUserID(int id) {
         List<Product> list = new ArrayList<>();
         String sql = "SELECT * FROM swp_demo.product where create_by = ?";
@@ -506,13 +506,13 @@ public class DAO extends DBContext {
                         rs.getTimestamp(16),
                         rs.getBoolean(17)));
             }
-
+            
         } catch (Exception ex) {
             System.out.println(ex);
         }
         return list;
     }
-
+    
     public List<Product> getProductByBuyerID(int bid) {
         List<Product> list = new ArrayList<>();
         String sql = "SELECT * FROM swp_demo.product where buyer_id = ?";
@@ -540,13 +540,13 @@ public class DAO extends DBContext {
                         rs.getTimestamp(16),
                         rs.getBoolean(17)));
             }
-
+            
         } catch (Exception ex) {
             System.out.println(ex);
         }
         return list;
     }
-
+    
     public intermediateOrders getOrderByProductID(int id) {
         String sql = "SELECT * FROM swp_demo.intermediate_orders\n"
                 + "where productID =? ;";
@@ -571,12 +571,12 @@ public class DAO extends DBContext {
                         rs.getBoolean(13));
             }
         } catch (Exception e) {
-
+            
         }
         return null;
-
+        
     }
-
+    
     public intermediateOrders getOrderByID(int id) {
         String sql = "SELECT * FROM swp_demo.intermediate_orders\n"
                 + "where id =? ;";
@@ -601,10 +601,10 @@ public class DAO extends DBContext {
                         rs.getBoolean(13));
             }
         } catch (Exception e) {
-
+            
         }
         return null;
-
+        
     }
 
     //BINH
@@ -624,7 +624,7 @@ public class DAO extends DBContext {
         }
         //CHIEN
     }
-
+    
     public void editUserByAdmin(int id, boolean is_Active) {
         String sql = "Update users set is_Active=? where id =? ";
         try {
@@ -633,20 +633,20 @@ public class DAO extends DBContext {
             ps.setBoolean(1, is_Active);
             ps.setInt(2, id);
             ps.executeUpdate();
-
+            
         } catch (Exception e) {
-
+            
         }
-
+        
     }
-
+    
     public void changePassword(String password, String username) {
         String sql = "UPDATE users SET password=? WHERE username=?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, password);
             st.setString(2, username);
-
+            
             st.executeUpdate();
 
             // Execute the update query         
@@ -654,7 +654,7 @@ public class DAO extends DBContext {
             System.out.println(e);
         }
     }
-
+    
     public User getUser(String username, String password) {
         String sql = "Select * from users where username = ? and password=? ";
         try {
@@ -662,7 +662,7 @@ public class DAO extends DBContext {
             st.setString(1, username);
             st.setString(2, password);
             ResultSet rs = st.executeQuery();
-
+            
             while (rs.next()) {
                 User u = new User();
                 u.setUsername(rs.getString("username"));
@@ -675,17 +675,17 @@ public class DAO extends DBContext {
         }
         return null;
     }
-
+    
     public boolean isEmailAlreadyExists(String email, int id) {
-
+        
         String sql = "Select * from users where email = ? AND id != ?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, email);
             st.setInt(2, id);
-
+            
             ResultSet rs = st.executeQuery();
-
+            
             while (rs.next()) {
                 int count = rs.getInt(1);
                 return count > 0;
@@ -723,13 +723,13 @@ public class DAO extends DBContext {
                         rs.getTimestamp(16),
                         rs.getBoolean(17)));
             }
-
+            
         } catch (Exception ex) {
             System.out.println(ex);
         }
         return list;
     }
-
+    
     public List<Category> getAllCategory() {
         List<Category> list = new ArrayList<>();
         String sql = "SELECT * FROM swp_demo.category";
@@ -743,20 +743,20 @@ public class DAO extends DBContext {
                         rs.getTimestamp(3),
                         rs.getTimestamp(4),
                         rs.getBoolean(5)));
-
+                
             }
         } catch (Exception ex) {
             System.out.println(ex);
         }
         return list;
     }
-
+    
     public List<Product> getAllProductbyName(String name) {
         List<Product> list = new ArrayList<>();
         String sql = "SELECT * FROM swp_demo.product where name like ?";
         try {
             con = new DBContext().connection;
-
+            
             ps = con.prepareStatement(sql);
             ps.setString(1, "%" + name + "%");
             rs = ps.executeQuery();
@@ -779,19 +779,18 @@ public class DAO extends DBContext {
                         rs.getTimestamp(16),
                         rs.getBoolean(17)));
             }
-
+            
         } catch (Exception ex) {
             System.out.println(ex);
         }
         return list;
     }
-
+    
     public Category getCategoryById(int cid) {
         String sql = "SELECT * FROM swp_demo.category\n"
                 + "where id=?;";
         try {
             con = new DBContext().connection;
-
             ps = con.prepareStatement(sql);
             ps.setInt(1, cid);
             rs = ps.executeQuery();
@@ -802,25 +801,25 @@ public class DAO extends DBContext {
                         rs.getTimestamp(4),
                         rs.getBoolean(5));
             }
-
+            
         } catch (Exception ex) {
             System.out.println(ex);
         }
         return null;
     }
-
+    
     public List<Product> getProductbyCategoryID(String id) {
         List<Product> list = new ArrayList<>();
         String sql = "Select * from product as p inner join category as c\n"
                 + "on p.categoryID=c.id where p.categoryID=?";
         try {
             con = new DBContext().connection;
-
+            
             ps = con.prepareStatement(sql);
             ps.setString(1, id);
             rs = ps.executeQuery();
             while (rs.next()) {
-
+                
                 list.add(new Product(rs.getInt(1),
                         rs.getString(2),
                         rs.getDouble(3),
@@ -839,13 +838,13 @@ public class DAO extends DBContext {
                         rs.getTimestamp(16),
                         rs.getBoolean(17)));
             }
-
+            
         } catch (Exception ex) {
             System.out.println(ex);
         }
         return list;
     }
-
+    
     public Wallet getWallet(int uid) {
         String query = "Select * from Wallet where create_by = ?";
         try {
@@ -862,16 +861,38 @@ public class DAO extends DBContext {
                         rs.getTimestamp(6));
             }
         } catch (Exception e) {
-
+            
         }
         return null;
     }
 
-    public static void main(String[] args) {
-        DAO dao = new DAO();
-        Wallet w = dao.getWallet(2);
-        System.out.println(w.getBalance());
-
+    public void insertCategory(String name) {
+        String query = "INSERT INTO `swp_demo`.`category` (`name`) VALUES (?)";
+        try {
+            con = new DBContext().connection; //connect sql
+            ps = con.prepareStatement(query);
+            ps.setString(1, name);            
+            ps.executeUpdate();
+            
+        } catch (Exception e) {
+            
+        }
     }
-
+public void DeleteCategory(String id) {
+        String query = "DELETE FROM `swp_demo`.`category` WHERE id = ?";
+        try {
+            con = new DBContext().connection; //connect sql
+            ps = con.prepareStatement(query);
+            ps.setString(1, id);            
+            ps.executeUpdate();
+            
+        } catch (Exception e) {
+            
+        }
+    }
+    public static void main(String[] args) {
+        DAO dao = new DAO(); 
+        
+    }
+    
 }

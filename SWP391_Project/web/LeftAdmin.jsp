@@ -18,7 +18,9 @@
          <a href="ManageAccount" class="list-group-item list-group-item-action py-2 ripple">
           <i class="fas fa-user-circle fa-fw me-3"></i><span>Quản lý tài khoản</span>
          </a>
-    
+      <a href="editcategory" class="list-group-item list-group-item-action py-2 ripple">
+          <i class="fas fa-user-circle fa-fw me-3"></i><span>Category</span>
+         </a>
       </div>
     </div>
   </nav>

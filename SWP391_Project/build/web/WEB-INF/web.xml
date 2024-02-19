@@ -81,10 +81,6 @@
         <url-pattern>/sendEmailServ</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>homeServ</servlet-name>
-        <url-pattern>/home</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>orderBuyChecking</servlet-name>
         <url-pattern>/orderChecking</url-pattern>
     </servlet-mapping>
