@@ -96,7 +96,7 @@ public class homeServ extends HttpServlet {
         listProductPage = listProduct.subList(start, end);
         request.setAttribute("Count", Count);
         request.setAttribute("page", page);
-        session.setAttribute("balance", dao.getWallet(u.getId()).getBalance());
+        request.setAttribute("dao", dao);
         request.setAttribute("listProductPage", listProductPage);
         request.setAttribute("listCategory", listCategory);
         request.getRequestDispatcher("home.jsp").forward(request, response);

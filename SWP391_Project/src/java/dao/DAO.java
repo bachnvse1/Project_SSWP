@@ -1191,6 +1191,6 @@ public class DAO extends DBContext {
 
     public static void main(String[] args) {
         DAO dao = new DAO();
-        dao.insertReport(1, 45, false, "khong dung mo ta", 2, false);
+        System.out.println(dao.getWallet(1).getBalance());
     }
 }

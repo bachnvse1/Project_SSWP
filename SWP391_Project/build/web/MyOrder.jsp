@@ -25,7 +25,7 @@
         <link type="text/css" rel="stylesheet" href="css/nouislider.min.css"/>
 
         <!-- Font Awesome Icon -->
-        <link rel="stylesheet" href="css/font-awesome.min.css">
+        <link rel="stylesheet" href="css/font-awesome.min.css"/>
         <!-- Custom stlylesheet -->
 
         <link type="text/css" rel="stylesheet" href="css/style.css" />
@@ -344,7 +344,7 @@
                                 <td>${p.getOrder().getIntermediary_fee()}</td>
                                 <td>${p.getOrder().getStatus()}</td>
                                 <td>${p.getProduct().isTransaction_fee() ? "Bên bán" : "Bên mua"}</td>
-                                <td>  <a class="productInfo" data-action="view"  href="#" data-product-id="${p.getProduct().getId()}"> <i style="color: #0061f2" class="fa fa-info-circle"></i></a>  
+                                <td>  <a class="productInfo" data-action="view"  href="#" data-product-id="${p.getOrder().getId()}"> <i style="color: #0061f2" class="fa fa-info-circle"></i></a>  
                                     <a class="updateproduct" data-action="update" href="#" data-product-id="${p.getProduct().getId()}">  <i style="color: #34ce57" class="fa fa-pencil"></i> </a>
                                     <a><i style="color: red" class="fa fa-trash"></i></a>  </td>
                             </tr>
@@ -524,6 +524,7 @@
                                         <form id="complaintForm">
                                             <h2 style="text-align: center;">Complain Order</h2>
                                             <input type="text" id="order_id" name="order_id" readonly="" hidden=""><br>
+                                            <input type="text" id="pro_id" name="pro_id" readonly="" hidden=""><br>
                                             <label for="order_code">Intermediate Orders Code</label><br>
                                             <input type="text" id="order_code" name="code" value="" readonly><br>
                                             <label for="hidden_info">Hidden Information</label><br>
@@ -549,7 +550,6 @@
                                     <div class="loader" id="loader"></div>
                                 </form>
                             </div>
-
                             </div>
                             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
                             <script src="jscript/myorder.js"></script>

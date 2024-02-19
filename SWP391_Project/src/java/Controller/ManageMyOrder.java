@@ -100,11 +100,13 @@ public class ManageMyOrder extends HttpServlet {
             throws ServletException, IOException {
         // processRequest(request, response);
         DAO dao = new DAO();
+        int id = Integer.parseInt(request.getParameter("pid"));
+        intermediateOrders order = dao.getOrderByID(id);
         // HttpSession session = request.getSession();
         //  User u = (User) session.getAttribute("user");
-        int id = Integer.parseInt(request.getParameter("pid"));
-        Product product = dao.getProductById(id);
-        intermediateOrders order = dao.getOrderByProductID(product.getId());
+        
+        Product product = dao.getProductByID(order.getProductId());
+        
         ProductOrderPair productOrderPair = new ProductOrderPair(product, order);
         String data = productOrderPair.getOrder().getCode() + ";"
                 + productOrderPair.getProduct().getName() + ";"

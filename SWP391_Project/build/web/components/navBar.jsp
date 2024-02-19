@@ -30,7 +30,7 @@
                             <li id="notification-Button"><a href="notification"><i class="fa fa-bell"></i>
                                     Notification</a></li>
                                     
-                            <li><a>${balance} VND</a></li>
+                            <li><a>${dao.getWallet(user.id).getBalance()} VND</a></li>
                             
                             <li id="info-Button"><a><i class="fa fa-user-o"></i>${user.display_name}</a></li>
                                     </c:if>
@@ -83,12 +83,24 @@
                         <div class="col-md-4 clearfix">
                             <div class="header-ctn">
                                 <!-- Wishlist -->
-                                <div>
+                                <c:if test="${user != null}">
+                                    <div>
                                     <a id="oder-Button" href="#">
                                         <i class="fa fa-heart-o"></i>
                                         <span>My Order</span>
                                     </a>
                                 </div>
+                                </c:if>
+                                
+                                <c:if test="${user == null}">
+                                    <div>
+                                    <a href="#">
+                                        <i class="fa fa-heart-o"></i>
+                                        <span>My Order</span>
+                                    </a>
+                                </div>
+                                </c:if>
+                                
                                 <!-- /Wishlist -->
 
                                 <!-- Cart -->

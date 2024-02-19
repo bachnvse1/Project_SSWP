@@ -7,7 +7,9 @@
         <link rel="icon" sizes="" href="https://yt3.ggpht.com/a-/AN66SAzzGZByUtn6CpHHJVIEOuqQbvAqwgPiKy1RTw=s900-mo-c-c0xffffffff-rj-k-no" type="image/jpg" />
         <title>Notification</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="css/font-awesome.min.css"/>
         <style>
+            
             body {
                 background-color: #f0f0f0;
                 font-family: Arial, sans-serif;
@@ -217,6 +219,26 @@
                     margin: 0 auto 10px auto;
                 }
             }
+            .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: none;
+}
+
+        .modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        display: none;
+}
         </style>
     </head>
 
@@ -244,6 +266,7 @@
                                     <td class="failure notification">
                                         <h1><span class="icon">&times;</span>Complain</h1>
                                         <p class="small">${r.getDescription()}</p>
+                                        <a class="productInfo" data-action="view"  data-product-id="${r.getOrderID()}"> <i style="color: black;" class="fa fa-info-circle"></i></a>
                                     </td>
                                 </tr>
                             </c:if>
@@ -253,6 +276,7 @@
                                     <td class="warning notification">
                                         <h1><span class="icon">&quest;</span>Buy Product</h1>
                                         <p class="small">${r.getDescription()}</p>
+                                        <a class="productInfo" data-action="view"   data-product-id="${r.getOrderID()}"> <i style="color: black;" class="fa fa-info-circle"></i></a>
                                     </td>
                                 </tr>
                             </c:if>
@@ -262,6 +286,7 @@
                                     <td class="healthy notification">
                                         <h1><span class="icon">&check;</span>Upload Order</h1>
                                         <p class="small">${r.getDescription()}</p>
+                                        <a class="productInfo" data-action="view"   data-product-id="${r.getOrderID()}"> <i style="color: black;" class="fa fa-info-circle"></i></a>
                                     </td>
                                 </tr>
                             </c:if>
@@ -271,6 +296,7 @@
                                     <td class="healthy notification">
                                         <h1><span class="icon">&check;</span>Verify Transaction</h1>
                                         <p class="small">${r.getDescription()}</p>
+                                        <a class="productInfo" data-action="view"  data-product-id="${r.getOrderID()}"> <i style="color: black;" class="fa fa-info-circle"></i></a>
                                     </td>
                                 </tr>
                             </c:if>
@@ -299,6 +325,62 @@
                 </td>
             </tr>
         </table>
-    </body>
+        
+        <div class="overlay" id="overlay"></div>
+                            <div style="height: 700px" class="modal" id="modal">
+                                <h2>Order Information</h2>
+                                <form>
+                                    <label for="orderCode">Order code:</label>
+                                    <input type="text" id="orderCode" value="" readonly><br>
 
+                                    <label for="productName">Product Name:</label>
+                                    <input type="text" id="productName" value="" readonly><br>
+
+                                    <label for="price">Price:</label>
+                                    <input type="text" id="price" value="" readonly><br>
+
+                                    <label for="intermediaryFee">Intermediary Fee:</label>
+                                    <input type="text" id="intermediaryFee" value="" readonly><br>
+
+                                    <label for="party">Party bears the fee:</label><br>
+                                    <input type="radio" id="partySeller" name="party" value="seller" readonly> Seller
+                                    <input type="radio" id="partyBuyer" name="party" value="buyer" readonly> Buyer<br>
+
+                                    <label for="receivedAmount">Total received amount:</label>
+                                    <input type="text" id="receivedAmount" value="" readonly><br>
+
+                                    <label for="paidAmount">Total paid amount:</label>
+                                    <input type="text" id="paidAmount" value="" readonly><br>
+
+                                    <label for="productImage">Product Image:</label><br>
+                                    <img style="max-width: 150px; max-height: 150px" id="img1" src="" >
+                                    <img style="max-width: 150px; max-height: 150px" id="img2" src="" >
+                                    <img style="max-width: 150px; max-height: 150px" id="img3" src="" >
+                                    <img style="max-width: 150px; max-height: 150px" id="img4" src="" ><br>
+
+                                    <label for="description">Description:</label>
+                                    <input id="description" value="" readonly></input><br>
+
+                                    <label for="hiddenContent">Hidden Content:</label>
+                                    <input type="text" id="hiddenContent" value=""  readonly><br>
+
+                                    <label for="contactMethod">Contact Method:</label>
+                                    <input type="text" id="contactMethod" value=""  readonly><br>
+
+                                    <label for="status">Status:</label>
+                                    <input type="text" id="status" value="" readonly><br>
+
+                                    <label for="buyer">Buyer:</label>
+                                    <input type="text" id="buyer" value="" readonly><br>
+                                    <label for="buyer">Create At:</label>
+                                    <input type="text" id="create_at" value="" readonly><br>
+                                    <label for="buyer">Update At:</label>
+                                    <input type="text" id="update_at" value="" readonly><br>
+
+                                    <button onclick="hideProductModal()">OK</button>
+                                </form>
+                            </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="jscript/myorder.js"></script>
+    </body>
 </html>

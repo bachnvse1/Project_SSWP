@@ -224,12 +224,14 @@ $(document).ready(function () {
     // Khi người dùng nhấn vào button, mở modal
     $(document).on("click", ".reportButton", function (e) {
         e.preventDefault();
+        var proid = $(this).data("proid");
         var orderId = $(this).data("orderid");
         var orderCode = $(this).data("ordercode");
         var hiddenInfo = $(this).data("hiddeninfo");
         $("#order_id").val(orderId); // Cập nhật giá trị của trường input
         $("#order_code").val(orderCode); // Cập nhật giá trị của trường input
         $("#hidden_info").val(hiddenInfo);
+        $("#pro_id").val(proid);
         $("#myModalComplain").show();
 
     });
@@ -264,7 +266,8 @@ $(document).ready(function () {
         e.preventDefault(); // Ngăn chặn chuyển hướng mặc định khi nhấn nút submit
         var formData = {
             order_id: $("#order_id").val(),
-            description: $("#description1").val()
+            description: $("#description1").val(),
+            pro_id : $("#pro_id").val()
         };
         $.ajax({
             type: 'POST',

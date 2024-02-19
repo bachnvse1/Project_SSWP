@@ -56,21 +56,6 @@ $(document).ready(function () {
     });
 });
 
-$(document).ready(function () {
-    $("#backHome").click(function () {
-        $.ajax({
-            type: 'GET',
-            url: "home.jsp",
-            success: function (response) {
-                window.location.href = "home.jsp";
-            },
-            error: function () {
-                // Xử lý lỗi nếu có
-                alert("Đã xảy ra lỗi khi tải trang");
-            }
-        });
-    });
-});
 
 
 

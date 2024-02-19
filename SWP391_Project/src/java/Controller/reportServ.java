@@ -77,12 +77,14 @@ public class reportServ extends HttpServlet {
             throws ServletException, IOException {
         String xid = request.getParameter("order_id").trim();
         String description = request.getParameter("description");
+        String xproid = request.getParameter("pro_id").trim();
         int id = Integer.parseInt(xid);
+        int proid = Integer.parseInt(xproid);
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("user");
         DAO dao = new DAO();
         if (dao.getReportByType(1, id) == null) {
-            dao.insertReport(1, id, false, "Order code: " + dao.getOrderByID(id).getCode() + " " + description, u.getId(), false);
+            dao.insertReport(1, id, false, "Contect seller: " + dao.getProductByID(proid).getContact_Method() + " || Order code: " + dao.getOrderByID(id).getCode() + " || " + description, u.getId(), false);
             response.getWriter().write("success");
             //1 là khiếu nại
             //2 là mua hàng

@@ -99,7 +99,7 @@ public class orderBuyChecking extends HttpServlet {
                         + "                                                    <td>" + o.getOrder().getUpdate_at() + "</td>\n"
                         + "                                                    <td>\n"
                         + "  <div class=\"buttonContainer\">\n"
-                        + "    <a class=\"reportButton\" data-orderid=\" " + o.getOrder().getId() + "\" data-ordercode=\"" + o.getOrder().getCode() + "\" data-hiddeninfo=\"" + o.getProduct().getHidden_content() + "\">\n"
+                        + "    <a class=\"reportButton\" data-orderid=\" " + o.getOrder().getId() + "\" data-ordercode=\"" + o.getOrder().getCode() + "\" data-hiddeninfo=\"" + o.getProduct().getHidden_content() + "\" data-proid = \"" + o.getProduct().getId() + " \">\n"
                         + "      <i class=\"fa fa-exclamation\"></i>\n"
                         + "    </a>\n"
                         + "    <a class=\"verifyButton\"  data-orderid=\" " + o.getOrder().getId() + "\" data-ordercode=\"" + o.getOrder().getCode() + "\" data-proid=\"" + o.getProduct().getId() + "\">\n"
