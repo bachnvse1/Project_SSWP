@@ -193,6 +193,9 @@ VALUES ('bach', 'UPdqztViNgyMw0QyGVTpe0ud+dw=', 'example@example.com', 'Example 
 INSERT INTO users (username, password, email, display_name, is_admin, is_verify, is_active) 
 VALUES ('bach2', 'UPdqztViNgyMw0QyGVTpe0ud+dw=', 'example@example.com', 'buyer', 0, 1, 1);
 
+INSERT INTO users (username, password, email, display_name, is_admin, is_verify, is_active) 
+VALUES ('bach3', 'UPdqztViNgyMw0QyGVTpe0ud+dw=', 'example@example.com', 'buyer', 0, 1, 1);
+
 INSERT INTO Wallet (balance, create_by, updated_by)
 VALUES (10000000.00, 1, 1),
        (50000000.50, 2, 2);
@@ -211,8 +214,15 @@ select * from Category
 select * from Product where is_delete = true
 select * from users
 select * from intermediate_Orders where productID = 2
+select * from swp_demo.Order_Detail
 select * from Wallet where create_by = 1
-select * from Report
+select * from Report 
+ -- //1 là khiếu nại
+--             //2 là mua hàng
+--             //3 là đăng đơn hàng
+--             //4 là hoàn tất mua hàng
+--             //5 là nạp tiền
+--             //6 là rút tiền
 
 select * from Product join intermediate_Orders
 on Product.id = intermediate_Orders.productID

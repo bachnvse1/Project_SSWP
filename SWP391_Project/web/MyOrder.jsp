@@ -267,7 +267,7 @@
 
                                         </tbody>
                                     </table>
-                                    
+
                                     <table class="table" id="orderBuy-complete">
                                         <thead>
                                             <tr>
@@ -292,36 +292,32 @@
                         </div>
                     </div>
                 </div>
-                <form>
-                <table id="Filter" class="text-nowrap mb-0 table" border="1">
-                    <tr>
-                        <th>Filter by code</th>
-                        <th>Filter by Name</th>
-                        <th>Filter by Price</th>
-                        <th>Filter by Status</th>
-                        <th>Filter by Party</th>
-                    </tr>
-                    <tr>
-                        <td><input id="filter_code" name="filter_code"> <button class="filterBtn">Filter</button></td>
-                        <td><input id="filter_name" name="filter_name"> <button class="filterBtn">Filter</button></td>
-                        <td>
-                            <select id="filter_price" name="filter_price">
-                                <option value="100000">Dưới 100.000</option>
-                                <option value="1000000">Dưới 1.000.000</option>
-                                <option value="10000000">Dưới 10.000.000</option>
-                                <option value="1">Trên 10.000.000</option>
-                            </select>
-                        </td>
-                        <td><input id="filter_status" name="filter_status"> <button class="filterBtn">Filter</button></td>
-                        <td>
-                            <select id="filter_party" name="filter_party">
-                                <option value="1">Seller</option>
-                                <option value="0">Buyer</option>
-                            </select>
-                        </td>
-                    </tr>
-                </table>
-                    </form>
+                <form action="filtermyorder">
+                    <table id="Filter" class="text-nowrap mb-0 table" border="1">
+                        <tr>
+                            <th>Search by Name</th>
+                            <th>Filter by Price</th>
+                            <th>Filter by Party</th>
+                        </tr>
+                        <tr>
+                            <td><input id="search_name" name="search_name"> <input type="submit" value="Search">
+                            <td>
+                                <select id="filter_price" name="filter_price">
+                                    <option value="100000">Dưới 100.000</option>
+                                    <option value="1000000">Dưới 1.000.000</option>
+                                    <option value="10000000">Dưới 10.000.000</option>
+                                    <option value="1">Trên 10.000.000</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select id="filter_party" name="filter_party">
+                                    <option value="1">Seller</option>
+                                    <option value="0">Buyer</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
                 <table id="ProductDisplay" class="text-nowrap mb-0 table" border="1">
 
                     <thead class="table-light">
@@ -395,7 +391,7 @@
                         <label for="image3">Image 3:</label>
                         <input type="text" id="image" name="image3" ><br>
 
-                        <label for="image4">Image 4:</label
+                        <label for="image4">Image 4:</label>
                         <input type="text" id="image" name="image4"><br>
 
                         <label for="transactionFee">Transaction Fee:</label>
@@ -404,178 +400,178 @@
                         <label for="contactMethod">Contact Method:</label>
                         <input type="text" id="contactMethod" name="Contact_Method" required><br>
                         <label for="hiddenContent">Hidden Content:</label>
-                            <input type="text" id="hiddenContent" name="hidden_content" required><br>
+                        <input type="text" id="hiddenContent" name="hidden_content" required><br>
 
 
-                            <input type="submit" value="ADD">
-                            </form>
-                            </div>
+                        <input type="submit" value="ADD">
+                    </form>
+                </div>
 
-                            </div>
-                            <div class="overlay" id="overlay"></div>
-                            <div style="height: 700px" class="modal" id="modal">
-                                <h2>Order Information</h2>                   
-                                <label for="orderCode">Order code:</label>
-                                <input type="text" id="orderCode" value="" readonly><br>
+            </div>
+            <div class="overlay" id="overlay"></div>
+            <div style="height: 700px" class="modal" id="modal">
+                <h2>Order Information</h2>                   
+                <label for="orderCode">Order code:</label>
+                <input type="text" id="orderCode" value="" readonly><br>
 
-                                <label for="productName">Product Name:</label>
-                                <input type="text" id="productName" value="" readonly><br>
+                <label for="productName">Product Name:</label>
+                <input type="text" id="productName" value="" readonly><br>
 
-                                <label for="price">Price:</label>
-                                <input type="text" id="price" value="" readonly><br>
+                <label for="price">Price:</label>
+                <input type="text" id="price" value="" readonly><br>
 
-                                <label for="intermediaryFee">Intermediary Fee:</label>
-                                <input type="text" id="intermediaryFee" value="" readonly><br>
+                <label for="intermediaryFee">Intermediary Fee:</label>
+                <input type="text" id="intermediaryFee" value="" readonly><br>
 
-                                <label for="party">Party bears the fee:</label>
-                                <input type="text" id="party" name="party" value="seller" readonly><br>
-
-
-                                <label for="receivedAmount">Total received amount:</label>
-                                <input type="text" id="receivedAmount" value="" readonly><br>
-
-                                <label for="paidAmount">Total paid amount:</label>
-                                <input type="text" id="paidAmount" value="" readonly><br>
-
-                                <label for="productImage">Product Image:</label><br>
-                                <img style="max-width: 150px; max-height: 150px" id="img1" src="" >
-                                <img style="max-width: 150px; max-height: 150px" id="img2" src="" >
-                                <img style="max-width: 150px; max-height: 150px" id="img3" src="" >
-                                <img style="max-width: 150px; max-height: 150px" id="img4" src="" ><br>
-
-                                <label for="description">Description:</label>
-                                <input id="description" value="" readonly></input><br>
-
-                                <label for="hiddenContent">Hidden Content:</label>
-                                <input type="text" id="hiddenContent" value=""  readonly><br>
-
-                                <label for="contactMethod">Contact Method:</label>
-                                <input type="text" id="contactMethod" value=""  readonly><br>
-
-                                <label for="status">Status:</label>
-                                <input type="text" id="status" value="" readonly><br>
-
-                                <label for="buyer">Buyer:</label>
-                                <input type="text" id="buyer" value="" readonly><br>
-                                <label for="buyer">Create At:</label>
-                                <input type="text" id="create_at" value="" readonly><br>
-                                <label for="buyer">Update At:</label>
-                                <input type="text" id="update_at" value="" readonly><br>
-
-                                <button onclick="hideProductModal()">OK</button>                              
-                            </div>
+                <label for="party">Party bears the fee:</label>
+                <input type="text" id="party" name="party" value="seller" readonly><br>
 
 
-                            <!--        /////////////////              -->                        
-                            <div style="height: 700px" class="modal" id="modal2">
-                                <button class="close-button"  onclick="hideProductModal()"><i class="fa fa-close"></i></button>
-                                <h2>Update Order Information</h2>   
-                                <form>
-                                    <label for="orderCode">Order code:</label>
-                                    <input type="text" id="orderCode_ud" value="${productOrderPair.getOrder().getCode()}" readonly ><br>
+                <label for="receivedAmount">Total received amount:</label>
+                <input type="text" id="receivedAmount" value="" readonly><br>
 
-                                    <label for="productName">Product Name:</label>
-                                    <input type="text" id="productName_ud" value="${productOrderPair.getProduct().getName()}" ><br>
+                <label for="paidAmount">Total paid amount:</label>
+                <input type="text" id="paidAmount" value="" readonly><br>
 
-                                    <label for="price">Price:</label>
-                                    <input type="text" id="price_ud" value="${productOrderPair.getProduct().getPrice()}" ><br>
+                <label for="productImage">Product Image:</label><br>
+                <img style="max-width: 150px; max-height: 150px" id="img1" src="" >
+                <img style="max-width: 150px; max-height: 150px" id="img2" src="" >
+                <img style="max-width: 150px; max-height: 150px" id="img3" src="" >
+                <img style="max-width: 150px; max-height: 150px" id="img4" src="" ><br>
 
-                                    <label for="intermediaryFee">Intermediary Fee:</label>
-                                    <input type="text" id="intermediaryFee_ud" value="${productOrderPair.getOrder().getIntermediary_fee()}" readonly><br>
+                <label for="description">Description:</label>
+                <input id="description" value="" readonly></input><br>
 
-                                    <label for="party">Party bears the fee:</label><br>
-                                    <input type="radio" id="partySeller_ud" name="party" value="seller"> Seller
-                                    <input type="radio" id="partyBuyer_ud" name="party" value="buyer"> Buyer<br>
+                <label for="hiddenContent">Hidden Content:</label>
+                <input type="text" id="hiddenContent" value=""  readonly><br>
 
-                                    <label for="receivedAmount">Total received amount:</label>
-                                    <input type="text" id="receivedAmount_ud" value="${productOrderPair.getOrder().getTotal_received_amount()}"readonly ><br>
+                <label for="contactMethod">Contact Method:</label>
+                <input type="text" id="contactMethod" value=""  readonly><br>
 
-                                    <label for="paidAmount">Total paid amount:</label>
-                                    <input type="text" id="paidAmount_ud" value="${productOrderPair.getOrder().getTotal_paid_amount()}" readonly><br>
+                <label for="status">Status:</label>
+                <input type="text" id="status" value="" readonly><br>
 
-                                    <label for="productImage">Product Image:</label><br>
-                                    <label for="image1">Image 1:</label>
-                                    <input type="text" id="img1_ud" name="image1" value=""><br>
+                <label for="buyer">Buyer:</label>
+                <input type="text" id="buyer" value="" readonly><br>
+                <label for="buyer">Create At:</label>
+                <input type="text" id="create_at" value="" readonly><br>
+                <label for="buyer">Update At:</label>
+                <input type="text" id="update_at" value="" readonly><br>
 
-                                    <label for="image2">Image 2:</label>
-                                    <input type="text" id="img2_ud" name="image2" value=""><br>
+                <button onclick="hideProductModal()">OK</button>                              
+            </div>
 
-                                    <label for="image3">Image 3:</label>
-                                    <input type="text" id="img3_ud" name="image3" value="" ><br>
 
-                                    <label for="image4">Image 4:</label>
-                                    <input type="text" id="img4_ud" name="image4" value=""><br>
+            <!--        /////////////////              -->                        
+            <div style="height: 700px" class="modal" id="modal2">
+                <button class="close-button"  onclick="hideProductModal()"><i class="fa fa-close"></i></button>
+                <h2>Update Order Information</h2>   
+                <form>
+                    <label for="orderCode">Order code:</label>
+                    <input type="text" id="orderCode_ud" value="${productOrderPair.getOrder().getCode()}" readonly ><br>
 
-                                    <label for="description">Description:</label>
-                                    <input id="description_ud" value="" ></input><br>
+                    <label for="productName">Product Name:</label>
+                    <input type="text" id="productName_ud" value="${productOrderPair.getProduct().getName()}" ><br>
 
-                                    <label for="hiddenContent">Hidden Content:</label>
-                                    <input type="text" id="hiddenContent_ud" value=""  ><br>
+                    <label for="price">Price:</label>
+                    <input type="text" id="price_ud" value="${productOrderPair.getProduct().getPrice()}" ><br>
 
-                                    <label for="contactMethod">Contact Method:</label>
-                                    <input type="text" id="contactMethod_ud" value=""  ><br>
+                    <label for="intermediaryFee">Intermediary Fee:</label>
+                    <input type="text" id="intermediaryFee_ud" value="${productOrderPair.getOrder().getIntermediary_fee()}" readonly><br>
 
-                                    <label for="status">Status:</label>
-                                    <input type="text" id="status_ud" value="" ><br>
+                    <label for="party">Party bears the fee:</label><br>
+                    <input type="radio" id="partySeller_ud" name="party" value="seller"> Seller
+                    <input type="radio" id="partyBuyer_ud" name="party" value="buyer"> Buyer<br>
 
-                                    <label for="buyer">Buyer:</label>
-                                    <input type="text" id="buyer_ud" value="" readonly ><br>
-                                    <label for="buyer">Create At:</label>
-                                    <input type="text" id="create_at_ud" value="" readonly><br>
-                                    <label for="buyer">Update At:</label>
-                                    <input type="text" id="update_at_ud" value="" readonly><br>
-                                    <button style="background-color:  #34ce57 " id="updateButton">Update</button>
-                                </form>
+                    <label for="receivedAmount">Total received amount:</label>
+                    <input type="text" id="receivedAmount_ud" value="${productOrderPair.getOrder().getTotal_received_amount()}"readonly ><br>
 
-                            </div>
+                    <label for="paidAmount">Total paid amount:</label>
+                    <input type="text" id="paidAmount_ud" value="${productOrderPair.getOrder().getTotal_paid_amount()}" readonly><br>
 
-                            <div id="myModalComplain" class="modal3">
-                                <div class="modal-content3">
-                                    <span class="close">&times;</span>
-                                    <div class="container-complain">
-                                        <form id="complaintForm">
-                                            <h2 style="text-align: center;">Complain Order</h2>
-                                            <input type="text" id="order_id" name="order_id" readonly="" hidden=""><br>
-                                            <input type="text" id="pro_id" name="pro_id" readonly="" hidden=""><br>
-                                            <label for="order_code">Intermediate Orders Code</label><br>
-                                            <input type="text" id="order_code" name="code" value="" readonly><br>
-                                            <label for="hidden_info">Hidden Information</label><br>
-                                            <input type="text" id="hidden_info" name="" value="" readonly><br>
-                                            <label for="description">Description</label><br>
-                                            <textarea id="description1" name="description" placeholder="Write something, as detailed as possible..." style="height:200px" required></textarea><br>
-                                            <input type="submit" value="Submit">
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
+                    <label for="productImage">Product Image:</label><br>
+                    <label for="image1">Image 1:</label>
+                    <input type="text" id="img1_ud" name="image1" value=""><br>
 
-                            <div id="myModalVerify" class="modal4">
-                                <span class="close">&times;</span></br></br>
-                                <h3>Verify Order</h3>
-                                <p>Order matches the description</p>
-                                <form id="authForm">
-                                    <input type="text" id="pro_id" name="pro_id" hidden="">
-                                    <div class="options1">
-                                        <button type="submit" class="option1 yes">Yes</button>
-                                        
-                                    </div>
-                                    <div class="loader" id="loader"></div>
-                                </form>
-                            </div>
+                    <label for="image2">Image 2:</label>
+                    <input type="text" id="img2_ud" name="image2" value=""><br>
 
-                            </div>
-                            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-                            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-                            <script src="jscript/myorder.js"></script>
-                            </body>
-                            </html>
+                    <label for="image3">Image 3:</label>
+                    <input type="text" id="img3_ud" name="image3" value="" ><br>
 
-                            <style>
-                                .swal2-title {
-                                    font-size: 30px; /* Kích thước chữ cho tiêu đề */
-                                }
+                    <label for="image4">Image 4:</label>
+                    <input type="text" id="img4_ud" name="image4" value=""><br>
 
-                                .swal2-content {
-                                    font-size: 18px; /* Kích thước chữ cho nội dung */
-                                }
-                            </style>
+                    <label for="description">Description:</label>
+                    <input id="description_ud" value="" ></input><br>
+
+                    <label for="hiddenContent">Hidden Content:</label>
+                    <input type="text" id="hiddenContent_ud" value=""  ><br>
+
+                    <label for="contactMethod">Contact Method:</label>
+                    <input type="text" id="contactMethod_ud" value=""  ><br>
+
+                    <label for="status">Status:</label>
+                    <input type="text" id="status_ud" value="" ><br>
+
+                    <label for="buyer">Buyer:</label>
+                    <input type="text" id="buyer_ud" value="" readonly ><br>
+                    <label for="buyer">Create At:</label>
+                    <input type="text" id="create_at_ud" value="" readonly><br>
+                    <label for="buyer">Update At:</label>
+                    <input type="text" id="update_at_ud" value="" readonly><br>
+                    <button style="background-color:  #34ce57 " id="updateButton">Update</button>
+                </form>
+
+            </div>
+
+            <div id="myModalComplain" class="modal3">
+                <div class="modal-content3">
+                    <span class="close">&times;</span>
+                    <div class="container-complain">
+                        <form id="complaintForm">
+                            <h2 style="text-align: center;">Complain Order</h2>
+                            <input type="text" id="order_id" name="order_id" readonly="" hidden=""><br>
+                            <input type="text" id="pro_id" name="pro_id" readonly="" hidden=""><br>
+                            <label for="order_code">Intermediate Orders Code</label><br>
+                            <input type="text" id="order_code" name="code" value="" readonly><br>
+                            <label for="hidden_info">Hidden Information</label><br>
+                            <input type="text" id="hidden_info" name="" value="" readonly><br>
+                            <label for="description">Description</label><br>
+                            <textarea id="description1" name="description" placeholder="Write something, as detailed as possible..." style="height:200px" required></textarea><br>
+                            <input type="submit" value="Submit">
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div id="myModalVerify" class="modal4">
+                <span class="close">&times;</span></br></br>
+                <h3>Verify Order</h3>
+                <p>Order matches the description</p>
+                <form id="authForm">
+                    <input type="text" id="pro_id" name="pro_id" hidden="">
+                    <div class="options1">
+                        <button type="submit" class="option1 yes">Yes</button>
+
+                    </div>
+                    <div class="loader" id="loader"></div>
+                </form>
+            </div>
+
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="jscript/myorder.js"></script>
+    </body>
+</html>
+
+<style>
+    .swal2-title {
+        font-size: 30px; /* Kích thước chữ cho tiêu đề */
+    }
+
+    .swal2-content {
+        font-size: 18px; /* Kích thước chữ cho nội dung */
+    }
+</style>

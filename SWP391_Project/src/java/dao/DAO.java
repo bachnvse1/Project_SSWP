@@ -30,11 +30,13 @@ public class DAO extends DBContext {
     public Connection con = null; //connect to sql
     public PreparedStatement ps = null; //ném câu lệnh query sang sql
     public ResultSet rs = null; //nhận kết quả trả về
-public static String removeDiacritics(String str) {
-    str = Normalizer.normalize(str, Normalizer.Form.NFD);
-    str = str.replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
-    return str;
-}
+
+    public static String removeDiacritics(String str) {
+        str = Normalizer.normalize(str, Normalizer.Form.NFD);
+        str = str.replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+        return str;
+    }
+
     // Bach 
     public void signup(String user, String pass, String email) {
         String query = "INSERT users (username, password, email, display_Name, is_admin, is_verify, is_active) VALUES (?, ?, ?, ?, 0, 0, 1)";
@@ -168,7 +170,7 @@ public static String removeDiacritics(String str) {
         }
         return list;
     }
-    
+
     public List<Report> getAllReport() {
         List<Report> list = new ArrayList<>();
         String query = "select * from swp_demo.Report";
@@ -193,11 +195,12 @@ public static String removeDiacritics(String str) {
         }
         return list;
     }
+
     public void editReportStatus(int id, boolean status) {
         String sql = "Update report set status=? where id =? ";
         try {
             con = new DBContext().connection;
-            ps = con.prepareStatement(sql);           
+            ps = con.prepareStatement(sql);
             ps.setBoolean(1, status);
             ps.setInt(2, id);
             ps.executeUpdate();
@@ -388,6 +391,21 @@ public static String removeDiacritics(String str) {
             ps.executeUpdate();
         } catch (Exception e) {
 
+        }
+    }
+
+    public void insertWallet(double balance, int uid) {
+        String query = "INSERT INTO Wallet (balance, create_by, updated_by)\n"
+                + "VALUES (?, ?, ?)";
+        try {
+             con = new DBContext().connection; //connect sql
+            ps = con.prepareStatement(query);
+            ps.setDouble(1, balance);
+            ps.setInt(2, uid);
+            ps.setInt(3, uid);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            
         }
     }
 
@@ -713,47 +731,14 @@ public static String removeDiacritics(String str) {
         }
         return null;
     }
+
     public List<Product> getProductByName(String name, int uid) {
         List<Product> list = new ArrayList<>();
         String sql = "SELECT * FROM swp_demo.product WHERE LOWER(REPLACE(name, ' ', '')) LIKE ? AND create_by = ?";
         try {
             con = new DBContext().connection;
             ps = con.prepareStatement(sql);
-            ps.setString(1,  "%" + removeDiacritics(name.toLowerCase()) + "%");
-            ps.setInt(2, uid);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                list.add(new Product(rs.getInt(1),
-                        rs.getString(2),
-                        rs.getDouble(3),
-                        rs.getInt(4),
-                        rs.getString(5),
-                        rs.getString(6),
-                        rs.getString(7),
-                        rs.getString(8),
-                        rs.getString(9),
-                        rs.getBoolean(10),
-                        rs.getString(11),
-                        rs.getInt(12),
-                        rs.getString(13),
-                        rs.getTimestamp(14),
-                        rs.getInt(15),
-                        rs.getTimestamp(16),
-                        rs.getBoolean(17)));
-            }
-        } catch (Exception ex) {
-            System.out.println(ex);
-
-        }
-        return list;
-    }    
-       public List<Product> getProductByFee(int fee, int uid) {
-        List<Product> list = new ArrayList<>();
-        String sql = "SELECT * FROM swp_demo.product WHERE transaction_Fees = ? AND create_by =?";
-        try {
-            con = new DBContext().connection;
-            ps = con.prepareStatement(sql);
-            ps.setInt(1,  fee);
+            ps.setString(1, "%" + removeDiacritics(name.toLowerCase()) + "%");
             ps.setInt(2, uid);
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -781,7 +766,43 @@ public static String removeDiacritics(String str) {
         }
         return list;
     }
-     public List<Product> getProductByPrice(double price, int uid) {
+
+    public List<Product> getProductByFee(int fee, int uid) {
+        List<Product> list = new ArrayList<>();
+        String sql = "SELECT * FROM swp_demo.product WHERE transaction_Fees = ? AND create_by =?";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, fee);
+            ps.setInt(2, uid);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Product(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getDouble(3),
+                        rs.getInt(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getBoolean(10),
+                        rs.getString(11),
+                        rs.getInt(12),
+                        rs.getString(13),
+                        rs.getTimestamp(14),
+                        rs.getInt(15),
+                        rs.getTimestamp(16),
+                        rs.getBoolean(17)));
+            }
+        } catch (Exception ex) {
+            System.out.println(ex);
+
+        }
+        return list;
+    }
+
+    public List<Product> getProductByPrice(double price, int uid) {
         List<Product> list = new ArrayList<>();
         String sql = "SELECT * FROM swp_demo.product WHERE price <= ? AND create_by =?";
         try {
@@ -814,8 +835,9 @@ public static String removeDiacritics(String str) {
 
         }
         return list;
-    }  
-       public List<Product> getProductByHigherPrice(double price , int uid) {
+    }
+
+    public List<Product> getProductByHigherPrice(double price, int uid) {
         List<Product> list = new ArrayList<>();
         String sql = "SELECT * FROM swp_demo.product WHERE price > ? AND create_by =?";
         try {
@@ -848,8 +870,8 @@ public static String removeDiacritics(String str) {
 
         }
         return list;
-    }  
-       
+    }
+
     public Product getProductById(int id) {
         String sql = "SELECT * FROM swp_demo.product\n"
                 + "where id =? ;";
@@ -884,19 +906,20 @@ public static String removeDiacritics(String str) {
         return null;
 
     }
-   public List<intermediateOrders> getListOrderByCode(String code, int uid) {
-          List<intermediateOrders> list = new ArrayList<>();
+
+    public List<intermediateOrders> getListOrderByCode(String code, int uid) {
+        List<intermediateOrders> list = new ArrayList<>();
         String sql = "SELECT * FROM swp_demo.intermediate_orders\n"
                 + "where code LIKE ? AND create_by =?";
         try {
             con = new DBContext().connection;
             ps = con.prepareStatement(sql);
-            ps.setString(1,"%"+code+"%");
+            ps.setString(1, "%" + code + "%");
             ps.setInt(2, uid);
             rs = ps.executeQuery();
             while (rs.next()) {
-               list.add(new intermediateOrders(
-               rs.getInt(1),
+                list.add(new intermediateOrders(
+                        rs.getInt(1),
                         rs.getString(2),
                         rs.getInt(3),
                         rs.getInt(4),
@@ -909,7 +932,7 @@ public static String removeDiacritics(String str) {
                         rs.getInt(11),
                         rs.getTimestamp(12),
                         rs.getBoolean(13)
-               ));
+                ));
             }
         } catch (Exception e) {
 
@@ -917,19 +940,20 @@ public static String removeDiacritics(String str) {
         return list;
 
     }
+
     public List<intermediateOrders> getOrderByStatus(String status, int uid) {
-          List<intermediateOrders> list = new ArrayList<>();
+        List<intermediateOrders> list = new ArrayList<>();
         String sql = "SELECT * FROM swp_demo.intermediate_orders\n"
                 + "where status LIKE ? AND create_by =?";
         try {
             con = new DBContext().connection;
             ps = con.prepareStatement(sql);
-            ps.setString(1,"%"+status+"%");
+            ps.setString(1, "%" + status + "%");
             ps.setInt(2, uid);
             rs = ps.executeQuery();
             while (rs.next()) {
-               list.add(new intermediateOrders(
-               rs.getInt(1),
+                list.add(new intermediateOrders(
+                        rs.getInt(1),
                         rs.getString(2),
                         rs.getInt(3),
                         rs.getInt(4),
@@ -942,7 +966,7 @@ public static String removeDiacritics(String str) {
                         rs.getInt(11),
                         rs.getTimestamp(12),
                         rs.getBoolean(13)
-               ));
+                ));
             }
         } catch (Exception e) {
 
@@ -950,6 +974,7 @@ public static String removeDiacritics(String str) {
         return list;
 
     }
+
     public intermediateOrders getOrderByProductID(int id) {
         String sql = "SELECT * FROM swp_demo.intermediate_orders\n"
                 + "where productID =? ;";
@@ -1010,7 +1035,8 @@ public static String removeDiacritics(String str) {
         return null;
 
     }
-public intermediateOrders getOrderByCode(String code) {
+
+    public intermediateOrders getOrderByCode(String code) {
         String sql = "SELECT * FROM swp_demo.intermediate_orders\n"
                 + "where code =? ;";
         try {
@@ -1039,6 +1065,7 @@ public intermediateOrders getOrderByCode(String code) {
         return null;
 
     }
+
     public void UpdateProductByProductID(int pid, Product product) {
         String sql = "UPDATE swp_demo.Product\n"
                 + "SET \n"
@@ -1461,31 +1488,35 @@ public intermediateOrders getOrderByCode(String code) {
         return null;
 
     }
- public void insertCategory(String name) {
+
+    public void insertCategory(String name) {
         String query = "INSERT INTO `swp_demo`.`category` (`name`) VALUES (?)";
         try {
             con = new DBContext().connection; //connect sql
             ps = con.prepareStatement(query);
-            ps.setString(1, name);            
+            ps.setString(1, name);
             ps.executeUpdate();
-            
+
         } catch (Exception e) {
-            
+
         }
     }
-public void DeleteCategory(String id) {
+
+    public void DeleteCategory(String id) {
         String query = "DELETE FROM `swp_demo`.`category` WHERE id = ?";
         try {
             con = new DBContext().connection; //connect sql
             ps = con.prepareStatement(query);
-            ps.setString(1, id);            
+            ps.setString(1, id);
             ps.executeUpdate();
-            
+
         } catch (Exception e) {
-            
+
         }
     }
-    public static void main(String[] args) {
 
+    public static void main(String[] args) {
+        DAO dao = new DAO();
+        dao.insertWallet(5000000, 4);
     }
 }

@@ -75,13 +75,14 @@ public class AddProdcutServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-   protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // processRequest(request, response);
         response.setContentType("text/html;charset=UTF-8");
         Product product = new Product();
         product.setName(request.getParameter("nameProduct"));
-        product.setPrice(Double.parseDouble(request.getParameter("priceProduct")));
+        try {
+              product.setPrice(Double.parseDouble(request.getParameter("priceProduct")));
         product.setCategoryID(Integer.parseInt(request.getParameter("categoryID")));
         product.setDescription(request.getParameter("Description"));
         product.setImage1(request.getParameter("image1"));
@@ -99,8 +100,8 @@ public class AddProdcutServlet extends HttpServlet {
         User u = (User) session.getAttribute("user");
         product.setCreate_by(u.getId());
         DAO dal = new DAO();
-      Wallet walet =  dal.getWallet(u.getId());
-        if(walet.getBalance()>500){
+        Wallet walet =  dal.getWallet(u.getId());
+        if(walet.getBalance() > 500){
             walet.setBalance(walet.getBalance()-500);
         dal.insertProduct(product);
         intermediateOrders order = new intermediateOrders();
@@ -119,11 +120,16 @@ public class AddProdcutServlet extends HttpServlet {
         order.setCreate_by(u.getId());
         order.setUpdate_by(u.getId());
         dal.insertOrder(order);
-        dal.insertReport(3, dal.getOrderByProductID(dal.getIdProduct()).getId(), true, "You have just posted an order with the code is: " + dal.getOrderByProductID(dal.getIdProduct()).getCode(), u.getId(), false);
+        dal.updateAmount(walet.getBalance(), u.getId());
+        session.setAttribute("balance", dal.getWallet(u.getId()).getBalance());
         response.getWriter().write("success");
         }else{
             response.getWriter().write("Insufficient_balance");
         }
+        } catch (NumberFormatException e) {
+            response.getWriter().write("price");
+        }
+      
     }
        
 

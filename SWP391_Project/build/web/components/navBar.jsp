@@ -74,7 +74,7 @@
 
                                     <button class="search-btn">Search</button>
                                 </form>
-                                </form>
+                                
                             </div>
                         </div>
                         <!-- /SEARCH BAR -->

@@ -76,6 +76,7 @@ function refreshCaptcha()
     $.get('refreshcaptcha', function () {
         // Thay đổi src của ảnh để làm mới
         $('#captchaImage').attr('src', 'captchaimage?' + new Date().getTime());
+        document.getElementById("captcha").value = "";
     });
 }
 ;

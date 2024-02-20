@@ -11,6 +11,7 @@ $(document).ready(function () {
     $("#orderBuy").hide();
     $("#myModalComplain").hide();
     $("#myModalVerify").hide();
+    $("#orderBuy-complete").hide();
     // Xử lý sự kiện khi nhấn nút "Add Product"
     $("#addProductButton").click(function () {
         $("#addProductForm").show();
@@ -19,11 +20,14 @@ $(document).ready(function () {
         $("#orderBuy").hide();
         $("#myModalComplain").hide();
         $("#myModalVerify").hide();
+        $("#orderBuy-complete").hide();
     });
     $("#allProductButton").click(function () {
         $("#addProductForm").hide();
         $("#ProductDisplay").show();
         $("#orderBuy").hide();
+        $("#orderBuy-complete").hide();
+         $("#Filter").show();
         $("#myModalComplain").hide();
         $("#myModalVerify").hide();
     });
@@ -76,6 +80,13 @@ $(document).ready(function () {
                                 window.location.href = 'manageMyOrder';
                             })
                             ;
+                        } else if(response==="price"){
+                           Swal.fire({
+                                title: "Error!",
+                                text: "Please re-enter the price",
+                                icon: "error"
+                            });
+                            
                         }
                     },
                     error: function (xhr, status, error) {

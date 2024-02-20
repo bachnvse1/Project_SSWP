@@ -62,11 +62,33 @@ public class FilterMyOrderServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+   protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
      //   processRequest(request, response);
-  
-    } 
+          String name = request.getParameter("search_name");
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("user");
+       DAO dao = new DAO();
+         List<Category> category = dao.getAllCategory();
+             List<ProductOrderPair> productOrderPairs = new ArrayList<>();
+       if(name != null){
+      List<Product> products = dao.getProductByName(name, u.getId());
+       for (Product product : products) {
+            intermediateOrders order = dao.getOrderByProductID(product.getId());
+            productOrderPairs.add(new ProductOrderPair(product, order));
+        }
+       }else{
+            List<Product> listProduct = dao.getProductByUserID(u.getId());
+   
+            for (Product product : listProduct) {
+            intermediateOrders order = dao.getOrderByProductID(product.getId());
+            productOrderPairs.add(new ProductOrderPair(product, order));
+        }
+       }
+        request.setAttribute("category", category);
+        request.setAttribute("productOrderPairs", productOrderPairs);
+        request.getRequestDispatcher("MyOrder.jsp").forward(request, response);
+    }
 
     /** 
      * Handles the HTTP <code>POST</code> method.
@@ -78,78 +100,8 @@ public class FilterMyOrderServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-       // processRequest(request, response);
-           String filterCode = request.getParameter("filter_code");
-        String filterName = request.getParameter("filter_name");
-        Double filterPrice = Double.valueOf(request.getParameter("filter_price"));
-        String filterStatus = request.getParameter("filter_status");
-        int filterParty = Integer.parseInt(request.getParameter("filter_party"));
-          HttpSession session = request.getSession();
-        User u = (User) session.getAttribute("user");
-         DAO dao = new DAO();
-            List<Category> category = dao.getAllCategory();
-         List<ProductOrderPair> productOrderPairs = new ArrayList<>();
-          if(filterCode != null){
-                  List<intermediateOrders> orders = dao.getListOrderByCode(filterCode, u.getId());
-                   
-                    for (intermediateOrders order : orders) {
-                        Product product = dao.getProductByID(order.getProductId());
-                         productOrderPairs.add(new ProductOrderPair(product, order));
-            }
-        }else if(filterName != null){
-              List<Product> listProduct = dao.getProductByName(filterName, u.getId());
-               
-            for (Product product : listProduct) {
-            intermediateOrders order = dao.getOrderByProductID(product.getId());
-            productOrderPairs.add(new ProductOrderPair(product, order));
-        }
-        }else if(filterPrice==1){
-              List<Product> listProduct = dao.getProductByHigherPrice(10000000, u.getId());
-               
-            for (Product product : listProduct) {
-            intermediateOrders order = dao.getOrderByProductID(product.getId());
-            productOrderPairs.add(new ProductOrderPair(product, order));
-        }
-        }else if(filterPrice != null){
-              List<Product> listProduct = dao.getProductByPrice(filterPrice, u.getId());
-               
-            for (Product product : listProduct) {
-            intermediateOrders order = dao.getOrderByProductID(product.getId());
-            productOrderPairs.add(new ProductOrderPair(product, order));
-        }
-        }else if( filterStatus != null){
-                List<intermediateOrders> orders = dao.getListOrderByCode(filterStatus, u.getId());                
-                
-                    for (intermediateOrders order : orders) {
-                        Product product = dao.getProductByID(order.getProductId());
-                         productOrderPairs.add(new ProductOrderPair(product, order));
-            }
-        }else if (filterParty == 1){
-                List<Product> listProduct = dao.getProductByPrice(filterParty, u.getId());
-                
-            for (Product product : listProduct) {
-            intermediateOrders order = dao.getOrderByProductID(product.getId());
-            productOrderPairs.add(new ProductOrderPair(product, order));
-        }
-        }else if (filterParty == 0){
-                List<Product> listProduct = dao.getProductByPrice(filterParty, u.getId());
-                
-            for (Product product : listProduct) {
-            intermediateOrders order = dao.getOrderByProductID(product.getId());
-            productOrderPairs.add(new ProductOrderPair(product, order));
-        }
-              }else {
-             List<Product> listProduct = dao.getProductByUserID(u.getId());
-   
-            for (Product product : listProduct) {
-            intermediateOrders order = dao.getOrderByProductID(product.getId());
-            productOrderPairs.add(new ProductOrderPair(product, order));
-        }
-        
-        }       
-        request.setAttribute("category", category);
-        request.setAttribute("productOrderPairs", productOrderPairs);
-        request.getRequestDispatcher("MyOrder.jsp").forward(request, response);
+        processRequest(request, response);
+           
     }
 
     /** 

@@ -109,7 +109,7 @@
                                         </div>
                                     </div>
                                     <div class="modal fade" id="exampleModalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" style="max-width: 700px" role="document">
+                                        <div class="modal-dialog" style="max-width: 700px;" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="exampleModalLabel">Feedback</h5>
@@ -117,7 +117,7 @@
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
-                                                <div class="modal-body">
+                                                <div class="modal-body" style="padding: 40px;">
 
                                                     <form action="Feedback" method="post">   
                                                         <div class="row">
@@ -131,9 +131,6 @@
                                                                     <input type="text" name="title" value="" required="" class="form-control"><br/>
                                                                     <h2 class="card-title">Content</h2>
                                                         <input type="text" name="content" value="" required="" class="form-control"><br/>
-                                                                  
-                                                                   
-                                                                 
                                                                     <h5>
                                                                         Phone no:
                                                                         <small class="text-muted">

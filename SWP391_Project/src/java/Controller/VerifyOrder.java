@@ -39,7 +39,7 @@ public class VerifyOrder extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet VerifyOrder</title>");            
+            out.println("<title>Servlet VerifyOrder</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet VerifyOrder at " + request.getContextPath() + "</h1>");
@@ -82,10 +82,16 @@ public class VerifyOrder extends HttpServlet {
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("user");
         DAO dao = new DAO();
+        
+        double balanceSeller = dao.getWallet(dao.getOrderByID(id).getCreate_by()).getBalance();
+        double moneyRecive = dao.getOrderByProductID(id).getTotal_received_amount();
+        dao.updateAmount(balanceSeller + moneyRecive, dao.getOrderByID(id).getCreate_by());
+        dao.updateAmount(dao.getWallet(1).getBalance() - moneyRecive, 1);
+        
         dao.updateOrder(u.getId(), "Complete", u.getId(), proid);
         dao.insertReport(4, id, true, "You have completed your purchase with order code is: " + dao.getOrderByID(id).getCode(), u.getId(), false);
         response.getWriter().write("success");
-        
+
     }
 
     /**
