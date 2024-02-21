@@ -336,7 +336,7 @@
                     <tbody>
 
                         <c:forEach items="${productOrderPairs}" var="p">
-                            <c:if test="${!p.getProduct().isIs_delete()}">
+                            <c:if test="${!p.getOrder().isIs_delete()}">
                                 <tr>
                                     <td>${p.getOrder().getCode()}</td>
                                     <td>${p.getProduct().getName()}</td>
@@ -353,7 +353,7 @@
                                         <a class="updateproduct" data-action="update" href="#" data-product-id="${p.getProduct().getId()}">
                                             <i style="color: #34ce57" class="fa fa-pencil"></i>
                                         </a>
-                                        <a class="deleteProductButton" data-product-id="${p.getProduct().getId()}">
+                                        <a class="deleteProductButton" data-product-id="${p.getOrder().getId()}">
                                             <i style="color: red" class="fa fa-trash"></i>
                                         </a>  
                                     </td>
@@ -362,14 +362,16 @@
                         </c:forEach>
                     </tbody>
                 </table>
+           
                 <div id="addProductForm" class="addProduct">
-                    <h2>Add Product</h2>
-
-                    <form id="addForm">                     
-                        <label for="name">Name:</label>
+                   <div class="modal-content3">
+                    <span class="close">&times;</span>
+                    <div class="container-complain">
+                        <form id="addForm">
+                            <h2 style="text-align: center;">Add New Order</h2>
+                            <label for="name">Name:</label>
                         <input type="text" name="nameProduct" required><br>
-
-                        <label for="price">Price:</label>
+                            <label for="price">Price:</label>
                         <input type="text" name="priceProduct" required><br>
 
                         <label for="category">Category:</label>
@@ -402,9 +404,10 @@
                         <label for="hiddenContent">Hidden Content:</label>
                         <input type="text" id="hiddenContent" name="hidden_content" required><br>
 
-
-                        <input type="submit" value="ADD">
-                    </form>
+                            <input type="submit" value="ADD">
+                        </form>
+                    </div>
+                </div>
                 </div>
 
             </div>

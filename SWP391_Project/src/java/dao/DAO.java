@@ -393,7 +393,18 @@ public class DAO extends DBContext {
 
         }
     }
+public void deleteOrder(int id, boolean is_delete){
+String query = "Update intermediate_Orders set is_delete = ? where id =? ";
+        try {
+            con = new DBContext().connection; //connect sql
+            ps = con.prepareStatement(query);
+            ps.setBoolean(1, is_delete);
+            ps.setInt(2, id);
+            ps.executeUpdate();
+        } catch (Exception e) {
 
+        }
+}
     public void insertWallet(double balance, int uid) {
         String query = "INSERT INTO Wallet (balance, create_by, updated_by)\n"
                 + "VALUES (?, ?, ?)";

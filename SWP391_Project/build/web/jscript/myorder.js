@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/JavaScript.js to edit this template
  */
 
-/* global modal1 */
+/* global l1 */
 
 $(document).ready(function () {
     // Ẩn form khi trang được tải
@@ -224,7 +224,7 @@ const swalWithBootstrapButtons = Swal.mixin({
 
 $('.deleteProductButton').click(function () {
     // Thu thập dữ liệu từ form
-    var productId = $(this).data('product-id');
+    var orderID = $(this).data('product-id');
 
     // Hiển thị hộp thoại xác nhận
     swalWithBootstrapButtons.fire({
@@ -241,7 +241,7 @@ $('.deleteProductButton').click(function () {
             $.ajax({
                 type: 'POST',
                 url: 'deleteProduct',
-                data: { pid: productId },
+                data: { oid: orderID },
                 success: function (response) {
                     if (response === "success") {
                         swalWithBootstrapButtons.fire({

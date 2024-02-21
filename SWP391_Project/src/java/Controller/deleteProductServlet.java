@@ -6,6 +6,7 @@
 package Controller;
 
 import Entity.Product;
+import Entity.intermediateOrders;
 import dao.DAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -72,8 +73,11 @@ public class deleteProductServlet extends HttpServlet {
     throws ServletException, IOException {
        // processRequest(request, response);
        DAO dal = new DAO();
-       int pid = Integer.parseInt(request.getParameter("pid"));
-       dal.deleteProduct(pid, true);
+       int oid = Integer.parseInt(request.getParameter("oid"));
+       dal.deleteOrder(oid, true);
+       intermediateOrders order = dal.getOrderByID(oid);
+       Product product = dal.getProductByID(order.getProductId());
+       dal.deleteProduct(product.getId(), true);
        response.getWriter().write("success");
     }
 
