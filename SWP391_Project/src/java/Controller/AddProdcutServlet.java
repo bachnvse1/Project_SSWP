@@ -101,7 +101,7 @@ public class AddProdcutServlet extends HttpServlet {
         product.setCreate_by(u.getId());
         DAO dal = new DAO();
         Wallet walet =  dal.getWallet(u.getId());
-        if(walet.getBalance() > 500){
+        if(walet.getBalance() >= 500){
             walet.setBalance(walet.getBalance()-500);
         dal.insertProduct(product);
         intermediateOrders order = new intermediateOrders();

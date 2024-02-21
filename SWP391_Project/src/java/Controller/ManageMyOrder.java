@@ -115,7 +115,7 @@ public class ManageMyOrder extends HttpServlet {
                 + productOrderPair.getProduct().getName() + ";"
                 + productOrderPair.getProduct().getPrice() + ";"
                 + productOrderPair.getOrder().getIntermediary_fee() + ";"
-                + (productOrderPair.getProduct().isTransaction_fee() ? "Bên bán" : "Bên mua") + ";"
+                + (productOrderPair.getProduct().isTransaction_fee() ? "Seller" : "Buyer") + ";"
                 + productOrderPair.getOrder().getTotal_received_amount() + ";"
                 + productOrderPair.getOrder().getTotal_paid_amount() + ";"
                 + productOrderPair.getProduct().getImage1() + ";"

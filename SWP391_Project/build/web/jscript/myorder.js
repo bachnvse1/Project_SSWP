@@ -126,10 +126,10 @@ $(document).ready(function () {
                 document.getElementById("img3").src = responseData[9];
                 document.getElementById("img4").src = responseData[10];
                 document.getElementById("description").value = responseData[11];
-                document.getElementById("hiddenContent").value = responseData[12];
+                document.getElementById("hiddenContent_info").value = responseData[12];
                 document.getElementById("contactMethod").value = responseData[13];
                 document.getElementById("status").value = responseData[14];
-                document.getElementById("buyer").value = responseData[15];
+                document.getElementById("buyer_info").value = responseData[15];
                 document.getElementById("create_at").value = responseData[16];
                 document.getElementById("update_at").value = responseData[17];
             }
@@ -155,9 +155,9 @@ $(document).ready(function () {
                 document.getElementById("productName_ud").value = responseData[1];
                 document.getElementById("price_ud").value = responseData[2];
                 document.getElementById("intermediaryFee_ud").value = responseData[3];
-                if (responseData[4] === 'Bên bán') {
+                if (responseData[4] === 'Seller') {
                     document.getElementById("partySeller_ud").checked = true;
-                } else if (responseData[4] === 'Bên mua') {
+                } else if (responseData[4] === 'Buyer') {
                     document.getElementById("partyBuyer_ud").checked = true;
                 }
                 document.getElementById("receivedAmount_ud").value = responseData[5];
@@ -203,8 +203,7 @@ $(document).ready(function () {
             success: function (response) {
                 if (response === 'success') {
                     alert("success");
-                }else{
-                    alert("ngu");
+                }else{                   
                 }
             },
             error: function (xhr, status, error) {
