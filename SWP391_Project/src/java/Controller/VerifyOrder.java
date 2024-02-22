@@ -90,6 +90,7 @@ public class VerifyOrder extends HttpServlet {
         
         dao.updateOrder(u.getId(), "Complete", u.getId(), proid);
         dao.insertReport(4, id, true, "You have completed your purchase with order code is: " + dao.getOrderByID(id).getCode(), u.getId(), false);
+        
         response.getWriter().write("success");
 
     }

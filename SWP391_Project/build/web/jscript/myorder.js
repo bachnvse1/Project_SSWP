@@ -27,7 +27,7 @@ $(document).ready(function () {
         $("#ProductDisplay").show();
         $("#orderBuy").hide();
         $("#orderBuy-complete").hide();
-         $("#Filter").show();
+        $("#Filter").show();
         $("#myModalComplain").hide();
         $("#myModalVerify").hide();
     });
@@ -40,7 +40,7 @@ function toggleOptions(productId) {
 $(document).ready(function () {
     $('#addForm').submit(function (e) {
         e.preventDefault(); // Ngăn chặn hành động mặc định của form
-        
+
         // Hiển thị hộp thoại xác nhận của SweetAlert2
         Swal.fire({
             title: "Are you sure?",
@@ -50,9 +50,9 @@ $(document).ready(function () {
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, add it!",
-            width: 600 , // Độ rộng của hộp thoại
-            height: 600 , // Chiều cao của hộp thoại
-            
+            width: 600, // Độ rộng của hộp thoại
+            height: 600, // Chiều cao của hộp thoại
+
         }).then((result) => {
             // Nếu người dùng xác nhận
             if (result.isConfirmed) {
@@ -71,7 +71,7 @@ $(document).ready(function () {
                             }).then(() => {
                                 window.location.href = 'manageMyOrder';
                             });
-                        } else if(response === "Insufficient_balance") {
+                        } else if (response === "Insufficient_balance") {
                             Swal.fire({
                                 title: "Error!",
                                 text: "Insufficient balance.",
@@ -79,14 +79,14 @@ $(document).ready(function () {
                             }).then(() => {
                                 window.location.href = 'manageMyOrder';
                             })
-                            ;
-                        } else if(response==="price"){
-                           Swal.fire({
+                                    ;
+                        } else if (response === "price") {
+                            Swal.fire({
                                 title: "Error!",
                                 text: "Please re-enter the price",
                                 icon: "error"
                             });
-                            
+
                         }
                     },
                     error: function (xhr, status, error) {
@@ -203,12 +203,12 @@ $(document).ready(function () {
             success: function (response) {
                 if (response === 'success') {
                     alert("success");
-                }else{                   
+                } else {
                 }
             },
             error: function (xhr, status, error) {
                 // Xử lý lỗi (nếu có)
-                alert("loi");   
+                alert("loi");
             }
         });
     });
@@ -240,7 +240,7 @@ $('.deleteProductButton').click(function () {
             $.ajax({
                 type: 'POST',
                 url: 'deleteProduct',
-                data: { oid: orderID },
+                data: {oid: orderID},
                 success: function (response) {
                     if (response === "success") {
                         swalWithBootstrapButtons.fire({
@@ -367,7 +367,7 @@ $(document).ready(function () {
         var formData = {
             order_id: $("#order_id").val(),
             description: $("#description1").val(),
-            pro_id : $("#pro_id").val()
+            pro_id: $("#pro_id").val()
         };
         $.ajax({
             type: 'POST',
@@ -399,10 +399,14 @@ $(document).ready(function () {
             success: function (response) {
                 if (response === "success") {
                     $("#myModalVerify").hide();
-                    alert("Verify order sucess");
+                    alert("Verify order success");
+
+                    // Chuyển hướng đến trang home
+                    window.location.href = 'manageMyOrder';
 
                 } else {
-                    alert("You have already verify this order!");
+                    $("#myModalVerify").hide();
+                    alert("You have already verified this order!");
                 }
             },
             error: function (xhr, status, error) {
@@ -412,36 +416,36 @@ $(document).ready(function () {
     });
 });
 
- $(document).ready(function(){
-        $(".filterBtn").click(function(e){
-            e.preventDefault(); // Ngăn chặn hành động mặc định của nút submit
-            sendData();
-        });
-
-        $("select").change(function(){
-            sendData();
-        });
-
-        function sendData() {
-            var formData = {
-                filter_code: $("#filter_code").val(),
-                filter_name: $("#filter_name").val(),
-                filter_price: $("#filter_price").val(),
-                filter_status: $("#filter_status").val(),
-                filter_party: $("#filter_party").val()
-            };
-
-            $.ajax({
-                type: "POST",
-                url: "filtermyorder",
-                data: formData,
-                success: function(response){
-                    // Xử lý dữ liệu trả về nếu cần
-                    console.log(response);
-                },
-                error: function(xhr, status, error){
-                    console.error(xhr.responseText);
-                }
-            });
-        }
+$(document).ready(function () {
+    $(".filterBtn").click(function (e) {
+        e.preventDefault(); // Ngăn chặn hành động mặc định của nút submit
+        sendData();
     });
+
+    $("select").change(function () {
+        sendData();
+    });
+
+    function sendData() {
+        var formData = {
+            filter_code: $("#filter_code").val(),
+            filter_name: $("#filter_name").val(),
+            filter_price: $("#filter_price").val(),
+            filter_status: $("#filter_status").val(),
+            filter_party: $("#filter_party").val()
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "filtermyorder",
+            data: formData,
+            success: function (response) {
+                // Xử lý dữ liệu trả về nếu cần
+                console.log(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    }
+});
