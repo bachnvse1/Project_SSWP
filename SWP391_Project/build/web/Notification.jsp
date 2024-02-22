@@ -8,8 +8,10 @@
         <title>Notification</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="css/font-awesome.min.css"/>
+        
+        <<link rel="stylesheet" href="css/myorder.css"/>
         <style>
-            
+
             body {
                 background-color: #f0f0f0;
                 font-family: Arial, sans-serif;
@@ -220,25 +222,72 @@
                 }
             }
             .overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        display: none;
-}
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                display: none;
+            }
 
-        .modal {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: white;
-        padding: 20px;
-        border-radius: 5px;
-        display: none;
-}
+            .modal {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: white;
+                padding: 20px;
+                border-radius: 5px;
+                display: none;
+            }
+            
+            .modal-content3 {
+                background-color: #fefefe;
+                margin: 10% auto; /* ?? cao t? trên xu?ng modal */
+                padding: 20px;
+                border: 1px solid #888;
+                width: 60%; /* ?? r?ng c?a modal */
+                border-radius: 10px; /* Bo tròn các góc */
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Hi?u ?ng ?? bóng */
+                display: flex; /* S? d?ng flexbox ?? s?p x?p các c?t hàng d?c */
+                flex-direction: column; /* S?p x?p các ph?n t? thành c?t hàng d?c */
+            }
+
+            /* Close Button */
+            .close {
+                color: #aaa;
+                align-self: flex-end; /* ??y nút ?óng v? phía cu?i cùng c?a modal */
+                font-size: 28px;
+                font-weight: bold;
+                margin-bottom: 10px; /* Kho?ng cách gi?a nút ?óng và các ph?n t? khác */
+            }
+
+            .close:hover,
+            .close:focus {
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+            /* Các ph?n t? trong modal */
+            .modal-content3 label,
+            .modal-content3 input,
+            .modal-content3 textarea {
+                margin-bottom: 10px; /* Kho?ng cách gi?a các ph?n t? */
+            }
+
+            .modal-content3 input,
+            .modal-content3 textarea {
+                width: calc(100% - 40px); /* ?? r?ng c?a input và textarea */
+                padding: 10px; /* Kho?ng cách gi?a n?i dung và vi?n */
+                border-radius: 5px; /* Bo tròn các góc */
+                border: 1px solid #ccc; /* Vi?n */
+            }
+
+            .modal-content3 textarea {
+                height: 150px; /* ?? cao c?a textarea */
+            }
         </style>
     </head>
 
@@ -246,7 +295,7 @@
         <table style="border: none" cellpadding="0" cellspacing="0" width="100%">
             <tr>
                 <td style="padding: 15px 0">
-                    <table style="border: none; margin-left: auto; margin-right: auto" cellpadding="0" cellspacing="0" width="600" class="content">
+                    <table style="border: none; margin-left: auto; margin-right: auto" cellpadding="0" cellspacing="0" width="900" class="content">
                         <!-- Start: Small header text in pale grey email background -->
 
                         <!-- End: Small header text in pale grey email background -->
@@ -314,73 +363,78 @@
                         <!-- End: Healthy Notification -->
 
                         <!-- Start: Information Notification -->
-<!--                        <tr>
-                            <td class="information notification">
-                                <h1><span class="icon">i</span>Information</h1>
-                                <p>The "something or other" system information</p>
-                                <p class="small">Any supplementary information</p>
-                            </td>
-                        </tr>-->
+                        <!--                        <tr>
+                                                    <td class="information notification">
+                                                        <h1><span class="icon">i</span>Information</h1>
+                                                        <p>The "something or other" system information</p>
+                                                        <p class="small">Any supplementary information</p>
+                                                    </td>
+                                                </tr>-->
                     </table>
                 </td>
             </tr>
         </table>
-        
-        <div class="overlay" id="overlay"></div>
-                            <div style="height: 700px" class="modal" id="modal">
-                                <h2>Order Information</h2>
-                                <form>
-                                    <label for="orderCode">Order code:</label>
-                                    <input type="text" id="orderCode" value="" readonly><br>
 
-                                    <label for="productName">Product Name:</label>
-                                    <input type="text" id="productName" value="" readonly><br>
+        <div class="overlay" id="overlay"></div>
+        <div style="height: 700px;overflow: auto;max-height: 800px" class="modal" id="modal">
+            <div class="modal-content3">                      
+                <div class="container-complain">
+                    <h2>Order Information</h2>                   
+                    <label for="orderCode">Order code:</label>
+                    <input type="text" id="orderCode" value="" readonly><br>
+
+                            <label for="productName">Product Name:</label>
+                            <input type="text" id="productName" value="" readonly><br>
 
                                     <label for="price">Price:</label>
                                     <input type="text" id="price" value="" readonly><br>
 
-                                    <label for="intermediaryFee">Intermediary Fee:</label>
-                                    <input type="text" id="intermediaryFee" value="" readonly><br>
+                                            <label for="intermediaryFee">Intermediary Fee:</label>
+                                            <input type="text" id="intermediaryFee" value="" readonly><br>
 
-                                    <label for="party">Party bears the fee:</label><br>
-                                    <input type="radio" id="partySeller" name="party" value="seller" readonly> Seller
-                                    <input type="radio" id="partyBuyer" name="party" value="buyer" readonly> Buyer<br>
+                                                    <label for="party">Party bears the fee:</label>
+                                                    <input type="text" id="party" name="party" value="" readonly><br>
 
-                                    <label for="receivedAmount">Total received amount:</label>
-                                    <input type="text" id="receivedAmount" value="" readonly><br>
 
-                                    <label for="paidAmount">Total paid amount:</label>
-                                    <input type="text" id="paidAmount" value="" readonly><br>
+                                                            <label for="receivedAmount">Total received amount:</label>
+                                                            <input type="text" id="receivedAmount" value="" readonly><br>
 
-                                    <label for="productImage">Product Image:</label><br>
-                                    <img style="max-width: 150px; max-height: 150px" id="img1" src="" >
-                                    <img style="max-width: 150px; max-height: 150px" id="img2" src="" >
-                                    <img style="max-width: 150px; max-height: 150px" id="img3" src="" >
-                                    <img style="max-width: 150px; max-height: 150px" id="img4" src="" ><br>
+                                                                    <label for="paidAmount">Total paid amount:</label>
+                                                                    <input type="text" id="paidAmount" value="" readonly><br>
 
-                                    <label for="description">Description:</label>
-                                    <input id="description" value="" readonly></input><br>
+                                                                            <label for="productImage">Product Image:</label><br>
+                                                                                <img style="max-width: 150px; max-height: 150px" id="img1" src="" >
+                                                                                    <img style="max-width: 150px; max-height: 150px" id="img2" src="" >
+                                                                                        <img style="max-width: 150px; max-height: 150px" id="img3" src="" >
+                                                                                            <img style="max-width: 150px; max-height: 150px" id="img4" src="" ><br>
 
-                                    <label for="hiddenContent">Hidden Content:</label>
-                                    <input type="text" id="hiddenContent" value=""  readonly><br>
+                                                                                                    <label for="description">Description:</label>
+                                                                                                    <textarea id="description" rows="4" value="" readonly></textarea><br>
 
-                                    <label for="contactMethod">Contact Method:</label>
-                                    <input type="text" id="contactMethod" value=""  readonly><br>
+                                                                                                        <label for="hiddenContent">Hidden Content:</label>
+                                                                                                        <input type="text" id="hiddenContent_info" value=""  readonly><br>
 
-                                    <label for="status">Status:</label>
-                                    <input type="text" id="status" value="" readonly><br>
+                                                                                                                <label for="contactMethod">Contact Method:</label>
+                                                                                                                <input type="text" id="contactMethod" value=""  readonly><br>
 
-                                    <label for="buyer">Buyer:</label>
-                                    <input type="text" id="buyer" value="" readonly><br>
-                                    <label for="buyer">Create At:</label>
-                                    <input type="text" id="create_at" value="" readonly><br>
-                                    <label for="buyer">Update At:</label>
-                                    <input type="text" id="update_at" value="" readonly><br>
+                                                                                                                        <label for="status">Status:</label>
+                                                                                                                        <input type="text" id="status" value="" readonly><br>
 
-                                    <button onclick="hideProductModal()">OK</button>
-                                </form>
-                            </div>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="jscript/myorder.js"></script>
-    </body>
-</html>
+                                                                                                                                <label for="buyer">Buyer:</label>
+                                                                                                                                <input type="text" id="buyer_info" value="" readonly><br>
+                                                                                                                                        <label for="buyer">Create At:</label>
+                                                                                                                                        <input type="text" id="create_at" value="" readonly><br>
+                                                                                                                                                <label for="buyer">Update At:</label>
+                                                                                                                                                <input type="text" id="update_at" value="" readonly><br>
+
+
+                                                                                                                                                        </div>
+                                                                                                                                                        <div style="margin-top: auto; text-align: center;">
+                                                                                                                                                            <button onclick="hideProductModal()">Close</button>
+                                                                                                                                                        </div>
+                                                                                                                                                        </div>              
+                                                                                                                                                        </div>
+                                                                                                                                                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                                                                                                                                                        <script src="jscript/myorder.js"></script>
+                                                                                                                                                        </body>
+                                                                                                                                                        </html>

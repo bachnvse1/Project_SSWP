@@ -84,16 +84,31 @@ public class AddToCartController extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             Cart cart = (Cart) session.getAttribute("cart");
             if (cart != null) {
+                int index = 0; // Khai báo một biến đếm hoặc index
                 for (Product product : cart.getProduct()) {
-                    out.println("<tr>");
-                    out.println("<td>" + product.getId() + "</td>");
-                    //out.println("<td><img src='/finalweb10/download?image=" + product.getImage1() + "' width='100' /></td>");
-                    out.println("<td><img src='" + product.getImage1() + "' alt='' style='height: 50px;'/></td>");
-                    out.println("<td>" + product.getName() + "</td>");
-                    out.println("<td>" + product.getPrice() + "</td>");
-                    out.println("<td><span class='delete-icon' onclick='deleteProduct(" + product.getId() + ")'>&#128465;</span></td>");
-                    out.println("<td><a href='xxx' class='buy-button'>Buy</a></td>");
-                    out.println("</tr>");
+                    if (!product.is_delete) {
+                        out.print("<tr>\n"
+                                + "                                <td>" + product.getId() + "</td>\n"
+                                + "                                <td><img src=\"" + product.getImage1() + "\" alt=\"\" style=\"height: 50px;\"/></td>\n"
+                                + "                                <td>" + product.getName() + "</td>\n"
+                                + "                                <td>" + product.getPrice() + "</td>\n"
+                                + "                                <td><span class=\"delete-icon\" onclick=\"deleteProduct(" + product.getId() + ")\">&#128465;</span></td>\n"
+                                + "                                <td><button class=\"add-to-cart-btn\"  data-target=\"cookiesPopup_" + index + "\">\n"
+                                + "                                        <i class=\"fa fa-shopping-cart\"></i>BUY\n"
+                                + "                                    </button></td>\n"
+                                + "                            </tr>\n"
+                                + "                        <div class=\"container-2\">\n"
+                                + "                            <div class=\"cookiesContent\" id=\"cookiesPopup_" + index + "\">\n"
+                                + "                                <button class=\"close\">✖</button>\n"
+                                + "                                <img src=\"https://dichthuatmientrung.com.vn/wp-content/uploads/2022/06/important-sticky-note.jpg\" alt=\"cookies-img\" style=\"width: 50%;\"/>\n"
+                                + "                                <p style=\"color:red; margin-top: 5%;\">We will hold your intermediary funds and wait until you confirm the transaction is completely successful</p>\n"
+                                + "                                <button class=\"button-buy\" data-id=\"" + product.getId() + "\">BUY</button>\n"
+                                + "                            </div>\n"
+                                + "                        </div>   ");
+                        index++;
+
+                    }
+
                 }
             }
         }

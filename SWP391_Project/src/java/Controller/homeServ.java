@@ -93,7 +93,7 @@ public class homeServ extends HttpServlet {
         }
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("user");
-        if(u != null) {
+        if (u != null) {
             session.setAttribute("balance", dao.getWallet(u.getId()).getBalance());
         }
         listProductPage = listProduct.subList(start, end);
