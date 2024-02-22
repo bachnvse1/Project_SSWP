@@ -63,14 +63,7 @@ public class VerifyOrder extends HttpServlet {
         //processRequest(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -84,7 +77,7 @@ public class VerifyOrder extends HttpServlet {
         DAO dao = new DAO();
         
         double balanceSeller = dao.getWallet(dao.getOrderByID(id).getCreate_by()).getBalance();
-        double moneyRecive = dao.getOrderByProductID(id).getTotal_received_amount();
+        double moneyRecive = dao.getOrderByProductID(proid).getTotal_received_amount();
         dao.updateAmount(balanceSeller + moneyRecive, dao.getOrderByID(id).getCreate_by());
         dao.updateAmount(dao.getWallet(1).getBalance() - moneyRecive, 1);
         

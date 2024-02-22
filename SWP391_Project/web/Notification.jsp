@@ -9,7 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="css/font-awesome.min.css"/>
         
-        <<link rel="stylesheet" href="css/myorder.css"/>
+        <link rel="stylesheet" href="css/myorder.css"/>
         <style>
 
             body {
@@ -288,10 +288,21 @@
             .modal-content3 textarea {
                 height: 150px; /* ?? cao c?a textarea */
             }
+            
+            .checkout-btn {
+                background-color: #4CAF50;
+                color: #ffffff;
+                padding: 10px 15px;
+                text-decoration: none;
+                border-radius: 5px;
+                display: inline-block;
+                margin-top: 20px;
+            }
         </style>
     </head>
-
+    
     <body style="margin: 0; padding: 0">
+        <a href="home" class="checkout-btn">Back to home</a>
         <table style="border: none" cellpadding="0" cellspacing="0" width="100%">
             <tr>
                 <td style="padding: 15px 0">
@@ -436,5 +447,6 @@
                                                                                                                                                         </div>
                                                                                                                                                         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
                                                                                                                                                         <script src="jscript/myorder.js"></script>
+                                                                                                                                                        
                                                                                                                                                         </body>
                                                                                                                                                         </html>

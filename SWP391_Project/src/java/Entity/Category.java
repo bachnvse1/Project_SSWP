@@ -20,6 +20,11 @@ public class Category {
     public Category() {
     }
 
+    public Category(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public Category(int id, String name, Timestamp create_At, Timestamp update_At, boolean is_delete) {
         this.id = id;
         this.name = name;

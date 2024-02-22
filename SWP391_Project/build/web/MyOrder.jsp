@@ -259,6 +259,12 @@
                         </ul>
                     </div>
                 </div>
+                <div class="management" id="mysale">
+                    <div class="title-bar">
+                        <a href="home" class="checkout-btn">Back to home</a>
+                    </div>
+                    
+                </div>
             </div>
             <div class="table-responsive" style="margin-left: 5%">
 
@@ -296,6 +302,7 @@
                                                 <th>Status</th>
                                                 <th>Seller</th>                        
                                                 <th>Category</th>
+                                                <th>Hidden Content</th>
                                                 <th>Contact</th>
                                                 <th>Price</th>
                                                 <th>Transaction Fees</th>
@@ -518,12 +525,41 @@
                             <input type="text" id="intermediaryFee_ud" value="" readonly><br>
 
                             <label for="party">Party bears the fee:</label><br>                   
-                            <div class="radio-buttons">
-                                <input type="radio" id="partySeller_ud"  name="party" value="seller" checked>
-                                <label for="seller">Seller</label>
+                           <div style="display: flex;">
+                                <style>
+                                    /* Ẩn radio button mặc định */
+                                    input[type="radio"] {
+                                        display: none;
+                                    }
 
+                                    /* Tùy chỉnh hình dạng và kiểu nền của radio button khi được chọn */
+                                    input[type="radio"] + label::before {
+                                        content: "";
+                                        display: inline-block;
+                                        width: 20px;
+                                        height: 20px;
+                                        margin-right: 5px;
+                                        border: 2px solid #3498db; /* Màu xanh */
+                                        border-radius: 4px;
+                                    }
+
+                                    /* Hiển thị hình vuông màu xanh khi radio button được chọn */
+                                    input[type="radio"]:checked + label::before {
+                                        background-color: #3498db; /* Màu nền xanh khi checked */
+                                    }
+
+                                    /* Căn chỉnh văn bản để nằm cùng hàng với radio button */
+                                    label {
+                                        display: inline-block;
+                                        vertical-align: middle;
+                                    }
+                                </style>
+
+                                <input type="radio" id="partySeller_ud" name="party" value="seller">
+                                <label for="partySeller_ud">Seller</label>
+                                
                                 <input type="radio" id="partyBuyer_ud" name="party" value="buyer">
-                                <label for="buyer">Buyer</label>
+                                <label for="partyBuyer_ud">Buyer</label>
                             </div>
                             <label for="receivedAmount">Total received amount:</label>
                             <input type="text" id="receivedAmount_ud" value=""readonly ><br>
@@ -597,7 +633,7 @@
                 <h3>Verify Order</h3>
                 <p>Order matches the description</p>
                 <form id="authForm">
-                    <input type="text" id="pro_id" name="pro_id" hidden="">
+                    <input type="text" id="pro_id1" name="pro_id" hidden="">
                     <div class="options1">
                         <button type="submit" class="option1 yes">Yes</button>
 

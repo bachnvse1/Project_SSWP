@@ -94,7 +94,7 @@
                 overflow-x: hidden;
                 overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
             }</style>
-           
+
     </head>
     <body>
 
@@ -134,11 +134,12 @@
                                                 <th scope="col">Username</th>                              
                                                 <th scope="col">Created_at</th>
                                                 <th scope="col">Updated_at</th>
-                                                <th ></th>
+                                                <th></th>
+                                                <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            
+
                                         <c:forEach items="${listCategory}" var="c">
                                             <tr>
 
@@ -146,21 +147,26 @@
                                                 <td>${c.name}</td>                                                                                                                               
                                                 <td>${c.create_At}</td>
                                                 <td>${c.update_At}</td>
-                                               <td>
 
-                                            <a href="#" onclick="doDelete('${c.id}')">
-                                                Delete
-                                            </a>                                                 
-                                        </td>
-                                         </tr>
-                                    </c:forEach>
+                                                <td>
+                                                    <a href="updatecategory?id=${c.id}">
+                                                        Update
+                                                    </a>  
+                                                </td>
+                                                <td>
+                                                    <a href="#" onclick="doDelete('${c.id}')">
+                                                        Delete
+                                                    </a>                                                 
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
                 </section>
-                    <a href="InserCategory.jsp">ADD</a>
+                <a href="InserCategory.jsp">ADD</a>
                 <!--Section: Quan Ly tai Khoan-->
             </div>
 
@@ -198,14 +204,14 @@
         <script type="text/javascript" src="js/mdb.min.js"></script>
         <!-- Custom scripts -->
         <script type="text/javascript" src="js/script.js"></script>
-     <script >
-            function doDelete(id){
-                var url = "deletecate";     
-                if(confirm("do U want delete")){
-                        window.location.href=url+"?id="+id;  
-                }
-                     
-            }
+        <script >
+                                            function doDelete(id) {
+                                                var url = "deletecate";
+                                                if (confirm("do U want delete")) {
+                                                    window.location.href = url + "?id=" + id;
+                                                }
+
+                                            }
         </script>
     </body>
 </html>

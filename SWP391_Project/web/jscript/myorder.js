@@ -203,7 +203,9 @@ $(document).ready(function () {
             success: function (response) {
                 if (response === 'success') {
                     alert("success");
+                    window.location.href = 'manageMyOrder';
                 } else {
+                    alert(response);
                 }
             },
             error: function (xhr, status, error) {
@@ -314,7 +316,7 @@ $(document).ready(function () {
             },
             error: function () {
                 // Xử lý lỗi nếu có
-                alert("Đã xảy ra lỗi khi tải trang");
+                alert("Đã xảy ra lỗi khi tải trang2");
             }
         });
     });
@@ -331,7 +333,7 @@ $(document).ready(function () {
         $("#order_id").val(orderId); // Cập nhật giá trị của trường input
         $("#order_code").val(orderCode); // Cập nhật giá trị của trường input
         $("#hidden_info").val(hiddenInfo);
-        $("#pro_id").val(proid);
+        $("#pro_id1").val(proid);
         $("#myModalComplain").show();
 
     });
@@ -341,7 +343,7 @@ $(document).ready(function () {
         var orderId = $(this).data("orderid");
         var proid = $(this).data("proid");
         $("#order_id").val(orderId); // Cập nhật giá trị của trường input // Cập nhật giá trị của trường input
-        $("#pro_id").val(proid);
+        $("#pro_id1").val(proid);
         $("#myModalVerify").show();
     });
 
@@ -390,7 +392,7 @@ $(document).ready(function () {
         e.preventDefault(); // Ngăn chặn chuyển hướng mặc định khi nhấn nút submit
         var formData = {
             id: $("#order_id").val(),
-            pro_id: $("#pro_id").val()
+            pro_id: $("#pro_id1").val()
         };
         $.ajax({
             type: 'POST',
@@ -410,7 +412,7 @@ $(document).ready(function () {
                 }
             },
             error: function (xhr, status, error) {
-                alert("ưe");
+                console.error(xhr.responseText);
             }
         });
     });

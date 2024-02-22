@@ -90,13 +90,12 @@
                                                                     <input type="text" name="action" value="delete" hidden="">
                                                                     <input type="text"  name="id" value="${listF.id}" hidden="">
                                                                     
-                                                                                            <button type="button" class="fa fa-trash" onclick="deleteItem(${listF.id})">
-
+                                                                        <button type="button" class="fa fa-trash" onclick="deleteItem(${listF.id})"></button>
                                                                 </form>
-                                                                </button>
+                                                                
 
                                                             </td>
-                                                                                            </c:if>
+                                                             </c:if>
                                                         </tr>
                                                     </c:forEach>
                                                         

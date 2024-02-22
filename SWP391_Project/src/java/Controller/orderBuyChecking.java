@@ -148,6 +148,7 @@ public class orderBuyChecking extends HttpServlet {
                         + "                                                    <td>" + o.getOrder().getStatus() + "</td>\n"
                         + "                                                    <td>" + dao.getUserById(o.getProduct().getCreate_by()).getDisplay_name() + "</td>\n"
                         + "                                                    <td>" + dao.getCategoryById(o.getProduct().getCategoryID()).getName() + "</td>\n"
+                        + "                                                    <td>" + o.getProduct().getHidden_content()+ "</td>\n"
                         + "                                                    <td>" + o.getProduct().getContact_Method() + "</td>\n"
                         + "                                                    <td>" + o.getProduct().getPrice() + " VND" + "</td>\n"
                         + "                                                    <td>" + o.getOrder().getIntermediary_fee() + " VND" + "</td>\n"

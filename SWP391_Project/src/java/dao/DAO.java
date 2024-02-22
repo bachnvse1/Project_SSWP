@@ -1077,40 +1077,38 @@ String query = "Update intermediate_Orders set is_delete = ? where id =? ";
 
     }
 
-    public void UpdateProductByProductID(int pid, Product product) {
-        String sql = "UPDATE swp_demo.Product\n"
-                + "SET \n"
-                + "    name = ?,\n"
+    public void UpdateProductByProductID(Product product) {
+        String sql = "UPDATE Product\n"
+                + "SET name = ?,\n"
                 + "    price = ?,\n"
-                + "    categoryID = ?,\n"
                 + "    description = ?,\n"
                 + "    image1 = ?,\n"
                 + "    image2 = ?,\n"
-                + "    image3 =?,\n"
+                + "    image3 = ?,\n"
                 + "    image4 = ?,\n"
-                + "    transaction_Fees = ?,\n"
+                + "    transaction_Fees = ?, -- or 0 depending on the value\n"
                 + "    contact_Method = ?,\n"
-                + "    hidden_content = ?,\n"
+                + "    hidden_content =?,\n"
                 + "    updated_by = ?,\n"
                 + "    updated_at = CURRENT_TIMESTAMP,\n"
-                + "WHERE \n"
-                + "    id = ?;";
+                + "    is_delete = ? -- or 1 depending on the status\n"
+                + "WHERE id = ?;";
         try {
             ps = con.prepareStatement(sql);
 
             ps.setString(1, product.getName());
             ps.setDouble(2, product.getPrice());
-            ps.setInt(3, product.getCategoryID());
-            ps.setString(4, product.getDescription());
-            ps.setString(5, product.getImage1());
-            ps.setString(6, product.getImage2());
-            ps.setString(7, product.getImage3());
-            ps.setString(8, product.getImage4());
-            ps.setBoolean(9, product.isTransaction_fee());
-            ps.setString(10, product.getContact_Method());
-            ps.setString(11, product.getHidden_content());
-            ps.setInt(12, product.getUpdate_by());
-            ps.setInt(13, pid);
+            ps.setString(3, product.getDescription());
+            ps.setString(4, product.getImage1());
+            ps.setString(5, product.getImage2());
+            ps.setString(6, product.getImage3());
+            ps.setString(7, product.getImage4());
+            ps.setBoolean(8, product.isTransaction_fee());
+            ps.setString(9, product.getContact_Method());
+            ps.setString(10, product.getHidden_content());
+            ps.setInt(11, product.getUpdate_by());
+            ps.setBoolean(12, product.isIs_delete());
+            ps.setInt(13, product.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
         }
@@ -1525,7 +1523,18 @@ String query = "Update intermediate_Orders set is_delete = ? where id =? ";
 
         }
     }
+public void Updatecategory(Category c){
+      String query = "Update `swp_demo`.`category` SET name=? WHERE id = ?";
+     try{      con = new DBContext().connection; //connect sql
+            ps = con.prepareStatement(query);
+            ps.setString(1, c.getName());
+            ps.setInt(2, c.getId());
+            ps.executeUpdate();
 
+        } catch (Exception e) {
+
+        }
+}
     public static void main(String[] args) {
         DAO dao = new DAO();
         dao.insertWallet(5000000, 4);
