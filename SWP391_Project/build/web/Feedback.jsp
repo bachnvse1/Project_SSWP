@@ -75,9 +75,10 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <c:forEach items="${listF}" var="listF">
+                                                    <c:forEach items="${listF}" var="listF" varStatus="loop">
                                                         <tr>
-                                                            <td>${listF.id}</td>
+                                                            <td>${loop.index + 1}</td>
+                                                            
                                                             <td>${listF.title}</td>
                                                                  <td>${listF.content}</td>
                                                             <td>${listF.create_at}</td>
@@ -104,61 +105,10 @@
                                                 </tbody>
                                                
                                             </table>
-                                            <button class="btn btn-primary float-right mt-2" data-toggle="modal" data-target="#exampleModalCreate">ADD</button>   
+                                               
                                         </div>
                                     </div>
-                                    <div class="modal fade" id="exampleModalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" style="max-width: 700px;" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Feedback</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body" style="padding: 40px;">
-
-                                                    <form action="Feedback" method="post">   
-                                                        <div class="row">
-
-                                                            <div class="card">
-                                                                <div class="card-body">
-
-                                                                    <input type="text" name="action" value="create" hidden="">
-
-                                                                    <h2 class="card-title">Title</h2>
-                                                                    <input type="text" name="title" value="" required="" class="form-control"><br/>
-                                                                    <h2 class="card-title">Content</h2>
-                                                        <input type="text" name="content" value="" required="" class="form-control"><br/>
-                                                                    <h5>
-                                                                        Phone no:
-                                                                        <small class="text-muted">
-                                                                           0966033008
-                                                                        </small>
-                                                                    </h5>
-                                                                    <h5>
-                                                                        Email:
-                                                                        <small class="text-muted">
-                                                                            hue@gmail.com
-                                                                        </small>
-                                                                    </h5>
-                                                                  
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-
-                                                            <button type="submit" class="btn btn btn-primary">Create</button>
-                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                        </div>    
-                                                    </form>
-
-                                                </div>
-
-                                            </div>
-                                            <!-- ============================================================== -->
-                                        </div>
-                                    </div> 
+                                   
                                     <!-- Modal -->
                                     <c:forEach items="${listF}" var="listF">
                                         <div class="modal fade" id="exampleModal${listF.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -189,18 +139,7 @@
                                                      
                                                                        
                                                                      
-                                                                        <h5>
-                                                                            Phone no:
-                                                                            <small class="text-muted">
-                                                                               0966033008
-                                                                            </small>
-                                                                        </h5>
-                                                                        <h5>
-                                                                            Email:
-                                                                            <small class="text-muted">
-                                                                                libraryonline@gmail.com
-                                                                            </small>
-                                                                        </h5>
+                                                                       
                                                                        
                                                                     </div>
                                                                 </div>
@@ -208,7 +147,7 @@
                                                             <div class="modal-footer">
 
                                                                 <button type="submit" class="btn btn btn-primary">Save Change</button>
-                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                                                             </div>
                                                         </form>
                                                     </div>

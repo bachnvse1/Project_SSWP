@@ -102,6 +102,7 @@ public class ManageMyOrder extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // processRequest(request, response);
+
         DAO dao = new DAO();
         int id = Integer.parseInt(request.getParameter("pid"));
         intermediateOrders order = dao.getOrderByID(id);
@@ -134,6 +135,7 @@ public class ManageMyOrder extends HttpServlet {
         response.getWriter().write(data);
 
     }
+    
 
     /**
      * Returns a short description of the servlet.

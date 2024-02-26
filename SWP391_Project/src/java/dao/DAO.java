@@ -1191,7 +1191,9 @@ String query = "Update intermediate_Orders set is_delete = ? where id =? ";
     public ArrayList<Feedback> getFeedbackList() {
         ArrayList<Feedback> list = new ArrayList<>();
         try {
-            String sql = "SELECT f.*, u.username FROM swp_demo.feedback f JOIN swp_demo.users u ON f.user_id = u.id";
+            
+            String sql = "SELECT f.*, u.username FROM swp_demo.feedback f JOIN swp_demo.users u ON f.user_id = u.id ORDER BY f.id DESC";
+
             PreparedStatement st = connection.prepareStatement(sql);
 //            st.setInt(1, userId);
             ResultSet rs = st.executeQuery();
