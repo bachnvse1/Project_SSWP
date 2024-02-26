@@ -175,29 +175,43 @@
 
         <script>
 
-                                    var buyButtons = document.querySelectorAll('.add-to-cart-btn');
-                                    buyButtons.forEach(function (button) {
-                                        button.addEventListener('click', function () {
-                                            // Lấy id của popup từ thuộc tính data-target của nút "BUY"
-                                            var targetId = this.getAttribute('data-target');
-                                            // Hiển thị form tương ứng với id
+                                    // Sử dụng event delegation:
+                                    document.addEventListener('click', function (event) {
+                                        var target = event.target;
+
+                                        // Kiểm tra xem nút BUY được nhấp hay không
+                                        if (target.classList.contains('add-to-cart-btn')) {
+                                            var targetId = target.getAttribute('data-target');
                                             var popup = document.getElementById(targetId);
                                             if (popup) {
-                                                popup.style.display = 'block'; // Hiển thị form
+                                                popup.style.display = 'block';
                                             }
-                                        });
-                                    });
+                                        }
 
-// Thêm trình nghe sự kiện cho các nút đóng trong các form
-                                    var closeButtons = document.querySelectorAll('.close');
-                                    closeButtons.forEach(function (closeButton) {
-                                        closeButton.addEventListener('click', function () {
-                                            // Tìm phần tử chứa nút đóng và ẩn nó
-                                            var popup = this.closest('.cookiesContent');
+                                        // Kiểm tra xem nút đóng được nhấp hay không
+                                        if (target.classList.contains('close')) {
+                                            var popup = target.closest('.cookiesContent');
                                             if (popup) {
-                                                popup.style.display = 'none'; // Ẩn form
+                                                popup.style.display = 'none';
                                             }
-                                        });
+                                        }
+
+                                        // Kiểm tra xem nút BUY trong popup được nhấp hay không
+                                        if (target.classList.contains('button-buy')) {
+                                            var productId = target.getAttribute('data-id');
+                                            $.ajax({
+                                                type: 'post',
+                                                url: 'buy',
+                                                data: {id: productId},
+                                                success: function (response) {
+                                                    alert(response);
+                                                    window.location.href = 'home';
+                                                },
+                                                error: function () {
+                                                    alert('Đã xảy ra lỗi khi tải trang');
+                                                }
+                                            });
+                                        }
                                     });
 
 

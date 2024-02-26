@@ -12,6 +12,8 @@ $(document).ready(function () {
     $("#myModalComplain").hide();
     $("#myModalVerify").hide();
     $("#orderBuy-complete").hide();
+    $("#exampleModalCreate").hide();
+
     // Xử lý sự kiện khi nhấn nút "Add Product"
     $("#addProductButton").click(function () {
         $("#addProductForm").show();
@@ -21,6 +23,7 @@ $(document).ready(function () {
         $("#myModalComplain").hide();
         $("#myModalVerify").hide();
         $("#orderBuy-complete").hide();
+        $("#exampleModalCreate").hide();
     });
     $("#allProductButton").click(function () {
         $("#addProductForm").hide();
@@ -30,6 +33,7 @@ $(document).ready(function () {
         $("#Filter").show();
         $("#myModalComplain").hide();
         $("#myModalVerify").hide();
+        $("#exampleModalCreate").hide();
     });
 });
 function toggleOptions(productId) {
@@ -351,6 +355,7 @@ $(document).ready(function () {
     // Khi người dùng nhấn vào nút đóng (×), đóng modal
     $(".close").click(function () {
         $("#myModalComplain").hide();
+        $("#exampleModalCreate").hide();
     });
 
     $(".close").click(function () {
@@ -400,14 +405,16 @@ $(document).ready(function () {
             data: formData, // Gửi dữ liệu của form sang servlet
             success: function (response) {
                 if (response === "success") {
-                    $("#myModalVerify").hide();
+                    
                     alert("Verify order success");
 
-                    // Chuyển hướng đến trang home
-                    window.location.href = 'manageMyOrder';
+                    // Hiển thị modal example sau khi nhấp OK
+                    $("#exampleModalCreate").show();
 
+                    // Chuyển hướng đến trang home
+                    //window.location.href = 'manageMyOrder';
                 } else {
-                    $("#myModalVerify").hide();
+                    $("#exampleModalCreate").hide();
                     alert("You have already verified this order!");
                 }
             },
@@ -416,6 +423,7 @@ $(document).ready(function () {
             }
         });
     });
+
 });
 
 $(document).ready(function () {

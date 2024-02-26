@@ -215,6 +215,13 @@
                 color: white;
             }
 
+            #exampleModalCreate {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+}
+
         </style>
     </head>
     <body>
@@ -632,21 +639,21 @@
                 <span class="close">&times;</span></br></br>
                 <h3>Verify Order</h3>
                 <p>Order matches the description</p>
-               
-                      <button class="btn btn-primary float-right mt-2" data-toggle="modal" data-target="#exampleModalCreate">Yes</button>   
-                                        
-                                   
-                  
-               
+                <form id="authForm">
+                    <input type="text" id="pro_id1" name="pro_id" hidden="">
+                    <div class="options1">
+                        <button type="submit" class="option1 yes">Yes</button>
+
+                    </div>
+                    <div class="loader" id="loader"></div>
+                </form>
             </div>
-                <div class="modal fade" id="exampleModalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  style="height:580px;padding:0px;">
+                <div id="exampleModalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  style="height:580px;padding:0px;">
                                         <div class="modal-dialog" style="max-width: 700px;" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="exampleModalLabel">Feedback</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
+                                                         <span class="close">&times;</span>
                                                 </div>
                                                 <div class="modal-body" style="padding: 40px;">
 
@@ -662,15 +669,11 @@
                                                                     <input type="text" name="title" value="" required="" class="form-control"><br/>
                                                                     <h2 class="card-title">Content</h2>
                                                         <input type="text" name="content" value="" required="" class="form-control"><br/>
-                                                                   
-                                                                  
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
-
                                                             <button type="submit" class="btn btn btn-primary">Add feedbacks</button>
-                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                                                         </div>    
                                                     </form>
 
