@@ -13,7 +13,8 @@ $(document).ready(function () {
     $("#myModalVerify").hide();
     $("#orderBuy-complete").hide();
     $("#exampleModalCreate").hide();
-
+    $("#ProductCompleteDisplay").hide();
+    $("#ProductProcessingDisplay").hide();
     // Xử lý sự kiện khi nhấn nút "Add Product"
     $("#addProductButton").click(function () {
         $("#addProductForm").show();
@@ -24,6 +25,8 @@ $(document).ready(function () {
         $("#myModalVerify").hide();
         $("#orderBuy-complete").hide();
         $("#exampleModalCreate").hide();
+        $("#ProductCompleteDisplay").hide();
+    $("#ProductProcessingDisplay").hide();
     });
     $("#allProductButton").click(function () {
         $("#addProductForm").hide();
@@ -34,6 +37,30 @@ $(document).ready(function () {
         $("#myModalComplain").hide();
         $("#myModalVerify").hide();
         $("#exampleModalCreate").hide();
+    });
+    $("#completedorder").click(function () {
+        $("#addProductForm").hide();
+        $("#ProductDisplay").hide();
+        $("#orderBuy").hide();
+        $("#orderBuy-complete").hide();
+        $("#Filter").show();
+        $("#myModalComplain").hide();
+        $("#myModalVerify").hide();
+        $("#exampleModalCreate").hide();
+        $("#ProductCompleteDisplay").show();
+    $("#ProductProcessingDisplay").hide();
+    });
+    $("#processingorder").click(function () {
+        $("#addProductForm").hide();
+        $("#ProductDisplay").hide();
+        $("#orderBuy").hide();
+        $("#orderBuy-complete").hide();
+        $("#Filter").show();
+        $("#myModalComplain").hide();
+        $("#myModalVerify").hide();
+        $("#exampleModalCreate").hide();
+        $("#ProductCompleteDisplay").hide();
+    $("#ProductProcessingDisplay").show();
     });
 });
 function toggleOptions(productId) {
@@ -412,7 +439,7 @@ $(document).ready(function () {
                     $("#exampleModalCreate").show();
 
                     // Chuyển hướng đến trang home
-                    //window.location.href = 'manageMyOrder';
+                    window.location.href = 'manageMyOrder';
                 } else {
                     $("#exampleModalCreate").hide();
                     alert("You have already verified this order!");

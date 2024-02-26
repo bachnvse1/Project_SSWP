@@ -216,11 +216,11 @@
             }
 
             #exampleModalCreate {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-}
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
 
         </style>
     </head>
@@ -230,13 +230,15 @@
             <div>
                 <div class="management" id="myproduct">
                     <div class="title-bar" onclick="toggleOptions('myproduct')">
-                        <h5>Manage Product</h5>
+                        <h5>Manage sales orders</h5>
                         <span class="arrow">▼</span>
                     </div>
                     <div class="options">
                         <ul>
-                            <li><a id="allProductButton" >All product</a></li>
-                            <li><a id="addProductButton" >Add product</a></li>
+                            <li><a id="allProductButton" >All Product</a></li>
+                            <li><a id="completedorder" >Completed Order</a></li>
+                            <li><a id="processingorder">Processing Order</a></li>
+                            <li><a id="addProductButton" >Add Product</a></li>
                         </ul>
                     </div>
                 </div>
@@ -253,24 +255,12 @@
                         </ul>
                     </div>
                 </div>
-                <div class="management" id="mysale">
-                    <div class="title-bar" onclick="toggleOptions('mysale')">
-                        <h5>Quản lí đơn bán</h5>
-                        <span class="arrow">▼</span>
-                    </div>
-                    <div class="options">
-                        <ul>
-                            <li><a >Đã hoàn thành</a></li>
-                            <li><a >Đang xử lí</a></li>
-                            <li><a >Đã hủy</a></li>
-                        </ul>
-                    </div>
-                </div>
+
                 <div class="management" id="mysale">
                     <div class="title-bar">
                         <a href="home" class="checkout-btn">Back to home</a>
                     </div>
-                    
+
                 </div>
             </div>
             <div class="table-responsive" style="margin-left: 5%">
@@ -398,6 +388,108 @@
                     </tbody>
                 </table>
 
+
+
+
+
+                <!--Complete Table-->
+                <table id="ProductCompleteDisplay" class="text-nowrap mb-0 table" border="1">
+
+                    <thead class="table-light">
+                        <tr>
+                            <th>Code</th>
+                            <th>Product Name</th>
+                            <th>Price</th>                        
+                            <th>Total amount received</th>
+                            <th>Total payment</th>
+                            <th>Transaction fees</th>
+                            <th>Status</th>
+                            <th>Party bears the fee</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <c:forEach items="${productOrderPairsComplete}" var="c">
+                            <c:if test="${!c.getOrder().isIs_delete()}">
+                                <tr>
+                                    <td>${c.getOrder().getCode()}</td>
+                                    <td>${c.getProduct().getName()}</td>
+                                    <td>${c.getProduct().getPrice()}</td>
+                                    <td>${c.getOrder().getTotal_received_amount()}</td>
+                                    <td>${c.getOrder().getTotal_paid_amount()}</td>
+                                    <td>${c.getOrder().getIntermediary_fee()}</td>
+                                    <td>${c.getOrder().getStatus()}</td>
+                                    <td>${c.getProduct().isTransaction_fee() ? "Seller" : "Buyer"}</td>
+                                    <td>
+                                        <a class="productInfo" data-action="view"  href="#" data-product-id="${c.getOrder().getId()}">
+                                            <i style="color: #0061f2" class="fa fa-info-circle"></i>
+                                        </a>  
+                                        <a class="updateproduct" data-action="update" href="#" data-product-id="${c.getOrder().getId()}">
+                                            <i style="color: #34ce57" class="fa fa-pencil"></i>
+                                        </a>
+                                        <a class="deleteProductButton" data-product-id="${c.getOrder().getId()}">
+                                            <i style="color: red" class="fa fa-trash"></i>
+                                        </a>  
+                                    </td>
+                                </tr>
+                            </c:if>
+                        </c:forEach>
+                    </tbody>
+                </table>
+
+
+
+
+                <!--Processing Table-->
+                <table id="ProductProcessingDisplay" class="text-nowrap mb-0 table" border="1">
+
+                    <thead class="table-light">
+                        <tr>
+                            <th>Code</th>
+                            <th>Product Name</th>
+                            <th>Price</th>                        
+                            <th>Total amount received</th>
+                            <th>Total payment</th>
+                            <th>Transaction fees</th>
+                            <th>Status</th>
+                            <th>Party bears the fee</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <c:forEach items="${productOrderPairsProcess}" var="o">
+                            <c:if test="${!o.getOrder().isIs_delete()}">
+                                <tr>
+                                    <td>${o.getOrder().getCode()}</td>
+                                    <td>${o.getProduct().getName()}</td>
+                                    <td>${o.getProduct().getPrice()}</td>
+                                    <td>${o.getOrder().getTotal_received_amount()}</td>
+                                    <td>${o.getOrder().getTotal_paid_amount()}</td>
+                                    <td>${o.getOrder().getIntermediary_fee()}</td>
+                                    <td>${o.getOrder().getStatus()}</td>
+                                    <td>${o.getProduct().isTransaction_fee() ? "Seller" : "Buyer"}</td>
+                                    <td>
+                                        <a class="productInfo" data-action="view"  href="#" data-product-id="${o.getOrder().getId()}">
+                                            <i style="color: #0061f2" class="fa fa-info-circle"></i>
+                                        </a>  
+                                        <a class="updateproduct" data-action="update" href="#" data-product-id="${o.getOrder().getId()}">
+                                            <i style="color: #34ce57" class="fa fa-pencil"></i>
+                                        </a>
+                                        <a class="deleteProductButton" data-product-id="${o.getOrder().getId()}">
+                                            <i style="color: red" class="fa fa-trash"></i>
+                                        </a>  
+                                    </td>
+                                </tr>
+                            </c:if>
+                        </c:forEach>
+                    </tbody>
+                </table>
+
+
+
+                <!--                  Add Form-->
                 <div id="addProductForm" class="addProduct">
                     <div class="modal-content3">                      
                         <div class="container-complain">
@@ -470,7 +562,7 @@
 
                         <label for="party">Party bears the fee:</label>
                         <input type="text" id="party" name="party" value="" readonly><br>
-                        
+
 
                         <label for="receivedAmount">Total received amount:</label>
                         <input type="text" id="receivedAmount" value="" readonly><br>
@@ -532,7 +624,7 @@
                             <input type="text" id="intermediaryFee_ud" value="" readonly><br>
 
                             <label for="party">Party bears the fee:</label><br>                   
-                           <div style="display: flex;">
+                            <div style="display: flex;">
                                 <style>
                                     /* Ẩn radio button mặc định */
                                     input[type="radio"] {
@@ -564,7 +656,7 @@
 
                                 <input type="radio" id="partySeller_ud" name="party" value="seller">
                                 <label for="partySeller_ud">Seller</label>
-                                
+
                                 <input type="radio" id="partyBuyer_ud" name="party" value="buyer">
                                 <label for="partyBuyer_ud">Buyer</label>
                             </div>
@@ -611,7 +703,7 @@
                     </div>
 
                 </div>              
-            
+
 
             </div>
 
@@ -648,41 +740,41 @@
                     <div class="loader" id="loader"></div>
                 </form>
             </div>
-                <div id="exampleModalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  style="height:580px;padding:0px;">
-                                        <div class="modal-dialog" style="max-width: 700px;" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Feedback</h5>
-                                                         <span class="close">&times;</span>
-                                                </div>
-                                                <div class="modal-body" style="padding: 40px;">
+            <div id="exampleModalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  style="height:580px;padding:0px;">
+                <div class="modal-dialog" style="max-width: 700px;" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Feedback</h5>
+                            <span class="close">&times;</span>
+                        </div>
+                        <div class="modal-body" style="padding: 40px;">
 
-                                                    <form action="Feedback" method="post">   
-                                                        <div class="row">
+                            <form action="Feedback" method="post">   
+                                <div class="row">
 
-                                                            <div class="card">
-                                                                <div class="card-body">
+                                    <div class="card">
+                                        <div class="card-body">
 
-                                                                    <input type="text" name="action" value="create" hidden="">
+                                            <input type="text" name="action" value="create" hidden="">
 
-                                                                    <h2 class="card-title">Title</h2>
-                                                                    <input type="text" name="title" value="" required="" class="form-control"><br/>
-                                                                    <h2 class="card-title">Content</h2>
-                                                        <input type="text" name="content" value="" required="" class="form-control"><br/>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="submit" class="btn btn btn-primary">Add feedbacks</button>
-                                                        </div>    
-                                                    </form>
-
-                                                </div>
-
-                                            </div>
-                                            <!-- ============================================================== -->
+                                            <h2 class="card-title">Title</h2>
+                                            <input type="text" name="title" value="" required="" class="form-control"><br/>
+                                            <h2 class="card-title">Content</h2>
+                                            <input type="text" name="content" value="" required="" class="form-control"><br/>
                                         </div>
-                                    </div> 
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn btn-primary">Add feedbacks</button>
+                                </div>    
+                            </form>
+
+                        </div>
+
+                    </div>
+                    <!-- ============================================================== -->
+                </div>
+            </div> 
 
         </div>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

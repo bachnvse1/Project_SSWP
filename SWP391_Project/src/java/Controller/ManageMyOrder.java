@@ -72,21 +72,40 @@ public class ManageMyOrder extends HttpServlet {
         DAO dao = new DAO();
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("user");
-
+        String complete = "Complete";
         List<Category> category = dao.getAllCategory();
-                     List<ProductOrderPair> productOrderPairs = new ArrayList<>();
-       
-       
-             List<Product> listProduct = dao.getProductByUserID(u.getId());
-   
-            for (Product product : listProduct) {
+         
+         // Get All Order
+         List<Product> listProduct = dao.getProductByUserID(u.getId());
+             List<ProductOrderPair> productOrderPairsAll = new ArrayList<>();
+             for (Product product : listProduct) {
             intermediateOrders order = dao.getOrderByProductID(product.getId());
-            productOrderPairs.add(new ProductOrderPair(product, order));
+            productOrderPairsAll.add(new ProductOrderPair(product, order));
         }
-        
+             // Get Complete Order
+            List<ProductOrderPair> productOrderPairsComplete = new ArrayList<>();
+         List<intermediateOrders> orderCom = dao.getOrderByStatus(complete, u.getId());
+               for (intermediateOrders orders : orderCom) {
+            Product product = dao.getProductByID(orders.getProductId());
+            productOrderPairsComplete.add(new ProductOrderPair(product, orders));
+        }
+               //Get Processing Order  
+              List<ProductOrderPair> productOrderPairsProcess = new ArrayList<>();
+         List<intermediateOrders> orderReady = dao.getOrderByStatus("Ready", u.getId());
+               for (intermediateOrders orders : orderReady) {
+            Product product = dao.getProductByID(orders.getProductId());
+            productOrderPairsProcess.add(new ProductOrderPair(product, orders));
+        }
+               List<intermediateOrders> orderCheck = dao.getOrderByStatus("Checking", u.getId());
+               for (intermediateOrders orders : orderCheck) {
+            Product product = dao.getProductByID(orders.getProductId());
+            productOrderPairsProcess.add(new ProductOrderPair(product, orders));
+        }
                
         request.setAttribute("category", category);
-        request.setAttribute("productOrderPairs", productOrderPairs);
+        request.setAttribute("productOrderPairs", productOrderPairsAll);
+        request.setAttribute("productOrderPairsComplete", productOrderPairsComplete);
+        request.setAttribute("productOrderPairsProcess", productOrderPairsProcess);
         request.getRequestDispatcher("MyOrder.jsp").forward(request, response);
     }
 
