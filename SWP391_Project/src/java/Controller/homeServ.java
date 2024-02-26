@@ -109,46 +109,50 @@ public class homeServ extends HttpServlet {
                 PrintWriter out = response.getWriter();
                 // Dynamically generate the product listing for AJAX response
                 for (Product p : listProductPage) {
-                    out.print(" <div class=\"col-md-3\">\n"
-                            + "                                            <!-- product -->\n"
-                            + "\n"
-                            + "                                            <div class=\"product\">\n"
-                            + "                                                <div class=\"product-img\">\n"
-                            + "                                                    <img src=\"" + p.image1 + "\" alt=\"\" style=\"height: 150px;\">\n"
-                            + "\n"
-                            + "                                                </div>\n"
-                            + "                                                <div class=\"product-body\">\n"
-                            + "\n"
-                            + "                                                    <h3 class=\"product-name\"><a href=\"#\">" + p.name + "</a></h3>\n"
-                            + "                                                    <h4 class=\"product-price\">" + p.price + "<del\n"
-                            + "                                                            class=\"product-old-price\">$990.00</del></h4>\n"
-                            + "\n"
-                            + "                                                    <div class=\"product-btns\">\n"
-                            + "                                                        <button class=\"add-to-wishlist\"><i class=\"fa fa-heart-o\"></i><span\n"
-                            + "                                                                class=\"tooltipp\">add to wishlist</span></button>\n"
-                            + "                                                        <button class=\"add-to-compare\"><i class=\"fa fa-exchange\"></i><span\n"
-                            + "                                                                class=\"tooltipp\">add to compare</span></button>\n"
-                            + "                                                        <button class=\"quick-view\"><i class=\"fa fa-eye\"></i><span\n"
-                            + "                                                                class=\"tooltipp\">quick view</span></button>\n"
-                            + "                                                    </div>\n"
-                            + "                                                </div>\n"
-                            + "                                                <div class=\"add-to-cart\">\n"
-                            + "                                                    <!-- Thêm một ID động cho nút \"Thêm vào giỏ hàng\" -->\n"
-                            + "                                                    <button class=\"add-to-cart-btn\" id=\"buyButton_${loop.index}\" data-target=\"cookiesPopup_${loop.index}\">\n"
-                            + "                                                        <i class=\"fa fa-shopping-cart\"></i> Thêm vào giỏ hàng\n"
-                            + "                                                    </button>\n"
-                            + "                                                </div>\n"
-                            + "                                            </div>\n"
-                            + "                                            <div class=\"container-2\">\n"
-                            + "                                                <div class=\"cookiesContent\" id=\"cookiesPopup_${loop.index}\">\n"
-                            + "                                                    <button class=\"close\">✖</button>\n"
-                            + "                                                    <img src=\"https://dichthuatmientrung.com.vn/wp-content/uploads/2022/06/important-sticky-note.jpg\" alt=\"cookies-img\" style=\"width: 50%;\"/>\n"
-                            + "                                                    <p style=\"color:red; margin-top: 5%;\">We will hold your intermediary funds and wait until you confirm the transaction is completely successful</p>\n"
-                            + "                                                    <button class=\"button-buy\" data-id=\"" + p.id + "\">BUY</button>\n"
-                            + "                                                </div>\n"
-                            + "                                            </div>               \n"
-                            + "                                            <!-- /product -->\n"
-                            + "                                        </div>");
+                    out.print("  <div class=\"col-md-3\">\n" +
+"                                            <!-- product -->\n" +
+"\n" +
+"                                            <div class=\"product\">\n" +
+"                                                <div class=\"product-img\">\n" +
+"                                                    <img src=\""+p.image1+"\" alt=\"\" style=\"height: 150px;\">\n" +
+"\n" +
+"                                                </div>\n" +
+"                                                <div class=\"product-body\">\n" +
+"\n" +
+"                                                    <p class=\"product-category\">Category</p>\n" +
+"                                                    <h3 class=\"product-name\"><a href=\"ProductDetail?id="+p.id+"\">"+p.name+"</a></h3>\n" +
+"                                                    <h4 class=\"product-price\">"+p.price+"<del\n" +
+"                                                            class=\"product-old-price\">$990.00</del></h4>\n" +
+"                                                    <div class=\"product-btns\">\n" +
+"                                                        <button class=\"add-to-wishlist\"><i class=\"fa fa-heart-o\"></i><span\n" +
+"                                                                class=\"tooltipp\">add to wishlist</span></button>\n" +
+"                                                        <button class=\"add-to-compare\"><i class=\"fa fa-exchange\"></i><span\n" +
+"                                                                class=\"tooltipp\">add to compare</span></button>\n" +
+"                                                        <button class=\"quick-view\"><i class=\"fa fa-eye\"></i><span\n" +
+"                                                                class=\"tooltipp\">quick view</span></button>\n" +
+"                                                    </div>\n" +
+"                                                </div>\n" +
+"                                                <div class=\"add-to-cart\">\n" +
+"                                                    <!-- Thêm một ID động cho nút \"Thêm vào giỏ hàng\" -->\n" +
+"                                                    <button class=\"add-to-cart-btn\" id=\"buyButton_${loop.index}\" data-target=\"cookiesPopup_${loop.index}\">\n" +
+"                                                        <i class=\"fa fa-shopping-cart\"></i>BUY\n" +
+"                                                    </button>\n" +
+"                                                    <!-- Thêm nút \"Buy\" -->\n" +
+"                                                    <button class=\"add-to-cart-btn\" onclick=\"addToCart("+p.id+")\">\n" +
+"                                                        <i class=\"fa fa-shopping-cart\"></i>CART\n" +
+"                                                    </button>\n" +
+"                                                </div>\n" +
+"                                            </div>\n" +
+"                                            <div class=\"container-2\">\n" +
+"                                                <div class=\"cookiesContent\" id=\"cookiesPopup_${loop.index}\">\n" +
+"                                                    <button class=\"close\">✖</button>\n" +
+"                                                    <img src=\"https://dichthuatmientrung.com.vn/wp-content/uploads/2022/06/important-sticky-note.jpg\" alt=\"cookies-img\" style=\"width: 50%;\"/>\n" +
+"                                                    <p style=\"color:red; margin-top: 5%;\">We will hold your intermediary funds and wait until you confirm the transaction is completely successful</p>\n" +
+"                                                    <button class=\"button-buy\" data-id=\""+p.id+"\">BUY</button>\n" +
+"                                                </div>\n" +
+"                                            </div>               \n" +
+"                                            <!-- /product -->\n" +
+"                                        </div>");
                 }
 
             } else {
