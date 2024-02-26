@@ -18,9 +18,9 @@ public class DBContext {
 
     public Connection connection;
 
-    private static final String URL = "jdbc:mysql://localhost:3306/swp_demo";
+       private static final String URL = "jdbc:mysql://localhost:3306/swp_demo";
     private static final String USER = "root";
-    private static final String PASSWORD = "160202";
+    private static final String PASSWORD = "1234";
 
     // Phương thức để lấy connection
     public DBContext() {

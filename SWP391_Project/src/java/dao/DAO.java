@@ -1539,6 +1539,6 @@ public void Updatecategory(Category c){
 }
     public static void main(String[] args) {
         DAO dao = new DAO();
-        dao.insertWallet(5000000, 4);
+        System.out.println(dao.getAllProduct());
     }
 }

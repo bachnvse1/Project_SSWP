@@ -198,7 +198,7 @@
                 <ul class="pagination justify-content-center">
                     <li class="page-item">
                         <c:forEach var="i" begin="1" end="${requestScope.Count}">
-                            <a  class="page-link" style="${requestScope.page == i ? "  color: black; border:1px solid #000;padding-right : 10px; padding-left : 10px" : ""}" adding-right : 25px href="home?page=${i}">
+                            <a onclick="loadPage('${i}')" class="page-link" style="${requestScope.page == i ? "  color: black; border:1px solid #000;padding-right : 10px; padding-left : 10px" : ""}" adding-right : 25px href="javascript:void(0);" >
                                 ${i}
                             </a>
                         </c:forEach>
@@ -280,32 +280,90 @@
         <script src="js1/jquery.zoom.min.js"></script>
         <script src="js1/main.js"></script>
         <script>
-    $(document).ready(function () {
-        $(".button-buy").click(function () {
-            var productId = $(this).data("id");
-            $.ajax({
-                type: 'post',
-                url: "buy",
-                data: {id: productId},
-                success: function (response) {
-                    alert(response);
-                    window.location.href = "home";
-                },
-                error: function () {
-                    // Xử lý lỗi nếu có
-                    alert("Đã xảy ra lỗi khi tải trang");
-                }
+            $(document).ready(function () {
+                $(".button-buy").click(function () {
+                    var productId = $(this).data("id");
+                    $.ajax({
+                        type: 'post',
+                        url: "buy",
+                        data: {id: productId},
+                        success: function (response) {
+                            alert(response);
+                            window.location.href = "home";
+                        },
+                        error: function () {
+                            // Xử lý lỗi nếu có
+                            alert("Đã xảy ra lỗi khi tải trang");
+                        }
+                    });
+                });
             });
-        });
-    });
-    function redirectToController(categoryId) {
-        // Construct the URL based on whether a categoryId is provided
-        var url = "home"; // Assuming 'home' is the endpoint handled by your servlet
-        if (categoryId !== 'all') {
-            url += "?categoryId=" + categoryId;
-        }
-        window.location.href = url;
-    }
+            function redirectToController(categoryId) {
+
+                // AJAX call to your server endpoint to fetch products by category
+                $.ajax({
+                    url: "home", // Update this URL to your server endpoint that handles the category request
+                    type: "GET",
+                    data: {
+                        categoryId: categoryId
+                    },
+                    success: function (response) {
+                        // Assuming 'response' contains the HTML or data to update the product list
+                        updateProductList(response);
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle any errors here
+                        console.error("An error occurred while fetching the category data:", error);
+                    }
+                });
+            }
+            function updateProductList(data) {
+                // Assuming 'data' is the HTML content to be placed inside the product list container
+                // Find the container in your DOM and update its content
+                $('#Listproduct').html(data);
+            }
+            $(document).ready(function () {
+                loadPage(1); // Load trang đầu tiên khi trang được tải lên
+            });
+
+            function loadPage(page) {
+                $.ajax({
+                    url: 'home',
+                    type: 'GET',
+                    data: {page: page}, // Truyền số trang qua cho Servlet
+
+                    success: function (response) {
+                        updateProductList(response);
+                    },
+                    error: function (xhr, status, error) {
+                        alert('Error while loading data');
+                    }
+                });
+            }
+            $(document).ready(function () {
+                // Event listener for form submission
+                $('#ajaxSearchForm').on('submit', function (e) {
+                    e.preventDefault(); // Prevent default form submission
+
+                    var formData = $(this).serialize(); // Serialize form data
+
+                    $.ajax({
+                        type: "GET", // or "POST", depending on your requirement
+                        url: "home", // the URL to submit the form data
+                        data: formData,
+                        success: function (response) {
+                            // Success action
+                            updateProductList(response);
+                            // Example: update your page with the response
+                            // $('#responseContainer').html(response);
+                        },
+                        error: function (xhr, status, error) {
+                            // Error action
+                            console.log("Error submitting form: " + error);
+                        }
+                    });
+                });
+            });
         </script>
 
     </body>

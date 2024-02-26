@@ -63,46 +63,106 @@ public class homeServ extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         DAO dao = new DAO();
-        List<Product> listProduct = null;
-        List<Product> listProductPage = null;
-        List<Category> listCategory = dao.getAllCategory();
-        String page = request.getParameter("page");
-        int pageSize = 8;
-        int Count = 0;
-
-        if (page == null) {
-            page = "1";
-        }
-
-        String pramCategoryId = request.getParameter("categoryId");
-        String search = request.getParameter("searchproductname");
-        if (pramCategoryId != null && !pramCategoryId.equals("all")) {
-            listProduct = dao.getProductbyCategoryID(pramCategoryId);
-        } else if (search != null && !search.isEmpty()) {
-            listProduct = dao.getAllProductbyName(search);
-        } else {
-            listProduct = dao.getAllProduct();
-        }
-        int start = (Integer.parseInt(page) - 1) * pageSize;
-        int end = Math.min(start + pageSize, listProduct.size());
-
-        if ((listProduct.size() % pageSize) == 0) {
-            Count = listProduct.size() / pageSize;
-        } else {
-            Count = listProduct.size() / pageSize + 1;
-        }
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("user");
         if (u != null) {
             session.setAttribute("balance", dao.getWallet(u.getId()).getBalance());
         }
-        listProductPage = listProduct.subList(start, end);
-        request.setAttribute("Count", Count);
-        request.setAttribute("page", page);
-        request.setAttribute("dao", dao);
-        request.setAttribute("listProductPage", listProductPage);
-        request.setAttribute("listCategory", listCategory);
-        request.getRequestDispatcher("home.jsp").forward(request, response);
+
+        List<Category> listCategory = dao.getAllCategory();
+        List<Product> listProduct;
+        String pageStr = request.getParameter("page");
+        String categoryId = request.getParameter("categoryId");
+        String searchQuery = request.getParameter("searchproductname");
+        int pageSize = 8, page = 1, totalCount, pageCount;
+
+        // Default response content type
+        response.setContentType("text/html;charset=UTF-8");
+
+        try {
+            if (pageStr != null && !pageStr.isEmpty()) {
+                page = Integer.parseInt(pageStr);
+            }
+
+            // Fetch products based on categoryId or search query
+            if (categoryId != null && !categoryId.equals("all")) {
+                listProduct = dao.getProductbyCategoryID(categoryId);
+            } else if (searchQuery != null && !searchQuery.isEmpty()) {
+                listProduct = dao.getAllProductbyName(searchQuery);
+            } else {
+                listProduct = dao.getAllProduct();
+            }
+
+            // Pagination calculations
+            totalCount = listProduct.size();
+            pageCount = (int) Math.ceil((double) totalCount / pageSize);
+            int start = (page - 1) * pageSize;
+            int end = Math.min(start + pageSize, totalCount);
+            List<Product> listProductPage = listProduct.subList(start, end);
+
+            // Set attributes for the JSP page
+            // Check if the request is from AJAX
+            boolean isAjax = "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));
+            if (isAjax) {
+                response.setContentType("application/html");
+
+                PrintWriter out = response.getWriter();
+                // Dynamically generate the product listing for AJAX response
+                for (Product p : listProductPage) {
+                    out.print(" <div class=\"col-md-3\">\n"
+                            + "                                            <!-- product -->\n"
+                            + "\n"
+                            + "                                            <div class=\"product\">\n"
+                            + "                                                <div class=\"product-img\">\n"
+                            + "                                                    <img src=\"" + p.image1 + "\" alt=\"\" style=\"height: 150px;\">\n"
+                            + "\n"
+                            + "                                                </div>\n"
+                            + "                                                <div class=\"product-body\">\n"
+                            + "\n"
+                            + "                                                    <h3 class=\"product-name\"><a href=\"#\">" + p.name + "</a></h3>\n"
+                            + "                                                    <h4 class=\"product-price\">" + p.price + "<del\n"
+                            + "                                                            class=\"product-old-price\">$990.00</del></h4>\n"
+                            + "\n"
+                            + "                                                    <div class=\"product-btns\">\n"
+                            + "                                                        <button class=\"add-to-wishlist\"><i class=\"fa fa-heart-o\"></i><span\n"
+                            + "                                                                class=\"tooltipp\">add to wishlist</span></button>\n"
+                            + "                                                        <button class=\"add-to-compare\"><i class=\"fa fa-exchange\"></i><span\n"
+                            + "                                                                class=\"tooltipp\">add to compare</span></button>\n"
+                            + "                                                        <button class=\"quick-view\"><i class=\"fa fa-eye\"></i><span\n"
+                            + "                                                                class=\"tooltipp\">quick view</span></button>\n"
+                            + "                                                    </div>\n"
+                            + "                                                </div>\n"
+                            + "                                                <div class=\"add-to-cart\">\n"
+                            + "                                                    <!-- Thêm một ID động cho nút \"Thêm vào giỏ hàng\" -->\n"
+                            + "                                                    <button class=\"add-to-cart-btn\" id=\"buyButton_${loop.index}\" data-target=\"cookiesPopup_${loop.index}\">\n"
+                            + "                                                        <i class=\"fa fa-shopping-cart\"></i> Thêm vào giỏ hàng\n"
+                            + "                                                    </button>\n"
+                            + "                                                </div>\n"
+                            + "                                            </div>\n"
+                            + "                                            <div class=\"container-2\">\n"
+                            + "                                                <div class=\"cookiesContent\" id=\"cookiesPopup_${loop.index}\">\n"
+                            + "                                                    <button class=\"close\">✖</button>\n"
+                            + "                                                    <img src=\"https://dichthuatmientrung.com.vn/wp-content/uploads/2022/06/important-sticky-note.jpg\" alt=\"cookies-img\" style=\"width: 50%;\"/>\n"
+                            + "                                                    <p style=\"color:red; margin-top: 5%;\">We will hold your intermediary funds and wait until you confirm the transaction is completely successful</p>\n"
+                            + "                                                    <button class=\"button-buy\" data-id=\"" + p.id + "\">BUY</button>\n"
+                            + "                                                </div>\n"
+                            + "                                            </div>               \n"
+                            + "                                            <!-- /product -->\n"
+                            + "                                        </div>");
+                }
+
+            } else {
+                request.setAttribute("listCategory", listCategory);
+                request.setAttribute("listProductPage", listProductPage);
+                request.setAttribute("Count", pageCount);
+                request.setAttribute("Page", page);
+                // For normal requests, forward to the JSP page
+                request.getRequestDispatcher("home.jsp").forward(request, response);
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // For simplicity, just print the stack trace. Consider logging and more user-friendly error handling.
+            // Optionally, redirect to an error page or display an error message directly.
+        }
     }
 
     @Override
