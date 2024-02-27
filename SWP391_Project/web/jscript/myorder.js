@@ -5,6 +5,7 @@
 
 /* global l1 */
 
+
 $(document).ready(function () {
     // Ẩn form khi trang được tải
     $("#addProductForm").hide();

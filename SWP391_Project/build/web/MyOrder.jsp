@@ -16,7 +16,7 @@
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
         <!-- Bootstrap -->
         <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
-
+        
         <!-- Slick -->
         <link type="text/css" rel="stylesheet" href="css/slick.css"/>
         <link type="text/css" rel="stylesheet" href="css/slick-theme.css"/>
@@ -30,12 +30,12 @@
 
         <link type="text/css" rel="stylesheet" href="css/style.css" />
         <link rel="stylesheet" href="css/myorder.css"/>
-        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-          <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
+         <!-- Link to DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+    
+    <!-- Link to DataTables JavaScript -->
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+        
         <style>
             .reportButton, .verifyButton {
                 display: inline-block;
@@ -343,9 +343,64 @@
                         </tr>
                     </table>
                 </form>
-                <table id="ProductDisplay" class="text-nowrap mb-0 table" border="1">
-
-                    <thead class="table-light">
+                <!--                <table id="ProductDisplay" class="text-nowrap mb-0 table" border="1">
+                
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Code</th>
+                                            <th>Product Name</th>
+                                            <th>Price</th>                        
+                                            <th>Total amount received</th>
+                                            <th>Total payment</th>
+                                            <th>Transaction fees</th>
+                                            <th>Status</th>
+                                            <th>Party bears the fee</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                
+                <c:forEach items="${productOrderPairs}" var="p">
+                    <c:if test="${!p.getOrder().isIs_delete()}">
+                        <tr>
+                            <td>${p.getOrder().getCode()}</td>
+                            <td>${p.getProduct().getName()}</td>
+                            <td>${p.getProduct().getPrice()}</td>
+                            <td>${p.getOrder().getTotal_received_amount()}</td>
+                            <td>${p.getOrder().getTotal_paid_amount()}</td>
+                            <td>${p.getOrder().getIntermediary_fee()}</td>
+                            <td>${p.getOrder().getStatus()}</td>
+                            <td>${p.getProduct().isTransaction_fee() ? "Seller" : "Buyer"}</td>
+                            <td>
+                                <a class="productInfo" data-action="view"  href="#" data-product-id="${p.getOrder().getId()}">
+                                    <i style="color: #0061f2" class="fa fa-info-circle"></i>
+                                </a>  
+                                <a class="updateproduct" data-action="update" href="#" data-product-id="${p.getOrder().getId()}">
+                                    <i style="color: #34ce57" class="fa fa-pencil"></i>
+                                </a>
+                                <a class="deleteProductButton" data-product-id="${p.getOrder().getId()}">
+                                    <i style="color: red" class="fa fa-trash"></i>
+                                </a>  
+                            </td>
+                        </tr>
+                    </c:if>
+                </c:forEach>
+            </tbody>
+        </table>-->
+                <table id="myDataTable">
+    <thead>
+        <tr>
+            <th>Column 1</th>
+            <th>Column 2</th>
+            <!-- Add more columns if needed -->
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Table data will be populated dynamically -->
+    </tbody>
+</table>
+                <table id="ProductDisplay">
+                    <thead>
                         <tr>
                             <th>Code</th>
                             <th>Product Name</th>
@@ -359,7 +414,6 @@
                         </tr>
                     </thead>
                     <tbody>
-
                         <c:forEach items="${productOrderPairs}" var="p">
                             <c:if test="${!p.getOrder().isIs_delete()}">
                                 <tr>
@@ -387,7 +441,6 @@
                         </c:forEach>
                     </tbody>
                 </table>
-
 
 
 
@@ -780,5 +833,10 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="jscript/myorder.js"></script>
+        <script type="text/javascript">
+                    $(document).ready(function () {
+                        $('#ProductDisplay').DataTable();
+                    });
+        </script>
     </body>
 </html>
