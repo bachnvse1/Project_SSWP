@@ -36,6 +36,5 @@ public class ProductOrderPair {
         this.order = order;
     }
 
-    
-
+  
 }

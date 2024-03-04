@@ -16,11 +16,11 @@ import java.sql.SQLException;
  */
 public class DBContext {
 
-    public Connection connection;
+    protected static Connection connection;
 
     private static final String URL = "jdbc:mysql://localhost:3306/swp_demo";
     private static final String USER = "root";
-    private static final String PASSWORD = "ngochuy2003";
+    private static final String PASSWORD = "123456";
 
     // Phương thức để lấy connection
     public DBContext() {
