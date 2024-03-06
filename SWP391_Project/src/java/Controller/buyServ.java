@@ -6,6 +6,8 @@ package Controller;
 
 import Entity.Category;
 import Entity.Product;
+import Entity.Transaction;
+import Entity.TransactionQueue;
 import Entity.User;
 import Entity.intermediateOrders;
 import dao.DAO;
@@ -67,6 +69,14 @@ public class buyServ extends HttpServlet {
         processRequest(request, response);
     }
 
+    private TransactionQueue transactionQueue;
+    private DAO dao;
+
+    public buyServ() {
+        this.transactionQueue = new TransactionQueue();
+        this.dao = new DAO(); // Initialize DAO instance
+    }
+
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -84,7 +94,7 @@ public class buyServ extends HttpServlet {
         String id = request.getParameter("id");
         int idx = Integer.parseInt(id);
         Product p = dao.getProductByID(idx);
-        if(dao.getWallet(u.getId()).getBalance() < p.getPrice()) {
+        if (dao.getWallet(u.getId()).getBalance() < p.getPrice()) {
             response.getWriter().print("Your balance is not enough to purchase the product!");
             return;
         }
@@ -92,24 +102,23 @@ public class buyServ extends HttpServlet {
             if (p.isIs_delete() == true) {
                 response.getWriter().print("The product has been sold and is being traded!");
             } else {
-                dao.updateOrder(u.id, "Checking", u.id, idx);
-                dao.deleteProduct(idx, true);
-                double balance = dao.getWallet(u.getId()).getBalance();
-                double moneyBuy = dao.getOrderByProductID(idx).getTotal_paid_amount();
-                dao.updateAmount(balance - moneyBuy, u.getId());
-                dao.updateAmount(dao.getWallet(1).getBalance() + moneyBuy, 1);
-                
-                dao.insertReport(2, dao.getOrderByProductID(idx).getId(), true, "You have just purchased an order, the code is: " + dao.getOrderByProductID(idx).getCode() + " and checking this order please!", u.getId(), false);
-                response.getWriter().print("You just buy product, please checking order!");
+                int transactionId = dao.insertTransaction(u.getId(), idx, "Pending"); // Insert transaction with pending status
+                if (transactionId != -1) {
+                    // Add the purchase transaction to the queue
+                    transactionQueue.addTransaction(new Transaction(transactionId, u.getId(), idx));
+                    dao.updateOrder(u.id, "Checking", idx);
+                    dao.deleteProduct(idx, true);
+                    dao.insertReport(2, dao.getOrderByProductID(idx).getId(), true, "You have just purchased an order, the code is: " + dao.getOrderByProductID(idx).getCode() + " and checking this order please!", u.getId(), false);
+                    
+                    response.getWriter().print("You just buy product, please checking order!");
+                    new Thread(() -> transactionQueue.processTransactions()).start();
+                } else {
+                    response.getWriter().print("Failed to process transaction. Please try again later!");
+                }
             }
         } else {
             response.getWriter().print("Can not buy product yourself!");
         }
-
-//        if(p.isTransaction_fee() == true) {
-//            order.setTotal_paid_amount(p.getPrice());
-//        } 
-//        order.setTotal_paid_amount(p.getPrice() + p.getPrice() * 0.05);
     }
 
     /**

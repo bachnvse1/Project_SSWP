@@ -12,6 +12,7 @@ import Entity.Report;
 import Entity.User;
 import Entity.Wallet;
 import Entity.intermediateOrders;
+import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -304,12 +305,11 @@ public class DAO extends DBContext {
         return null;
     }
 
-    public void updateOrder(int buyer_id, String status, int updated_by, int pid) {
+    public void updateOrder(int buyer_id, String status, int pid) {
         String query = "UPDATE intermediate_Orders\n"
                 + "SET \n"
                 + "    buyer_id = ?,\n"
                 + "    status = ?,\n"
-                + "    updated_by = ?,\n"
                 + "    updated_at = CURRENT_TIMESTAMP\n"
                 + "WHERE\n"
                 + "    productID = ?;";
@@ -318,14 +318,35 @@ public class DAO extends DBContext {
             ps = con.prepareStatement(query);
             ps.setInt(1, buyer_id);
             ps.setString(2, status);
-            ps.setInt(3, updated_by);
-            ps.setInt(4, pid);
+            ps.setInt(3, pid);
             ps.executeUpdate();
 
         } catch (Exception e) {
 
         }
     }
+    
+    public void updateOrderStatus(int uid, String status, int oid) {
+        String query = "UPDATE intermediate_Orders\n"
+                + "SET \n"
+                + "    updated_by = ?,\n"
+                + "    status = ?,\n"
+                + "    updated_at = CURRENT_TIMESTAMP\n"
+                + "WHERE\n"
+                + "    id = ?;";
+        try {
+            con = new DBContext().connection; //connect sql
+            ps = con.prepareStatement(query);
+            ps.setInt(1, uid);
+            ps.setString(2, status);
+            ps.setInt(3, oid);
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+
+        }
+    }
+    
 
     public Product getProductByID(int id) {
 
@@ -393,8 +414,9 @@ public class DAO extends DBContext {
 
         }
     }
-public void deleteOrder(int id, boolean is_delete){
-String query = "Update intermediate_Orders set is_delete = ? where id =? ";
+
+    public void deleteOrder(int id, boolean is_delete) {
+        String query = "Update intermediate_Orders set is_delete = ? where id =? ";
         try {
             con = new DBContext().connection; //connect sql
             ps = con.prepareStatement(query);
@@ -404,19 +426,20 @@ String query = "Update intermediate_Orders set is_delete = ? where id =? ";
         } catch (Exception e) {
 
         }
-}
+    }
+
     public void insertWallet(double balance, int uid) {
         String query = "INSERT INTO Wallet (balance, create_by, updated_by)\n"
                 + "VALUES (?, ?, ?)";
         try {
-             con = new DBContext().connection; //connect sql
+            con = new DBContext().connection; //connect sql
             ps = con.prepareStatement(query);
             ps.setDouble(1, balance);
             ps.setInt(2, uid);
             ps.setInt(3, uid);
             ps.executeUpdate();
         } catch (Exception e) {
-            
+
         }
     }
 
@@ -493,6 +516,54 @@ String query = "Update intermediate_Orders set is_delete = ? where id =? ";
         } catch (SQLException e) {
             System.out.println(e);
         }
+    }
+
+    public void updateTransactionStatus(int tid, String status) {
+        String sql = "UPDATE transactions SET status = ? WHERE id = ?";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(sql);
+            ps.setInt(2, tid);
+            ps.setString(1, status);
+
+            ps.executeUpdate();
+            // Execute the update query         
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    public int insertTransaction(int uid, int pid, String status) {
+        int generatedId = -1; // Giá trị mặc định nếu không có ID được sinh ra
+        String query = "INSERT INTO transactions (user_id, product_id, status)\n"
+                + "VALUES (?, ?, ?)";
+        try {
+            con = new DBContext().connection; // Kết nối với cơ sở dữ liệu
+            ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, uid);
+            ps.setInt(2, pid);
+            ps.setString(3, status);
+            ps.executeUpdate();
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                generatedId = rs.getInt(1); // Lấy ID được sinh ra
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // Xử lý ngoại lệ một cách thích hợp
+        } finally {
+            // Đóng tài nguyên (PreparedStatement, ResultSet, Connection)
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace(); // Xử lý ngoại lệ một cách thích hợp
+            }
+        }
+        return generatedId;
     }
 
     //HUY
@@ -1191,7 +1262,7 @@ String query = "Update intermediate_Orders set is_delete = ? where id =? ";
     public ArrayList<Feedback> getFeedbackList() {
         ArrayList<Feedback> list = new ArrayList<>();
         try {
-            
+
             String sql = "SELECT f.*, u.username FROM swp_demo.feedback f JOIN swp_demo.users u ON f.user_id = u.id ORDER BY f.id DESC";
 
             PreparedStatement st = connection.prepareStatement(sql);
@@ -1525,9 +1596,11 @@ String query = "Update intermediate_Orders set is_delete = ? where id =? ";
 
         }
     }
-public void Updatecategory(Category c){
-      String query = "Update `swp_demo`.`category` SET name=? WHERE id = ?";
-     try{      con = new DBContext().connection; //connect sql
+
+    public void Updatecategory(Category c) {
+        String query = "Update `swp_demo`.`category` SET name=? WHERE id = ?";
+        try {
+            con = new DBContext().connection; //connect sql
             ps = con.prepareStatement(query);
             ps.setString(1, c.getName());
             ps.setInt(2, c.getId());
@@ -1536,9 +1609,10 @@ public void Updatecategory(Category c){
         } catch (Exception e) {
 
         }
-}
+    }
+
     public static void main(String[] args) {
         DAO dao = new DAO();
-        dao.insertWallet(5000000, 4);
+        System.out.println(dao.insertTransaction(3, 4, "HI"));
     }
 }
