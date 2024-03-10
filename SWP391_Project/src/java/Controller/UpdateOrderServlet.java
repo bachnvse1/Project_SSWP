@@ -90,7 +90,7 @@ public class UpdateOrderServlet extends HttpServlet {
 
         intermediateOrders order = dao.getOrderByCode(code);
         Product product = dao.getProductByID(order.getProductId());
-        if (order.getStatus().equals("Ready")) {
+        if (order.getStatus().equals("Sẵn sàng giao dịch")) {
             product.setName(productName);
             product.setPrice(price);
             if (party.equals("seller")) {
@@ -119,7 +119,7 @@ public class UpdateOrderServlet extends HttpServlet {
 //       request.getRequestDispatcher("manageMyOrder").forward(request, response);
             response.getWriter().write("success");
         } else {
-            response.getWriter().print("Can not update product!");
+            response.getWriter().print("Không thể cập nhật đơn hàng!");
         }
 
     }

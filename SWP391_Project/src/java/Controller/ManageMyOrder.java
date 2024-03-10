@@ -123,7 +123,8 @@ public class ManageMyOrder extends HttpServlet {
             throws ServletException, IOException {
         // processRequest(request, response);
 
-        DAO dao = new DAO();
+       
+  DAO dao = new DAO();
         int id = Integer.parseInt(request.getParameter("pid"));
         intermediateOrders order = dao.getOrderByID(id);
         // HttpSession session = request.getSession();
@@ -134,11 +135,11 @@ public class ManageMyOrder extends HttpServlet {
         ProductOrderPair productOrderPair = new ProductOrderPair(product, order);
         String data = productOrderPair.getOrder().getCode() + ";"
                 + productOrderPair.getProduct().getName() + ";"
-                + productOrderPair.getProduct().getPrice() + ";"
-                + productOrderPair.getOrder().getIntermediary_fee() + ";"
-                + (productOrderPair.getProduct().isTransaction_fee() ? "Seller" : "Buyer") + ";"
-                + productOrderPair.getOrder().getTotal_received_amount() + ";"
-                + productOrderPair.getOrder().getTotal_paid_amount() + ";"
+                + String.format("%,.0f",(double) productOrderPair.getProduct().getPrice()) + " ₫" + ";"
+                +  String.format("%,.0f",(double)productOrderPair.getOrder().getIntermediary_fee()) + " ₫"   + ";"
+                + (productOrderPair.getProduct().isTransaction_fee() ? "Bên Bán" : "Bên Mua") + ";"
+                +  String.format("%,.0f",(double) productOrderPair.getOrder().getTotal_received_amount()) + " ₫"  + ";"
+                +  String.format("%,.0f",(double) productOrderPair.getOrder().getTotal_paid_amount()) + " ₫"  + ";"
                 + productOrderPair.getProduct().getImage1() + ";"
                 + productOrderPair.getProduct().getImage2() + ";"
                 + productOrderPair.getProduct().getImage3() + ";"
@@ -147,12 +148,13 @@ public class ManageMyOrder extends HttpServlet {
                 + productOrderPair.getProduct().getHidden_content() + ";"
                 + productOrderPair.getProduct().getContact_Method() + ";"
                 + productOrderPair.getOrder().getStatus() + ";"
-                + dao.getUserById(productOrderPair.getOrder().getBuyer_id()).getDisplay_name() + ";"
+                + productOrderPair.getOrder().getBuyer_id() + ";"
                 + productOrderPair.getOrder().getCreate_at() + ";"
                 + productOrderPair.getOrder().getUpdate_at();
         response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(data);
+
 
     }
     

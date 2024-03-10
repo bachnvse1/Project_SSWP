@@ -194,9 +194,9 @@ $('.productInfo1').click(function (event) {
                 document.getElementById("productName_ud").value = responseData[1];
                 document.getElementById("price_ud").value = responseData[2];
                 document.getElementById("intermediaryFee_ud").value = responseData[3];
-                if (responseData[4] === 'Seller') {
+                if (responseData[4] === 'Bên Bán') {
                     document.getElementById("partySeller_ud").checked = true;
-                } else if (responseData[4] === 'Buyer') {
+                } else if (responseData[4] === 'Bên Mua') {
                     document.getElementById("partyBuyer_ud").checked = true;
                 }
                 document.getElementById("receivedAmount_ud").value = responseData[5];
@@ -250,6 +250,7 @@ $(document).ready(function () {
             error: function (xhr, status, error) {
                 // Xử lý lỗi (nếu có)
                 alert("loi");
+                console.error(xhr.responseText);
             }
         });
     });

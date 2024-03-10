@@ -78,11 +78,16 @@ public class AddProdcutServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // processRequest(request, response);
-        response.setContentType("text/html;charset=UTF-8");
+          response.setContentType("text/html;charset=UTF-8");
         Product product = new Product();
-        product.setName(request.getParameter("nameProduct"));
+        
         try {
-              product.setPrice(Double.parseDouble(request.getParameter("priceProduct")));
+        product.setName(request.getParameter("nameProduct"));
+        
+        product.setPrice(Double.parseDouble(request.getParameter("priceProduct")));
+        if(product.getPrice()<=0){
+            throw new NumberFormatException();
+        }
         product.setCategoryID(Integer.parseInt(request.getParameter("categoryID")));
         product.setDescription(request.getParameter("Description"));
         product.setImage1(request.getParameter("image1"));
@@ -96,6 +101,9 @@ public class AddProdcutServlet extends HttpServlet {
         }
         product.setContact_Method(request.getParameter("Contact_Method"));
         product.setHidden_content(request.getParameter("hidden_content"));
+        if(product.getName().equals("")|| product.getDescription().equals("") || product.getContact_Method().equals("")|| product.getHidden_content().equals("")){
+            throw new Exception();
+        }
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("user");
         product.setCreate_by(u.getId());
@@ -128,7 +136,10 @@ public class AddProdcutServlet extends HttpServlet {
         }
         } catch (NumberFormatException e) {
             response.getWriter().write("price");
+        } catch (Exception e2){
+             response.getWriter().write("null");
         }
+
       
     }
        

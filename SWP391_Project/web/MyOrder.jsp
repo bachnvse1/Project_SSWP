@@ -223,6 +223,7 @@
             }
 
         </style>
+  
     </head>
     <body>
         <%@include file="components/navBar.jsp" %>
@@ -230,15 +231,15 @@
             <div>
                 <div class="management" id="myproduct">
                     <div class="title-bar" onclick="toggleOptions('myproduct')">
-                        <h5>Manage sales orders</h5>
+                        <h5>Quản lí đơn bán</h5>
                         <span class="arrow">▼</span>
                     </div>
                     <div class="options">
                         <ul>
-                            <li><a id="allProductButton" >All Product</a></li>
-                            <li><a id="completedorder" >Completed Order</a></li>
-                            <li><a id="processingorder">Processing Order</a></li>
-                            <li><a id="addProductButton" >Add Product</a></li>
+                            <li><a id="allProductButton" >Tất cả sản phẩm</a></li>
+                            <li><a id="completedorder" >Sản phẩm đã bán</a></li>
+                            <li><a id="processingorder">Sản phẩm đang xử lí</a></li>
+                            <li><a id="addProductButton" >Thêm sản phẩm</a></li>
                         </ul>
                     </div>
                 </div>
@@ -258,7 +259,7 @@
 
                 <div class="management" id="mysale">
                     <div class="title-bar">
-                        <a href="home" class="checkout-btn">Back to home</a>
+                        <a href="home" class="checkout-btn">Về trang chủ</a>
                     </div>
 
                 </div>
@@ -320,9 +321,9 @@
                 <form action="filtermyorder">
                     <table id="Filter" class="text-nowrap mb-0 table" border="1">
                         <tr>
-                            <th>Search by Name</th>
-                            <th>Filter by Price</th>
-                            <th>Filter by Party</th>
+                            <th>Tìm kiếm bằng tên</th>
+                            <th>Lọc theo giá</th>
+                            <th>Lọc theo bên chịu phí</th>
                         </tr>
                         <tr>
                             <td><input id="search_name" name="search_name"> <input type="submit" value="Search">
@@ -347,15 +348,15 @@
 
                     <thead class="table-light">
                         <tr>
-                            <th>Code</th>
-                            <th>Product Name</th>
-                            <th>Price</th>                        
-                            <th>Total amount received</th>
-                            <th>Total payment</th>
-                            <th>Transaction fees</th>
-                            <th>Status</th>
-                            <th>Party bears the fee</th>
-                            <th>Action</th>
+                            <th>Mã giao dịch</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Giá</th>                        
+                            <th>Tổng phí nhận được</th>
+                            <th>Tổng phí phải trả</th>
+                            <th>Phí giao dịch</th>
+                            <th>Trạng thái</th>
+                            <th>Bên chịu phí</th>
+                            <th>Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -370,7 +371,7 @@
                                     <td>${p.getOrder().getTotal_paid_amount()}</td>
                                     <td>${p.getOrder().getIntermediary_fee()}</td>
                                     <td>${p.getOrder().getStatus()}</td>
-                                    <td>${p.getProduct().isTransaction_fee() ? "Seller" : "Buyer"}</td>
+                                    <td>${p.getProduct().isTransaction_fee() ? "Bên Bán" : "Bên Mua"}</td>
                                     <td>
                                         <a class="productInfo" data-action="view"  href="#" data-product-id="${p.getOrder().getId()}">
                                             <i style="color: #0061f2" class="fa fa-info-circle"></i>
@@ -397,15 +398,15 @@
 
                     <thead class="table-light">
                         <tr>
-                            <th>Code</th>
-                            <th>Product Name</th>
-                            <th>Price</th>                        
-                            <th>Total amount received</th>
-                            <th>Total payment</th>
-                            <th>Transaction fees</th>
-                            <th>Status</th>
-                            <th>Party bears the fee</th>
-                            <th>Action</th>
+                            <th>Mã đơn hàng</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Giá</th>                        
+                            <th>Tổng phí nhận</th>
+                            <th>Tổng phí phải trả</th>
+                            <th>Phí giao dịch</th>
+                            <th>Trạng Thái</th>
+                            <th>Bên chịu phí</th>
+                            <th>Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -424,13 +425,7 @@
                                     <td>
                                         <a class="productInfo" data-action="view"  href="#" data-product-id="${c.getOrder().getId()}">
                                             <i style="color: #0061f2" class="fa fa-info-circle"></i>
-                                        </a>  
-                                        <a class="updateproduct" data-action="update" href="#" data-product-id="${c.getOrder().getId()}">
-                                            <i style="color: #34ce57" class="fa fa-pencil"></i>
-                                        </a>
-                                        <a class="deleteProductButton" data-product-id="${c.getOrder().getId()}">
-                                            <i style="color: red" class="fa fa-trash"></i>
-                                        </a>  
+                                        </a>                                                                                 
                                     </td>
                                 </tr>
                             </c:if>
@@ -445,16 +440,16 @@
                 <table id="ProductProcessingDisplay" class="text-nowrap mb-0 table" border="1">
 
                     <thead class="table-light">
-                        <tr>
-                            <th>Code</th>
-                            <th>Product Name</th>
-                            <th>Price</th>                        
-                            <th>Total amount received</th>
-                            <th>Total payment</th>
-                            <th>Transaction fees</th>
-                            <th>Status</th>
-                            <th>Party bears the fee</th>
-                            <th>Action</th>
+                          <tr>
+                            <th>Mã đơn hàng</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Giá</th>                        
+                            <th>Tổng phí nhận</th>
+                            <th>Tổng phí phải trả</th>
+                            <th>Phí giao dịch</th>
+                            <th>Trạng Thái</th>
+                            <th>Bên chịu phí</th>
+                            <th>Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -494,49 +489,49 @@
                     <div class="modal-content3">                      
                         <div class="container-complain">
                             <form id="addForm">
-                                <h2 style="text-align: center;">Add New Order</h2>
-                                <label for="name">Name:</label>
+                                <h2 style="text-align: center;">Thêm sản phẩm</h2>
+                                <label for="name">Tên sản phẩm:</label>
                                 <input type="text" name="nameProduct" required><br>
-                                <label for="price">Price:</label>
-                                <input type="text" name="priceProduct" required><br>
+                                <label for="price">Giá:</label><br>
+                                <input type="text" name="priceProduct" required ><br>
 
-                                <label for="category">Category:</label>
+                                <label for="category">Danh mục:</label>
                                 <select name="categoryID">
                                     <c:forEach items="${category}" var="c">
                                         <option value="${c.getId()}">${c.getName()}</option>
                                     </c:forEach>
                                 </select><br>
 
-                                <label for="description">Description:</label>
+                                <label for="description">Mô tả(Càng chi tiết về sản phẩm càng tốt vì đây sẽ là cơ sở pháp lý giải quyết khiếu nại nếu có sau này):</label>
                                 <input name="Description" rows="4" required></input><br>
 
-                                <label for="image1">Image 1:</label>
+                                <label for="image1">Ảnh 1:</label>
                                 <input type="text" id="image" name="image1"><br>
 
-                                <label for="image2">Image 2:</label>
+                                <label for="image2">Ảnh 2:</label>
                                 <input type="text" id="image" name="image2"><br>
 
-                                <label for="image3">Image 3:</label>
+                                <label for="image3">Ảnh 3:</label>
                                 <input type="text" id="image" name="image3" ><br>
 
-                                <label for="image4">Image 4:</label>
+                                <label for="image4">Ảnh 4:</label>
                                 <input type="text" id="image" name="image4"><br>
 
-                                <label for="transactionFee">Transaction Fee:</label>
+                                <label for="transactionFee">Bên chịu phí:</label>
 
                                 <div class="radio-buttons">
                                     <input type="radio" id="seller" name="Transaction_fee" value="seller" checked>
-                                    <label for="seller">Seller</label>
+                                    <label for="seller">Bên bán</label>
 
                                     <input type="radio" id="buyer" name="Transaction_fee" value="buyer">
-                                    <label for="buyer">Buyer</label>
+                                    <label for="buyer">Bên mua</label>
                                 </div>
-                                <label for="contactMethod">Contact Method:</label>
-                                <input type="text" name="Contact_Method" required><br>
-                                <label for="hiddenContent">Hidden Content:</label>
+                                <label for="contactMethod">Phương thức liên hệ:</label>
+                                <input type="text" name="Contact_Method" placeholder="Số điện thoại / Zalo / Link Facebook / Telegram / discord ..." required><br>
+                                <label for="hiddenContent">Nội dung ẩn:</label>
                                 <input type="text"  name="hidden_content" required><br>
 
-                                <input type="submit" value="ADD">
+                                <input type="submit" value="Thêm mới">
                             </form>
                         </div>
                     </div>
@@ -547,52 +542,52 @@
             <div style="height: 700px;overflow: auto;max-height: 800px; width: 1300px;" class="modal" id="modal">
                 <div class="modal-content3">                      
                     <div class="container-complain">
-                        <h2>Order Information</h2>                   
-                        <label for="orderCode">Order code:</label>
+                        <h2>Thông tin đơn hàng</h2>                   
+                        <label for="orderCode">Mã đơn hàng:</label>
                         <input type="text" id="orderCode" value="" readonly><br>
 
-                        <label for="productName">Product Name:</label>
+                        <label for="productName">Tên sản phẩm:</label>
                         <input type="text" id="productName" value="" readonly><br>
 
-                        <label for="price">Price:</label>
+                        <label for="price">Giá:</label>
                         <input type="text" id="price" value="" readonly><br>
 
-                        <label for="intermediaryFee">Intermediary Fee:</label>
+                        <label for="intermediaryFee">Phí giao dịch:</label>
                         <input type="text" id="intermediaryFee" value="" readonly><br>
 
-                        <label for="party">Party bears the fee:</label>
+                        <label for="party">Bên chịu phí:</label>
                         <input type="text" id="party" name="party" value="" readonly><br>
 
 
-                        <label for="receivedAmount">Total received amount:</label>
+                        <label for="receivedAmount">Tổng phí thực nhận:</label>
                         <input type="text" id="receivedAmount" value="" readonly><br>
 
-                        <label for="paidAmount">Total paid amount:</label>
+                        <label for="paidAmount">Tổng phí phải trả:</label>
                         <input type="text" id="paidAmount" value="" readonly><br>
 
-                        <label for="productImage">Product Image:</label><br>
+                        <label for="productImage">Hình ảnh sản phẩm:</label><br>
                         <img style="max-width: 150px; max-height: 150px" id="img1" src="" >
                         <img style="max-width: 150px; max-height: 150px" id="img2" src="" >
                         <img style="max-width: 150px; max-height: 150px" id="img3" src="" >
                         <img style="max-width: 150px; max-height: 150px" id="img4" src="" ><br>
 
-                        <label for="description">Description:</label>
+                        <label for="description">Mô tả:</label>
                         <textarea id="description" rows="4" value="" readonly></textarea><br>
 
-                        <label for="hiddenContent">Hidden Content:</label>
+                        <label for="hiddenContent">Thông tin ẩn:</label>
                         <input type="text" id="hiddenContent_info" value=""  readonly><br>
 
-                        <label for="contactMethod">Contact Method:</label>
+                        <label for="contactMethod">Phương thức liên lạc:</label>
                         <input type="text" id="contactMethod" value=""  readonly><br>
 
-                        <label for="status">Status:</label>
+                        <label for="status">Trạng thái:</label>
                         <input type="text" id="status" value="" readonly><br>
 
-                        <label for="buyer">Buyer:</label>
+                        <label for="buyer">Người mua:</label>
                         <input type="text" id="buyer_info" value="" readonly><br>
-                        <label for="buyer">Create At:</label>
+                        <label for="buyer">Thời gian tạo:</label>
                         <input type="text" id="create_at" value="" readonly><br>
-                        <label for="buyer">Update At:</label>
+                        <label for="buyer">Chỉnh sửa cuối:</label>
                         <input type="text" id="update_at" value="" readonly><br>
                         <c:if test="">
                             
@@ -611,21 +606,21 @@
                 <button class="close-button"  onclick="hideProductModal()"><i class="fa fa-close"></i></button>
                 <div class="modal-content3">                      
                     <div class="container-complain">
-                        <h2>Update Order Information</h2>   
+                        <h2>Cập nhật đơn hàng</h2>   
                         <form>
-                            <label for="orderCode">Order code:</label>
+                            <label for="orderCode">Mã đơn hàng:</label>
                             <input type="text" id="orderCode_ud" value="" readonly ><br>
 
-                            <label for="productName">Product Name:</label>
+                            <label for="productName">Tên sản phẩm:</label>
                             <input type="text" id="productName_ud" value="" ><br>
 
-                            <label for="price">Price:</label>
+                            <label for="price">Giá:</label>
                             <input type="text" id="price_ud" value="" ><br>
 
-                            <label for="intermediaryFee">Intermediary Fee:</label>
+                            <label for="intermediaryFee">Phí giao dịch:</label>
                             <input type="text" id="intermediaryFee_ud" value="" readonly><br>
 
-                            <label for="party">Party bears the fee:</label><br>                   
+                            <label for="party">Bên chịu phí:</label><br>                   
                             <div style="display: flex;">
                                 <style>
                                     /* Ẩn radio button mặc định */
@@ -657,49 +652,49 @@
                                 </style>
 
                                 <input type="radio" id="partySeller_ud" name="party" value="seller">
-                                <label for="partySeller_ud">Seller</label>
+                                <label for="partySeller_ud">Bên bán</label>
 
                                 <input type="radio" id="partyBuyer_ud" name="party" value="buyer">
-                                <label for="partyBuyer_ud">Buyer</label>
+                                <label for="partyBuyer_ud">Bên mua</label>
                             </div>
-                            <label for="receivedAmount">Total received amount:</label>
+                            <label for="receivedAmount">Tổng tiền thực nhận:</label>
                             <input type="text" id="receivedAmount_ud" value=""readonly ><br>
 
-                            <label for="paidAmount">Total paid amount:</label>
+                            <label for="paidAmount">Tổng phí phải trả:</label>
                             <input type="text" id="paidAmount_ud" value="" readonly><br>
 
-                            <label for="productImage">Product Image:</label><br>
-                            <label for="image1">Image 1:</label>
+                            <label for="productImage">Hình ảnh sản phẩm:</label><br>
+                            <label for="image1">Ảnh 1:</label>
                             <input type="text" id="img1_ud" name="image1" value=""><br>
 
-                            <label for="image2">Image 2:</label>
+                            <label for="image2">Ảnh 2:</label>
                             <input type="text" id="img2_ud" name="image2" value=""><br>
 
-                            <label for="image3">Image 3:</label>
+                            <label for="image3">Ảnh 3:</label>
                             <input type="text" id="img3_ud" name="image3" value="" ><br>
 
-                            <label for="image4">Image 4:</label>
+                            <label for="image4">Ảnh 4:</label>
                             <input type="text" id="img4_ud" name="image4" value=""><br>
 
-                            <label for="description">Description:</label>
+                            <label for="description">Mô tả:</label>
                             <input id="description_ud" value="" ></input><br>
 
-                            <label for="hiddenContent">Hidden Content:</label>
+                            <label for="hiddenContent">Thông tin ẩn:</label>
                             <input type="text" id="hiddenContent_ud" value=""  ><br>
 
-                            <label for="contactMethod">Contact Method:</label>
+                            <label for="contactMethod">Phương thức liên lạc:</label>
                             <input type="text" id="contactMethod_ud" value=""  ><br>
 
-                            <label for="status">Status:</label>
+                            <label for="status">Trạng thái:</label>
                             <input type="text" id="status_ud" value="" ><br>
 
-                            <label for="buyer">Buyer:</label>
+                            <label for="buyer">Người mua:</label>
                             <input type="text" id="buyer_ud" value="" readonly ><br>
-                            <label for="buyer">Create At:</label>
+                            <label for="buyer">Thời gian tạo:</label>
                             <input type="text" id="create_at_ud" value="" readonly><br>
-                            <label for="buyer">Update At:</label>
+                            <label for="buyer">Chỉnh sửa cuối:</label>
                             <input type="text" id="update_at_ud" value="" readonly><br>
-                            <button style="background-color:  #34ce57 " id="updateButton">Update</button>
+                            <button style="background-color:  #34ce57 " id="updateButton">Cập nhật</button>
                         </form>
 
                     </div>
@@ -754,12 +749,12 @@
 
             <div id="myModalVerify" class="modal4">
                 <span class="close1">&times;</span></br></br>
-                <h3>Verify Order</h3>
-                <p>Order matches the description</p>
+                <h3>Xác nhận đơn hàng</h3>
+                <p>Đơn hàng đúng với thông tin mô tả</p>
                 <form id="authForm">
                     <input type="text" id="pro_id1" name="pro_id" hidden="">
                     <div class="options1">
-                        <button type="submit" class="option1 yes">Yes</button>
+                        <button type="submit" class="option1 yes">Đồng ý</button>
 
                     </div>
                     <div class="loader" id="loader"></div>
@@ -769,7 +764,7 @@
                 <div class="modal-dialog" style="max-width: 700px;" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Feedback</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Đánh giá</h5>
                             <span class="close1">&times;</span>
                         </div>
                         <div class="modal-body" style="padding: 40px;">
@@ -782,15 +777,15 @@
 
                                             <input type="text" name="action" value="create" hidden="">
 
-                                            <h2 class="card-title">Title</h2>
+                                            <h2 class="card-title">Tiêu đề</h2>
                                             <input type="text" name="title" value="" required="" class="form-control"><br/>
-                                            <h2 class="card-title">Content</h2>
+                                            <h2 class="card-title">Nội dung</h2>
                                             <input type="text" name="content" value="" required="" class="form-control"><br/>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn btn-primary">Add feedbacks</button>
+                                    <button type="submit" class="btn btn btn-primary">Thêm đánh giá</button>
                                 </div>    
                             </form>
 
