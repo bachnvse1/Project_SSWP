@@ -27,7 +27,7 @@ $(document).ready(function () {
         $("#orderBuy-complete").hide();
         $("#exampleModalCreate").hide();
         $("#ProductCompleteDisplay").hide();
-    $("#ProductProcessingDisplay").hide();
+        $("#ProductProcessingDisplay").hide();
     });
     $("#allProductButton").click(function () {
         $("#addProductForm").hide();
@@ -38,6 +38,8 @@ $(document).ready(function () {
         $("#myModalComplain").hide();
         $("#myModalVerify").hide();
         $("#exampleModalCreate").hide();
+        $("#ProductCompleteDisplay").hide();
+        $("#ProductProcessingDisplay").hide();
     });
     $("#completedorder").click(function () {
         $("#addProductForm").hide();
@@ -49,7 +51,7 @@ $(document).ready(function () {
         $("#myModalVerify").hide();
         $("#exampleModalCreate").hide();
         $("#ProductCompleteDisplay").show();
-    $("#ProductProcessingDisplay").hide();
+        $("#ProductProcessingDisplay").hide();
     });
     $("#processingorder").click(function () {
         $("#addProductForm").hide();
@@ -134,7 +136,8 @@ $(document).ready(function () {
 $(document).ready(function () {
     $('.productInfo').click(function (event) {
         event.preventDefault();
-
+                document.getElementById("overlay").style.display = "block";
+                document.getElementById("modal").style.display = "block";
         var productId = $(this).data('product-id');
         var action = $(this).data('action');
         $.ajax({
@@ -142,8 +145,7 @@ $(document).ready(function () {
             url: 'manageMyOrder',
             data: {pid: productId, action: action},
             success: function (response) {
-                document.getElementById("overlay").style.display = "block";
-                document.getElementById("modal").style.display = "block";
+                
 
                 var responseData = response.split(";");
                 document.getElementById("orderCode").value = responseData[0];
@@ -167,6 +169,11 @@ $(document).ready(function () {
             }
         });
     });
+
+$('.productInfo1').click(function (event) {
+    console.log("Clicked on productInfo");
+    // Các lệnh xử lý khác ở đây
+});
 
 
     $('.updateproduct').click(function (event) {
@@ -319,6 +326,8 @@ $(document).ready(function () {
         $("#ProductDisplay").hide();
         $("#Filter").hide();
         $("#addProductForm").hide();
+        $("#ProductProcessingDisplay").hide();
+        $("#ProductCompleteDisplay").hide();
         $.ajax({
             type: 'GET',
             url: "orderChecking",
@@ -340,6 +349,8 @@ $(document).ready(function () {
         $("#ProductDisplay").hide();
         $("#Filter").hide();
         $("#addProductForm").hide();
+        $("#ProductProcessingDisplay").hide();
+        $("#ProductCompleteDisplay").hide();
         $.ajax({
             type: 'POST',
             url: "orderChecking",
@@ -358,14 +369,37 @@ $(document).ready(function () {
     // Khi người dùng nhấn vào button, mở modal
     $(document).on("click", ".reportButton", function (e) {
         e.preventDefault();
-        var proid = $(this).data("proid");
         var orderId = $(this).data("orderid");
         var orderCode = $(this).data("ordercode");
+        var productName = $(this).data("productname");
+        var Price = $(this).data("price");
+        var Imtermediary = $(this).data("inter");
+        var party = $(this).data("party");
+        var totalPaid = $(this).data("totalpaids");
+        var productImg = $(this).data("proimg");
+        var des = $(this).data("des");
         var hiddenInfo = $(this).data("hiddeninfo");
+        var contact = $(this).data("contact");
+        var status = $(this).data("status1");
+        var buyer = $(this).data("buyers");
+        var createTime = $(this).data("create");
+        
         $("#order_id").val(orderId); // Cập nhật giá trị của trường input
         $("#order_code").val(orderCode); // Cập nhật giá trị của trường input
+        $("#productName1").val(productName);
+       
+        $("#Price").val(Price);
+        $("#inter").val(Imtermediary);
+        $("#party1").val(party);
+        $("#totalPaid1").val(totalPaid);
+        $("#img1").val(productImg);
+        $("#des").val(des);
         $("#hidden_info").val(hiddenInfo);
-        $("#pro_id1").val(proid);
+        $("#contact").val(contact);
+        $("#status1").val(status);
+        $("#buyer1").val(buyer);
+        $("#create").val(createTime);
+        
         $("#myModalComplain").show();
 
     });

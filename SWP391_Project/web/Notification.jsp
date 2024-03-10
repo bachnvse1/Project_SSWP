@@ -387,7 +387,7 @@
         </table>
 
         <div class="overlay" id="overlay"></div>
-        <div style="height: 700px;overflow: auto;max-height: 800px" class="modal" id="modal">
+        <div style="height: 700px;overflow: auto;max-height: 800px; width: 1300px;" class="modal" id="modal">
             <div class="modal-content3">                      
                 <div class="container-complain">
                     <h2>Order Information</h2>                   

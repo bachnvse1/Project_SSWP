@@ -123,6 +123,8 @@ create table Wallet (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
+
+
 CREATE TABLE feedback (
     id INT PRIMARY KEY auto_increment,
     title VARCHAR(100),
@@ -134,6 +136,15 @@ CREATE TABLE feedback (
     
     
 );
+
+CREATE TABLE transactions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    product_id INT,
+    status VARCHAR(50)
+);
+
+
 INSERT INTO swp_demo.feedback (id, title, content, create_at, user_id, intermediary_order_id)
 VALUES (1, 'Feedback Title', 'Feedback Content', '2024-02-08 12:00:00', 1, 1);
 INSERT INTO swp_demo.feedback (id, title, content, create_at, user_id, intermediary_order_id)
@@ -209,6 +220,7 @@ delete from swp_demo.product where product.id = 5;
 delete from swp_demo.intermediate_Orders where product.id = 5;
 delete  from swp_demo.Order_Detail
 delete from Report
+delete from transactions
 
 select * from Category
 select * from Product where is_delete = true
@@ -217,6 +229,7 @@ select * from intermediate_Orders where productID = 2
 select * from swp_demo.Order_Detail
 select * from Wallet where create_by = 5
 select * from Report 
+select *  from transactions
  -- //1 là khiếu nại
 --             //2 là mua hàng
 --             //3 là đăng đơn hàng
@@ -226,3 +239,7 @@ select * from Report
 
 select * from Product join intermediate_Orders
 on Product.id = intermediate_Orders.productID
+
+SELECT SUM(intermediary_fee) + 500 AS total_revenue
+FROM revenue
+WHERE MONTH(create_at) IN (5, 6);

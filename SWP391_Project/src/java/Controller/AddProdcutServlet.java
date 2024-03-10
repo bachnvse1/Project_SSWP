@@ -116,7 +116,7 @@ public class AddProdcutServlet extends HttpServlet {
             order.setTotal_received_amount(product.getPrice());
         }
         order.setIntermediary_fee(product.getPrice() * 5 / 100);
-        order.setStatus("Ready");
+        order.setStatus("Sẵn sàng giao dịch");
         order.setCreate_by(u.getId());
         order.setUpdate_by(u.getId());
         dal.insertOrder(order);

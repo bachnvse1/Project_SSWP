@@ -91,12 +91,12 @@ public class ManageMyOrder extends HttpServlet {
         }
                //Get Processing Order  
               List<ProductOrderPair> productOrderPairsProcess = new ArrayList<>();
-         List<intermediateOrders> orderReady = dao.getOrderByStatus("Ready", u.getId());
+         List<intermediateOrders> orderReady = dao.getOrderByStatus("Sẵn sàng giao dịch", u.getId());
                for (intermediateOrders orders : orderReady) {
             Product product = dao.getProductByID(orders.getProductId());
             productOrderPairsProcess.add(new ProductOrderPair(product, orders));
         }
-               List<intermediateOrders> orderCheck = dao.getOrderByStatus("Checking", u.getId());
+               List<intermediateOrders> orderCheck = dao.getOrderByStatus("Người mua đang kiểm tra đơn hàng", u.getId());
                for (intermediateOrders orders : orderCheck) {
             Product product = dao.getProductByID(orders.getProductId());
             productOrderPairsProcess.add(new ProductOrderPair(product, orders));
@@ -106,6 +106,7 @@ public class ManageMyOrder extends HttpServlet {
         request.setAttribute("productOrderPairs", productOrderPairsAll);
         request.setAttribute("productOrderPairsComplete", productOrderPairsComplete);
         request.setAttribute("productOrderPairsProcess", productOrderPairsProcess);
+        
         request.getRequestDispatcher("MyOrder.jsp").forward(request, response);
     }
 
@@ -146,7 +147,7 @@ public class ManageMyOrder extends HttpServlet {
                 + productOrderPair.getProduct().getHidden_content() + ";"
                 + productOrderPair.getProduct().getContact_Method() + ";"
                 + productOrderPair.getOrder().getStatus() + ";"
-                + productOrderPair.getOrder().getBuyer_id() + ";"
+                + dao.getUserById(productOrderPair.getOrder().getBuyer_id()).getDisplay_name() + ";"
                 + productOrderPair.getOrder().getCreate_at() + ";"
                 + productOrderPair.getOrder().getUpdate_at();
         response.setContentType("text/plain");

@@ -95,29 +95,29 @@ public class buyServ extends HttpServlet {
         int idx = Integer.parseInt(id);
         Product p = dao.getProductByID(idx);
         if (dao.getWallet(u.getId()).getBalance() < p.getPrice()) {
-            response.getWriter().print("Your balance is not enough to purchase the product!");
+            response.getWriter().print("Số dư của bạn không đủ để mua sản phẩm!");
             return;
         }
         if (p.getCreate_by() != u.getId()) {
             if (p.isIs_delete() == true) {
-                response.getWriter().print("The product has been sold and is being traded!");
+                response.getWriter().print("Sản phẩm đã được bán");
             } else {
                 int transactionId = dao.insertTransaction(u.getId(), idx, "Pending"); // Insert transaction with pending status
                 if (transactionId != -1) {
                     // Add the purchase transaction to the queue
                     transactionQueue.addTransaction(new Transaction(transactionId, u.getId(), idx));
-                    dao.updateOrder(u.id, "Checking", idx);
+                    dao.updateOrder(u.id, "Người mua đang kiểm tra đơn hàng", idx);
                     dao.deleteProduct(idx, true);
-                    dao.insertReport(2, dao.getOrderByProductID(idx).getId(), true, "You have just purchased an order, the code is: " + dao.getOrderByProductID(idx).getCode() + " and checking this order please!", u.getId(), false);
+                    dao.insertReport(2, dao.getOrderByProductID(idx).getId(), true, "Bạn đã thanh toán đơn hàng có mã sản phẩm là: " + dao.getOrderByProductID(idx).getCode() + ". Hãy kiểm tra thông tin đơn hàng!", u.getId(), false);
                     
-                    response.getWriter().print("You just buy product, please checking order!");
+                    response.getWriter().print("Bạn vừa mua sản phẩm, hãy kiểm tra đơn hàng!");
                     new Thread(() -> transactionQueue.processTransactions()).start();
                 } else {
                     response.getWriter().print("Failed to process transaction. Please try again later!");
                 }
             }
         } else {
-            response.getWriter().print("Can not buy product yourself!");
+            response.getWriter().print("Không thể mua sản phẩm của chính mình!");
         }
     }
 

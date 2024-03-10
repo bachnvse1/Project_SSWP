@@ -1056,6 +1056,41 @@ public class DAO extends DBContext {
         return list;
 
     }
+    
+    public List<intermediateOrders> getAllOrderByStatus(String status) {
+        List<intermediateOrders> list = new ArrayList<>();
+        String sql = "SELECT * FROM swp_demo.intermediate_orders\n"
+                + "where status LIKE ? AND create_by =?";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(sql);
+            ps.setString(1, "%" + status + "%");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new intermediateOrders(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getDouble(5),
+                        rs.getDouble(6),
+                        rs.getDouble(7),
+                        rs.getString(8),
+                        rs.getInt(9),
+                        rs.getTimestamp(10),
+                        rs.getInt(11),
+                        rs.getTimestamp(12),
+                        rs.getBoolean(13)
+                ));
+            }
+        } catch (Exception e) {
+
+        }
+        return list;
+
+    }
+    
+    
 
     public intermediateOrders getOrderByProductID(int id) {
         String sql = "SELECT * FROM swp_demo.intermediate_orders\n"

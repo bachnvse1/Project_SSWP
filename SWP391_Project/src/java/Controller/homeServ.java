@@ -6,7 +6,9 @@ package Controller;
 
 import Entity.Category;
 import Entity.Product;
+import Entity.ProductOrderPair;
 import Entity.User;
+import Entity.intermediateOrders;
 import dao.DAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -15,6 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -65,6 +68,7 @@ public class homeServ extends HttpServlet {
         DAO dao = new DAO();
         List<Product> listProduct = null;
         List<Product> listProductPage = null;
+
         List<Category> listCategory = dao.getAllCategory();
         String page = request.getParameter("page");
         int pageSize = 8;
