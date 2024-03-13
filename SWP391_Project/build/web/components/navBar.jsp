@@ -147,35 +147,16 @@
         <script>
             $(document).ready(function () {
                 $("#info-Button").click(function () {
-                    $.ajax({
-                        type: 'GET',
-                        url: "editprofile.jsp",
-                        success: function (response) {
-                            window.location.href = "editprofile.jsp";
-                        },
-                        error: function () {
-                            // Xử lý lỗi nếu có
-                            alert("Đã xảy ra lỗi khi tải trang");
-                        }
-                    });
+                   window.location.href="EditProfile";
                 });
 
             });
 
 
             $(document).ready(function () {
-                $("#oder-Button").click(function () {
-                    $.ajax({
-                        type: 'GET',
-                        url: "manageMyOrder",
-                        success: function (response) {
-                            window.location.href = "manageMyOrder";
-                        },
-                        error: function () {
-                            // Xử lý lỗi nếu có
-                            alert("Đã xảy ra lỗi khi tải trang");
-                        }
-                    });
+                $("#oder-Button").click(function () {                   
+                    window.location.href = "manageMyOrder";
+              
                 });
             });
 

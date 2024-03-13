@@ -121,15 +121,17 @@ public class AuthorlizationFilter implements Filter {
         if (!isLoggedIn) {
             if (isLoginRequired() || isAdminRequired()) {
                 httpRequest.getRequestDispatcher("/login").forward(request, response);
-            }  else if (url.endsWith(".jsp")) {
-            httpRequest.getRequestDispatcher("/login").forward(request, response);
-        }
+            } //else if (url.endsWith(".jsp")) {              
+               // httpRequest.getRequestDispatcher("/home").forward(request, response);
+         //  }
         } else if (isLoggedIn) {
             if (!u.isIs_Admin() && isAdminRequired()) {
+                
                 httpRequest.getRequestDispatcher("/error-404.html").forward(request, response);
-            }  else if (url.endsWith(".jsp")) {              
-                httpRequest.getRequestDispatcher("/home").forward(request, response);
-            }
+           }  //else if (url.endsWith(".jsp")) {  
+              // session.removeAttribute("user");
+              //  httpRequest.getRequestDispatcher("/home").forward(request, response);
+           //}
         }
         Throwable problem = null;
         try {

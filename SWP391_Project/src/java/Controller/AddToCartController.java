@@ -78,7 +78,7 @@ public class AddToCartController extends HttpServlet {
                 listProduct.removeIf(product -> product.getId() == deleteId);
                 cart.setProduct(listProduct);
                 session.setAttribute("cart", cart);
-            }
+            }  
         }
         // In trực tiếp HTML chứa danh sách sản phẩm mới
         try (PrintWriter out = response.getWriter()) {
