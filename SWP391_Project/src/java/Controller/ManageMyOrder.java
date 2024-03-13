@@ -107,7 +107,7 @@ public class ManageMyOrder extends HttpServlet {
         request.setAttribute("productOrderPairs", productOrderPairsAll);
         request.setAttribute("productOrderPairsComplete", productOrderPairsComplete);
         request.setAttribute("productOrderPairsProcess", productOrderPairsProcess);
-        List<Report> listReport = dao.getListReport(u.getId());
+        List<Report> listReport = dao.getTopNext3Report(u.getId(), 1);
         request.setAttribute("listR", listReport);
         request.getRequestDispatcher("MyOrder.jsp").forward(request, response);
     }
@@ -149,7 +149,7 @@ public class ManageMyOrder extends HttpServlet {
                 + productOrderPair.getProduct().getHidden_content() + ";"
                 + productOrderPair.getProduct().getContact_Method() + ";"
                 + productOrderPair.getOrder().getStatus() + ";"
-                + dao.getUserById(productOrderPair.getOrder().getBuyer_id()).getDisplay_name() + ";"
+                + dao.getUserById(productOrderPair.getOrder().getBuyer_id()) + ";"
                 + productOrderPair.getOrder().getCreate_at() + ";"
                 + productOrderPair.getOrder().getUpdate_at();
         response.setContentType("text/plain");

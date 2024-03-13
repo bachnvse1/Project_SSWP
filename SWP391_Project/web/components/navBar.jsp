@@ -350,32 +350,26 @@
             <!-- /MAIN HEADER -->
         </header>
         
-<!--        <div id="popupContainer">
+        <div id="popupContainer">
             <span class="close">&times;</span>
         <table id="notificationTable" class="popupTable" style="display: none; border: none" cellpadding="0" cellspacing="0" width="100%">
             <tr>
                 <td>
                     <table id="table123" style="border: none; margin-left: auto; margin-right: auto" cellpadding="0" cellspacing="0" width="900" class="content">
-                         Start: Small header text in pale grey email background 
-
-                         End: Small header text in pale grey email background 
-
-                         Start: White block with text content 
                         <tr>
                             <td class="general center">
                                 <h1 style="text-align: center;">Thông báo </h1>  
                             </td>
                         </tr>
-                         End: White block with text content 
-
-                         Start: Failure Notification 
                         <c:forEach items="${listR}" var="r">
                             <c:if test="${r.getType_report() == 1}">
                                 <tr class="abc">
                                     <td class="failure notification">
                                         <h1><span class="icon">&times;</span>Khiếu nại đơn hàng</h1>
                                         <p class="small">${r.getDescription()}</p>
-                                        <a class="productInfo" data-action="view"  data-product-id="${r.getOrderID()}"> <i style="color: black;" class="fa fa-info-circle"></i></a>
+                                       <a class="productInfo" data-action="view" href="#"  data-product-id="${r.orderID}">
+                                            <i style="color: #0061f2" class="fa fa-info-circle"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             </c:if>
@@ -385,7 +379,9 @@
                                     <td class="warning notification">
                                         <h1><span class="icon">&quest;</span>Đang kiểm tra đơn hàng</h1>
                                         <p class="small">${r.getDescription()}</p>
-                                        <a class="productInfo" data-action="view"   data-product-id="${r.getOrderID()}"> <i style="color: black;" class="fa fa-info-circle"></i></a>
+                                        <a class="productInfo" data-action="view" href="#"  data-product-id="${r.orderID}">
+                                            <i style="color: #0061f2" class="fa fa-info-circle"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             </c:if>
@@ -395,7 +391,9 @@
                                     <td class="healthy notification">
                                         <h1><span class="icon">&check;</span>Sẵn sàng giao dịch</h1>
                                         <p class="small">${r.getDescription()}</p>
-                                        <a class="productInfo" data-action="view"   data-product-id="${r.getOrderID()}"> <i style="color: black;" class="fa fa-info-circle"></i></a>
+                                       <a class="productInfo" data-action="view" href="#"  data-product-id="${r.orderID}">
+                                            <i style="color: #0061f2" class="fa fa-info-circle"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             </c:if>
@@ -405,7 +403,9 @@
                                     <td class="healthy notification">
                                         <h1><span class="icon">&check;</span>Đơn hàng đã hoàn tất</h1>
                                         <p class="small">${r.getDescription()}</p>
-                                        <a class="productInfo" data-action="view"  data-product-id="${r.getOrderID()}"> <i style="color: black;" class="fa fa-info-circle"></i></a>
+                                        <a class="productInfo" data-action="view" href="#"  data-product-id="${r.orderID}">
+                                            <i style="color: #0061f2" class="fa fa-info-circle"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             </c:if>
@@ -415,24 +415,15 @@
                                     <td class="failure notification">
                                         <h1><span class="icon">&check;</span>Yêu cầu admin giải quyếtt</h1>
                                         <p class="small">${r.getDescription()}</p>
-                                        <a class="productInfo" data-action="view"  data-product-id="${r.getOrderID()}"> <i style="color: black;" class="fa fa-info-circle"></i></a>
+                                        <a class="productInfo" data-action="view" href="#"  data-product-id="${r.orderID}">
+                                            <i style="color: #0061f2" class="fa fa-info-circle"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             </c:if>
 
                         </c:forEach>
 
-                         End: Failure Notification 
-
-                         Start: Warning Notification 
-
-                         End: Warning Notification 
-
-                         Start: Healthy Notification 
-
-                         End: Healthy Notification 
-
-                         Start: Information Notification 
                                                 <tr>
                                                     <td class="information notification">
                                                         <h1><span class="icon">i</span>Information</h1>
@@ -446,7 +437,7 @@
             </tr>
         </table>
             <button onclick="loadMore()">Load More</button>
-            </div>-->
+            </div>
 
 
 

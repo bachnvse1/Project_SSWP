@@ -155,15 +155,12 @@ $(document).ready(function () {
                 document.getElementById("buyer_info").value = responseData[15];
                 document.getElementById("create_at").value = responseData[16];
                 document.getElementById("update_at").value = responseData[17];
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
             }
         });
     });
-
-$('.productInfo1').click(function (event) {
-    console.log("Clicked on productInfo");
-    // Các lệnh xử lý khác ở đây
-});
-
 
     $('.updateproduct').click(function (event) {
         event.preventDefault();
@@ -174,6 +171,10 @@ $('.productInfo1').click(function (event) {
             url: 'manageMyOrder',
             data: {pid: productId, action: action},
             success: function (response) {
+                const popupContainer = document.getElementById('popupContainer');
+                const tablePopup = document.getElementById('notificationTable');
+                popupContainer.style.display = 'none';
+                tablePopup.style.display = 'none';
                 document.getElementById("overlay").style.display = "block";
                 document.getElementById("modal2").style.display = "block";
 
@@ -509,29 +510,29 @@ const showPopupButton = document.getElementById('notification-Button');
             document.body.style.overflow = 'hidden';
 });
 
-//var orderiValue;
-//
-//$("button[type='submit']").click(function() {
-//    orderiValue = $(this).data("orderi");
-//});
-//
-//$("#complaintForm").submit(function (e) {
-//        e.preventDefault(); // Ngăn chặn chuyển hướng mặc định khi nhấn nút submit
-//        var formData = {
-//            id: $("#order_id").val(),
-//            datax: orderiValue
-//        };
-//        $.ajax({
-//            type: 'POST',
-//            url: 'report', // Đường dẫn đến servlet xử lý
-//            data: formData, // Gửi dữ liệu của form sang servlet
-//            success: function (response) {
-//                alert(response);
-//                window.location.href = 'manageMyOrder';
-//            },
-//            error: function (xhr, status, error) {
-//                console.table(xhr.responseText);
-//            }
-//        });
-//    });
+var orderiValue;
+
+$("button[type='submit']").click(function() {
+    orderiValue = $(this).data("orderi");
+});
+
+$("#complaintForm").submit(function (e) {
+        e.preventDefault(); // Ngăn chặn chuyển hướng mặc định khi nhấn nút submit
+        var formData = {
+            id: $("#order_id").val(),
+            datax: orderiValue
+        };
+        $.ajax({
+            type: 'POST',
+            url: 'report', // Đường dẫn đến servlet xử lý
+            data: formData, // Gửi dữ liệu của form sang servlet
+            success: function (response) {
+                alert(response);
+                window.location.href = 'manageMyOrder';
+            },
+            error: function (xhr, status, error) {
+                console.table(xhr.responseText);
+            }
+        });
+    });
 
