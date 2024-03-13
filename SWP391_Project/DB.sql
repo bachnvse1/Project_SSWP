@@ -152,6 +152,18 @@ CREATE TABLE deposit (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+create table vnpay_Transaction (
+id int not null auto_increment,
+-- 3 status: pending, fail, success
+Status varchar(20),
+Wallet_id int,
+Payment_code varchar(100),
+Time text,
+Description text,
+BankCode varchar(10),
+primary key(id)
+);
+
 
 
 INSERT INTO swp_demo.feedback (id, title, content, create_at, user_id, intermediary_order_id)

@@ -18,6 +18,7 @@ public class vnpay_Transaction {
     private String BankCode;
 
     public vnpay_Transaction() {
+        
     }
 
     public vnpay_Transaction(int ID, String status, int Wallet_id, String Payment_Code, String Time, String Description, String BankCode) {
