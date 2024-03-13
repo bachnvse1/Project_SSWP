@@ -24,7 +24,8 @@ import jakarta.servlet.http.HttpSession;
  */
 @WebServlet(name = "AddProdcutServlet", urlPatterns = {"/addProduct"})
 public class AddProdcutServlet extends HttpServlet {
-
+        private static final long serialVersionUID = 1L;
+        
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -74,6 +75,10 @@ public class AddProdcutServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    private static final String UPLOAD_DIRECTORY = "imagesupload";
+	private static final int THRESHOLD_SIZE = 1024 * 1024 * 3; // 3MB
+	private static final int MAX_FILE_SIZE = 1024 * 1024 * 4; // 4MB
+	private static final int MAX_REQUEST_SIZE = 1024 * 1024 * 5; // 5MB
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

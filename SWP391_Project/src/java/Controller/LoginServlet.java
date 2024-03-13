@@ -64,7 +64,8 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+     //   processRequest(request, response);
+     request.getRequestDispatcher("signin.jsp").forward(request, response);
     }
 
     /**
@@ -82,9 +83,7 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         //processRequest(request, response);
         String user = request.getParameter("username");
-        String pass = request.getParameter("password");
-        request.setAttribute("username", user);
-        request.setAttribute("pass", pass);
+        String pass = request.getParameter("password");       
         String captcha = request.getParameter("capchaRespone");
         String sessionCaptcha = (String) request.getSession().getAttribute("captcha");
         DAO dal = new DAO();

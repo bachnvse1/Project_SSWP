@@ -223,7 +223,7 @@
             }
 
         </style>
-  
+
     </head>
     <body>
         <%@include file="components/navBar.jsp" %>
@@ -272,7 +272,7 @@
                             <div class="rounded">
                                 <div class="table-responsive table-borderless" style="margin-top: 5%;width: fit-content;">
 
-                                    <table id="orderBuy" class="text-nowrap mb-0 table" border="1">
+                                    <table id="orderBuy" class="text-nowrap mb-0 table" border="1" style="display: none"> 
                                         <thead class="table-light">
                                             <tr>
                                                 <th>Mã đơn hàng</th>
@@ -293,7 +293,7 @@
                                         </tbody>
                                     </table>
 
-                                    <table class="text-nowrap mb-0 table" id="orderBuy-complete" border="1">
+                                    <table class="text-nowrap mb-0 table" id="orderBuy-complete" border="1" style="display: none">
                                         <thead class="table-light">
                                             <tr>
                                                 <th>Mã đơn hàng</th>
@@ -319,7 +319,7 @@
                     </div>
                 </div>
                 <form action="filtermyorder">
-                    <table id="Filter" class="text-nowrap mb-0 table" border="1">
+                    <table id="Filter" class="text-nowrap mb-0 table" border="1" style="display: none">
                         <tr>
                             <th>Tìm kiếm bằng tên</th>
                             <th>Lọc theo giá</th>
@@ -344,7 +344,7 @@
                         </tr>
                     </table>
                 </form>
-                <table id="ProductDisplay" class="text-nowrap mb-0 table" border="1">
+                <table id="ProductDisplay" class="text-nowrap mb-0 table" border="1" style="display: none">
 
                     <thead class="table-light">
                         <tr>
@@ -394,7 +394,7 @@
 
 
                 <!--Complete Table-->
-                <table id="ProductCompleteDisplay" class="text-nowrap mb-0 table" border="1">
+                <table id="ProductCompleteDisplay" class="text-nowrap mb-0 table" border="1" style="display: none">
 
                     <thead class="table-light">
                         <tr>
@@ -440,7 +440,7 @@
                 <table id="ProductProcessingDisplay" class="text-nowrap mb-0 table" border="1">
 
                     <thead class="table-light">
-                          <tr>
+                        <tr>
                             <th>Mã đơn hàng</th>
                             <th>Tên sản phẩm</th>
                             <th>Giá</th>                        
@@ -485,10 +485,10 @@
 
 
                 <!--                  Add Form-->
-                <div id="addProductForm" class="addProduct">
+                <div id="addProductForm" class="addProduct" style="display: none">
                     <div class="modal-content3">                      
                         <div class="container-complain">
-                            <form id="addForm">
+                            <form id="addForm" enctype="multipart/form-data">
                                 <h2 style="text-align: center;">Thêm sản phẩm</h2>
                                 <label for="name">Tên sản phẩm:</label>
                                 <input type="text" name="nameProduct" required><br>
@@ -503,10 +503,10 @@
                                 </select><br>
 
                                 <label for="description">Mô tả(Càng chi tiết về sản phẩm càng tốt vì đây sẽ là cơ sở pháp lý giải quyết khiếu nại nếu có sau này):</label>
-                                <input name="Description" rows="4" required></input><br>
+                                <textarea name="Description"></textarea><br>
 
                                 <label for="image1">Ảnh 1:</label>
-                                <input type="text" id="image" name="image1"><br>
+                                <input type="file" id="image" name="image1" accept="image/*"><br>
 
                                 <label for="image2">Ảnh 2:</label>
                                 <input type="text" id="image" name="image2"><br>
@@ -532,7 +532,7 @@
                                 <input type="text"  name="hidden_content" required><br>
 
                                 <input type="submit" value="Thêm mới">
-                            </form>
+                            </form>                         
                         </div>
                     </div>
                 </div>
@@ -590,7 +590,7 @@
                         <label for="buyer">Chỉnh sửa cuối:</label>
                         <input type="text" id="update_at" value="" readonly><br>
                         <c:if test="">
-                            
+
                         </c:if>
 
                     </div>
@@ -738,8 +738,8 @@
                             <input type="text" id="buyer1"  value="" readonly><br>
                             <label for="hidden_info">Thời gian tạo</label><br>
                             <input type="text" id="create" name="" value="" readonly><br><br><br>
-<!--                            <label for="description">Description</label><br>
-                            <textarea id="description1" name="description" placeholder="Write something, as detailed as possible..." style="height:200px" required></textarea><br>-->
+                            <!--                            <label for="description">Description</label><br>
+                                                        <textarea id="description1" name="description" placeholder="Write something, as detailed as possible..." style="height:200px" required></textarea><br>-->
                             <button id="hihi1" style="float: left; color: red; ">Khiếu nại đơn hàng không đúng mô tả</button>
                             <button id="hihi2" style="float: right; color: #4CAF50;">Xác nhận đơn hàng đúng mô tả</button>
                         </form>
@@ -747,7 +747,7 @@
                 </div>
             </div>
 
-            <div id="myModalVerify" class="modal4">
+            <div id="myModalVerify" class="modal4" style="display: none">
                 <span class="close1">&times;</span></br></br>
                 <h3>Xác nhận đơn hàng</h3>
                 <p>Đơn hàng đúng với thông tin mô tả</p>
@@ -760,8 +760,8 @@
                     <div class="loader" id="loader"></div>
                 </form>
             </div>
-            <div id="exampleModalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  style="height:580px;padding:0px;">
-                <div class="modal-dialog" style="max-width: 700px;" role="document">
+            <div id="exampleModalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  style="height:580px;padding:0px">
+                <div class="modal-dialog" style="max-width: 700px;display: none" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Đánh giá</h5>
@@ -800,5 +800,7 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="jscript/myorder.js"></script>
+        <script src="ckeditor/ckeditor.js"></script>
+
     </body>
 </html>

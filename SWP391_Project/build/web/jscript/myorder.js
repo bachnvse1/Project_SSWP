@@ -7,15 +7,15 @@
 
 $(document).ready(function () {
     // Ẩn form khi trang được tải
-    $("#addProductForm").hide();
-    $("#orderBuy").hide();
-    $("#myModalComplain").hide();
-    $("#myModalVerify").hide();
-    $("#orderBuy-complete").hide();
-    $("#exampleModalCreate").hide();
-    $("#ProductCompleteDisplay").hide();
-    $("#ProductProcessingDisplay").hide();
-    
+//    $("#addProductForm").hide();
+//    $("#orderBuy").hide();
+//    $("#myModalComplain").hide();
+//    $("#myModalVerify").hide();
+//    $("#orderBuy-complete").hide();
+//    $("#exampleModalCreate").hide();
+//    $("#ProductCompleteDisplay").hide();
+//    $("#ProductProcessingDisplay").hide();
+//    
     // Xử lý sự kiện khi nhấn nút "Add Product"
     $("#addProductButton").click(function () {
         $("#addProductForm").show();
