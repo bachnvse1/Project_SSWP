@@ -136,8 +136,6 @@ $(document).ready(function () {
             url: 'manageMyOrder',
             data: {pid: productId, action: action},
             success: function (response) {
-                
-                
                 var responseData = response.split(";");
                 document.getElementById("orderCode").value = responseData[0];
                 document.getElementById("productName").value = responseData[1];
@@ -511,29 +509,29 @@ const showPopupButton = document.getElementById('notification-Button');
             document.body.style.overflow = 'hidden';
 });
 
-var orderiValue;
-
-$("button[type='submit']").click(function() {
-    orderiValue = $(this).data("orderi");
-});
-
-$("#complaintForm").submit(function (e) {
-        e.preventDefault(); // Ngăn chặn chuyển hướng mặc định khi nhấn nút submit
-        var formData = {
-            id: $("#order_id").val(),
-            datax: orderiValue
-        };
-        $.ajax({
-            type: 'POST',
-            url: 'report', // Đường dẫn đến servlet xử lý
-            data: formData, // Gửi dữ liệu của form sang servlet
-            success: function (response) {
-                alert(response);
-                window.location.href = 'manageMyOrder';
-            },
-            error: function (xhr, status, error) {
-                console.table(xhr.responseText);
-            }
-        });
-    });
+//var orderiValue;
+//
+//$("button[type='submit']").click(function() {
+//    orderiValue = $(this).data("orderi");
+//});
+//
+//$("#complaintForm").submit(function (e) {
+//        e.preventDefault(); // Ngăn chặn chuyển hướng mặc định khi nhấn nút submit
+//        var formData = {
+//            id: $("#order_id").val(),
+//            datax: orderiValue
+//        };
+//        $.ajax({
+//            type: 'POST',
+//            url: 'report', // Đường dẫn đến servlet xử lý
+//            data: formData, // Gửi dữ liệu của form sang servlet
+//            success: function (response) {
+//                alert(response);
+//                window.location.href = 'manageMyOrder';
+//            },
+//            error: function (xhr, status, error) {
+//                console.table(xhr.responseText);
+//            }
+//        });
+//    });
 

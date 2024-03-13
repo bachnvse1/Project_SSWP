@@ -101,7 +101,7 @@ public class homeServ extends HttpServlet {
         if (u != null) {
             session.setAttribute("balance", dao.getWallet(u.getId()).getBalance());
         }
-         List<Report> listReport = dao.getTopNext3Report(u.getId(), 1);
+        List<Report> listReport = dao.getTopNext3Report(u.getId(), 1);
         request.setAttribute("listR", listReport);
         listProductPage = listProduct.subList(start, end);
         request.setAttribute("Count", Count);

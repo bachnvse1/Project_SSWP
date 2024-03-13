@@ -74,7 +74,7 @@ public class notificationServ extends HttpServlet {
             if (r.getType_report() == 1) {
                 out.println("<tr class=\"abc\">\n"
                         + "                                    <td class=\"failure notification\">\n"
-                        + "                                        <h1><span class=\"icon\">&times;</span>Complain</h1>\n"
+                        + "                                        <h1><span class=\"icon\">&times;</span>Khiếu nại đơn hàng</h1>\n"
                         + "                                        <p class=\"small\">" + r.getDescription() + "</p>\n"
                         + "                                        <a class=\"productInfo\" data-action=\"view\"  data-product-id=\"" + r.getOrderID() + "\"> <i style=\"color: black;\" class=\"fa fa-info-circle\"></i></a>\n"
                         + "                                    </td>\n"
@@ -83,7 +83,7 @@ public class notificationServ extends HttpServlet {
             if (r.getType_report() == 2) {
                 out.println("<tr class=\"abc\">\n"
                         + "                                    <td class=\"warning notification\">\n"
-                        + "                                        <h1><span class=\"icon\">&times;</span>Complain</h1>\n"
+                        + "                                        <h1><span class=\"icon\">&times;</span>Đang kiểm tra đơn hàng</h1>\n"
                         + "                                        <p class=\"small\">" + r.getDescription() + "</p>\n"
                         + "                                        <a class=\"productInfo\" data-action=\"view\"  data-product-id=\"" + r.getOrderID() + "\"> <i style=\"color: black;\" class=\"fa fa-info-circle\"></i></a>\n"
                         + "                                    </td>\n"
@@ -92,7 +92,7 @@ public class notificationServ extends HttpServlet {
             if (r.getType_report() == 3) {
                 out.println("<tr class=\"abc\">\n"
                         + "                                    <td class=\"healthy notification\">\n"
-                        + "                                        <h1><span class=\"icon\">&times;</span>Complain</h1>\n"
+                        + "                                        <h1><span class=\"icon\">&times;</span>Sẵn sàng giao dịch</h1>\n"
                         + "                                        <p class=\"small\">" + r.getDescription() + "</p>\n"
                         + "                                        <a class=\"productInfo\" data-action=\"view\"  data-product-id=\"" + r.getOrderID() + "\"> <i style=\"color: black;\" class=\"fa fa-info-circle\"></i></a>\n"
                         + "                                    </td>\n"
@@ -101,7 +101,17 @@ public class notificationServ extends HttpServlet {
             if (r.getType_report() == 4) {
                 out.println("<tr class=\"abc\">\n"
                         + "                                    <td class=\"healthy notification\">\n"
-                        + "                                        <h1><span class=\"icon\">&times;</span>Complain</h1>\n"
+                        + "                                        <h1><span class=\"icon\">&times;</span>Đơn hàng đã hoàn tất</h1>\n"
+                        + "                                        <p class=\"small\">" + r.getDescription() + "</p>\n"
+                        + "                                        <a class=\"productInfo\" data-action=\"view\"  data-product-id=\"" + r.getOrderID() + "\"> <i style=\"color: black;\" class=\"fa fa-info-circle\"></i></a>\n"
+                        + "                                    </td>\n"
+                        + "                                </tr>");
+            }
+            
+            if (r.getType_report() == 7) {
+                out.println("<tr class=\"abc\">\n"
+                        + "                                    <td class=\"failure notification\">\n"
+                        + "                                        <h1><span class=\"icon\">&times;</span>Yêu cầu admin giải quyết</h1>\n"
                         + "                                        <p class=\"small\">" + r.getDescription() + "</p>\n"
                         + "                                        <a class=\"productInfo\" data-action=\"view\"  data-product-id=\"" + r.getOrderID() + "\"> <i style=\"color: black;\" class=\"fa fa-info-circle\"></i></a>\n"
                         + "                                    </td>\n"

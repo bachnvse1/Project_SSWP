@@ -350,30 +350,30 @@
             <!-- /MAIN HEADER -->
         </header>
         
-        <div id="popupContainer">
+<!--        <div id="popupContainer">
             <span class="close">&times;</span>
         <table id="notificationTable" class="popupTable" style="display: none; border: none" cellpadding="0" cellspacing="0" width="100%">
             <tr>
                 <td>
                     <table id="table123" style="border: none; margin-left: auto; margin-right: auto" cellpadding="0" cellspacing="0" width="900" class="content">
-                        <!-- Start: Small header text in pale grey email background -->
+                         Start: Small header text in pale grey email background 
 
-                        <!-- End: Small header text in pale grey email background -->
+                         End: Small header text in pale grey email background 
 
-                        <!-- Start: White block with text content -->
+                         Start: White block with text content 
                         <tr>
                             <td class="general center">
                                 <h1 style="text-align: center;">Thông báo </h1>  
                             </td>
                         </tr>
-                        <!-- End: White block with text content -->
+                         End: White block with text content 
 
-                        <!-- Start: Failure Notification -->
+                         Start: Failure Notification 
                         <c:forEach items="${listR}" var="r">
                             <c:if test="${r.getType_report() == 1}">
                                 <tr class="abc">
                                     <td class="failure notification">
-                                        <h1><span class="icon">&times;</span>Khiếu nại</h1>
+                                        <h1><span class="icon">&times;</span>Khiếu nại đơn hàng</h1>
                                         <p class="small">${r.getDescription()}</p>
                                         <a class="productInfo" data-action="view"  data-product-id="${r.getOrderID()}"> <i style="color: black;" class="fa fa-info-circle"></i></a>
                                     </td>
@@ -383,7 +383,7 @@
                             <c:if test="${r.getType_report() == 2}">
                                 <tr class="abc">
                                     <td class="warning notification">
-                                        <h1><span class="icon">&quest;</span>Mua sản phẩm</h1>
+                                        <h1><span class="icon">&quest;</span>Đang kiểm tra đơn hàng</h1>
                                         <p class="small">${r.getDescription()}</p>
                                         <a class="productInfo" data-action="view"   data-product-id="${r.getOrderID()}"> <i style="color: black;" class="fa fa-info-circle"></i></a>
                                     </td>
@@ -393,7 +393,7 @@
                             <c:if test="${r.getType_report() == 3}">
                                 <tr class="abc">
                                     <td class="healthy notification">
-                                        <h1><span class="icon">&check;</span>Đăng sản phẩm</h1>
+                                        <h1><span class="icon">&check;</span>Sẵn sàng giao dịch</h1>
                                         <p class="small">${r.getDescription()}</p>
                                         <a class="productInfo" data-action="view"   data-product-id="${r.getOrderID()}"> <i style="color: black;" class="fa fa-info-circle"></i></a>
                                     </td>
@@ -403,7 +403,17 @@
                             <c:if test="${r.getType_report() == 4}">
                                 <tr class="abc">
                                     <td class="healthy notification">
-                                        <h1><span class="icon">&check;</span>Xác thực giao dịch</h1>
+                                        <h1><span class="icon">&check;</span>Đơn hàng đã hoàn tất</h1>
+                                        <p class="small">${r.getDescription()}</p>
+                                        <a class="productInfo" data-action="view"  data-product-id="${r.getOrderID()}"> <i style="color: black;" class="fa fa-info-circle"></i></a>
+                                    </td>
+                                </tr>
+                            </c:if>
+                                
+                                <c:if test="${r.getType_report() == 7}">
+                                <tr class="abc">
+                                    <td class="failure notification">
+                                        <h1><span class="icon">&check;</span>Yêu cầu admin giải quyếtt</h1>
                                         <p class="small">${r.getDescription()}</p>
                                         <a class="productInfo" data-action="view"  data-product-id="${r.getOrderID()}"> <i style="color: black;" class="fa fa-info-circle"></i></a>
                                     </td>
@@ -412,31 +422,31 @@
 
                         </c:forEach>
 
-                        <!-- End: Failure Notification -->
+                         End: Failure Notification 
 
-                        <!-- Start: Warning Notification -->
+                         Start: Warning Notification 
 
-                        <!-- End: Warning Notification -->
+                         End: Warning Notification 
 
-                        <!-- Start: Healthy Notification -->
+                         Start: Healthy Notification 
 
-                        <!-- End: Healthy Notification -->
+                         End: Healthy Notification 
 
-                        <!-- Start: Information Notification -->
-                        <!--                        <tr>
+                         Start: Information Notification 
+                                                <tr>
                                                     <td class="information notification">
                                                         <h1><span class="icon">i</span>Information</h1>
                                                         <p>The "something or other" system information</p>
                                                         <p class="small">Any supplementary information</p>
                                                     </td>
-                                                </tr>-->
+                                                </tr>
                         
                     </table>
                 </td>
             </tr>
         </table>
             <button onclick="loadMore()">Load More</button>
-            </div>
+            </div>-->
 
 
 

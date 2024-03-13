@@ -126,7 +126,7 @@ public class ManageMyOrder extends HttpServlet {
         // processRequest(request, response);
 
         DAO dao = new DAO();
-        int id = Integer.parseInt(request.getParameter("pid"));
+        int id = Integer.parseInt(request.getParameter("pid").trim());
         intermediateOrders order = dao.getOrderByID(id);
         // HttpSession session = request.getSession();
         //  User u = (User) session.getAttribute("user");

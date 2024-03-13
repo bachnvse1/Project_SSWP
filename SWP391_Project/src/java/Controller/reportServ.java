@@ -99,7 +99,7 @@ public class reportServ extends HttpServlet {
         } else {
             if (dao.getWallet(u.getId()).getBalance() > 10000) {
                 if (!dao.getOrderByID(id).getStatus().equals("Yêu cầu admin giải quyết")) {
-                    dao.insertReport(1, id, 1, false, "2 bên không tự giải quyết được yêu cầu admin tham gia giải quyết đơn hàng mã code: " + dao.getOrderByID(id).getCode(), u.getId(), false);
+                    dao.insertReport(7, id, 1, false, "2 bên không tự giải quyết được yêu cầu admin tham gia giải quyết đơn hàng mã code: " + dao.getOrderByID(id).getCode(), u.getId(), false);
                     dao.updateOrderStatus(u.getId(), "Yêu cầu admin giải quyết", id);
                     response.getWriter().print("Yêu cầu admin giải quyết thành công. Chờ giải quyết nhé!");
                 } else {
