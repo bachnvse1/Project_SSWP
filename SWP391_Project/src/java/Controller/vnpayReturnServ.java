@@ -4,12 +4,9 @@
  */
 package Controller;
 
-import Entity.Category;
-import Entity.Product;
-import Entity.Transaction;
-import Entity.TransactionQueue;
 import Entity.User;
-import Entity.intermediateOrders;
+import Entity.Wallet;
+import com.vnpay.common.Config;
 import dao.DAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,14 +16,18 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.List;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
  * @author ADMIN
  */
-@WebServlet(name = "buyServ", urlPatterns = {"/buy"})
-public class buyServ extends HttpServlet {
+@WebServlet(name = "vnpayReturnServ", urlPatterns = {"/vnpay_return"})
+public class vnpayReturnServ extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,10 +46,10 @@ public class buyServ extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet buyServ</title>");
+            out.println("<title>Servlet vnpayReturnServ</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet buyServ at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet vnpayReturnServ at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -66,15 +67,32 @@ public class buyServ extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    private TransactionQueue transactionQueue;
-    private DAO dao;
-
-    public buyServ() {
-        this.transactionQueue = new TransactionQueue();
-        this.dao = new DAO(); // Initialize DAO instance
+       Map fields = new HashMap();
+        for (Enumeration params = request.getParameterNames(); params.hasMoreElements();) {
+            String fieldName = URLEncoder.encode((String) params.nextElement(), StandardCharsets.US_ASCII.toString());
+            String fieldValue = URLEncoder.encode(request.getParameter(fieldName), StandardCharsets.US_ASCII.toString());
+            if ((fieldValue != null) && (fieldValue.length() > 0)) {
+                fields.put(fieldName, fieldValue);
+            }
+        }
+        //trc khi chuyen sang cho vnpay thi status mac dinh la pending, neu successed thi doi status sang thanh cong va soat lai 1 lan nua thi dau den cuoi xem co giao dich nao con pending thi xu li not (trong bang vnpay_transaction, nghia la cu thuc hien giao dich la luu vao db la pending r neu ma xu li xong thi cap nhat xem successed hay failed neu failed thi cap nhat vao trong bang wallet la account bang bao nhieu do ben vnpay tra ve status thi cap nhat status trong bang vnpay_transaction sau do neu thanh cong thi lai bat dau do lai xem co cai nao van con pending thi xu li not (neu van chua xu li dc truong hop 2 accout cung an thanh toan 1 luc thi phai dung queue(FIFO) de luu giao dich de xu li tung cai 1) neu thanh cong thi luu vao 1 cai queue r thuc hien tung cai 1 tranh reload lai trang thi lien tuc cong tien
+        String vnp_SecureHash = request.getParameter("vnp_SecureHash");
+        if (fields.containsKey("vnp_SecureHashType")) {
+            fields.remove("vnp_SecureHashType");
+        }
+        if (fields.containsKey("vnp_SecureHash")) {
+            fields.remove("vnp_SecureHash");
+        }
+        String signValue = Config.hashAllFields(fields);
+        
+        DAO dao = new DAO();
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("user");
+        Wallet w = dao.getWallet(u.getId());
+        boolean paid = false;
+        
+        
+        
     }
 
     /**
@@ -88,37 +106,7 @@ public class buyServ extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        DAO dao = new DAO();
-        HttpSession session = request.getSession();
-        User u = (User) session.getAttribute("user");
-        String id = request.getParameter("id");
-        int idx = Integer.parseInt(id);
-        Product p = dao.getProductByID(idx);
-        if (dao.getWallet(u.getId()).getBalance() < p.getPrice()) {
-            response.getWriter().print("Số dư của bạn không đủ để mua sản phẩm!");
-            return;
-        }
-        if (p.getCreate_by() != u.getId()) {
-            if (p.isIs_delete() == true) {
-                response.getWriter().print("Sản phẩm đã được bán");
-            } else {
-                int transactionId = dao.insertTransaction(u.getId(), idx, "Pending"); // Insert transaction with pending status
-                if (transactionId != -1) {
-                    // Add the purchase transaction to the queue
-                    transactionQueue.addTransaction(new Transaction(transactionId, u.getId(), idx));
-                    dao.updateOrder(u.id, "Người mua đang kiểm tra đơn hàng", idx);
-                    
-                    dao.insertReport(2, dao.getOrderByProductID(idx).getId(), u.getId(), true, "Bạn đã thanh toán đơn hàng có mã sản phẩm là: " + dao.getOrderByProductID(idx).getCode() + ". Hãy kiểm tra thông tin đơn hàng!", u.getId(), false);
-                    
-                    response.getWriter().print("Bạn vừa mua sản phẩm, hãy kiểm tra đơn hàng!");
-                    new Thread(() -> transactionQueue.processTransactions()).start();
-                } else {
-                    response.getWriter().print("Failed to process transaction. Please try again later!");
-                }
-            }
-        } else {
-            response.getWriter().print("Không thể mua sản phẩm của chính mình!");
-        }
+        processRequest(request, response);
     }
 
     /**

@@ -7,6 +7,7 @@ package Controller;
 import Entity.Category;
 import Entity.Product;
 import Entity.ProductOrderPair;
+import Entity.Report;
 import Entity.User;
 import Entity.intermediateOrders;
 import dao.DAO;
@@ -100,6 +101,8 @@ public class homeServ extends HttpServlet {
         if (u != null) {
             session.setAttribute("balance", dao.getWallet(u.getId()).getBalance());
         }
+         List<Report> listReport = dao.getTopNext3Report(u.getId(), 1);
+        request.setAttribute("listR", listReport);
         listProductPage = listProduct.subList(start, end);
         request.setAttribute("Count", Count);
         request.setAttribute("page", page);

@@ -314,7 +314,7 @@
                         <!-- Start: White block with text content -->
                         <tr>
                             <td class="general center">
-                                <h1>Notification</h1>  
+                                <h1>Notification1</h1>  
                             </td>
                         </tr>
                         <!-- End: White block with text content -->
@@ -381,9 +381,11 @@
                                                         <p class="small">Any supplementary information</p>
                                                     </td>
                                                 </tr>-->
+                         <tr><button>Load more</button></tr>
                     </table>
                 </td>
             </tr>
+           
         </table>
 
         <div class="overlay" id="overlay"></div>

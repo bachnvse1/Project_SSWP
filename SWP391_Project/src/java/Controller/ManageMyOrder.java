@@ -7,6 +7,7 @@ package Controller;
 import Entity.Category;
 import Entity.Product;
 import Entity.ProductOrderPair;
+import Entity.Report;
 import Entity.User;
 import Entity.intermediateOrders;
 import dao.DAO;
@@ -72,7 +73,7 @@ public class ManageMyOrder extends HttpServlet {
         DAO dao = new DAO();
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("user");
-        String complete = "Complete";
+        String complete = "Đơn hàng đã hoàn thành";
         List<Category> category = dao.getAllCategory();
          
          // Get All Order
@@ -106,7 +107,8 @@ public class ManageMyOrder extends HttpServlet {
         request.setAttribute("productOrderPairs", productOrderPairsAll);
         request.setAttribute("productOrderPairsComplete", productOrderPairsComplete);
         request.setAttribute("productOrderPairsProcess", productOrderPairsProcess);
-        
+        List<Report> listReport = dao.getListReport(u.getId());
+        request.setAttribute("listR", listReport);
         request.getRequestDispatcher("MyOrder.jsp").forward(request, response);
     }
 

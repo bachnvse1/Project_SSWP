@@ -89,7 +89,7 @@ public class AddProdcutServlet extends HttpServlet {
         product.setImage2(request.getParameter("image2"));
         product.setImage3(request.getParameter("image3"));
         product.setImage4(request.getParameter("image4"));
-        if (request.getParameter("Transaction_fee").equals("seller")) {
+        if (request.getParameter("Transaction_fee").equals("Người bán")) {
             product.setTransaction_fee(true);
         } else {
             product.setTransaction_fee(false);
@@ -102,7 +102,7 @@ public class AddProdcutServlet extends HttpServlet {
         DAO dal = new DAO();
         Wallet walet =  dal.getWallet(u.getId());
         if(walet.getBalance() >= 500){
-            walet.setBalance(walet.getBalance()-500);
+            walet.setBalance(walet.getBalance() - 500);
         dal.insertProduct(product);
         intermediateOrders order = new intermediateOrders();
         order.setCode("SP00" + dal.getIdProduct());
@@ -122,6 +122,7 @@ public class AddProdcutServlet extends HttpServlet {
         dal.insertOrder(order);
         dal.updateAmount(walet.getBalance(), u.getId());
         session.setAttribute("balance", dal.getWallet(u.getId()).getBalance());
+        dal.insertReport(3, order.getId(), u.getId(), true, "Bạn vừa đăng sản phẩm với mã code: " + order.getCode(), u.getId(), false);
         response.getWriter().write("success");
         }else{
             response.getWriter().write("Insufficient_balance");

@@ -31,9 +31,9 @@
 
         <!-- Font Awesome Icon -->
         <link rel="stylesheet" href="css/font-awesome.min.css">
-
         <!-- Custom stlylesheet -->
         <link type="text/css" rel="stylesheet" href="css/style.css"/>
+        
 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -92,6 +92,9 @@
             .button-buy:active {
                 transform: scale(0.9);
             }
+            
+            
+            
         </style>
 
     </head>
@@ -135,7 +138,7 @@
                                 <!-- tab -->
                                 <div id="Listproduct" class="tab-pane fade in active">
                                     <c:forEach items="${listProductPage}" var="p" varStatus="loop">
-
+                                        
                                         <div class="col-md-3">
                                             <!-- product -->
 
@@ -168,7 +171,8 @@
                                                     <!-- Thêm nút "Buy" -->
                                                     <button class="add-to-cart-btn" onclick="addToCart(${p.id})">
                                                         <i class="fa fa-shopping-cart"></i>CART
-                                                    </button>
+                                                   
+                                                        
                                                 </div>
                                             </div>
                                             <div class="container-2">
@@ -230,8 +234,66 @@
             <!-- /container -->
         </div>
         <!-- /NEWSLETTER -->
+        
+        <div class="overlay" id="overlay"></div>
+            <div style="height: 700px;overflow: auto;max-height: 800px; width: 1300px;" class="modal" id="modal">
+                <div class="modal-content3">                      
+                    <div class="container-complain">
+                        <h2>Order Information</h2>                   
+                        <label for="orderCode">Order code:</label>
+                        <input type="text" id="orderCode" value="" readonly><br>
+
+                        <label for="productName">Product Name:</label>
+                        <input type="text" id="productName" value="" readonly><br>
+
+                        <label for="price">Price:</label>
+                        <input type="text" id="price" value="" readonly><br>
+
+                        <label for="intermediaryFee">Intermediary Fee:</label>
+                        <input type="text" id="intermediaryFee" value="" readonly><br>
+
+                        <label for="party">Party bears the fee:</label>
+                        <input type="text" id="party" name="party" value="" readonly><br>
 
 
+                        <label for="receivedAmount">Total received amount:</label>
+                        <input type="text" id="receivedAmount" value="" readonly><br>
+
+                        <label for="paidAmount">Total paid amount:</label>
+                        <input type="text" id="paidAmount" value="" readonly><br>
+
+                        <label for="productImage">Product Image:</label><br>
+                        <img style="max-width: 150px; max-height: 150px" id="img1" src="" >
+                        <img style="max-width: 150px; max-height: 150px" id="img2" src="" >
+                        <img style="max-width: 150px; max-height: 150px" id="img3" src="" >
+                        <img style="max-width: 150px; max-height: 150px" id="img4" src="" ><br>
+
+                        <label for="description">Description:</label>
+                        <textarea id="description" rows="4" value="" readonly></textarea><br>
+
+                        <label for="hiddenContent">Hidden Content:</label>
+                        <input type="text" id="hiddenContent_info" value=""  readonly><br>
+
+                        <label for="contactMethod">Contact Method:</label>
+                        <input type="text" id="contactMethod" value=""  readonly><br>
+
+                        <label for="status">Status:</label>
+                        <input type="text" id="status" value="" readonly><br>
+
+                        <label for="buyer">Buyer:</label>
+                        <input type="text" id="buyer_info" value="" readonly><br>
+                        <label for="buyer">Create At:</label>
+                        <input type="text" id="create_at" value="" readonly><br>
+                        <label for="buyer">Update At:</label>
+                        <input type="text" id="update_at" value="" readonly><br>
+
+                    </div>
+                    <div style="margin-top: auto; text-align: center;">
+                        <button onclick="hideProductModal()">Close</button>
+                    </div>
+                </div>              
+            </div>
+        
 
         <script>
             <c:forEach items="${listProductPage}" var="p" varStatus="loop">
@@ -266,19 +328,33 @@
                     }
                 });
             }
+            
+            // Lấy tham chiếu đến button và popup container
+        const showPopupButton = document.getElementById('notification-Button');
+        const popupContainer = document.getElementById('popupContainer');
+        const tablePopup = document.getElementById('notificationTable');
+// Thêm sự kiện click cho nút
+        showPopupButton.addEventListener('click', function() {
+    // Hiện popup container
+            popupContainer.style.display = 'block';
+            tablePopup.style.display = 'block';
+
+    // Khóa cuộn trang
+            document.body.style.overflow = 'hidden';
+});
         </script>
         <!-- FOOTER -->
         <%@include file="components/footer.jsp" %>
-        <!-- /FOOTER -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="jscript/signin_captcha.js"></script>
-        <!-- jQuery Plugins -->
+       
         <script src="js1/jquery.min.js"></script>
         <script src="js1/bootstrap.min.js"></script>
         <script src="js1/slick.min.js"></script>
         <script src="js1/nouislider.min.js"></script>
         <script src="js1/jquery.zoom.min.js"></script>
         <script src="js1/main.js"></script>
+        <script src="jscript/myorder.js"></script>
         <script>
     $(document).ready(function () {
         $(".button-buy").click(function () {
@@ -307,7 +383,6 @@
         window.location.href = url;
     }
         </script>
-
     </body>
 </html>
 

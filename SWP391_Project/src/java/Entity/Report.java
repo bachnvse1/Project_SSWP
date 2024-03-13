@@ -15,6 +15,7 @@ public class Report {
     private int id;
     private int type_report;
     private int orderID;
+    private int recivedID;
     private boolean status;
     private String description;
     private int create_by;
@@ -26,10 +27,11 @@ public class Report {
     public Report() {
     }
 
-    public Report(int id, int type_report, int orderID, boolean status, String description, int create_by, Timestamp create_At, int update_by, Timestamp update_At, boolean is_delete) {
+    public Report(int id, int type_report, int orderID, int recivedID, boolean status, String description, int create_by, Timestamp create_At, int update_by, Timestamp update_At, boolean is_delete) {
         this.id = id;
         this.type_report = type_report;
         this.orderID = orderID;
+        this.recivedID = recivedID;
         this.status = status;
         this.description = description;
         this.create_by = create_by;

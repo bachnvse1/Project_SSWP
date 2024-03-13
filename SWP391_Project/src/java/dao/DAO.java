@@ -106,13 +106,14 @@ public class DAO extends DBContext {
                 return new Report(rs.getInt(1),
                         rs.getInt(2),
                         rs.getInt(3),
-                        rs.getBoolean(4),
-                        rs.getString(5),
-                        rs.getInt(6),
-                        rs.getTimestamp(7),
-                        rs.getInt(8),
-                        rs.getTimestamp(9),
-                        rs.getBoolean(10));
+                        rs.getInt(4),
+                        rs.getBoolean(5),
+                        rs.getString(6),
+                        rs.getInt(7),
+                        rs.getTimestamp(8),
+                        rs.getInt(9),
+                        rs.getTimestamp(10),
+                        rs.getBoolean(11));
             }
         } catch (Exception e) {
 
@@ -132,13 +133,14 @@ public class DAO extends DBContext {
                 return new Report(rs.getInt(1),
                         rs.getInt(2),
                         rs.getInt(3),
-                        rs.getBoolean(4),
-                        rs.getString(5),
-                        rs.getInt(6),
-                        rs.getTimestamp(7),
-                        rs.getInt(8),
-                        rs.getTimestamp(9),
-                        rs.getBoolean(10));
+                        rs.getInt(4),
+                        rs.getBoolean(5),
+                        rs.getString(6),
+                        rs.getInt(7),
+                        rs.getTimestamp(8),
+                        rs.getInt(9),
+                        rs.getTimestamp(10),
+                        rs.getBoolean(11));
             }
         } catch (Exception e) {
 
@@ -158,13 +160,14 @@ public class DAO extends DBContext {
                 list.add(new Report(rs.getInt(1),
                         rs.getInt(2),
                         rs.getInt(3),
-                        rs.getBoolean(4),
-                        rs.getString(5),
-                        rs.getInt(6),
-                        rs.getTimestamp(7),
-                        rs.getInt(8),
-                        rs.getTimestamp(9),
-                        rs.getBoolean(10)));
+                        rs.getInt(4),
+                        rs.getBoolean(5),
+                        rs.getString(6),
+                        rs.getInt(7),
+                        rs.getTimestamp(8),
+                        rs.getInt(9),
+                        rs.getTimestamp(10),
+                        rs.getBoolean(11)));
             }
         } catch (Exception e) {
 
@@ -183,13 +186,14 @@ public class DAO extends DBContext {
                 list.add(new Report(rs.getInt(1),
                         rs.getInt(2),
                         rs.getInt(3),
-                        rs.getBoolean(4),
-                        rs.getString(5),
-                        rs.getInt(6),
-                        rs.getTimestamp(7),
-                        rs.getInt(8),
-                        rs.getTimestamp(9),
-                        rs.getBoolean(10)));
+                        rs.getInt(4),
+                        rs.getBoolean(5),
+                        rs.getString(6),
+                        rs.getInt(7),
+                        rs.getTimestamp(8),
+                        rs.getInt(9),
+                        rs.getTimestamp(10),
+                        rs.getBoolean(11)));
             }
         } catch (Exception e) {
 
@@ -382,19 +386,20 @@ public class DAO extends DBContext {
         return null;
     }
 
-    public void insertReport(int type, int orderID, boolean status, String description, int userID, boolean is_delete) {
-        String query = "INSERT INTO Report (type_report, orderID, status, description, create_by, updated_by, is_delete)\n"
-                + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+    public void insertReport(int type, int orderID, int recivedID, boolean status, String description, int userID, boolean is_delete) {
+        String query = "INSERT INTO Report (type_report, orderID, recivedID, status, description, create_by, updated_by, is_delete)\n"
+                + "VALUES (?, ?, ?,?, ?, ?, ?, ?)";
         try {
             con = new DBContext().connection; //connect sql
             ps = con.prepareStatement(query);
             ps.setInt(1, type);
             ps.setInt(2, orderID);
-            ps.setBoolean(3, status);
-            ps.setString(4, description);
-            ps.setInt(5, userID);
+            ps.setInt(3, recivedID);
+            ps.setBoolean(4, status);
+            ps.setString(5, description);
             ps.setInt(6, userID);
-            ps.setBoolean(7, is_delete);
+            ps.setInt(7, userID);
+            ps.setBoolean(8, is_delete);
             ps.executeUpdate();
 
         } catch (Exception e) {
@@ -1645,9 +1650,41 @@ public class DAO extends DBContext {
 
         }
     }
+    
+    public List<Report> getTopNext3Report(int uid,int amount) {
+        List<Report> list = new ArrayList<>();
+        String query = "SELECT * FROM Report where create_by = ? ORDER BY id desc LIMIT 3 OFFSET ?;";
+        try {
+            con = new DBContext().connection; //connect sql
+            ps = con.prepareStatement(query);
+            ps.setInt(1, uid);
+            ps.setInt(2, amount);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Report(rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getBoolean(5),
+                        rs.getString(6),
+                        rs.getInt(7),
+                        rs.getTimestamp(8),
+                        rs.getInt(9),
+                        rs.getTimestamp(10),
+                        rs.getBoolean(11)));
+            }
+        } catch (Exception e) {
+
+        }
+        return list;
+    }
 
     public static void main(String[] args) {
         DAO dao = new DAO();
-        System.out.println(dao.insertTransaction(3, 4, "HI"));
+         List<Report> list = dao.getTopNext3Report(3, 1);
+         for (Report report : list) {
+             System.out.println(report.getId());
+        }
+        
     }
 }

@@ -75,25 +75,50 @@ public class reportServ extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String xid = request.getParameter("order_id").trim();
-        String description = request.getParameter("description");
-        String xproid = request.getParameter("pro_id").trim();
+        String xid = request.getParameter("id").trim();
         int id = Integer.parseInt(xid);
-        int proid = Integer.parseInt(xproid);
+        String xindex = request.getParameter("datax").trim();
+        int index = Integer.parseInt(xindex);
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("user");
         DAO dao = new DAO();
-        if (dao.getReportByType(1, id) == null) {
-            dao.insertReport(1, id, false, "Contect seller: " + dao.getProductByID(proid).getContact_Method() + " || Order code: " + dao.getOrderByID(id).getCode() + " || " + description, u.getId(), false);
-            response.getWriter().write("success");
-            //1 là khiếu nại
-            //2 là mua hàng
-            //3 là đăng đơn hàng
-            //4 là hoàn tất mua hàng
-            //5 là nạp tiền
-            //6 là rút tiền
+
+        if (index == 1) {
+            if (!dao.getOrderByID(id).getStatus().equals("Người mua khiếu nại đơn hàng")) {
+                dao.insertReport(1, id, dao.getOrderByID(id).getBuyer_id(), false, "Có khiếu nại từ người mua rằng đơn hàng " + dao.getOrderByID(id).getCode()+" không đúng mô tả ", u.getId(), false);
+                dao.updateOrderStatus(u.getId(), "Người mua khiếu nại đơn hàng", id);
+                response.getWriter().print("Bạn vừa khiếu nại đơn hàng. Chờ giải quyết nhé!");
+            } else {
+                response.getWriter().print("Bạn đã khiếu nại đơn hàng rồi. Chờ giải quyết!");
+            }
+        } else if (index == 2) {
+            dao.insertReport(4, id, u.getId(), true, "Bạn đã hoàn tất mua đơn hàng với mã sản code: " + dao.getOrderByID(id).getCode(), u.getId(), false);
+            dao.updateOrderStatus(u.getId(), "Đơn hàng đã hoàn thành", id);
+            response.getWriter().print("Bạn đã xác thực đơn hàng thành công. Xin cảm ơn!");
+
+        } else {
+            if (dao.getWallet(u.getId()).getBalance() > 10000) {
+                if (!dao.getOrderByID(id).getStatus().equals("Yêu cầu admin giải quyết")) {
+                    dao.insertReport(1, id, 1, false, "2 bên không tự giải quyết được yêu cầu admin tham gia giải quyết đơn hàng mã code: " + dao.getOrderByID(id).getCode(), u.getId(), false);
+                    dao.updateOrderStatus(u.getId(), "Yêu cầu admin giải quyết", id);
+                    response.getWriter().print("Yêu cầu admin giải quyết thành công. Chờ giải quyết nhé!");
+                } else {
+                    response.getWriter().print("Bạn đã yêu cầu admin giải quyết. Cùng chờ nhé!");
+                }
+
+            } else {
+                response.getWriter().print("Không đủ số dư để khiếu nại đơn hàng! Hãy nạp thêm tiền nhé.");
+            }
         }
 
+        //1 là Người mua khiếu nại đơn hàng
+        //2 là Người mua đang kiểm tra đơn hàng
+        //3 là Sẵn sàng giao dịch
+        //4 là Đơn hàng đã hoàn tất
+        //5 là nạp tiền
+        //6 là rút tiền
+        //7 yêu cầu admin giải quyết
+        //8
     }
 
     /**

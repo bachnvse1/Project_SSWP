@@ -53,5 +53,22 @@ public class TransactionQueue {
         // Update transaction status in transaction table
         dao.updateTransactionStatus(transaction.getID(), "Completed");
     }
+    
+    private void processTransactionUpProduct(Transaction transaction) {
+        // Retrieve user's wallet balance from the database
+        double currentBalance = dao.getWallet(transaction.getUserID()).getBalance();
+        
+        // Retrieve product price from the database
+        double productPrice = dao.getProductByID(transaction.getOrderID()).getPrice();
+
+        // Update wallet balance after deducting product price
+        double newBalance = currentBalance - productPrice;
+        
+        // Update the user's wallet balance in the database
+        dao.updateAmount(newBalance, transaction.getUserID());
+        
+        // Update transaction status in transaction table
+        dao.updateTransactionStatus(transaction.getID(), "Completed");
+    }
 }
 

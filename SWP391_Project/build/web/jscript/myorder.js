@@ -7,63 +7,49 @@
 
 $(document).ready(function () {
     // Ẩn form khi trang được tải
-    $("#addProductForm").hide();
-    $("#orderBuy").hide();
-    $("#myModalComplain").hide();
-    $("#myModalVerify").hide();
-    $("#orderBuy-complete").hide();
-    $("#exampleModalCreate").hide();
-    $("#ProductCompleteDisplay").hide();
-    $("#ProductProcessingDisplay").hide();
+    document.getElementById("ProductDisplay").style.display = 'block';
+    document.getElementById("Filter").style.display = 'block';
     
     // Xử lý sự kiện khi nhấn nút "Add Product"
     $("#addProductButton").click(function () {
-        $("#addProductForm").show();
-        $("#ProductDisplay").hide();
-        $("#Filter").hide();
-        $("#orderBuy").hide();
-        $("#myModalComplain").hide();
-        $("#myModalVerify").hide();
-        $("#orderBuy-complete").hide();
-        $("#exampleModalCreate").hide();
-        $("#ProductCompleteDisplay").hide();
-        $("#ProductProcessingDisplay").hide();
+        document.getElementById("addProductForm").style.display = 'block';
+        document.getElementById("ProductDisplay").style.display = 'none';
+        document.getElementById("ProductCompleteDisplay").style.display = 'none';
+        document.getElementById("ProductProcessingDisplay").style.display = 'none';
+        document.getElementById("Filter").style.display = 'none';
+        document.getElementById("orderBuy").style.display = 'none';
+        document.getElementById("orderBuy-complete").style.display = 'none';
+        
     });
     $("#allProductButton").click(function () {
-        $("#addProductForm").hide();
-        $("#ProductDisplay").show();
-        $("#orderBuy").hide();
-        $("#orderBuy-complete").hide();
-        $("#Filter").show();
-        $("#myModalComplain").hide();
-        $("#myModalVerify").hide();
-        $("#exampleModalCreate").hide();
-        $("#ProductCompleteDisplay").hide();
-        $("#ProductProcessingDisplay").hide();
+        document.getElementById("ProductDisplay").style.display = 'block';
+        document.getElementById("Filter").style.display = 'block';
+        document.getElementById("ProductCompleteDisplay").style.display = 'none';
+        document.getElementById("ProductProcessingDisplay").style.display = 'none';
+        document.getElementById("addProductForm").style.display = 'none';
+        document.getElementById("orderBuy").style.display = 'none';
+        document.getElementById("orderBuy-complete").style.display = 'none';
+        
     });
     $("#completedorder").click(function () {
-        $("#addProductForm").hide();
-        $("#ProductDisplay").hide();
-        $("#orderBuy").hide();
-        $("#orderBuy-complete").hide();
-        $("#Filter").show();
-        $("#myModalComplain").hide();
-        $("#myModalVerify").hide();
-        $("#exampleModalCreate").hide();
-        $("#ProductCompleteDisplay").show();
-        $("#ProductProcessingDisplay").hide();
+
+        document.getElementById("Filter").style.display = 'block';
+        document.getElementById("ProductCompleteDisplay").style.display = 'block';
+        document.getElementById("ProductDisplay").style.display = 'none';
+        document.getElementById("addProductForm").style.display = 'none';
+        document.getElementById("orderBuy").style.display = 'none';
+        document.getElementById("orderBuy-complete").style.display = 'none';
+        document.getElementById("ProductProcessingDisplay").style.display = 'none';
+
     });
     $("#processingorder").click(function () {
-        $("#addProductForm").hide();
-        $("#ProductDisplay").hide();
-        $("#orderBuy").hide();
-        $("#orderBuy-complete").hide();
-        $("#Filter").show();
-        $("#myModalComplain").hide();
-        $("#myModalVerify").hide();
-        $("#exampleModalCreate").hide();
-        $("#ProductCompleteDisplay").hide();
-    $("#ProductProcessingDisplay").show();
+        document.getElementById("Filter").style.display = 'block';
+        document.getElementById("ProductProcessingDisplay").style.display = 'block';
+        document.getElementById("ProductDisplay").style.display = 'none';
+        document.getElementById("ProductCompleteDisplay").style.display = 'none';
+        document.getElementById("addProductForm").style.display = 'none';
+        document.getElementById("orderBuy").style.display = 'none';
+        document.getElementById("orderBuy-complete").style.display = 'none';
     });
 });
 function toggleOptions(productId) {
@@ -136,8 +122,13 @@ $(document).ready(function () {
 $(document).ready(function () {
     $('.productInfo').click(function (event) {
         event.preventDefault();
+                const popupContainer = document.getElementById('popupContainer');
+                const tablePopup = document.getElementById('notificationTable');
+                popupContainer.style.display = 'none';
+                tablePopup.style.display = 'none';
                 document.getElementById("overlay").style.display = "block";
                 document.getElementById("modal").style.display = "block";
+
         var productId = $(this).data('product-id');
         var action = $(this).data('action');
         $.ajax({
@@ -146,7 +137,7 @@ $(document).ready(function () {
             data: {pid: productId, action: action},
             success: function (response) {
                 
-
+                
                 var responseData = response.split(";");
                 document.getElementById("orderCode").value = responseData[0];
                 document.getElementById("productName").value = responseData[1];
@@ -321,13 +312,13 @@ function hideProductModal() {
 
 $(document).ready(function () {
     $("#order-checking").click(function () {
-        $("#orderBuy").show();
-        $("#orderBuy-complete").hide();
-        $("#ProductDisplay").hide();
-        $("#Filter").hide();
-        $("#addProductForm").hide();
-        $("#ProductProcessingDisplay").hide();
-        $("#ProductCompleteDisplay").hide();
+        document.getElementById("orderBuy").style.display = 'block';
+        document.getElementById("orderBuy-complete").style.display = 'none';
+        document.getElementById("ProductProcessingDisplay").style.display = 'none';
+        document.getElementById("ProductDisplay").style.display = 'none';
+        document.getElementById("ProductCompleteDisplay").style.display = 'none';
+        document.getElementById("addProductForm").style.display = 'none';
+        document.getElementById("Filter").style.display = 'none';
         $.ajax({
             type: 'GET',
             url: "orderChecking",
@@ -344,13 +335,13 @@ $(document).ready(function () {
 
 $(document).ready(function () {
     $("#order-complete").click(function () {
-        $("#orderBuy-complete").show();
-        $("#orderBuy").hide();
-        $("#ProductDisplay").hide();
-        $("#Filter").hide();
-        $("#addProductForm").hide();
-        $("#ProductProcessingDisplay").hide();
-        $("#ProductCompleteDisplay").hide();
+        document.getElementById("orderBuy-complete").style.display = 'block';
+        document.getElementById("ProductProcessingDisplay").style.display = 'none';
+        document.getElementById("ProductDisplay").style.display = 'none';
+        document.getElementById("ProductCompleteDisplay").style.display = 'none';
+        document.getElementById("addProductForm").style.display = 'none';
+        document.getElementById("orderBuy").style.display = 'none';
+        document.getElementById("Filter").style.display = 'none';
         $.ajax({
             type: 'POST',
             url: "orderChecking",
@@ -384,10 +375,15 @@ $(document).ready(function () {
         var buyer = $(this).data("buyers");
         var createTime = $(this).data("create");
         
+        
+        $("#complaintOrderButton").attr("data-order-id", orderId);
+       
+        $("#verifyOrderButton").attr("data-order-id", orderId);
+        
+        
         $("#order_id").val(orderId); // Cập nhật giá trị của trường input
         $("#order_code").val(orderCode); // Cập nhật giá trị của trường input
         $("#productName1").val(productName);
-       
         $("#Price").val(Price);
         $("#inter").val(Imtermediary);
         $("#party1").val(party);
@@ -400,8 +396,7 @@ $(document).ready(function () {
         $("#buyer1").val(buyer);
         $("#create").val(createTime);
         
-        $("#myModalComplain").show();
-
+        document.getElementById("myModalComplain").style.display = 'block';
     });
 
     $(document).on("click", ".verifyButton", function (e) {
@@ -410,52 +405,27 @@ $(document).ready(function () {
         var proid = $(this).data("proid");
         $("#order_id").val(orderId); // Cập nhật giá trị của trường input // Cập nhật giá trị của trường input
         $("#pro_id1").val(proid);
-        $("#myModalVerify").show();
+        document.getElementById("myModalVerify").style.display = 'block';
     });
 
 
     // Khi người dùng nhấn vào nút đóng (×), đóng modal
     $(".close").click(function () {
-        $("#myModalComplain").hide();
-        
+        document.getElementById("myModalComplain").style.display = 'none';
         
     });
 
     $(".close1").click(function () {
-        $("#myModalVerify").hide();
-        $("#exampleModalCreate").hide();
+
+        document.getElementById("exampleModalCreate").style.display = 'none';
+        document.getElementById("myModalVerify").style.display = 'none';
         window.location.href = "manageMyOrder";
     });
     // Khi người dùng nhấp bất kỳ đâu ngoài modal, đóng modal
     $(window).click(function (event) {
         if (event.target === $("#myModalComplain")[0]) {
-            $("#myModalComplain").hide();
+            document.getElementById("myModalComplain").style.display = 'none';
         }
-    });
-
-
-    $("#complaintForm").submit(function (e) {
-        e.preventDefault(); // Ngăn chặn chuyển hướng mặc định khi nhấn nút submit
-        var formData = {
-            order_id: $("#order_id").val(),
-            description: $("#description1").val(),
-            pro_id: $("#pro_id1").val()
-        };
-        $.ajax({
-            type: 'POST',
-            url: 'report', // Đường dẫn đến servlet xử lý
-            data: formData, // Gửi dữ liệu của form sang servlet
-            success: function (response) {
-                if (response === "success") {
-                    alert("Complain success! Please wainting response from system!");
-                } else {
-                    alert("You have already complained about this order");
-                }
-            },
-            error: function (xhr, status, error) {
-                console.error(xhr.responseText);
-            }
-        });
     });
 
     $("#authForm").submit(function (e) {
@@ -474,12 +444,11 @@ $(document).ready(function () {
                     alert("Verify order success");
 
                     // Hiển thị modal example sau khi nhấp OK
-                    $("#exampleModalCreate").show();
-
+                    document.getElementById("exampleModalCreate").style.display = 'block';
                     // Chuyển hướng đến trang home
                     //window.location.href = 'manageMyOrder';
                 } else {
-                    $("#exampleModalCreate").hide();
+                    document.getElementById("exampleModalCreate").style.display = 'none';
                     alert("You have already verified this order!");
                 }
             },
@@ -488,6 +457,8 @@ $(document).ready(function () {
             }
         });
     });
+    
+    
 
 });
 
@@ -523,4 +494,46 @@ $(document).ready(function () {
             }
         });
     }
+    
+    
 });
+
+const showPopupButton = document.getElementById('notification-Button');
+        const popupContainer = document.getElementById('popupContainer');
+        const tablePopup = document.getElementById('notificationTable');
+// Thêm sự kiện click cho nút
+        showPopupButton.addEventListener('click', function() {
+    // Hiện popup container
+            popupContainer.style.display = 'block';
+            tablePopup.style.display = 'block';
+
+    // Khóa cuộn trang
+            document.body.style.overflow = 'hidden';
+});
+
+var orderiValue;
+
+$("button[type='submit']").click(function() {
+    orderiValue = $(this).data("orderi");
+});
+
+$("#complaintForm").submit(function (e) {
+        e.preventDefault(); // Ngăn chặn chuyển hướng mặc định khi nhấn nút submit
+        var formData = {
+            id: $("#order_id").val(),
+            datax: orderiValue
+        };
+        $.ajax({
+            type: 'POST',
+            url: 'report', // Đường dẫn đến servlet xử lý
+            data: formData, // Gửi dữ liệu của form sang servlet
+            success: function (response) {
+                alert(response);
+                window.location.href = 'manageMyOrder';
+            },
+            error: function (xhr, status, error) {
+                console.table(xhr.responseText);
+            }
+        });
+    });
+

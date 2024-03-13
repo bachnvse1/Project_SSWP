@@ -271,7 +271,7 @@
                             <div class="rounded">
                                 <div class="table-responsive table-borderless" style="margin-top: 5%;width: fit-content;">
 
-                                    <table id="orderBuy" class="text-nowrap mb-0 table" border="1">
+                                    <table id="orderBuy" class="text-nowrap mb-0 table"  style="display: none;">
                                         <thead class="table-light">
                                             <tr>
                                                 <th>Mã đơn hàng</th>
@@ -292,7 +292,7 @@
                                         </tbody>
                                     </table>
 
-                                    <table class="text-nowrap mb-0 table" id="orderBuy-complete" border="1">
+                                    <table class="text-nowrap mb-0 table" id="orderBuy-complete"  style="display: none;">
                                         <thead class="table-light">
                                             <tr>
                                                 <th>Mã đơn hàng</th>
@@ -301,7 +301,10 @@
                                                 <th>Danh mục</th>
                                                 <th>Thông tin ẩn</th>
                                                 <th>Liên hệ</th>
-                                                <th>Giá sản phẩm</th>
+                                                <th>Giá sản phẩm
+                                                
+                                                
+                                                </th>
                                                 <th>Phí trung gian</th>
                                                 <th>Người chịu phí</th>
                                                 <th>Tổng tiền thanh toán</th>
@@ -317,8 +320,8 @@
                         </div>
                     </div>
                 </div>
-                <form action="filtermyorder">
-                    <table id="Filter" class="text-nowrap mb-0 table" border="1">
+                <form action="filtermyorder" >
+                    <table id="Filter" class="text-nowrap mb-0 table" style="display: none;">
                         <tr>
                             <th>Search by Name</th>
                             <th>Filter by Price</th>
@@ -343,7 +346,7 @@
                         </tr>
                     </table>
                 </form>
-                <table id="ProductDisplay" class="text-nowrap mb-0 table" border="1">
+                <table id="ProductDisplay" class="text-nowrap mb-0 table"  style="display: none;">
 
                     <thead class="table-light">
                         <tr>
@@ -370,7 +373,7 @@
                                     <td>${p.getOrder().getTotal_paid_amount()}</td>
                                     <td>${p.getOrder().getIntermediary_fee()}</td>
                                     <td>${p.getOrder().getStatus()}</td>
-                                    <td>${p.getProduct().isTransaction_fee() ? "Seller" : "Buyer"}</td>
+                                    <td>${p.getProduct().isTransaction_fee() ? "Người bán" : "Người mua"}</td>
                                     <td>
                                         <a class="productInfo" data-action="view"  href="#" data-product-id="${p.getOrder().getId()}">
                                             <i style="color: #0061f2" class="fa fa-info-circle"></i>
@@ -393,7 +396,7 @@
 
 
                 <!--Complete Table-->
-                <table id="ProductCompleteDisplay" class="text-nowrap mb-0 table" border="1">
+                <table id="ProductCompleteDisplay" class="text-nowrap mb-0 table"  style="display: none;">
 
                     <thead class="table-light">
                         <tr>
@@ -420,7 +423,7 @@
                                     <td>${c.getOrder().getTotal_paid_amount()}</td>
                                     <td>${c.getOrder().getIntermediary_fee()}</td>
                                     <td>${c.getOrder().getStatus()}</td>
-                                    <td>${c.getProduct().isTransaction_fee() ? "Seller" : "Buyer"}</td>
+                                    <td>${c.getProduct().isTransaction_fee() ? "Người bán" : "Người mua"}</td>
                                     <td>
                                         <a class="productInfo" data-action="view"  href="#" data-product-id="${c.getOrder().getId()}">
                                             <i style="color: #0061f2" class="fa fa-info-circle"></i>
@@ -442,7 +445,7 @@
 
 
                 <!--Processing Table-->
-                <table id="ProductProcessingDisplay" class="text-nowrap mb-0 table" border="1">
+                <table id="ProductProcessingDisplay" class="text-nowrap mb-0 table" style="display: none;">
 
                     <thead class="table-light">
                         <tr>
@@ -469,7 +472,7 @@
                                     <td>${o.getOrder().getTotal_paid_amount()}</td>
                                     <td>${o.getOrder().getIntermediary_fee()}</td>
                                     <td>${o.getOrder().getStatus()}</td>
-                                    <td>${o.getProduct().isTransaction_fee() ? "Seller" : "Buyer"}</td>
+                                    <td>${o.getProduct().isTransaction_fee() ? "Người bán" : "Người mua"}</td>
                                     <td>
                                         <a class="productInfo" data-action="view" href="#"  data-product-id="${o.getOrder().getId()}">
                                             <i style="color: #0061f2" class="fa fa-info-circle"></i>
@@ -490,7 +493,7 @@
 
 
                 <!--                  Add Form-->
-                <div id="addProductForm" class="addProduct">
+                <div id="addProductForm" class="addProduct" style="display: none;">
                     <div class="modal-content3">                      
                         <div class="container-complain">
                             <form id="addForm">
@@ -525,10 +528,10 @@
                                 <label for="transactionFee">Transaction Fee:</label>
 
                                 <div class="radio-buttons">
-                                    <input type="radio" id="seller" name="Transaction_fee" value="seller" checked>
+                                    <input type="radio" id="seller" name="Transaction_fee" value="Người bán" checked>
                                     <label for="seller">Seller</label>
 
-                                    <input type="radio" id="buyer" name="Transaction_fee" value="buyer">
+                                    <input type="radio" id="buyer" name="Transaction_fee" value="Người mua">
                                     <label for="buyer">Buyer</label>
                                 </div>
                                 <label for="contactMethod">Contact Method:</label>
@@ -607,7 +610,7 @@
 
 
             <!--        /////////////////              -->                        
-            <div style="height: 700px;overflow: auto;max-height: 800px" class="modal" id="modal2">               
+            <div style="height: 700px;overflow: auto;max-height: 800px; display: none;" class="modal" id="modal2" >               
                 <button class="close-button"  onclick="hideProductModal()"><i class="fa fa-close"></i></button>
                 <div class="modal-content3">                      
                     <div class="container-complain">
@@ -709,13 +712,13 @@
 
             </div>
 
-            <div id="myModalComplain" class="modal3">
+            <div id="myModalComplain" class="modal3" style="display: none;">
                 <div class="modal-content3">
                     <span class="close">&times;</span>
                     <div class="container-complain">
-                        <form id="complaintForm">
+                        <form id="complaintForm" >
                             <h2 style="text-align: center;">Chi tiết đơn hàng</h2>
-                            <button id="hihi" style="float: right; color: #007bff; ">Yêu cầu admin tham gia giải quyết</button>
+                            <button id="requestAdmin" type="submit" style="float: right; color: white; background-color: #007bff; border: 1px solid; padding: 10px; border-radius: 3px; " data-orderi="3">Yêu cầu admin tham gia giải quyết</button>
                             <input type="text" id="order_id" name="order_id" readonly="" hidden=""><br>
                             <label for="order_code">Mã đơn hàng trung gian</label><br>
                             <input type="text" id="order_code" name="code" value="" readonly><br>
@@ -745,14 +748,16 @@
                             <input type="text" id="create" name="" value="" readonly><br><br><br>
 <!--                            <label for="description">Description</label><br>
                             <textarea id="description1" name="description" placeholder="Write something, as detailed as possible..." style="height:200px" required></textarea><br>-->
-                            <button id="hihi1" style="float: left; color: red; ">Khiếu nại đơn hàng không đúng mô tả</button>
-                            <button id="hihi2" style="float: right; color: #4CAF50;">Xác nhận đơn hàng đúng mô tả</button>
+                           <button type="submit" style="float: left; color: white; background-color: red; border: 1px solid red; padding: 10px; border-radius: 3px;" data-orderi="1">Khiếu nại đơn hàng không đúng mô tả</button>
+                           <button type="submit" style="float: right; color: white; background-color: #4CAF50; border: 1px solid #4CAF50; padding: 10px; border-radius: 3px;" data-orderi="2">Xác nhận đơn hàng đúng mô tả</button>
+
+
                         </form>
                     </div>
                 </div>
             </div>
 
-            <div id="myModalVerify" class="modal4">
+            <div id="myModalVerify" class="modal4" style="display:none;">
                 <span class="close1">&times;</span></br></br>
                 <h3>Verify Order</h3>
                 <p>Order matches the description</p>
@@ -765,7 +770,9 @@
                     <div class="loader" id="loader"></div>
                 </form>
             </div>
-            <div id="exampleModalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  style="height:580px;padding:0px;">
+            
+            
+            <div id="exampleModalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  style="height:580px;padding:0px; display: none;">
                 <div class="modal-dialog" style="max-width: 700px;" role="document">
                     <div class="modal-content">
                         <div class="modal-header">

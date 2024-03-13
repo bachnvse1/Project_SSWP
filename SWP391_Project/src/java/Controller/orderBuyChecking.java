@@ -80,7 +80,8 @@ public class orderBuyChecking extends HttpServlet {
         }
         String s = "";
         for (ProductOrderPair o : productOrderPairs) {
-            if (o.getOrder().getStatus().equals("Người mua đang kiểm tra đơn hàng")) {
+            if (o.getOrder().getStatus().equals("Người mua đang kiểm tra đơn hàng") || o.getOrder().getStatus().equals("Người mua khiếu nại đơn hàng")
+                    || o.getOrder().getStatus().equals("Yêu cầu admin giải quyết")) {
                 if (o.getProduct().isTransaction_fee() == true) {
                     s = "Người bán";
                 } else {
@@ -103,9 +104,6 @@ public class orderBuyChecking extends HttpServlet {
                         + "    <a class=\"reportButton\" data-orderid=\"" + o.getOrder().getId() + "\" data-ordercode=\"" + o.getOrder().getCode() + "\" data-productname=\"" + o.getProduct().getName()+ "\" data-price = \"" + o.getProduct().getPrice() + "\" data-inter = \"" + o.getOrder().getIntermediary_fee() + "\" data-party = \"" + s + "\" data-totalpaids = \"" + o.getOrder().getTotal_paid_amount() + "\" data-proimg = \"" + o.getProduct().getImage1() + "\" data-des = \"" + o.getProduct().getDescription() + "\" data-hiddeninfo = \"" + o.getProduct().getHidden_content()+ "\" data-contact = \"" + o.getProduct().getContact_Method() + "\" data-status1 = \"" + o.getOrder().getStatus() + "\" data-buyers = \"" + dao.getUserById(o.getProduct().getCreate_by()).getDisplay_name() + "\" data-create = \"" +  o.getProduct().getCreate_At() + "\">\n"
                         + "      <i style=\"color: #0061f2\" class=\"fa fa-info-circle\"></i>\n"
                         + "    </a>\n"
-                        + "    <a class=\"verifyButton\"  data-orderid=\" " + o.getOrder().getId() + "\" data-ordercode=\"" + o.getOrder().getCode() + "\" data-proid=\"" + o.getProduct().getId() + "\">\n"
-                        + "  <i class=\"fa fa-check\"></i>\n"
-                        + "</a>\n"
                         + "  </div>\n"
                         + "</td>\n"
                         + " </tr>");

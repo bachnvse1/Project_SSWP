@@ -25,6 +25,29 @@ $(document).ready(function () {
 });
 
 
+$(document).ready(function() {            
+            $("#user-Signin").keypress(function(event) {
+                if (event.keyCode === 13) {
+                    event.preventDefault();
+                    SignIn(); 
+                }
+            });
+       
+            $("#password-field").keypress(function(event) {
+                if (event.keyCode === 13) {
+                    event.preventDefault();
+                    SignIn();
+                }
+            });
+
+            $("#captcha").keypress(function(event) {
+                if (event.keyCode === 13) {
+                    event.preventDefault();
+                    SignIn(); 
+                }
+            });
+        });
+
 function SignIn()
 {
     var username = $("#user-Signin").val();

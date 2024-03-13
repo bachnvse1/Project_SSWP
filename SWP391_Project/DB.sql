@@ -95,6 +95,7 @@ create table Report(
 	id INT PRIMARY KEY AUTO_INCREMENT,
     type_report int,
     orderID int,
+    recivedID int,
     status bit,
     description VARCHAR(255) CHARACTER SET UTF8MB4,
     create_by int,
@@ -133,8 +134,6 @@ CREATE TABLE feedback (
     user_id INT,
     intermediary_order_id INT,
     FOREIGN KEY (user_id) REFERENCES users (id)
-    
-    
 );
 
 CREATE TABLE transactions (
@@ -143,6 +142,16 @@ CREATE TABLE transactions (
     product_id INT,
     status VARCHAR(50)
 );
+
+CREATE TABLE deposit (
+  id int NOT NULL,
+  wallet_id int DEFAULT NULL,
+  amount decimal(10,0) DEFAULT NULL,
+  description varchar(500) DEFAULT NULL,
+  create_datetime datetime DEFAULT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 
 
 INSERT INTO swp_demo.feedback (id, title, content, create_at, user_id, intermediary_order_id)
@@ -237,9 +246,12 @@ select *  from transactions
 --             //5 là nạp tiền
 --             //6 là rút tiền
 
-select * from Product join intermediate_Orders
-on Product.id = intermediate_Orders.productID
+SELECT p.*
+FROM Product p
+INNER JOIN intermediate_Orders io ON p.id = io.productID
+WHERE io.status = 'Người mua đang kiểm tra đơn hàng';
 
-SELECT SUM(intermediary_fee) + 500 AS total_revenue
-FROM revenue
-WHERE MONTH(create_at) IN (5, 6);
+select * from report where create_by = 3
+SELECT * FROM Report where create_by = 3 ORDER BY id LIMIT 3 OFFSET 1 ;
+
+

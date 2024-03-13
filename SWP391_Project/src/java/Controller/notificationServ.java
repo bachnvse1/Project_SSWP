@@ -41,7 +41,7 @@ public class notificationServ extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet notificationServ</title>");            
+            out.println("<title>Servlet notificationServ</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet notificationServ at " + request.getContextPath() + "</h1>");
@@ -62,12 +62,53 @@ public class notificationServ extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        DAO dao = new DAO();
+       DAO dao = new DAO();
+        PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();
+        String amount = request.getParameter("exists");
+        int iamount = Integer.parseInt(amount);
         User u = (User) session.getAttribute("user");
-        List<Report> listReport = dao.getListReport(u.getId());
-        request.setAttribute("listR", listReport);
-        request.getRequestDispatcher("Notification.jsp").forward(request, response);
+        List<Report> listReport = dao.getTopNext3Report(u.getId(), iamount);
+      
+        for (Report r : listReport) {
+            if (r.getType_report() == 1) {
+                out.println("<tr class=\"abc\">\n"
+                        + "                                    <td class=\"failure notification\">\n"
+                        + "                                        <h1><span class=\"icon\">&times;</span>Complain</h1>\n"
+                        + "                                        <p class=\"small\">" + r.getDescription() + "</p>\n"
+                        + "                                        <a class=\"productInfo\" data-action=\"view\"  data-product-id=\"" + r.getOrderID() + "\"> <i style=\"color: black;\" class=\"fa fa-info-circle\"></i></a>\n"
+                        + "                                    </td>\n"
+                        + "                                </tr>");
+            }
+            if (r.getType_report() == 2) {
+                out.println("<tr class=\"abc\">\n"
+                        + "                                    <td class=\"warning notification\">\n"
+                        + "                                        <h1><span class=\"icon\">&times;</span>Complain</h1>\n"
+                        + "                                        <p class=\"small\">" + r.getDescription() + "</p>\n"
+                        + "                                        <a class=\"productInfo\" data-action=\"view\"  data-product-id=\"" + r.getOrderID() + "\"> <i style=\"color: black;\" class=\"fa fa-info-circle\"></i></a>\n"
+                        + "                                    </td>\n"
+                        + "                                </tr>");
+            }
+            if (r.getType_report() == 3) {
+                out.println("<tr class=\"abc\">\n"
+                        + "                                    <td class=\"healthy notification\">\n"
+                        + "                                        <h1><span class=\"icon\">&times;</span>Complain</h1>\n"
+                        + "                                        <p class=\"small\">" + r.getDescription() + "</p>\n"
+                        + "                                        <a class=\"productInfo\" data-action=\"view\"  data-product-id=\"" + r.getOrderID() + "\"> <i style=\"color: black;\" class=\"fa fa-info-circle\"></i></a>\n"
+                        + "                                    </td>\n"
+                        + "                                </tr>");
+            }
+            if (r.getType_report() == 4) {
+                out.println("<tr class=\"abc\">\n"
+                        + "                                    <td class=\"healthy notification\">\n"
+                        + "                                        <h1><span class=\"icon\">&times;</span>Complain</h1>\n"
+                        + "                                        <p class=\"small\">" + r.getDescription() + "</p>\n"
+                        + "                                        <a class=\"productInfo\" data-action=\"view\"  data-product-id=\"" + r.getOrderID() + "\"> <i style=\"color: black;\" class=\"fa fa-info-circle\"></i></a>\n"
+                        + "                                    </td>\n"
+                        + "                                </tr>");
+            }
+
+        }
     }
 
     /**
@@ -82,6 +123,9 @@ public class notificationServ extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
+        
+        
+
         
     }
 
