@@ -101,8 +101,13 @@
                                     </div>
                                 </c:if>
 
-                                <!-- /Wishlist -->
-
+                               
+                                <div class="row">
+                                    <a href="withdrawal" >
+                                        <span>Rút tiền</span>
+                                        <!--<div class="qty">3</div> -->
+                                    </a>
+                                </div>
                                 <!-- Cart -->
                                 <div class="row">
                                     <a id="your-cart-button" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">

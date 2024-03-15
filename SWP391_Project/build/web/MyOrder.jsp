@@ -800,7 +800,6 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="jscript/myorder.js"></script>
-        <script src="ckeditor/ckeditor.js"></script>
 
     </body>
 </html>

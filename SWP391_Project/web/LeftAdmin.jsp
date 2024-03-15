@@ -24,6 +24,10 @@
             <a href="ReportServlet" class="list-group-item list-group-item-action py-2 ripple">
                 <i class="fas fa-exclamation-triangle fa-fw me-3"></i><span>Manage Report</span>
             </a>
+            <a href="withdrawalProcessing.jsp" class="list-group-item list-group-item-action py-2 ripple">
+                <i class="fas fa-money fa-fw me-3"></i><span>Yêu cầu rút tiền</span>
+            </a>
+            
         </div>
     </div>
 </nav>

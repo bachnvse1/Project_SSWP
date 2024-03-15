@@ -14,8 +14,7 @@ $(document).ready(function () {
 //    $("#orderBuy-complete").hide();
 //    $("#exampleModalCreate").hide();
 //    $("#ProductCompleteDisplay").hide();
-//    $("#ProductProcessingDisplay").hide();
-//    
+//    $("#ProductProcessingDisplay").hide();  
     // Xử lý sự kiện khi nhấn nút "Add Product"
     $("#addProductButton").click(function () {
         $("#addProductForm").show();

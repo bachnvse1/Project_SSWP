@@ -113,26 +113,27 @@ public class AuthorlizationFilter implements Filter {
 
         doBeforeProcessing(request, response);
         httpRequest = (HttpServletRequest) request;
-        HttpSession session = httpRequest.getSession();        
-
-        User u = (User) session.getAttribute("user");
-        boolean isLoggedIn = (session != null && u != null);
-        String url = httpRequest.getServletPath();
-        if (!isLoggedIn) {
-            if (isLoginRequired() || isAdminRequired()) {
-                httpRequest.getRequestDispatcher("/login").forward(request, response);
-            } //else if (url.endsWith(".jsp")) {              
-               // httpRequest.getRequestDispatcher("/home").forward(request, response);
-         //  }
-        } else if (isLoggedIn) {
-            if (!u.isIs_Admin() && isAdminRequired()) {
-                
-                httpRequest.getRequestDispatcher("/error-404.html").forward(request, response);
-           }  //else if (url.endsWith(".jsp")) {  
-              // session.removeAttribute("user");
-              //  httpRequest.getRequestDispatcher("/home").forward(request, response);
-           //}
-        }
+//       HttpServletResponse  httpResponse = (HttpServletResponse) response;
+//        HttpSession session = httpRequest.getSession();        
+//
+//        User u = (User) session.getAttribute("user");
+//        boolean isLoggedIn = (session != null && u != null);
+//        String url = httpRequest.getServletPath();
+//        if (!isLoggedIn) {
+//            if (isLoginRequired() || isAdminRequired()) {
+//                httpRequest.getRequestDispatcher("/login").forward(request, response);
+//            } //else if (url.endsWith(".jsp")) {              
+//             //  httpResponse.sendRedirect("/home");
+//         //  }
+//        } else if (isLoggedIn) {
+//            if (!u.isIs_Admin() && isAdminRequired()) {
+//                
+//                httpRequest.getRequestDispatcher("/error-404.html").forward(request, response);
+//           }  //else if (url.endsWith(".jsp")) {  
+//              // session.removeAttribute("user");
+//              //  httpRequest.getRequestDispatcher("/home").forward(request, response);
+//           //}
+//        }
         Throwable problem = null;
         try {
             chain.doFilter(request, response);

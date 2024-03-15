@@ -118,7 +118,7 @@ public class AddProdcutServlet extends HttpServlet {
             walet.setBalance(walet.getBalance()-500);
         dal.insertProduct(product);
         intermediateOrders order = new intermediateOrders();
-        order.setCode("SP00" + dal.getIdProduct());
+        order.setCode("SP00" + dal.getIdProduct()+1);
         order.setProductId(dal.getIdProduct());
         if (product.isTransaction_fee() == true) {
             order.setTotal_paid_amount(product.getPrice());
