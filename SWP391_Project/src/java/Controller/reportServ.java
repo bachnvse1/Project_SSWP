@@ -116,7 +116,7 @@ public class reportServ extends HttpServlet {
                 }
 
             } else {
-                response.getWriter().print("Không đủ số dư để khiếu nại đơn hàng! Hãy nạp thêm tiền tối thiếu 10.000đ nhé.");
+                response.getWriter().print("Không đủ số dư để yêu cầu admin giải quyết đơn hàng! Hãy nạp thêm tiền tối thiếu 10.000đ nhé.");
             }
         }
 

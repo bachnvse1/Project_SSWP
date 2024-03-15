@@ -39,7 +39,7 @@ public class OrderBuyerDetailServ extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet OrderBuyerDetailServ</title>");            
+            out.println("<title>Servlet OrderBuyerDetailServ</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet OrderBuyerDetailServ at " + request.getContextPath() + "</h1>");
@@ -65,44 +65,42 @@ public class OrderBuyerDetailServ extends HttpServlet {
         String code = request.getParameter("code").trim();
         intermediateOrders o = dao.getOrderByCode(code);
         String s = "";
-        if(dao.getProductByID(o.getProductId()).isTransaction_fee()) {
+        if (dao.getProductByID(o.getProductId()).isTransaction_fee()) {
             s = "Người bán";
         } else {
             s = "Người mua";
         }
         response.getWriter().print("<h2 style=\"text-align: center;\">Chi tiết đơn hàng</h2>\n"
-                + "                            <button id=\"requestAdmin\" type=\"submit\" style=\"float: right; color: white; background-color: #007bff; border: 1px solid; padding: 10px; border-radius: 3px; \" data-orderi=\""+3+"\">Yêu cầu admin tham gia giải quyết</button>\n"
-                + "                            <input type=\"text\" id=\"order_id\" name=\"order_id\" readonly=\"\" hidden=\"\" value=\""+o.getId()+"\"><br>\n"
+                + "                            <button class=\"requestAdmin\" type=\"submit\" style=\"float: right; color: white; background-color: #007bff; border: 1px solid; padding: 10px; border-radius: 3px; \" data-orderi=\"3\">Yêu cầu admin tham gia giải quyết</button>\n"
+                + "                            <input type=\"text\" id=\"order_id\" name=\"order_id\" readonly=\"\" hidden=\"\" value=\"" + o.getId() + "\"><br>\n"
                 + "                            <label for=\"order_code\">Mã đơn hàng trung gian</label><br>\n"
-                + "                            <input type=\"text\" id=\"order_code\" name=\"code\" value=\""+o.getCode()+"\" readonly><br>\n"
+                + "                            <input type=\"text\" id=\"order_code\" name=\"code\" value=\"" + o.getCode() + "\" readonly><br>\n"
                 + "                            <label for=\"order_code\">Tên sản phẩm</label><br>\n"
-                + "                            <input type=\"text\" id=\"productName1\"  value=\""+dao.getProductByID(o.getProductId()).getName()+"\" readonly><br>\n"
+                + "                            <input type=\"text\" id=\"productName1\"  value=\"" + dao.getProductByID(o.getProductId()).getName() + "\" readonly><br>\n"
                 + "                            <label for=\"order_code\">Giá sản phẩm</label><br>\n"
-                + "                            <input type=\"text\" id=\"Price\"  value=\""+dao.getProductByID(o.getProductId()).getPrice()+"\" readonly><br>\n"
+                + "                            <input type=\"text\" id=\"Price\"  value=\"" + dao.getProductByID(o.getProductId()).getPrice() + "\" readonly><br>\n"
                 + "                            <label for=\"order_code\">Phí trung gian</label><br>\n"
-                + "                            <input type=\"text\" id=\"inter\"  value=\""+o.getIntermediary_fee()+"\" readonly><br>\n"
+                + "                            <input type=\"text\" id=\"inter\"  value=\"" + o.getIntermediary_fee() + "\" readonly><br>\n"
                 + "                            <label for=\"order_code\">Bên chịu phí</label><br>\n"
-                + "                            <input type=\"text\" id=\"party1\"  value=\""+s+"\" readonly><br>\n"
+                + "                            <input type=\"text\" id=\"party1\"  value=\"" + s + "\" readonly><br>\n"
                 + "                            <label for=\"order_code\">Tổng tiền trả</label><br>\n"
-                + "                            <input type=\"text\" id=\"totalPaid1\"  value=\""+o.getTotal_paid_amount()+"\" readonly><br>\n"
+                + "                            <input type=\"text\" id=\"totalPaid1\"  value=\"" + o.getTotal_paid_amount() + "\" readonly><br>\n"
                 + "                            <label for=\"order_code\">Ảnh mô tả</label><br>\n"
-                + "                            <img style=\"max-width: 150px; max-height: 150px\" id=\"img1\" src=\""+dao.getProductByID(o.getProductId()).getImage1()+"\" >\n"
+                + "                            <img style=\"max-width: 150px; max-height: 150px\" id=\"img1\" src=\"" + dao.getProductByID(o.getProductId()).getImage1() + "\" >\n"
                 + "                            <label for=\"order_code\">Mô tả sản phẩm</label><br>\n"
-                + "                            <input type=\"text\" id=\"des\"  value=\""+dao.getProductByID(o.getProductId()).getDescription()+"\" readonly><br>\n"
+                + "                            <input type=\"text\" id=\"des\"  value=\"" + dao.getProductByID(o.getProductId()).getDescription() + "\" readonly><br>\n"
                 + "                            <label for=\"order_code\">Thông tin ẩn</label><br>\n"
-                + "                            <input type=\"text\" id=\"hidden_info\"  value=\""+dao.getProductByID(o.getProductId()).getHidden_content()+"\" readonly><br>\n"
+                + "                            <input type=\"text\" id=\"hidden_info\"  value=\"" + dao.getProductByID(o.getProductId()).getHidden_content() + "\" readonly><br>\n"
                 + "                            <label for=\"order_code\">Liên hệ</label><br>\n"
-                + "                            <input type=\"text\" id=\"contact\"  value=\""+dao.getProductByID(o.getProductId()).getContact_Method()+"\" readonly><br>\n"
+                + "                            <input type=\"text\" id=\"contact\"  value=\"" + dao.getProductByID(o.getProductId()).getContact_Method() + "\" readonly><br>\n"
                 + "                            <label for=\"order_code\">Trạng thái</label><br>\n"
-                + "                            <input type=\"text\" id=\"status1\"  value=\""+o.getStatus()+"\" readonly><br>\n"
+                + "                            <input type=\"text\" id=\"status1\"  value=\"" + o.getStatus() + "\" readonly><br>\n"
                 + "                            <label for=\"order_code\">Người bán</label><br>\n"
-                + "                            <input type=\"text\" id=\"buyer1\"  value=\""+dao.getUserById(o.getCreate_by()).getDisplay_name()+"\" readonly><br>\n"
+                + "                            <input type=\"text\" id=\"buyer1\"  value=\"" + dao.getUserById(o.getCreate_by()).getDisplay_name() + "\" readonly><br>\n"
                 + "                            <label for=\"hidden_info\">Thời gian tạo</label><br>\n"
-                + "                            <input type=\"text\" id=\"create\" name=\"\" value=\""+o.getCreate_at()+"\" readonly><br><br><br>\n"
-                + "                            <!--                            <label for=\"description\">Description</label><br>\n"
-                + "                                                        <textarea id=\"description1\" name=\"description\" placeholder=\"Write something, as detailed as possible...\" style=\"height:200px\" required></textarea><br>-->\n"
-                + "                            <button type=\"submit\" style=\"float: left; color: white; background-color: red; border: 1px solid red; padding: 10px; border-radius: 3px;\" data-orderi=\""+ 1 +"\">Khiếu nại đơn hàng không đúng mô tả</button>\n"
-                + "                            <button type=\"submit\" style=\"float: right; color: white; background-color: #4CAF50; border: 1px solid #4CAF50; padding: 10px; border-radius: 3px;\" data-orderi=\""+ 2 +"\">Xác nhận đơn hàng đúng mô tả</button>");
+                + "                            <input type=\"text\" id=\"create\" name=\"\" value=\"" + o.getCreate_at() + "\" readonly><br><br><br>\n"
+                + "                            <button type=\"submit\" class=\"complainOrder\" style=\"float: left; color: white; background-color: red; border: 1px solid red; padding: 10px; border-radius: 3px;\" data-orderi=\"1\">Khiếu nại đơn hàng không đúng mô tả</button>\n"
+                + "                            <button type=\"submit\" class=\"confirmOrder\" style=\"float: right; color: white; background-color: #4CAF50; border: 1px solid #4CAF50; padding: 10px; border-radius: 3px;\" data-orderi=\"2\">Xác nhận đơn hàng đúng mô tả</button>");
 
         // HttpSession session = request.getSession();
         //  User u = (User) session.getAttribute("user");

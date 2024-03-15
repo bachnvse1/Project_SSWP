@@ -585,12 +585,11 @@ showPopupButton.addEventListener('click', function () {
 
 
 $("#complaintForm").submit(function (e) {
-    e.preventDefault(); // Ngăn chặn chuyển hướng mặc định khi nhấn nút submit
-    var orderiValue;
+    e.preventDefault(); // Ngăn chặn hành vi gửi form mặc định
 
-    $("button[type='submit']").click(function () {
-        orderiValue = $(this).data("orderi");
-    });
+    // Lấy giá trị của data-orderi từ nút submit đã được nhấn
+    var orderiValue = $(this).find("button[type='submit']:focus").attr("data-orderi");
+
     // Hàm thực hiện AJAX
     function performAjaxRequest() {
         var formData = {
@@ -599,14 +598,14 @@ $("#complaintForm").submit(function (e) {
         };
         $.ajax({
             type: 'POST',
-            url: 'report', // Đường dẫn đến servlet xử lý
-            data: formData, // Gửi dữ liệu của form sang servlet
+            url: 'report', // URL của servlet xử lý
+            data: formData, // Gửi dữ liệu form tới servlet
             success: function (response) {
-                alert(response);
-                window.location.href = 'manageMyOrder';
+                alert(response); // Hiển thị thông báo từ server
+                window.location.href = 'manageMyOrder'; // Chuyển hướng đến trang manageMyOrder sau khi gửi thành công
             },
             error: function (xhr, status, error) {
-                console.table(xhr.responseText);
+                console.error(error); // Ghi log lỗi ra console
             }
         });
     }
