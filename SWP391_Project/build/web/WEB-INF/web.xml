@@ -48,10 +48,6 @@
         <servlet-name>orderBuyChecking</servlet-name>
         <servlet-class>Controller.orderBuyChecking</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>VerifyOrder</servlet-name>
-        <servlet-class>Controller.VerifyOrder</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>SendEmail</servlet-name>
         <url-pattern>/send</url-pattern>
@@ -84,5 +80,4 @@
         <servlet-name>homeServ</servlet-name>
         <url-pattern>/home</url-pattern>
     </servlet-mapping>
-
 </web-app>

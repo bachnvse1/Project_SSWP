@@ -97,6 +97,7 @@ public class reportServ extends HttpServlet {
             } else {
                 dao.insertReport(4, id, u.getId(), true, "Bạn đã hoàn tất mua đơn hàng với mã sản code: " + dao.getOrderByID(id).getCode(), u.getId(), false);
                 dao.updateOrderStatus(u.getId(), "Đơn hàng đã hoàn thành", id);
+                
                 response.getWriter().print("Bạn đã xác thực đơn hàng thành công. Xin cảm ơn!");
             }
 
