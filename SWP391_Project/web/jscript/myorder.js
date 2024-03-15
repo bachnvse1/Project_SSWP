@@ -9,7 +9,11 @@ $(document).ready(function () {
     // Ẩn form khi trang được tải
     document.getElementById("ProductDisplay").style.display = 'block';
     document.getElementById("Filter").style.display = 'block';
-    
+    if ($.fn.DataTable.isDataTable('#orderBuy')) {
+        // Nếu đã tồn tại, hủy DataTable hiện tại
+        $('#orderBuy').DataTable().destroy();
+    }
+
     // Xử lý sự kiện khi nhấn nút "Add Product"
     $("#addProductButton").click(function () {
         document.getElementById("addProductForm").style.display = 'block';
@@ -19,7 +23,11 @@ $(document).ready(function () {
         document.getElementById("Filter").style.display = 'none';
         document.getElementById("orderBuy").style.display = 'none';
         document.getElementById("orderBuy-complete").style.display = 'none';
-        
+        if ($.fn.DataTable.isDataTable('#orderBuy')) {
+            // Nếu đã tồn tại, hủy DataTable hiện tại
+            $('#orderBuy').DataTable().destroy();
+        }
+
     });
     $("#allProductButton").click(function () {
         document.getElementById("ProductDisplay").style.display = 'block';
@@ -29,7 +37,11 @@ $(document).ready(function () {
         document.getElementById("addProductForm").style.display = 'none';
         document.getElementById("orderBuy").style.display = 'none';
         document.getElementById("orderBuy-complete").style.display = 'none';
-        
+        if ($.fn.DataTable.isDataTable('#orderBuy')) {
+            // Nếu đã tồn tại, hủy DataTable hiện tại
+            $('#orderBuy').DataTable().destroy();
+        }
+
     });
     $("#completedorder").click(function () {
 
@@ -40,6 +52,10 @@ $(document).ready(function () {
         document.getElementById("orderBuy").style.display = 'none';
         document.getElementById("orderBuy-complete").style.display = 'none';
         document.getElementById("ProductProcessingDisplay").style.display = 'none';
+        if ($.fn.DataTable.isDataTable('#orderBuy')) {
+            // Nếu đã tồn tại, hủy DataTable hiện tại
+            $('#orderBuy').DataTable().destroy();
+        }
 
     });
     $("#processingorder").click(function () {
@@ -50,6 +66,10 @@ $(document).ready(function () {
         document.getElementById("addProductForm").style.display = 'none';
         document.getElementById("orderBuy").style.display = 'none';
         document.getElementById("orderBuy-complete").style.display = 'none';
+        if ($.fn.DataTable.isDataTable('#orderBuy')) {
+            // Nếu đã tồn tại, hủy DataTable hiện tại
+            $('#orderBuy').DataTable().destroy();
+        }
     });
 });
 function toggleOptions(productId) {
@@ -122,12 +142,12 @@ $(document).ready(function () {
 $(document).ready(function () {
     $('.productInfo').click(function (event) {
         event.preventDefault();
-                const popupContainer = document.getElementById('popupContainer');
-                const tablePopup = document.getElementById('notificationTable');
-                popupContainer.style.display = 'none';
-                tablePopup.style.display = 'none';
-                document.getElementById("overlay").style.display = "block";
-                document.getElementById("modal").style.display = "block";
+        const popupContainer = document.getElementById('popupContainer');
+        const tablePopup = document.getElementById('notificationTable');
+        popupContainer.style.display = 'none';
+        tablePopup.style.display = 'none';
+        document.getElementById("overlay").style.display = "block";
+        document.getElementById("modal").style.display = "block";
 
         var productId = $(this).data('product-id');
         var action = $(this).data('action');
@@ -309,6 +329,29 @@ function hideProductModal() {
     document.getElementById("modal2").style.display = "none";
 }
 
+//$(document).ready(function () {
+//    $("#order-checking").click(function () {
+//        document.getElementById("orderBuy").style.display = 'block';
+//        document.getElementById("orderBuy-complete").style.display = 'none';
+//        document.getElementById("ProductProcessingDisplay").style.display = 'none';
+//        document.getElementById("ProductDisplay").style.display = 'none';
+//        document.getElementById("ProductCompleteDisplay").style.display = 'none';
+//        document.getElementById("addProductForm").style.display = 'none';
+//        document.getElementById("Filter").style.display = 'none';
+//        $.ajax({
+//            type: 'GET',
+//            url: "orderChecking",
+//            success: function (response) {
+//                $("#cell-info").html(response);
+//            },
+//            error: function () {
+//                // Xử lý lỗi nếu có
+//                alert("Đã xảy ra lỗi khi tải trang");
+//            }
+//        });
+//    });
+//});
+
 $(document).ready(function () {
     $("#order-checking").click(function () {
         document.getElementById("orderBuy").style.display = 'block';
@@ -318,22 +361,79 @@ $(document).ready(function () {
         document.getElementById("ProductCompleteDisplay").style.display = 'none';
         document.getElementById("addProductForm").style.display = 'none';
         document.getElementById("Filter").style.display = 'none';
+        // Kiểm tra xem DataTable đã được khởi tạo trên bảng chưa
+        if ($.fn.DataTable.isDataTable('#orderBuy')) {
+            // Nếu đã tồn tại, hủy DataTable hiện tại
+            $('#orderBuy').DataTable().destroy();
+        }
+
+        // Gửi yêu cầu AJAX để nhận dữ liệu từ servlet
         $.ajax({
             type: 'GET',
             url: "orderChecking",
             success: function (response) {
-                $("#cell-info").html(response);
+                // Khởi tạo DataTables với dữ liệu nhận được từ servlet
+                $('#orderBuy').DataTable({
+                    "data": response, // Dữ liệu từ servlet
+                    "columns": [
+                        {"data": "orderCode"},
+                        {"data": "orderStatus"},
+                        {"data": "sellerName"},
+                        {"data": "categoryName"},
+                        {"data": "contactMethod"},
+                        {"data": "Price"},
+                        {"data": "Intermediary_fee"},
+                        {"data": "isTransaction_fee"},
+                        {"data": "totalPaid"},
+                        {
+                            "data": null,
+                            "render": function (data, type, row) {
+                                return '<button class="btn btn-info btn-detail" data-ordercode="' + row.orderCode + '">Detail</button>';
+                            }
+                        }
+
+                        // Thêm các cột khác tại đây
+                    ]
+                });
             },
             error: function () {
                 // Xử lý lỗi nếu có
-                alert("Đã xảy ra lỗi khi tải trang");
+                alert("Đã xảy ra lỗi khi tải dữ liệu");
             }
         });
     });
+
+    $(document).on('click', '.btn-detail', function () {
+        var formData = {
+            code: $(this).data("ordercode")
+        };
+        document.getElementById("myModalComplain").style.display = 'block';
+        $.ajax({
+            type: 'GET',
+            url: 'orderBuyerDetail',
+            data: formData,
+            success: function (response) {
+                $("#complaintForm").html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+        // Thực hiện các thao tác tiếp theo khi nút chi tiết được click
+    });
 });
+
+
+
+
+
 
 $(document).ready(function () {
     $("#order-complete").click(function () {
+        if ($.fn.DataTable.isDataTable('#orderBuy')) {
+            // Nếu đã tồn tại, hủy DataTable hiện tại
+            $('#orderBuy').DataTable().destroy();
+        }
         document.getElementById("orderBuy-complete").style.display = 'block';
         document.getElementById("ProductProcessingDisplay").style.display = 'none';
         document.getElementById("ProductDisplay").style.display = 'none';
@@ -373,13 +473,13 @@ $(document).ready(function () {
         var status = $(this).data("status1");
         var buyer = $(this).data("buyers");
         var createTime = $(this).data("create");
-        
-        
+
+
         $("#complaintOrderButton").attr("data-order-id", orderId);
-       
+
         $("#verifyOrderButton").attr("data-order-id", orderId);
-        
-        
+
+
         $("#order_id").val(orderId); // Cập nhật giá trị của trường input
         $("#order_code").val(orderCode); // Cập nhật giá trị của trường input
         $("#productName1").val(productName);
@@ -394,7 +494,7 @@ $(document).ready(function () {
         $("#status1").val(status);
         $("#buyer1").val(buyer);
         $("#create").val(createTime);
-        
+
         document.getElementById("myModalComplain").style.display = 'block';
     });
 
@@ -411,7 +511,7 @@ $(document).ready(function () {
     // Khi người dùng nhấn vào nút đóng (×), đóng modal
     $(".close").click(function () {
         document.getElementById("myModalComplain").style.display = 'none';
-        
+
     });
 
     $(".close1").click(function () {
@@ -426,39 +526,6 @@ $(document).ready(function () {
             document.getElementById("myModalComplain").style.display = 'none';
         }
     });
-
-    $("#authForm").submit(function (e) {
-        e.preventDefault(); // Ngăn chặn chuyển hướng mặc định khi nhấn nút submit
-        var formData = {
-            id: $("#order_id").val(),
-            pro_id: $("#pro_id1").val()
-        };
-        $.ajax({
-            type: 'POST',
-            url: 'verifyOrder', // Đường dẫn đến servlet xử lý
-            data: formData, // Gửi dữ liệu của form sang servlet
-            success: function (response) {
-                if (response === "success") {
-                    
-                    alert("Verify order success");
-
-                    // Hiển thị modal example sau khi nhấp OK
-                    document.getElementById("exampleModalCreate").style.display = 'block';
-                    // Chuyển hướng đến trang home
-                    //window.location.href = 'manageMyOrder';
-                } else {
-                    document.getElementById("exampleModalCreate").style.display = 'none';
-                    alert("You have already verified this order!");
-                }
-            },
-            error: function (xhr, status, error) {
-                console.error(xhr.responseText);
-            }
-        });
-    });
-    
-    
-
 });
 
 $(document).ready(function () {
@@ -493,31 +560,39 @@ $(document).ready(function () {
             }
         });
     }
-    
-    
+
+
 });
 
 const showPopupButton = document.getElementById('notification-Button');
-        const popupContainer = document.getElementById('popupContainer');
-        const tablePopup = document.getElementById('notificationTable');
+const popupContainer = document.getElementById('popupContainer');
+const tablePopup = document.getElementById('notificationTable');
 // Thêm sự kiện click cho nút
-        showPopupButton.addEventListener('click', function() {
+showPopupButton.addEventListener('click', function () {
     // Hiện popup container
-            popupContainer.style.display = 'block';
-            tablePopup.style.display = 'block';
+    popupContainer.style.display = 'block';
+    tablePopup.style.display = 'block';
 
     // Khóa cuộn trang
-            document.body.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
 });
 
-var orderiValue;
 
-$("button[type='submit']").click(function() {
-    orderiValue = $(this).data("orderi");
-});
+
+
+
+
+
 
 $("#complaintForm").submit(function (e) {
-        e.preventDefault(); // Ngăn chặn chuyển hướng mặc định khi nhấn nút submit
+    e.preventDefault(); // Ngăn chặn chuyển hướng mặc định khi nhấn nút submit
+    var orderiValue;
+
+    $("button[type='submit']").click(function () {
+        orderiValue = $(this).data("orderi");
+    });
+    // Hàm thực hiện AJAX
+    function performAjaxRequest() {
         var formData = {
             id: $("#order_id").val(),
             datax: orderiValue
@@ -534,5 +609,26 @@ $("#complaintForm").submit(function (e) {
                 console.table(xhr.responseText);
             }
         });
+    }
+
+    // Sử dụng SweetAlert2 để xác nhận trước khi thực hiện AJAX
+    Swal.fire({
+        title: "Bạn có chắc chắn xác nhận không?",
+        icon: "question",
+        iconHtml: "",
+        showCancelButton: true,
+        confirmButtonText: "Có",
+        cancelButtonText: "Không",
+        showCloseButton: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            performAjaxRequest(); // Nếu người dùng ấn đồng ý, thực hiện AJAX
+        }
     });
+});
+
+
+
+
+
 

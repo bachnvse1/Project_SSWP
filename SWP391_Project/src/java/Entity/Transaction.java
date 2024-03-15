@@ -12,14 +12,24 @@ public class Transaction {
     private int ID;
     private int userID;
     private int orderID;
+    private double amount;
+    private String paymentCode;
 
     public Transaction() {
     }
 
-    public Transaction(int ID, int userID, int orderID) {
+    public Transaction(int ID, int userID, int orderID, double amount) {
         this.ID = ID;
         this.userID = userID;
         this.orderID = orderID;
+        this.amount = amount;
+    }
+    
+     public Transaction(int ID, int userID, String paymentCode, double amount) {
+        this.ID = ID;
+        this.userID = userID;
+        this.paymentCode = paymentCode;
+        this.amount = amount;
     }
 
     public int getID() {
@@ -42,8 +52,25 @@ public class Transaction {
         return orderID;
     }
 
+    public String getPaymentCode() {
+        return paymentCode;
+    }
+
+    public void setPaymentCode(String paymentCode) {
+        this.paymentCode = paymentCode;
+    }
+
     public void setOrderID(int orderID) {
         this.orderID = orderID;
     }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+    
 
 }

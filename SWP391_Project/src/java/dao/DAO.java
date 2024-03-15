@@ -538,7 +538,7 @@ public class DAO extends DBContext {
         }
     }
 
-    public int insertTransaction(int uid, int pid, String status) {
+    public int insertTransactionBuy(int uid, int pid, String status) {
         int generatedId = -1; // Giá trị mặc định nếu không có ID được sinh ra
         String query = "INSERT INTO transactions (user_id, product_id, status)\n"
                 + "VALUES (?, ?, ?)";
@@ -547,6 +547,39 @@ public class DAO extends DBContext {
             ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, uid);
             ps.setInt(2, pid);
+            ps.setString(3, status);
+            ps.executeUpdate();
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                generatedId = rs.getInt(1); // Lấy ID được sinh ra
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // Xử lý ngoại lệ một cách thích hợp
+        } finally {
+            // Đóng tài nguyên (PreparedStatement, ResultSet, Connection)
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace(); // Xử lý ngoại lệ một cách thích hợp
+            }
+        }
+        return generatedId;
+    }
+    
+    public int insertTransactionVnpay(int uid, String paymentCode, String status) {
+        int generatedId = -1; // Giá trị mặc định nếu không có ID được sinh ra
+        String query = "INSERT INTO transactions (user_id, paymentCode, status)\n"
+                + "VALUES (?, ?, ?)";
+        try {
+            con = new DBContext().connection; // Kết nối với cơ sở dữ liệu
+            ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, uid);
+            ps.setString(2, paymentCode);
             ps.setString(3, status);
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
@@ -1127,6 +1160,8 @@ public class DAO extends DBContext {
         return null;
 
     }
+    
+    
 
     public intermediateOrders getOrderByID(int id) {
         String sql = "SELECT * FROM swp_demo.intermediate_orders\n"
@@ -1681,10 +1716,7 @@ public class DAO extends DBContext {
 
     public static void main(String[] args) {
         DAO dao = new DAO();
-         List<Report> list = dao.getTopNext3Report(3, 1);
-         for (Report report : list) {
-             System.out.println(report.getId());
-        }
+         System.out.println(dao.getOrderByCode("SP0026").getId());
         
     }
 }

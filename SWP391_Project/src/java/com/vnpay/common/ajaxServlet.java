@@ -38,6 +38,11 @@ public class ajaxServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession sesion = req.getSession();
+        User u = (User) sesion.getAttribute("user");
+        if(u == null) {
+            resp.sendRedirect("home");
+        }
         String vnp_Version = "2.1.0";
         String vnp_Command = "pay";
         String orderType = "other";
@@ -46,7 +51,6 @@ public class ajaxServlet extends HttpServlet {
         xAmount = xAmount.substring(0, xAmount.length() - 2);
         xAmount = xAmount.replace(".", "");
         HttpSession session = req.getSession();
-        double amount1 = Double.parseDouble(xAmount);
         long amount = Integer.parseInt(xAmount) * 10000;
         //long amount = 10000 * 100;
         //String bankCode = req.getParameter("deposit_method");
@@ -92,7 +96,6 @@ public class ajaxServlet extends HttpServlet {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
         String vnp_CreateDate = formatter.format(cld.getTime());
         vnp_Params.put("vnp_CreateDate", vnp_CreateDate);
-        User u = (User) session.getAttribute("user");
 
         SimpleDateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         
@@ -131,7 +134,7 @@ public class ajaxServlet extends HttpServlet {
         queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
         String paymentUrl = Config.vnp_PayUrl + "?" + queryUrl;
 
-        resp.sendRedirect(paymentUrl);
+        resp.getWriter().print(paymentUrl);
 
 //        com.google.gson.JsonObject job = new JsonObject();
 //        job.addProperty("code", "00");

@@ -9,6 +9,7 @@ package Entity;
  * @author ADMIN
  */
 import dao.DAO;
+import dao.VNPAYDAO;
 import java.util.Queue;
 import java.util.LinkedList;
 
@@ -16,14 +17,16 @@ import java.util.LinkedList;
 public class TransactionQueue {
     private Queue<Transaction> queue;
     private DAO dao;
-
+    private VNPAYDAO vnpayDao;
     public TransactionQueue() {
         this.queue = new LinkedList<>();
         this.dao = new DAO(); // Initialize DAO instance
+        this.vnpayDao = new VNPAYDAO();
     }
 
     // Method to add a transaction to the queue
     public void addTransaction(Transaction transaction) {
+        
         queue.add(transaction);
     }
 
@@ -36,16 +39,24 @@ public class TransactionQueue {
         }
     }
 
+    
+   public void processTransactionsvnpay() {
+        while (!queue.isEmpty()) {
+            Transaction transaction = queue.poll();
+            // Process the transaction here (e.g., update database)
+            processTransactionVnpay(transaction);
+        }
+    }
     // Method to process a single transaction
     private void processTransaction(Transaction transaction) {
         // Retrieve user's wallet balance from the database
         double currentBalance = dao.getWallet(transaction.getUserID()).getBalance();
         
         // Retrieve product price from the database
-        double productPrice = dao.getProductByID(transaction.getOrderID()).getPrice();
+        //double productPrice = dao.getProductByID(transaction.getOrderID()).getPrice();
 
         // Update wallet balance after deducting product price
-        double newBalance = currentBalance - productPrice;
+        double newBalance = currentBalance - transaction.getAmount();
         
         // Update the user's wallet balance in the database
         dao.updateAmount(newBalance, transaction.getUserID());
@@ -54,21 +65,26 @@ public class TransactionQueue {
         dao.updateTransactionStatus(transaction.getID(), "Completed");
     }
     
-    private void processTransactionUpProduct(Transaction transaction) {
+     private void processTransactionVnpay(Transaction transaction) {
         // Retrieve user's wallet balance from the database
         double currentBalance = dao.getWallet(transaction.getUserID()).getBalance();
         
         // Retrieve product price from the database
-        double productPrice = dao.getProductByID(transaction.getOrderID()).getPrice();
+        //double productPrice = dao.getProductByID(transaction.getOrderID()).getPrice();
 
         // Update wallet balance after deducting product price
-        double newBalance = currentBalance - productPrice;
+        double newBalance = currentBalance + transaction.getAmount();
         
         // Update the user's wallet balance in the database
         dao.updateAmount(newBalance, transaction.getUserID());
         
         // Update transaction status in transaction table
         dao.updateTransactionStatus(transaction.getID(), "Completed");
+        
+        vnpayDao.updateStatusVnpay(transaction.getPaymentCode(),dao.getWallet(transaction.getUserID()).getId(), "Completed");
+        
     }
+     
+    
 }
 

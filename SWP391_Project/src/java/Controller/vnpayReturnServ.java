@@ -4,10 +4,14 @@
  */
 package Controller;
 
+import Entity.Transaction;
+import Entity.TransactionQueue;
 import Entity.User;
 import Entity.Wallet;
+import Entity.vnpay_Transaction;
 import com.vnpay.common.Config;
 import dao.DAO;
+import dao.VNPAYDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -18,9 +22,15 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -46,13 +56,21 @@ public class vnpayReturnServ extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet vnpayReturnServ</title>");            
+            out.println("<title>Servlet vnpayReturnServ</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet vnpayReturnServ at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
+    }
+
+    private TransactionQueue transactionQueue;
+    private DAO dao;
+
+    public vnpayReturnServ() {
+        this.transactionQueue = new TransactionQueue();
+        this.dao = new DAO(); // Initialize DAO instance
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -67,7 +85,8 @@ public class vnpayReturnServ extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       Map fields = new HashMap();
+        response.setContentType("text/html;charset=UTF-8");
+        Map fields = new HashMap();
         for (Enumeration params = request.getParameterNames(); params.hasMoreElements();) {
             String fieldName = URLEncoder.encode((String) params.nextElement(), StandardCharsets.US_ASCII.toString());
             String fieldValue = URLEncoder.encode(request.getParameter(fieldName), StandardCharsets.US_ASCII.toString());
@@ -84,15 +103,60 @@ public class vnpayReturnServ extends HttpServlet {
             fields.remove("vnp_SecureHash");
         }
         String signValue = Config.hashAllFields(fields);
-        
+
         DAO dao = new DAO();
+        VNPAYDAO vnpayDao = new VNPAYDAO();
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("user");
         Wallet w = dao.getWallet(u.getId());
+        double amount = Double.parseDouble(request.getParameter("vnp_Amount")) / 100;
         boolean paid = false;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+        Date dateTime = null;
+        try {
+            dateTime = dateFormat.parse(request.getParameter("vnp_PayDate"));
+        } catch (ParseException ex) {
+            Logger.getLogger(vnpayReturnServ.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
-        
-        
+        vnpay_Transaction vnpay = new vnpay_Transaction("Pending", w.getId(), request.getParameter("vnp_TxnRef"), request.getParameter("vnp_PayDate"), request.getParameter("vnp_OrderInfo"), request.getParameter("vnp_BankCode"));
+        if (signValue.equals(vnp_SecureHash)) {
+            List<vnpay_Transaction> vnpayList = vnpayDao.getListTransaction(w);
+            if ("00".equals(request.getParameter("vnp_TransactionStatus"))) {
+                for (vnpay_Transaction transaction : vnpayList) {
+                    if (transaction != null && transaction.getTime() != null && transaction.getPayment_Code() != null) {
+                        if (transaction.getWallet_id() == w.getId() && transaction.getTime().equals(request.getParameter("vnp_PayDate"))) {
+                            paid = true;
+                        }
+                    }
+                }
+                if (paid == true) {
+                    response.getWriter().print("Giao dịch của bạn đã hoàn thành trước đó rồi!");
+                } else {
+                    vnpayDao.setTransactionVnpay(vnpay);
+                    int transactionId = dao.insertTransactionVnpay(u.getId(), request.getParameter("vnp_TxnRef"), "Pending");
+                    if (transactionId != -1) {
+                        transactionQueue.addTransaction(new Transaction(transactionId, u.getId(), request.getParameter("vnp_TxnRef"), amount));
+                        transactionQueue.processTransactionsvnpay();
+                        dao.insertReport(2, vnpayDao.getStatus(request.getParameter("vnp_TxnRef")).getID(), u.getId(), true, "Bạn đã nạp tiền thành công vào lúc: " + dateTime + " với số tiền là: " + amount + ". Hãy kiểm tra số dư tài khoản!", u.getId(), false);
+                        session.setAttribute("balance", w.getBalance());
+                        request.setAttribute("transactionCode", vnpay.getPayment_Code());
+                        request.setAttribute("money", amount);
+                        request.setAttribute("description", vnpay.getDescription());
+                        request.setAttribute("bank", vnpay.getBankCode());
+                        request.setAttribute("time", dateTime);
+                        request.setAttribute("status", vnpayDao.getStatus(request.getParameter("vnp_TxnRef")).getStatus());
+                        request.getRequestDispatcher("vnpayReturn.jsp").forward(request, response);
+                        
+                    }
+
+                }
+            } else {
+                response.getWriter().print("Số tiền phải lớn hơn 10.000đ");
+            }
+        } else {
+            response.getWriter().print("Invalid signature");
+        }
     }
 
     /**

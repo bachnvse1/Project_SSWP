@@ -26,10 +26,15 @@
 
         <!-- Font Awesome Icon -->
         <link rel="stylesheet" href="css/font-awesome.min.css"/>
+
         <!-- Custom stlylesheet -->
+
+
 
         <link type="text/css" rel="stylesheet" href="css/style.css" />
         <link rel="stylesheet" href="css/myorder.css"/>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -271,7 +276,27 @@
                             <div class="rounded">
                                 <div class="table-responsive table-borderless" style="margin-top: 5%;width: fit-content;">
 
-                                    <table id="orderBuy" class="text-nowrap mb-0 table"  style="display: none;">
+                                    <table id="orderBuy" class="text-nowrap mb-0 table" style="display: none;">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>Mã đơn hàng</th>
+                                                <th>Trạng thái</th>
+                                                <th>Người bán</th>
+                                                <th>Danh mục</th>
+                                                <th>Liên hệ</th>
+                                                <th>Giá sản phẩm</th>
+                                                <th>Phí trung gian</th>
+                                                <th>Người chịu phí</th>
+                                                <th>Tổng tiền thanh toán</th>
+                                                <th>Hành động</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="table-body" id="cell-info">
+                                        </tbody>
+                                    </table>
+
+
+                                    <table class="text-nowrap mb-0 table" id="orderBuy-complete"  style="display: none;">
                                         <thead class="table-light">
                                             <tr>
                                                 <th>Mã đơn hàng</th>
@@ -283,38 +308,19 @@
                                                 <th>Phí trung gian</th>
                                                 <th>Người chịu phí</th>
                                                 <th>Tổng tiền thanh toán</th>
-                                                <th>Thời gian tạo</th>
                                                 <th>Hành động</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="table-body" id="cell-info">
 
-                                        </tbody>
-                                    </table>
-
-                                    <table class="text-nowrap mb-0 table" id="orderBuy-complete"  style="display: none;">
-                                        <thead class="table-light">
-                                            <tr>
-                                                <th>Mã đơn hàng</th>
-                                                <th>Trạng thái</th>
-                                                <th>Người bán</th>                        
-                                                <th>Danh mục</th>
-                                                <th>Thông tin ẩn</th>
-                                                <th>Liên hệ</th>
-                                                <th>Giá sản phẩm
-                                                
-                                                
-                                                </th>
-                                                <th>Phí trung gian</th>
-                                                <th>Người chịu phí</th>
-                                                <th>Tổng tiền thanh toán</th>
-                                                <th>Thời gian tạo</th>
                                             </tr>
                                         </thead>
                                         <tbody class="table-body" id="cell-info1">
 
                                         </tbody>
                                     </table>
+                                    <div class="d-flex">
+                                        <div id="pagination-container" class="mx-auto mt-3">
+
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -390,6 +396,7 @@
                         </c:forEach>
                     </tbody>
                 </table>
+
 
 
 
@@ -598,7 +605,7 @@
                         <label for="buyer">Update At:</label>
                         <input type="text" id="update_at" value="" readonly><br>
                         <c:if test="">
-                            
+
                         </c:if>
 
                     </div>
@@ -717,7 +724,7 @@
                     <span class="close">&times;</span>
                     <div class="container-complain">
                         <form id="complaintForm" >
-                            <h2 style="text-align: center;">Chi tiết đơn hàng</h2>
+<!--                            <h2 style="text-align: center;">Chi tiết đơn hàng</h2>
                             <button id="requestAdmin" type="submit" style="float: right; color: white; background-color: #007bff; border: 1px solid; padding: 10px; border-radius: 3px; " data-orderi="3">Yêu cầu admin tham gia giải quyết</button>
                             <input type="text" id="order_id" name="order_id" readonly="" hidden=""><br>
                             <label for="order_code">Mã đơn hàng trung gian</label><br>
@@ -746,10 +753,10 @@
                             <input type="text" id="buyer1"  value="" readonly><br>
                             <label for="hidden_info">Thời gian tạo</label><br>
                             <input type="text" id="create" name="" value="" readonly><br><br><br>
-<!--                            <label for="description">Description</label><br>
-                            <textarea id="description1" name="description" placeholder="Write something, as detailed as possible..." style="height:200px" required></textarea><br>-->
-                           <button type="submit" style="float: left; color: white; background-color: red; border: 1px solid red; padding: 10px; border-radius: 3px;" data-orderi="1">Khiếu nại đơn hàng không đúng mô tả</button>
-                           <button type="submit" style="float: right; color: white; background-color: #4CAF50; border: 1px solid #4CAF50; padding: 10px; border-radius: 3px;" data-orderi="2">Xác nhận đơn hàng đúng mô tả</button>
+                                                        <label for="description">Description</label><br>
+                                                        <textarea id="description1" name="description" placeholder="Write something, as detailed as possible..." style="height:200px" required></textarea><br>
+                            <button type="submit" style="float: left; color: white; background-color: red; border: 1px solid red; padding: 10px; border-radius: 3px;" data-orderi="1">Khiếu nại đơn hàng không đúng mô tả</button>
+                            <button type="submit" style="float: right; color: white; background-color: #4CAF50; border: 1px solid #4CAF50; padding: 10px; border-radius: 3px;" data-orderi="2">Xác nhận đơn hàng đúng mô tả</button>-->
 
 
                         </form>
@@ -761,17 +768,13 @@
                 <span class="close1">&times;</span></br></br>
                 <h3>Verify Order</h3>
                 <p>Order matches the description</p>
-                <form id="authForm">
-                    <input type="text" id="pro_id1" name="pro_id" hidden="">
-                    <div class="options1">
-                        <button type="submit" class="option1 yes">Yes</button>
-
-                    </div>
-                    <div class="loader" id="loader"></div>
-                </form>
+                <div class="options1">
+                    <button class="option1 yes">Yes</button>
+                </div>
+                <div class="loader" id="loader"></div>
             </div>
-            
-            
+
+
             <div id="exampleModalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  style="height:580px;padding:0px; display: none;">
                 <div class="modal-dialog" style="max-width: 700px;" role="document">
                     <div class="modal-content">
@@ -811,6 +814,13 @@
         </div>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+        <!-- DataTables CSS -->
+
+
+        <!-- DataTables JS -->
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
         <script src="jscript/myorder.js"></script>
     </body>
 </html>
