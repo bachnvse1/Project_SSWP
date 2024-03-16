@@ -10,66 +10,116 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Yêu cầu rút tiền</title>
         <link rel="stylesheet" href="css/font-awesome.min.css">
         <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
         <!-- Bootstrap -->
         <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
-
         <!-- Slick -->
         <link type="text/css" rel="stylesheet" href="css/slick.css"/>
         <link type="text/css" rel="stylesheet" href="css/slick-theme.css"/>
-
         <!-- nouislider -->
         <link type="text/css" rel="stylesheet" href="css/nouislider.min.css"/>
-
         <!-- Font Awesome Icon -->
         <link rel="stylesheet" href="css/font-awesome.min.css"/>
         <!-- Custom stlylesheet -->
-
-        <link type="text/css" rel="stylesheet" href="css/style.css" />        
+        <link type="text/css" rel="stylesheet" href="css/style.css" />   
+        <!--Table-->
     </head>
     <body>
- <%@include file="components/navBar.jsp" %>
-<!--        <table id="withdrawalTable" class="display">
-            <thead>
-                <tr>
-                    <td>Mã yêu cầu</td>
-                    <td>Trạng thái xử lí</td>
-                    <td>Số tiền rút</td>
-                    <td>Số tài khoản</td>
-                    <td>Chủ tài khoản</td>
-                    <td>Tên ngân hàng</td>
-                    <td>Chi nhánh ngân hàng</td>
-                    <td>Phản hồi</td>
-                    <td>Thời gian tạo</td>
-                    <td>Cập nhật</td>
-                    <td>Hành động</td>               
-                </tr>
-            </thead>
-            <tbody>           
-                <tr>
-                    <td>Mã yêu cầu</td>
-                    <td>Trạng thái xử lí</td>
-                    <td>Số tiền rút</td>
-                    <td>Số tài khoản</td>
-                    <td>Chủ tài khoản</td>
-                    <td>Tên ngân hàng</td>
-                    <td>Chi nhánh ngân hàng</td>
-                    <td>Phản hồi</td>
-                    <td>Thời gian tạo</td>
-                    <td>Cập nhật</td>
-                    <td>Hành động</td>               
-                </tr>
+        <%@include file="components/navBar.jsp" %>
+        <section class="ftco-section">
+            <div class="container">
+                <div class="row justify-content-center">				
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-wrap">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Mã yêu cầu</th>
+                                        <th>Trạng thái xử lý</th>
+                                        <th>Số tiền rút</th>
+                                        <th>Số tài khoản</th>
+                                        <th>Chủ tài khoản</th>
+                                        <th>Tên ngân hàng</th>
+                                        <th>Chi nhánh ngân hàng</th>
+                                        <th>Phản hồi</th>
+                                        <th>Thời gian tạo</th>
+                                        <th>Cập nhật</th>                                                      
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach items="${Listwithdrawal}" var="w">
+                                        <tr>
+                                            <th scope="row">${w.getCode()}</th>
+                                            <th>
+                                      <c:choose>
+                                        <c:when test="${w.getStatus() eq 'Hoàn thành'}">
+                                            <a href="#" class="btn btn-success">${w.getStatus()}</a>
+                                        </c:when>
+                                        <c:when test="${w.getStatus() eq 'Mới tạo'}">
+                                            <a href="#" class="btn btn-info">${w.getStatus()}</a>
+                                        </c:when>
+                                            <c:when test="${w.getStatus() eq 'Bị từ chối'}">
+                                            <a href="#" class="btn btn-danger">${w.getStatus()}</a>
+                                        </c:when>                                                                                                                          
+                                            <c:when test="${w.getStatus() eq 'Bị lỗi'}">
+                                            <a href="#" class="btn btn-warning">${w.getStatus()}</a>
+                                        </c:when>
+                                            <c:when test="${w.getStatus() eq 'Chờ chuyển khoản'}">
+                                            <a href="#" class="btn btn-color">${w.getStatus()}</a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a href="#" class="btn btn-secondary">${w.getStatus()}</a>
+                                        </c:otherwise>
+                                    </c:choose>
+                                            </th>
+                                    <th><c:out value="${String.format('%,.0f', w.getAmount())}" /></th>
+                                    <th>${w.getAccount_number()}</th>
+                                    <th>${w.getAccount_holder()}</th>
+                                    <th>${w.getBankname()}</th>
+                                    <th>${w.getBankbranch()}</th>
+                                    <th>${w.getResponse()}</th>
+                                    <th>${w.getCreated_at()}</th>
+                                    <th>${w.getUpdated_at()}</th>
 
-            </tbody>
-        </table>-->
+                                    </tr>
+                                </c:forEach>
+                                <!--						    <tr>
+                                                                                      <th scope="row">1001</th>
+                                                                                      <td>Mark Otto</td>
+                                                                                      <td>Japan</td>
+                                                                                      <td>$3000</td>
+                                                                                      <td>$1200</td>
+                                                                                      <td><a href="#" class="btn btn-warning">Open</a></td>
+                                                                                    </tr>
+                                
+                                                                                    <tr>
+                                                                                      <th scope="row">1001</th>
+                                                                                      <td>Mark Otto</td>
+                                                                                      <td>Japan</td>
+                                                                                      <td>$3000</td>
+                                                                                      <td>$1200</td>
+                                                                                      <td><a href="#" class="btn btn-danger">On hold</a></td>
+                                                                                    </tr>-->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <button id="showModalButton" class="mr-1 btn btn-success">
+            <i class="fa fa-plus"></i> Gửi yêu cầu
+        </button>
         <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
+            <div id="withdrawalModal" class="modal-content" style="display: none">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12">
@@ -137,47 +187,62 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" style="left: 2%"><a href="home"> Back to home</a></button>
-                    <button type="button" class="btn btn-secondary">Close</button>
+                    <button id="closeRqForm" type="button" class="btn btn-secondary">Close</button>
                 </div>
             </div>
         </div>
+        <script>
+            $(document).ready(function () {
+                // Thêm sự kiện click cho nút "Gửi yêu cầu"
+                $('#showModalButton').click(function () {
+                    // Loại bỏ lớp d-none từ phần modal khi nút được nhấn
+                    $('#withdrawalModal').show();
+                });
+            });
+            $(document).ready(function () {
+                // Thêm sự kiện click cho nút "Gửi yêu cầu"
+                $('#closeRqForm').click(function () {
+                    // Loại bỏ lớp d-none từ phần modal khi nút được nhấn
+                    $('#withdrawalModal').hide();
+                });
+            });
+            $(document).ready(function () {
+                $('#withdrawalForm').submit(function (e) {
+                    e.preventDefault();
+                    var confirmation = confirm("Xác nhận đúng thông tin TK Ngân hàng? Nếu thông tin bị sai thì bạn sẽ mất 10% khoản tiền yêu cầu rút");
+
+                    // Nếu người dùng xác nhận
+                    if (confirmation) {
+                        var formData = $(this).serialize();
+                        $.ajax({
+                            url: 'withdrawal',
+                            type: 'POST',
+                            data: formData,
+                            success: function (response) {
+                                // Xử lý phản hồi từ máy chủ nếu cần
+                                if (response === "success") {
+                                    alert("Thành công!");
+                                    window.location.href = 'withdrawal';
+                                } else if (response === "less than 100000") {
+                                    alert("Số tiền rút không được nhỏ hơn 100,000 VND!");
+                                } else if (response === "blank") {
+                                    alert("Không được để trống (Số tài khoản,Chủ tài khoản,Tên ngân hàng)!");
+                                } else if (response === "Insufficient balance") {
+                                    alert("Số dư không đủ!");
+                                } else {
+                                    alert("Vui lòng kiểm tra lại số tiền!");
+                                }
+                            },
+                            error: function (xhr, status, error) {
+
+                                console.error(xhr.responseText);
+                            }
+                        });
+                    }
+                });
+            });
+        </script>
     </body>
 
-    <script>
-       $(document).ready(function () {
-    $('#withdrawalForm').submit(function (e) {
-        e.preventDefault(); 
-        var confirmation = confirm("Xác nhận đúng thông tin TK Ngân hàng? Nếu thông tin bị sai thì bạn sẽ mất 10% khoản tiền yêu cầu rút");
-        
-        // Nếu người dùng xác nhận
-        if (confirmation) {
-            var formData = $(this).serialize(); 
-            $.ajax({
-                url: 'withdrawal', 
-                type: 'POST', 
-                data: formData, 
-                success: function (response) {
-                    // Xử lý phản hồi từ máy chủ nếu cần
-                    if (response === "success") {
-                        alert("Thành công!");
-                        window.location.href = 'withdrawal';
-                    }else if(response === "less than 100000"){
-                        alert("Số tiền rút không được nhỏ hơn 100,000 VND!");
-                    }else if(response ==="blank"){
-                        alert("Không được để trống (Số tài khoản,Chủ tài khoản,Tên ngân hàng)!");
-                    }else if(response ==="Insufficient balance"){
-                        alert("Số dư không đủ!");
-                    }else{
-                        alert("Vui lòng kiểm tra lại số tiền!");
-                    }
-                },
-                error: function (xhr, status, error) {
-            
-                    console.error(xhr.responseText);
-                }
-            });
-        }
-    });
-});
-    </script>
+
 </html>

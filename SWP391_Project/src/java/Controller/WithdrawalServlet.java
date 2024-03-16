@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  *
@@ -63,6 +64,16 @@ public class WithdrawalServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
        // processRequest(request, response);
+       DAO dao = new DAO();
+       HttpSession session = request.getSession();
+       User u = (User) session.getAttribute("user");
+       List<Withdrawal> withdrawals = dao.getWitdrawalbyUser(u.getId());
+        request.setAttribute("Listwithdrawal", withdrawals);
+        for (Withdrawal withdrawal : withdrawals) {
+            request.setAttribute("amountW", String.format("%,.0f",(double) withdrawal.getAmount()));
+        }   
+       
+       
        request.getRequestDispatcher("withdrawal.jsp").forward(request, response);
     }
 
@@ -102,7 +113,7 @@ public class WithdrawalServlet extends HttpServlet {
         withdrawal.setAccount_holder(accountHolder);
         withdrawal.setBankname(bankName);
         withdrawal.setBankbranch(bankBranch);
-        withdrawal.setCode("WDR2024000");
+        withdrawal.setCode("WDR2024000"+dao.getIdWithdrawal()+1);
         withdrawal.setStatus("Mới tạo");
         withdrawal.setCreated_by(u.getId());
         withdrawal.setUpdated_by(u.getId());
