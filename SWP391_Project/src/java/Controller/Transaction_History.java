@@ -4,9 +4,7 @@
  */
 package Controller;
 
-import Entity.Category;
 import Entity.History_Transaction;
-import Entity.Product;
 import Entity.User;
 import dao.DAO;
 import java.io.IOException;
@@ -23,8 +21,8 @@ import java.util.List;
  *
  * @author My pc
  */
-@WebServlet(name = "Searchproduct", urlPatterns = {"/searchhistory"})
-public class Searchproduct extends HttpServlet {
+@WebServlet(name = "Transaction_History", urlPatterns = {"/transaction"})
+public class Transaction_History extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,74 +41,48 @@ public class Searchproduct extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Searchproduct</title>");
+            out.println("<title>Servlet Transaction_History</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Searchproduct at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String name = request.getParameter("searchbyid");
-        
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("user");
-        List<History_Transaction> h = null;
-
         DAO dao = new DAO();
-        request.setAttribute("dao", dao);
-        if (name != "") {
-            h = dao.SearchHistory_TransactionbyID(name, u.id);
-        } else {
-            h = dao.GetHistory_TransactionbyID(u.id);
-        }
 
-        request.setAttribute("historytransaction", h);
+        List<History_Transaction> his = dao.GetHistory_TransactionbyID(u.id);
+
+        request.setAttribute("dao", dao);
+        request.setAttribute("historytransaction", his);
         request.getRequestDispatcher("Historytransaction.jsp").forward(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        User u = (User) session.getAttribute("user");
-        String price = request.getParameter("price2").trim();
-        String[] price2 = price.split("-");
-        List<History_Transaction> h = null;
-
+               response.setContentType("text/html;charset=UTF-8");
+        int hid = Integer.parseInt(request.getParameter("hid").trim());
         DAO dao = new DAO();
-         request.setAttribute("dao", dao);
-        h = dao.SearchHistory_TransactionbyPrice(price2[0], price2[1], u.id);
-        request.setAttribute("historytransaction", h);
-        request.getRequestDispatcher("Historytransaction.jsp").forward(request, response);
+        History_Transaction his = dao.GetHistoryby_ID(hid);
+        String data = his.getID() + ";"
+                + his.getMoney_Transaction() + ";"
+                + his.getTransaction_Type() + ";"
+                +(his.isStatus() ? "Đã xử lý" : "Chưa Xử Lý") + ";"
+                + his.getNote() + ";"
+                + dao.getUserById(his.getCreated_by()).display_name + ";"
+                + his.getCreate_at() + ";"
+                + his.getUpdate_at();
+        response.setContentType("text/plain");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(data);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";

@@ -42,10 +42,7 @@
         <link href="css/styles.css" rel="stylesheet" type="text/css"/> 
         <link href="css/manager.css" rel="stylesheet" type="text/css"/>
 
-        <!--           <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round"> -->
-        <!--         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> -->
-        <!--       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
-        <!--     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">  -->
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
@@ -127,7 +124,7 @@
 
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-hover text-nowrap">
+                                    <table id="example" class="table table-striped" style="width:100%">
                                         <thead>
                                             <tr>
                                                 <th scope="col">ID</th>
@@ -178,8 +175,7 @@
 
 
         <script src="js/manager.js" type="text/javascript"></script>
-
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      
         <!--Main layout-->
         <!-- SCRIPTS -->
         <!-- JQuery -->
@@ -187,7 +183,7 @@
         <!-- Bootstrap tooltips -->
         <script type="text/javascript" src="https://mdbootstrap.com/previews/ecommerce-demo/js/popper.min.js"></script>
         <!-- Bootstrap core JavaScript -->
-        <script type="text/javascript" src="https://mdbootstrap.com/previews/ecommerce-demo/js/bootstrap.js"></script>
+
         <!-- MDB core JavaScript -->
         <script type="text/javascript" src="https://mdbootstrap.com/previews/ecommerce-demo/js/mdb.min.js"></script>
         <!-- MDB Ecommerce JavaScript -->
@@ -205,13 +201,17 @@
         <!-- Custom scripts -->
         <script type="text/javascript" src="js/script.js"></script>
         <script >
-                                            function doDelete(id) {
-                                                var url = "deletecate";
-                                                if (confirm("do U want delete")) {
-                                                    window.location.href = url + "?id=" + id;
-                                                }
+                                                        function doDelete(id) {
+                                                            var url = "deletecate";
+                                                            if (confirm("do U want delete")) {
+                                                                window.location.href = url + "?id=" + id;
+                                                            }
 
-                                            }
+                                                        }
+        </script>
+        
+        <script>
+            new DataTable('#example');
         </script>
     </body>
 </html>

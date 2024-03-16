@@ -80,7 +80,7 @@ public class VerifyOrder extends HttpServlet {
         double moneyRecive = dao.getOrderByProductID(proid).getTotal_received_amount();
         dao.updateAmount(balanceSeller + moneyRecive, dao.getOrderByID(id).getCreate_by());
         dao.updateAmount(dao.getWallet(1).getBalance() - moneyRecive, 1);
-        
+      dao.InsertHistory_Transaction(moneyRecive, "+", true,  "done:"+dao.getOrderByProductID(proid).getCode(), u.id, dao.getOrderByID(id).getCreate_by());
         dao.updateOrder(u.getId(), "Complete", u.getId(), proid);
         dao.insertReport(4, id, true, "You have completed your purchase with order code is: " + dao.getOrderByID(id).getCode(), u.getId(), false);
         

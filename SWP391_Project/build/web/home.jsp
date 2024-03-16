@@ -125,6 +125,7 @@
                         </div>
 
                     </div>
+                    <a href="transaction">History_Transaction</a>
                     <!-- /section title -->
                     <!-- Products tab & slick -->
 

@@ -7,6 +7,7 @@ package dao;
 import Context.DBContext;
 import Entity.Category;
 import Entity.Feedback;
+import Entity.History_Transaction;
 import Entity.Product;
 import Entity.Report;
 import Entity.User;
@@ -15,10 +16,8 @@ import Entity.intermediateOrders;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
 import java.sql.SQLException;
 import java.util.*;
-import java.sql.Timestamp;
 import java.text.Normalizer;
 
 /**
@@ -393,8 +392,9 @@ public class DAO extends DBContext {
 
         }
     }
-public void deleteOrder(int id, boolean is_delete){
-String query = "Update intermediate_Orders set is_delete = ? where id =? ";
+
+    public void deleteOrder(int id, boolean is_delete) {
+        String query = "Update intermediate_Orders set is_delete = ? where id =? ";
         try {
             con = new DBContext().connection; //connect sql
             ps = con.prepareStatement(query);
@@ -404,19 +404,20 @@ String query = "Update intermediate_Orders set is_delete = ? where id =? ";
         } catch (Exception e) {
 
         }
-}
+    }
+
     public void insertWallet(double balance, int uid) {
         String query = "INSERT INTO Wallet (balance, create_by, updated_by)\n"
                 + "VALUES (?, ?, ?)";
         try {
-             con = new DBContext().connection; //connect sql
+            con = new DBContext().connection; //connect sql
             ps = con.prepareStatement(query);
             ps.setDouble(1, balance);
             ps.setInt(2, uid);
             ps.setInt(3, uid);
             ps.executeUpdate();
         } catch (Exception e) {
-            
+
         }
     }
 
@@ -1191,7 +1192,7 @@ String query = "Update intermediate_Orders set is_delete = ? where id =? ";
     public ArrayList<Feedback> getFeedbackList() {
         ArrayList<Feedback> list = new ArrayList<>();
         try {
-            
+
             String sql = "SELECT f.*, u.username FROM swp_demo.feedback f JOIN swp_demo.users u ON f.user_id = u.id ORDER BY f.id DESC";
 
             PreparedStatement st = connection.prepareStatement(sql);
@@ -1331,7 +1332,8 @@ String query = "Update intermediate_Orders set is_delete = ? where id =? ";
     //BINH
     public List<Product> getAllProduct() {
         List<Product> list = new ArrayList<>();
-        String sql = "SELECT * FROM swp_demo.product where is_delete = false";
+        String sql = "Select * from product as p inner join intermediate_orders i on p.id=i.productID\n"
+                + "where i.status='Ready'";
         try {
             con = new DBContext().connection;
             ps = con.prepareStatement(sql);
@@ -1385,7 +1387,8 @@ String query = "Update intermediate_Orders set is_delete = ? where id =? ";
 
     public List<Product> getAllProductbyName(String name) {
         List<Product> list = new ArrayList<>();
-        String sql = "SELECT * FROM swp_demo.product where name like ? and is_delete = false";
+        String sql = "SELECT * FROM Product p\n"
+                + "JOIN intermediate_orders io ON p.id = io.productID where name like ? and io.status = 'Ready'";
         try {
             con = new DBContext().connection;
 
@@ -1444,7 +1447,9 @@ String query = "Update intermediate_Orders set is_delete = ? where id =? ";
     public List<Product> getProductbyCategoryID(String id) {
         List<Product> list = new ArrayList<>();
         String sql = "Select * from product as p inner join category as c\n"
-                + "on p.categoryID=c.id where p.categoryID=? and p.is_delete = 0";
+                + "          on p.categoryID=c.id\n"
+                + "          join intermediate_orders i on p.id=i.productID\n"
+                + "          where p.categoryID= ? and i.status='Ready'";
         try {
             con = new DBContext().connection;
 
@@ -1519,15 +1524,18 @@ String query = "Update intermediate_Orders set is_delete = ? where id =? ";
             con = new DBContext().connection; //connect sql
             ps = con.prepareStatement(query);
             ps.setString(1, id);
+
             ps.executeUpdate();
 
         } catch (Exception e) {
 
         }
     }
-public void Updatecategory(Category c){
-      String query = "Update `swp_demo`.`category` SET name=? WHERE id = ?";
-     try{      con = new DBContext().connection; //connect sql
+
+    public void Updatecategory(Category c) {
+        String query = "Update `swp_demo`.`category` SET name=? WHERE id = ?";
+        try {
+            con = new DBContext().connection; //connect sql
             ps = con.prepareStatement(query);
             ps.setString(1, c.getName());
             ps.setInt(2, c.getId());
@@ -1536,9 +1544,157 @@ public void Updatecategory(Category c){
         } catch (Exception e) {
 
         }
-}
+    }
+
+    public History_Transaction InsertHistory_Transaction(double money, String Transaction_type, boolean status, String note, int create_by, int nguoinhan) {
+        String query = "INSERT INTO History_Transaction (Money_Transaction, Transaction_Type, Status, Note, Create_by, nguoioinhan)\n"
+                + "VALUES(?, ?, ?, ?, ?, ?)";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(query);
+            ps.setDouble(1, money);
+            ps.setString(2, Transaction_type);
+            ps.setBoolean(3, status);
+            ps.setString(4, note);
+            ps.setInt(5, create_by);
+            ps.setInt(6, nguoinhan);
+            ps.executeUpdate();
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return null;
+    }
+
+    public List<History_Transaction> GetHistory_TransactionbyID(int uid) {
+        List<History_Transaction> list = new ArrayList<>();
+        String sql = "SELECT * FROM swp_demo.history_transaction WHERE Create_by = ? AND nguoioinhan = 1 OR nguoioinhan = ?";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, uid);
+            ps.setInt(2, uid);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                list.add(new History_Transaction(
+                        rs.getInt(1),
+                        rs.getDouble(2),
+                        rs.getString(3),
+                        rs.getBoolean(4),
+                        rs.getString(5),
+                        rs.getInt(6),
+                        rs.getTimestamp(7),
+                        rs.getInt(8),
+                        rs.getTimestamp(9)
+                ));
+            }
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return list;
+    }
+
+    public History_Transaction GetHistoryby_ID(int uid) {
+        String sql = "SELECT *FROM swp_demo.history_transaction h \n"
+                + "WHERE h.id=?";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, uid);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return new History_Transaction(
+                        rs.getInt(1),
+                        rs.getDouble(2),
+                        rs.getString(3),
+                        rs.getBoolean(4),
+                        rs.getString(5),
+                        rs.getInt(6),
+                        rs.getTimestamp(7),
+                        rs.getInt(8),
+                        rs.getTimestamp(9)
+                );
+            }
+
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return null;
+    }
+
+    public List<History_Transaction> SearchHistory_TransactionbyID(String hid, int uid) {
+        List<History_Transaction> list = new ArrayList<>();
+        String sql = "SELECT *FROM swp_demo.history_transaction h \n"
+                + "WHERE h.id = ?  AND h.Create_by = ?\n"
+                + "AND (h.nguoioinhan = 1 OR h.nguoioinhan = ?)";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(sql);
+            ps.setString(1, hid);
+            ps.setInt(2, uid);
+            ps.setInt(3, uid);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                list.add(new History_Transaction(
+                        rs.getInt(1),
+                        rs.getDouble(2),
+                        rs.getString(3),
+                        rs.getBoolean(4),
+                        rs.getString(5),
+                        rs.getInt(6),
+                        rs.getTimestamp(7),
+                        rs.getInt(8),
+                        rs.getTimestamp(9)
+                ));
+            }
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return list;
+    }
+
+    public List<History_Transaction> SearchHistory_TransactionbyPrice(String from, String to, int uid) {
+        List<History_Transaction> list = new ArrayList<>();
+        String sql = "SELECT *FROM swp_demo.history_transaction h\n"
+                + "WHERE (h.Money_Transaction >= ? AND h.Money_Transaction<= ?)\n"
+                + "AND (h.Create_by = ?\n"
+                + "AND h.nguoioinhan = 1 OR h.nguoioinhan = ?)";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(sql);
+            ps.setString(1, from);
+            ps.setString(2, to);
+            ps.setInt(3, uid);
+            ps.setInt(4, uid);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                list.add(new History_Transaction(
+                        rs.getInt(1),
+                        rs.getDouble(2),
+                        rs.getString(3),
+                        rs.getBoolean(4),
+                        rs.getString(5),
+                        rs.getInt(6),
+                        rs.getTimestamp(7),
+                        rs.getInt(8),
+                        rs.getTimestamp(9)
+                ));
+            }
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return list;
+    }
+
     public static void main(String[] args) {
         DAO dao = new DAO();
-        dao.insertWallet(5000000, 4);
+        List<History_Transaction> l = dao.GetHistory_TransactionbyID(4);
+
+        for (History_Transaction h : l) {
+            System.out.println();
+        }
+
     }
 }

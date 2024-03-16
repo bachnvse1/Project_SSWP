@@ -15,7 +15,7 @@ $(document).ready(function () {
     $("#exampleModalCreate").hide();
     $("#ProductCompleteDisplay").hide();
     $("#ProductProcessingDisplay").hide();
-    
+
     // Xử lý sự kiện khi nhấn nút "Add Product"
     $("#addProductButton").click(function () {
         $("#addProductForm").show();
@@ -27,7 +27,7 @@ $(document).ready(function () {
         $("#orderBuy-complete").hide();
         $("#exampleModalCreate").hide();
         $("#ProductCompleteDisplay").hide();
-    $("#ProductProcessingDisplay").hide();
+        $("#ProductProcessingDisplay").hide();
     });
     $("#allProductButton").click(function () {
         $("#addProductForm").hide();
@@ -49,7 +49,7 @@ $(document).ready(function () {
         $("#myModalVerify").hide();
         $("#exampleModalCreate").hide();
         $("#ProductCompleteDisplay").show();
-    $("#ProductProcessingDisplay").hide();
+        $("#ProductProcessingDisplay").hide();
     });
     $("#processingorder").click(function () {
         $("#addProductForm").hide();
@@ -61,7 +61,7 @@ $(document).ready(function () {
         $("#myModalVerify").hide();
         $("#exampleModalCreate").hide();
         $("#ProductCompleteDisplay").hide();
-    $("#ProductProcessingDisplay").show();
+        $("#ProductProcessingDisplay").show();
     });
 });
 function toggleOptions(productId) {
@@ -134,7 +134,6 @@ $(document).ready(function () {
 $(document).ready(function () {
     $('.productInfo').click(function (event) {
         event.preventDefault();
-
         var productId = $(this).data('product-id');
         var action = $(this).data('action');
         $.ajax({
@@ -383,8 +382,8 @@ $(document).ready(function () {
     // Khi người dùng nhấn vào nút đóng (×), đóng modal
     $(".close").click(function () {
         $("#myModalComplain").hide();
-        
-        
+
+
     });
 
     $(".close1").click(function () {
@@ -436,7 +435,7 @@ $(document).ready(function () {
             data: formData, // Gửi dữ liệu của form sang servlet
             success: function (response) {
                 if (response === "success") {
-                    
+
                     alert("Verify order success");
 
                     // Hiển thị modal example sau khi nhấp OK
