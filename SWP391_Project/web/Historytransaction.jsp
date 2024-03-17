@@ -60,7 +60,7 @@
                 margin: 10% auto; /* Độ cao từ trên xuống modal */
                 padding: 20px;
                 border: 1px solid #888;
-                width: 60%; /* Độ rộng của modal */
+                width: 80%; /* Độ rộng của modal */
                 border-radius: 10px; /* Bo tròn các góc */
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Hiệu ứng đổ bóng */
                 display: flex; /* Sử dụng flexbox để sắp xếp các cột hàng dọc */
@@ -100,10 +100,23 @@
 
         </style>  
         <style>
+
+
             html,
-            body,
+            dt-length{
+                margin-top: 15px;
+            }
+            .form-control-sm{
+                width: 50%;
+                margin-bottom:15px;
+            }
+            .row {
+                margin-right: 0px;
+                margin-left: 0px;
+
+            }
             .intro {
-                height: 100%;
+                padding-left: 15px;
             }
 
             table td,
@@ -134,23 +147,7 @@
             }
         </style>
     </head>
-    <body>
-        <form action="searchhistory" method="get">
-            <input type="text" placeholder="search by name" name="searchbyid">
-            <button>Search</button>
-
-        </form>
-        <form action="searchhistory" method="post">
-            <li>
-                <label class="checkbox-inline" for="1"><input name="price2" value="00-50" id="1" type="checkbox" onchange="this.form.submit()">$20 - $50</label>
-            </li>
-            <li>
-                <label class="checkbox-inline" for="1"><input name="price2"  value="50-100" id="1" type="checkbox" onchange="this.form.submit()">$50 - $100</label>
-            </li>
-            <li>
-                <label class="checkbox-inline" for="1"><input name="price2"  value="100-1000000000" id="1" type="checkbox" onchange="this.form.submit()">$100 - $1000000</label>
-            </li>
-        </form>
+    <body>      
         <section class="intro">
             <div class="bg-image h-100" style="background-color: #f5f7fa;">
                 <div class="mask d-flex align-items-center h-100">
@@ -159,8 +156,8 @@
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-body p-0">
-                                        <div class="table-responsive table-scroll" data-mdb-perfect-scrollbar="true" style="position: relative; height: 700px">
-                                            <table class="table table-striped mb-0">
+                                        <div class="table-responsive table-scroll" data-mdb-perfect-scrollbar="true" style="position: relative; padding-left: 15px; height: 650px;width: 105%; ">
+                                            <table id="example" class="table table-striped">
                                                 <thead style="background-color: #002d72;">
                                                     <tr>
                                                         <th  scope="col">Mã Giao dịch</th>
@@ -192,7 +189,6 @@
                                                                 </a>                                          
                                                             </td>
                                                         </tr>
-
                                                     </c:forEach>
                                                 </tbody>
                                             </table>
@@ -239,6 +235,17 @@
                 </div>
             </div>              
         </div>
+        <script src="https://code.jquery.com/jquery-3.7.1.js"></script> 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+        <script src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>  
+        <script src="https://cdn.datatables.net/2.0.2/js/dataTables.bootstrap5.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css"></script>
+        <script src="https://cdn.datatables.net/2.0.2/css/dataTables.bootstrap5.css"></script>
+
+
+
+
 
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -280,6 +287,8 @@
                         ;
 
         </script>
-
+        <script>
+            new DataTable('#example');
+        </script>
     </body>
 </html>

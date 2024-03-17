@@ -115,7 +115,7 @@
                             <div class="section-nav">
                                 <ul class="section-tab-nav tab-nav">
                                     <!-- Correctly setting 'All' category selection -->
-                                    <li><a href="javascript:void(0);" onclick="redirectToController('all')">All</a></li>
+                                    <li><a href="javascript:void(0);" onclick="redirectToController('all')">Tất cả</a></li>
                                         <c:forEach items="${listCategory}" var="category">
 
                                         <li><a href="javascript:void(0);" onclick="redirectToController('${category.id}')">${category.name}</a></li>

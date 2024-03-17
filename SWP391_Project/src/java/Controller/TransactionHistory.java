@@ -4,7 +4,7 @@
  */
 package Controller;
 
-import Entity.History_Transaction;
+import Entity.HistoryTransaction;
 import Entity.User;
 import dao.DAO;
 import java.io.IOException;
@@ -21,8 +21,8 @@ import java.util.List;
  *
  * @author My pc
  */
-@WebServlet(name = "Transaction_History", urlPatterns = {"/transaction"})
-public class Transaction_History extends HttpServlet {
+@WebServlet(name = "TransactionHistory", urlPatterns = {"/transaction"})
+public class TransactionHistory extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -56,7 +56,7 @@ public class Transaction_History extends HttpServlet {
         User u = (User) session.getAttribute("user");
         DAO dao = new DAO();
 
-        List<History_Transaction> his = dao.GetHistory_TransactionbyID(u.id);
+        List<HistoryTransaction> his = dao.GetHistory_TransactionbyID(u.id);
 
         request.setAttribute("dao", dao);
         request.setAttribute("historytransaction", his);
@@ -69,7 +69,7 @@ public class Transaction_History extends HttpServlet {
                response.setContentType("text/html;charset=UTF-8");
         int hid = Integer.parseInt(request.getParameter("hid").trim());
         DAO dao = new DAO();
-        History_Transaction his = dao.GetHistoryby_ID(hid);
+        HistoryTransaction his = dao.GetHistoryby_ID(hid);
         String data = his.getID() + ";"
                 + his.getMoney_Transaction() + ";"
                 + his.getTransaction_Type() + ";"

@@ -98,7 +98,7 @@ public class buyServ extends HttpServlet {
                 double moneyBuy = dao.getOrderByProductID(idx).getTotal_paid_amount();
                 dao.updateAmount(balance - moneyBuy, u.getId());
                 dao.updateAmount(dao.getWallet(1).getBalance() + moneyBuy, 1);
-                dao.InsertHistory_Transaction(moneyBuy, "-", true, "done:"+dao.getOrderByProductID(idx).getCode()+".", u.id,1);
+                dao.InsertHistory_Transaction(moneyBuy, "-", true, "done:"+dao.getOrderByProductID(idx).getCode()+".", u.id,u.id);
                 dao.insertReport(2, dao.getOrderByProductID(idx).getId(), true, "You have just purchased an order, the code is: " + dao.getOrderByProductID(idx).getCode() + " and checking this order please!", u.getId(), false);
                 response.getWriter().print("You just buy product, please checking order!");
             }

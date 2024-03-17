@@ -10,7 +10,7 @@ import java.sql.Timestamp;
  *
  * @author My pc
  */
-public class History_Transaction {
+public class HistoryTransaction {
     public int ID;
     public double Money_Transaction;
     public String Transaction_Type;
@@ -20,10 +20,10 @@ public class History_Transaction {
     public Timestamp create_at;   
     public Timestamp Update_at;
     public int nguoinhan;
-    public History_Transaction() {
+    public HistoryTransaction() {
     }
 
-    public History_Transaction(int ID, double Money_Transaction, String Transaction_Type, boolean Status, String Note,int created_by, Timestamp create_at, int nguoinhan,  Timestamp Update_at) {
+    public HistoryTransaction(int ID, double Money_Transaction, String Transaction_Type, boolean Status, String Note,int created_by, Timestamp create_at, int nguoinhan,  Timestamp Update_at) {
         this.ID = ID;
         this.Money_Transaction = Money_Transaction;
         this.Transaction_Type = Transaction_Type;

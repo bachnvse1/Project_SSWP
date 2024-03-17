@@ -7,7 +7,7 @@ package dao;
 import Context.DBContext;
 import Entity.Category;
 import Entity.Feedback;
-import Entity.History_Transaction;
+import Entity.HistoryTransaction;
 import Entity.Product;
 import Entity.Report;
 import Entity.User;
@@ -1546,7 +1546,7 @@ public class DAO extends DBContext {
         }
     }
 
-    public History_Transaction InsertHistory_Transaction(double money, String Transaction_type, boolean status, String note, int create_by, int nguoinhan) {
+    public HistoryTransaction InsertHistory_Transaction(double money, String Transaction_type, boolean status, String note, int create_by, int nguoinhan) {
         String query = "INSERT INTO History_Transaction (Money_Transaction, Transaction_Type, Status, Note, Create_by, nguoioinhan)\n"
                 + "VALUES(?, ?, ?, ?, ?, ?)";
         try {
@@ -1565,9 +1565,10 @@ public class DAO extends DBContext {
         return null;
     }
 
-    public List<History_Transaction> GetHistory_TransactionbyID(int uid) {
-        List<History_Transaction> list = new ArrayList<>();
-        String sql = "SELECT * FROM swp_demo.history_transaction WHERE Create_by = ? AND nguoioinhan = 1 OR nguoioinhan = ?";
+    public List<HistoryTransaction> GetHistory_TransactionbyID(int uid) {
+        List<HistoryTransaction> list = new ArrayList<>();
+        String sql = "SELECT *FROM swp_demo.history_transaction h \n"
+                + "WHERE   h.Create_by = ? OR h.nguoioinhan = ?;";
         try {
             con = new DBContext().connection;
             ps = con.prepareStatement(sql);
@@ -1576,7 +1577,7 @@ public class DAO extends DBContext {
             rs = ps.executeQuery();
 
             while (rs.next()) {
-                list.add(new History_Transaction(
+                list.add(new HistoryTransaction(
                         rs.getInt(1),
                         rs.getDouble(2),
                         rs.getString(3),
@@ -1594,7 +1595,7 @@ public class DAO extends DBContext {
         return list;
     }
 
-    public History_Transaction GetHistoryby_ID(int uid) {
+    public HistoryTransaction GetHistoryby_ID(int uid) {
         String sql = "SELECT *FROM swp_demo.history_transaction h \n"
                 + "WHERE h.id=?";
         try {
@@ -1603,7 +1604,7 @@ public class DAO extends DBContext {
             ps.setInt(1, uid);
             rs = ps.executeQuery();
             while (rs.next()) {
-                return new History_Transaction(
+                return new HistoryTransaction(
                         rs.getInt(1),
                         rs.getDouble(2),
                         rs.getString(3),
@@ -1622,77 +1623,11 @@ public class DAO extends DBContext {
         return null;
     }
 
-    public List<History_Transaction> SearchHistory_TransactionbyID(String hid, int uid) {
-        List<History_Transaction> list = new ArrayList<>();
-        String sql = "SELECT *FROM swp_demo.history_transaction h \n"
-                + "WHERE h.id = ?  AND h.Create_by = ?\n"
-                + "AND (h.nguoioinhan = 1 OR h.nguoioinhan = ?)";
-        try {
-            con = new DBContext().connection;
-            ps = con.prepareStatement(sql);
-            ps.setString(1, hid);
-            ps.setInt(2, uid);
-            ps.setInt(3, uid);
-            rs = ps.executeQuery();
-
-            while (rs.next()) {
-                list.add(new History_Transaction(
-                        rs.getInt(1),
-                        rs.getDouble(2),
-                        rs.getString(3),
-                        rs.getBoolean(4),
-                        rs.getString(5),
-                        rs.getInt(6),
-                        rs.getTimestamp(7),
-                        rs.getInt(8),
-                        rs.getTimestamp(9)
-                ));
-            }
-        } catch (Exception ex) {
-            System.out.println(ex);
-        }
-        return list;
-    }
-
-    public List<History_Transaction> SearchHistory_TransactionbyPrice(String from, String to, int uid) {
-        List<History_Transaction> list = new ArrayList<>();
-        String sql = "SELECT *FROM swp_demo.history_transaction h\n"
-                + "WHERE (h.Money_Transaction >= ? AND h.Money_Transaction<= ?)\n"
-                + "AND (h.Create_by = ?\n"
-                + "AND h.nguoioinhan = 1 OR h.nguoioinhan = ?)";
-        try {
-            con = new DBContext().connection;
-            ps = con.prepareStatement(sql);
-            ps.setString(1, from);
-            ps.setString(2, to);
-            ps.setInt(3, uid);
-            ps.setInt(4, uid);
-            rs = ps.executeQuery();
-
-            while (rs.next()) {
-                list.add(new History_Transaction(
-                        rs.getInt(1),
-                        rs.getDouble(2),
-                        rs.getString(3),
-                        rs.getBoolean(4),
-                        rs.getString(5),
-                        rs.getInt(6),
-                        rs.getTimestamp(7),
-                        rs.getInt(8),
-                        rs.getTimestamp(9)
-                ));
-            }
-        } catch (Exception ex) {
-            System.out.println(ex);
-        }
-        return list;
-    }
-
     public static void main(String[] args) {
         DAO dao = new DAO();
-        List<History_Transaction> l = dao.GetHistory_TransactionbyID(4);
+        List<HistoryTransaction> l = dao.GetHistory_TransactionbyID(4);
 
-        for (History_Transaction h : l) {
+        for (HistoryTransaction h : l) {
             System.out.println();
         }
 
