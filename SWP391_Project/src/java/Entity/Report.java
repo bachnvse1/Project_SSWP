@@ -109,6 +109,14 @@ public class Report {
         return update_by;
     }
 
+    public int getRecivedID() {
+        return recivedID;
+    }
+
+    public void setRecivedID(int recivedID) {
+        this.recivedID = recivedID;
+    }
+
     public void setUpdate_by(int update_by) {
         this.update_by = update_by;
     }

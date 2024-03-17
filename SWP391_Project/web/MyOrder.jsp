@@ -221,6 +221,23 @@
                 left: 50%;
                 transform: translate(-50%, -50%);
             }
+            .historyOrder {
+                background-color: #0061f2; /* Màu nền xanh */
+                color: #ffffff; /* Màu chữ màu trắng */
+                border: none;
+                border-radius: 10px; /* Bo góc */
+                padding: 8px 15px;
+                cursor: pointer;
+                transition: ease-out 0.5s;
+            }
+
+            .historyOrder:hover {
+                background-color: #008000; /* Màu nền khi di chuột qua */
+            }
+
+            .historyOrder:hover i {
+                color: #ffffff; /* Màu biểu tượng màu trắng khi di chuột qua */
+            }
 
         </style>
     </head>
@@ -285,6 +302,7 @@
                                                 <th>Tổng tiền thanh toán</th>
                                                 <th>Thời gian tạo</th>
                                                 <th>Hành động</th>
+                                                <th>Lịch sử trạng thái</th>
                                             </tr>
                                         </thead>
                                         <tbody class="table-body" id="cell-info">
@@ -302,13 +320,14 @@
                                                 <th>Thông tin ẩn</th>
                                                 <th>Liên hệ</th>
                                                 <th>Giá sản phẩm
-                                                
-                                                
+
+
                                                 </th>
                                                 <th>Phí trung gian</th>
                                                 <th>Người chịu phí</th>
                                                 <th>Tổng tiền thanh toán</th>
                                                 <th>Thời gian tạo</th>
+                                                <th>Lịch sử trạng thái</th>
                                             </tr>
                                         </thead>
                                         <tbody class="table-body" id="cell-info1">
@@ -409,6 +428,7 @@
                             <th>Status</th>
                             <th>Party bears the fee</th>
                             <th>Action</th>
+                            <th>Lịch sử trạng thái</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -435,9 +455,14 @@
                                             <i style="color: red" class="fa fa-trash"></i>
                                         </a>  
                                     </td>
+                                    <td>
+                                        <a class="historyOrder" href="orderHistory?idor=${c.getOrder().getId()}">
+                                            <i style="color: #FFFFFF" class="fa fa-calendar"></i> Lịch sử
+                                        </a>                                        
+                                    </td>
                                 </tr>
-                            </c:if>
-                        </c:forEach>
+                        </c:if>
+                    </c:forEach>
                     </tbody>
                 </table>
 
@@ -458,6 +483,7 @@
                             <th>Status</th>
                             <th>Party bears the fee</th>
                             <th>Action</th>
+                            <th>Lịch sử trạng thái</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -483,6 +509,11 @@
                                         <a class="deleteProductButton" data-product-id="${o.getOrder().getId()}">
                                             <i style="color: red" class="fa fa-trash"></i>
                                         </a>  
+                                    </td>
+                                    <td>
+                                        <a class="historyOrder" href="orderHistory?idor=${o.getOrder().getId()}">
+                                            <i style="color: #FFFFFF" class="fa fa-calendar"></i> Lịch sử
+                                        </a>                                        
                                     </td>
                                 </tr>
                             </c:if>
@@ -598,7 +629,7 @@
                         <label for="buyer">Update At:</label>
                         <input type="text" id="update_at" value="" readonly><br>
                         <c:if test="">
-                            
+
                         </c:if>
 
                     </div>
@@ -746,10 +777,10 @@
                             <input type="text" id="buyer1"  value="" readonly><br>
                             <label for="hidden_info">Thời gian tạo</label><br>
                             <input type="text" id="create" name="" value="" readonly><br><br><br>
-<!--                            <label for="description">Description</label><br>
-                            <textarea id="description1" name="description" placeholder="Write something, as detailed as possible..." style="height:200px" required></textarea><br>-->
-                           <button type="submit" style="float: left; color: white; background-color: red; border: 1px solid red; padding: 10px; border-radius: 3px;" data-orderi="1">Khiếu nại đơn hàng không đúng mô tả</button>
-                           <button type="submit" style="float: right; color: white; background-color: #4CAF50; border: 1px solid #4CAF50; padding: 10px; border-radius: 3px;" data-orderi="2">Xác nhận đơn hàng đúng mô tả</button>
+                            <!--                            <label for="description">Description</label><br>
+                                                        <textarea id="description1" name="description" placeholder="Write something, as detailed as possible..." style="height:200px" required></textarea><br>-->
+                            <button type="submit" style="float: left; color: white; background-color: red; border: 1px solid red; padding: 10px; border-radius: 3px;" data-orderi="1">Khiếu nại đơn hàng không đúng mô tả</button>
+                            <button type="submit" style="float: right; color: white; background-color: #4CAF50; border: 1px solid #4CAF50; padding: 10px; border-radius: 3px;" data-orderi="2">Xác nhận đơn hàng đúng mô tả</button>
 
 
                         </form>
@@ -770,8 +801,8 @@
                     <div class="loader" id="loader"></div>
                 </form>
             </div>
-            
-            
+
+
             <div id="exampleModalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  style="height:580px;padding:0px; display: none;">
                 <div class="modal-dialog" style="max-width: 700px;" role="document">
                     <div class="modal-content">

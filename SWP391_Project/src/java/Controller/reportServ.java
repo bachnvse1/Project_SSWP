@@ -87,6 +87,7 @@ public class reportServ extends HttpServlet {
             if (!dao.getOrderByID(id).getStatus().equals("Người mua khiếu nại đơn hàng")) {
                 dao.insertReport(1, id, dao.getOrderByID(id).getBuyer_id(), false, "Có khiếu nại từ người mua rằng đơn hàng " + dao.getOrderByID(id).getCode()+" không đúng mô tả ", u.getId(), false);
                 dao.updateOrderStatus(u.getId(), "Người mua khiếu nại đơn hàng", id);
+                dao.insertOrderHistory(id, "Bên mua khiếu nại", "Người mua khiếu nại sản phẩm không đúng miêu tả", dao.getOrderByID(id).getBuyer_id());
                 response.getWriter().print("Bạn vừa khiếu nại đơn hàng. Chờ giải quyết nhé!");
             } else {
                 response.getWriter().print("Bạn đã khiếu nại đơn hàng rồi. Chờ giải quyết!");
@@ -94,13 +95,15 @@ public class reportServ extends HttpServlet {
         } else if (index == 2) {
             dao.insertReport(4, id, u.getId(), true, "Bạn đã hoàn tất mua đơn hàng với mã sản code: " + dao.getOrderByID(id).getCode(), u.getId(), false);
             dao.updateOrderStatus(u.getId(), "Đơn hàng đã hoàn thành", id);
+            dao.insertOrderHistory(id, "Hoàn thành giao dịch", "Người mua xác nhận hoàn thành đơn hàng", dao.getOrderByID(id).getBuyer_id());
             response.getWriter().print("Bạn đã xác thực đơn hàng thành công. Xin cảm ơn!");
 
         } else {
             if (dao.getWallet(u.getId()).getBalance() > 10000) {
                 if (!dao.getOrderByID(id).getStatus().equals("Yêu cầu admin giải quyết")) {
-                    dao.insertReport(1, id, 1, false, "2 bên không tự giải quyết được yêu cầu admin tham gia giải quyết đơn hàng mã code: " + dao.getOrderByID(id).getCode(), u.getId(), false);
+                    dao.insertReport(7, id, 1, false, "2 bên không tự giải quyết được yêu cầu admin tham gia giải quyết đơn hàng mã code: " + dao.getOrderByID(id).getCode(), u.getId(), false);
                     dao.updateOrderStatus(u.getId(), "Yêu cầu admin giải quyết", id);
+                    dao.insertOrderHistory(id, "Chờ Admin giải quyết", "Giao dịch được khiếu nại và chờ Admin giải quyết", dao.getOrderByID(id).getBuyer_id());
                     response.getWriter().print("Yêu cầu admin giải quyết thành công. Chờ giải quyết nhé!");
                 } else {
                     response.getWriter().print("Bạn đã yêu cầu admin giải quyết. Cùng chờ nhé!");

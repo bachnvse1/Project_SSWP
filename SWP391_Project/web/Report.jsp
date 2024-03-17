@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>A
+<html>
     <head>
         <meta charset="ISO-8859-1">
         <title>Quản Lý report</title>
@@ -165,9 +165,9 @@
                     <section class="mb-4">
                         <div class="card">
                             <div class="card-header py-3 row">
-                                <div class="col-sm-3">
+                                <div class="col-sm-5">
                                     <h5 class="mb-0 text-left" id="">
-                                        <strong>QUẢN LÝ BÁO CÁO</strong>
+                                        <strong>QUẢN LÝ KHIẾU NẠI YÊU CẦU XỬ LÝ</strong>
                                     </h5>
                                 </div>
 
@@ -178,41 +178,39 @@
                                     <table class="table table-hover text-nowrap">
                                         <thead>
                                             <tr>
-                                                <th scope="col">Order_ID</th>
-                                                <th scope="col">Type_Report</th>
-                                                <th scope="col">Status</th>
-                                                <th scope="col">Description</th>
-                                                <th scope="col">Created_by</th>                                                
-                                                <th scope="col">Created_at</th>
+                                                <th scope="col">Phân loại</th>
+                                                <th scope="col">Trạng thái</th>
+                                                <th scope="col">Mô tả</th>
+                                                <th scope="col">Tạo bởi</th>                                                
+                                                <th scope="col">Thời gian</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        <c:forEach items="${listR}" var="r" varStatus="loop">
-                                            <c:if test="${r.type_report == 1}">
+
+                                        <c:forEach items="${combo3}" var="c" varStatus="loop">
+                                            <c:if test="${c.getReport().getType_report() == 7}">
                                                 <tr>
-
-                                                    <td>${r.orderID}</td>
-                                                    <td>${r.type_report}</td>
-                                                    <td>${r.status}</td>
-                                                    <td>${r.description}</td>
-                                                    <td>${r.create_by}</td>
-                                                    <td>${r.create_At}</td>
-
+                                                    <td>${c.getReport().getType_report()}</td>
+                                                    <td>${c.getReport().isStatus()}</td>
+                                                    <td>${c.getReport().getDescription()}</td>
+                                                    <td>${c.getReport().getCreate_by()}</td>
+                                                    <td>${c.getReport().getCreate_At()}</td>
+                                                    
                                                     <td>
-                                                        <c:if test="${r.type_report == 1}">
-                                                            <c:choose>
-                                                                <c:when test="${r.status == true}">
-                                                                    <a class="btn btn-success edit-btn" data-toggle="modal" data-target="#confirmationModal_${loop.index}">
-                                                                        Done
-                                                                    </a>
-                                                                </c:when>
-                                                                <c:when test="${r.status != true}">
-                                                                    <a class= "btn btn-danger edit-btn" data-toggle="modal" data-target="#confirmationModal_${loop.index}">
-                                                                        Pending
-                                                                    </a>
-                                                                </c:when>
-                                                            </c:choose>
-                                                        </c:if>
+
+                                                        <c:choose>
+                                                            <c:when test="${c.getReport().isStatus() == true}">
+                                                                <a class="btn btn-success edit-btn" data-toggle="modal" data-target="#confirmationModal_${loop.index}">
+                                                                    Done
+                                                                </a>
+                                                            </c:when>
+                                                            <c:when test="${c.getReport().isStatus() != true}">
+                                                                <a class= "btn btn-danger edit-btn" data-toggle="modal" data-target="#confirmationModal_${loop.index}">
+                                                                    Pending
+                                                                </a>
+                                                            </c:when>
+                                                        </c:choose>
+
                                                     </td>
                                                     <td>
                                                         <span class="info-icon" data-toggle="modal" data-target="#detailModal_${loop.index}">&#8505;</span>
@@ -232,8 +230,8 @@
                                                         </div>
                                                         <div class="modal-footer">
                                                             <div class="modal-footer">
-                                                                <a href="#" class="btn btn-secondary" onclick="updateReportStatus(${r.id}, false);" data-dismiss="modal">No</a>
-                                                                <a href="#" class="btn btn-primary" onclick="updateReportStatus(${r.id}, true);" data-dismiss="modal">Yes</a>
+                                                                <a href="#" class="btn btn-secondary" onclick="updateReportStatus(${c.getReport().getId()}, false);" data-dismiss="modal">No</a>
+                                                                <a href="#" class="btn btn-primary" onclick="updateReportStatus(${c.getReport().getId()}, true);" data-dismiss="modal">Yes</a>
                                                             </div>
                                                         </div>
 
@@ -252,47 +250,47 @@
                                                             </button>
                                                         </div>
                                                         <div class="modal-content3">
-                                                            
-                                                            
+
+
                                                             <!-- Add your input fields for Name, Price, Image, Content here -->
                                                             <div class="form-row">
-                                                                <label for="orderCode">Order code:</label>
-                                                                <input type="text" id="orderCode" value="${r.orderID}" readonly><br>
+                                                                <label for="orderCode">Mã giao dịch:</label>
+                                                                <input type="text" id="orderCode" value="${c.getOrder().getCode()}" readonly><br>
                                                             </div>
 
                                                             <div class="form-row">
-                                                                <label for="productName">Product Name:</label>
-                                                                <input type="text" id="productName" value="" readonly><br>
+                                                                <label for="productName">Tên sản phẩm:</label>
+                                                                <input type="text" id="productName" value="${c.getProduct().getName()}" readonly><br>
                                                             </div>
                                                             <div class="form-row">
-                                                                <label for="price">Price:</label>
-                                                                <input type="text" id="price" value="" readonly><br>
+                                                                <label for="price">Giá:</label>
+                                                                <input type="text" id="price" value="${c.getProduct().getPrice()}" readonly><br>
                                                             </div>
 
-                                                            <label for="productImage">Product Image:</label>
+                                                            <label for="productImage">Hình ảnh:</label>
                                                             <img style="max-width: 150px; max-height: 150px" id="img1" src="" >
                                                             <img style="max-width: 150px; max-height: 150px" id="img2" src="" >
                                                             <img style="max-width: 150px; max-height: 150px" id="img3" src="" >
                                                             <img style="max-width: 150px; max-height: 150px" id="img4" src="" ><br>
                                                             <div class="form-row">
-                                                                <label for="description">Description:</label>
-                                                                <input id="description" value="${r.description}" readonly></input><br>
+                                                                <label for="description">Mô tả:</label>
+                                                                <input id="description" value="${c.getProduct().getDescription()}" readonly></input><br>
                                                             </div>
                                                             <div class="form-row">
-                                                                <label for="hiddenContent">Hidden Content:</label>
-                                                                <input type="text" id="hiddenContent" value=""  readonly><br>
+                                                                <label for="hiddenContent">Nội dung ẩn:</label>
+                                                                <input type="text" id="hiddenContent" value="${c.getProduct().getHidden_content()}" readonly><br>
                                                             </div>
                                                             <div class="form-row">
-                                                                <label for="party">Buyer:</label>                          
-                                                                <input type="text" id="partyBuyer" name="party" value="" readonly><br>
+                                                                <label for="party">Người mua:</label>                          
+                                                                <input type="text" id="partyBuyer" name="party" value="${c.getOrder().getBuyer_id()}" readonly><br>
                                                             </div>
                                                             <div class="form-row">
-                                                                <label for="party">Seller:</label>                          
-                                                                <input type="text" id="partySeller" name="party" value="" readonly><br>
+                                                                <label for="party">Người bán:</label>                          
+                                                                <input type="text" id="partySeller" name="party" value="${c.getOrder().getCreate_by()}" readonly><br>
                                                             </div>
                                                             <div class="form-row">
-                                                                <label for="contactMethod">Contact Method:</label><br>
-                                                                <input type="text" id="contactMethod" value=""  readonly><br>
+                                                                <label for="contactMethod">Thông tin liên hệ:</label><br>
+                                                                <input type="text" id="contactMethod" value="${c.getProduct().getContact_Method()}"  readonly><br>
                                                             </div>
 
                                                         </div>
@@ -351,7 +349,7 @@
                                                                     function updateReportStatus(id, status) {
                                                                         // Gọi servlet với các tham số id và status
                                                                         window.location.href = 'EditReportStatus?id=' + id + '&status=' + status;
-                                                                    }
+                                                                    }                                                                    
         </script>
     </body>
 </html>

@@ -88,13 +88,12 @@ public class AddToCartController extends HttpServlet {
                 for (Product product : cart.getProduct()) {
                     if (!product.is_delete) {
                         out.print("<tr>\n"
-                                + "                                <td>" + product.getId() + "</td>\n"
-                                + "                                <td><img src=\"" + product.getImage1() + "\" alt=\"\" style=\"height: 50px;\"/></td>\n"
                                 + "                                <td>" + product.getName() + "</td>\n"
+                                + "                                <td><img src=\"" + product.getImage1() + "\" alt=\"\" style=\"height: 50px;\"/></td>\n"
                                 + "                                <td>" + product.getPrice() + "</td>\n"
-                                + "                                <td><span class=\"delete-icon\" onclick=\"deleteProduct(" + product.getId() + ")\">&#128465;</span></td>\n"
+                                + "                                <td><span class=\"delete-icon\" onclick=\"deleteProduct(" + product.getId() + ")\"><i class=\"fa fa-trash\"></i></span></td>\n"
                                 + "                                <td><button class=\"add-to-cart-btn\"  data-target=\"cookiesPopup_" + index + "\">\n"
-                                + "                                        <i class=\"fa fa-shopping-cart\"></i>BUY\n"
+                                + "                                        <i class=\"fa fa-shopping-cart\"></i> MUA\n"
                                 + "                                    </button></td>\n"
                                 + "                            </tr>\n"
                                 + "                        <div class=\"container-2\">\n"
@@ -102,7 +101,7 @@ public class AddToCartController extends HttpServlet {
                                 + "                                <button class=\"close\">✖</button>\n"
                                 + "                                <img src=\"https://dichthuatmientrung.com.vn/wp-content/uploads/2022/06/important-sticky-note.jpg\" alt=\"cookies-img\" style=\"width: 50%;\"/>\n"
                                 + "                                <p style=\"color:red; margin-top: 5%;\">We will hold your intermediary funds and wait until you confirm the transaction is completely successful</p>\n"
-                                + "                                <button class=\"button-buy\" data-id=\"" + product.getId() + "\">BUY</button>\n"
+                                + "                                <button class=\"button-buy\" data-id=\"" + product.getId() + "\">MUA</button>\n"
                                 + "                            </div>\n"
                                 + "                        </div>   ");
                         index++;

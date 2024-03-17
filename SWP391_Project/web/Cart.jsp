@@ -5,7 +5,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Shopping Cart</title>
+        <title>Giỏ hàng</title>
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
 
         <!-- Bootstrap -->
@@ -29,6 +29,15 @@
                 background-color: #f4f4f4;
                 margin: 0;
                 padding: 0;
+            }
+
+            .container {
+                max-width: 800px;
+                margin: 50px auto; /* Canh giữa khung lớn */
+                padding: 20px;
+                background-color: #fff; /* Màu nền cho khung lớn */
+                border-radius: 10px; /* Bo tròn góc */
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Hiệu ứng bóng */
             }
 
             h2 {
@@ -124,129 +133,173 @@
             .button-buy:active {
                 transform: scale(0.9);
             }
+            .delete-icon {
+                display: inline-block;
+                width: 30px;
+                height: 30px;
+                background-color: #ff0000; /* Màu đỏ */
+                border-radius: 10px; /* Độ cong của góc */
+                text-align: center;
+                line-height: 30px;
+                cursor: pointer;
+            }
+
+            .delete-icon i {
+                color: #ffffff; /* Màu trắng cho biểu tượng */
+            }
+            .add-to-cart-btn {
+                background-color: #008000; /* Màu nền xanh */
+                color: #ffffff; /* Màu chữ màu trắng */
+                border: none;
+                border-radius: 10px; /* Bo góc */
+                padding: 8px 15px;
+                cursor: pointer;
+                transition: ease-out 0.5s;
+            }
+
+            .add-to-cart-btn:hover {
+                background-color: #725AC1; /* Màu nền khi di chuột qua */
+            }
+
+            .add-to-cart-btn:hover i {
+                color: #ffffff; /* Màu biểu tượng màu trắng khi di chuột qua */
+            }
+
+
         </style>
     </head>
     <body>
 
 
         <div style="max-width: 800px; margin: 0 auto;" >
-            <h2>Shopping Cart</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Id Product</th>
-                        <th>Image</th>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th>Delete</th>
-                        <th>Buy</th>
-                    </tr>
-                </thead>
-                <tbody id="tableCart">
-                    <c:forEach items="${cart.product}" var="x"  varStatus="loop">
-                        <c:if test="${x.is_delete != true}">
-                            <tr>
-                                <td>${x.id}</td>
-                                <td><img src="${x.image1}" alt="" style="height: 50px;"/></td>
-                                <td>${x.name}</td>
-                                <td>${x.price}</td>
-                                <td><span class="delete-icon" onclick="deleteProduct(${x.id})">&#128465;</span></td>
-                                <td><button class="add-to-cart-btn" id="buyButton_${loop.index}" data-target="cookiesPopup_${loop.index}">
-                                        <i class="fa fa-shopping-cart"></i>BUY
-                                    </button></td>
-                            </tr>
-                        <div class="container-2">
-                            <div class="cookiesContent" id="cookiesPopup_${loop.index}">
-                                <button class="close">✖</button>
-                                <img src="https://dichthuatmientrung.com.vn/wp-content/uploads/2022/06/important-sticky-note.jpg" alt="cookies-img" style="width: 50%;"/>
-                                <p style="color:red; margin-top: 5%;">We will hold your intermediary funds and wait until you confirm the transaction is completely successful</p>
-                                <button class="button-buy" data-id="${x.id}">BUY</button>
-                            </div>
-                        </div>   
-                    </c:if>
+            <div class="container">
+                <h2>GIỎ HÀNG</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tên sản phẩm</th>
+                            <th>Hình ảnh</th>
+                            <th>Giá sản phẩm</th>
+                            <th>Xóa</th>
+                            <th>Mua</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableCart">
+                        <c:forEach items="${cart.product}" var="x"  varStatus="loop">
+                            <c:if test="${x.is_delete != true}">
+                                <tr>
+                                    <td>${x.name}</td>
+                                    <td><img src="${x.image1}" alt="" style="height: 50px;"/></td>
+                                    <td>${x.price}</td>
+                                    <td><span class="delete-icon" onclick="deleteProduct(${x.id})"><i class="fa fa-trash"></i></span></td>
+                                    <td><button class="add-to-cart-btn" id="buyButton_${loop.index}" data-target="cookiesPopup_${loop.index}">
+                                            <i class="fa fa-shopping-cart"></i> MUA
+                                        </button></td>
+                                </tr>
+                            <div class="container-2">
+                                <div class="cookiesContent" id="cookiesPopup_${loop.index}">
+                                    <button class="close">✖</button>
+                                    <img src="https://dichthuatmientrung.com.vn/wp-content/uploads/2022/06/important-sticky-note.jpg" alt="cookies-img" style="width: 50%;"/>
+                                    <p style="color:red; margin-top: 5%;">Chúng tôi sẽ giữ tiền trung gian của bạn và đợi cho đến khi bạn xác nhận giao dịch hoàn toàn thành công</p>
+                                    <button class="button-buy" data-id="${x.id}"> Mua</button>
+                                </div>
+                            </div>   
+                        </c:if>
 
-                </c:forEach>
-                </tbody>
-            </table>
+                    </c:forEach>
+                    </tbody>
+                </table>
 
-            <a href="home" class="checkout-btn">Back to home</a>
+                <a href="home" class="checkout-btn">Trở về trang chủ</a>
+            </div>
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
         <script>
 
-                                    // Sử dụng event delegation:
-                                    document.addEventListener('click', function (event) {
-                                        var target = event.target;
+                                        // Sử dụng event delegation:
+                                        document.addEventListener('click', function (event) {
+                                            var target = event.target;
 
-                                        // Kiểm tra xem nút BUY được nhấp hay không
-                                        if (target.classList.contains('add-to-cart-btn')) {
-                                            var targetId = target.getAttribute('data-target');
-                                            var popup = document.getElementById(targetId);
-                                            if (popup) {
-                                                popup.style.display = 'block';
+                                            // Kiểm tra xem nút BUY được nhấp hay không
+                                            if (target.classList.contains('add-to-cart-btn')) {
+                                                var targetId = target.getAttribute('data-target');
+                                                var popup = document.getElementById(targetId);
+                                                if (popup) {
+                                                    popup.style.display = 'block';
+                                                }
                                             }
-                                        }
 
-                                        // Kiểm tra xem nút đóng được nhấp hay không
-                                        if (target.classList.contains('close')) {
-                                            var popup = target.closest('.cookiesContent');
-                                            if (popup) {
-                                                popup.style.display = 'none';
+                                            // Kiểm tra xem nút đóng được nhấp hay không
+                                            if (target.classList.contains('close')) {
+                                                var popup = target.closest('.cookiesContent');
+                                                if (popup) {
+                                                    popup.style.display = 'none';
+                                                }
                                             }
-                                        }
 
-                                        // Kiểm tra xem nút BUY trong popup được nhấp hay không
-                                        if (target.classList.contains('button-buy')) {
-                                            var productId = target.getAttribute('data-id');
+                                            // Kiểm tra xem nút BUY trong popup được nhấp hay không
+                                            if (target.classList.contains('button-buy')) {
+                                                var productId = target.getAttribute('data-id');
+                                                $.ajax({
+                                                    type: 'post',
+                                                    url: 'buy',
+                                                    data: {id: productId},
+                                                    success: function (response) {
+                                                        alert(response);
+                                                        window.location.href = 'Cart.jsp';
+                                                    },
+                                                    error: function () {
+                                                        alert('Đã xảy ra lỗi khi tải trang');
+                                                    }
+                                                });
+                                            }
+                                        });
+
+
+                                        $(".button-buy").click(function () {
+                                            var productId = $(this).data("id");
                                             $.ajax({
                                                 type: 'post',
-                                                url: 'buy',
+                                                url: "buy",
                                                 data: {id: productId},
                                                 success: function (response) {
                                                     alert(response);
-                                                    window.location.href = 'home';
+                                                    window.location.href = "Cart.jsp";
                                                 },
                                                 error: function () {
-                                                    alert('Đã xảy ra lỗi khi tải trang');
+                                                    // Xử lý lỗi nếu có
+                                                    alert("Đã xảy ra lỗi khi tải trang");
+                                                }
+                                            });
+                                        });
+
+                                        document.addEventListener('click', function (event) {
+                                            var target = event.target;
+
+                                            if (target.classList.contains('button-buy')) {
+                                                var productId = target.getAttribute('data-id'); // Lấy ID của sản phẩm từ thuộc tính data-id của nút                                                
+                                                // Xóa sản phẩm khỏi giỏ hàng bằng AJAX
+                                                deleteProduct(productId);
+                                            }
+                                            // Các phần xử lý khác ở đây
+                                        });
+
+                                        function deleteProduct(deleteProductId) {
+
+                                            $.ajax({
+                                                type: "GET", // Hoặc "GET" tùy thuộc vào yêu cầu của bạn
+                                                url: "AddToCartController", // Thay thế bằng URL của servlet của bạn
+                                                data: {deleteProductId: deleteProductId},
+                                                success: function (response) {
+                                                    // Xử lý kết quả từ servlet nếu cần
+                                                    $("#tableCart").html(response);
+                                                },
+                                                error: function (error) {
+                                                    console.log("Error:", error);
                                                 }
                                             });
                                         }
-                                    });
-
-
-                                    $(".button-buy").click(function () {
-                                        var productId = $(this).data("id");
-                                        $.ajax({
-                                            type: 'post',
-                                            url: "buy",
-                                            data: {id: productId},
-                                            success: function (response) {
-                                                alert(response);
-                                                window.location.href = "home";
-                                            },
-                                            error: function () {
-                                                // Xử lý lỗi nếu có
-                                                alert("Đã xảy ra lỗi khi tải trang");
-                                            }
-                                        });
-                                    });
-
-                                    function deleteProduct(deleteProductId) {
-
-                                        $.ajax({
-                                            type: "GET", // Hoặc "GET" tùy thuộc vào yêu cầu của bạn
-                                            url: "AddToCartController", // Thay thế bằng URL của servlet của bạn
-                                            data: {deleteProductId: deleteProductId},
-                                            success: function (response) {
-                                                // Xử lý kết quả từ servlet nếu cần
-                                                $("#tableCart").html(response);
-                                            },
-                                            error: function (error) {
-                                                console.log("Error:", error);
-                                            }
-                                        });
-                                    }
         </script>
     </body>
 </html>

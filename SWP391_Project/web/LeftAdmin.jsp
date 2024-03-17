@@ -12,17 +12,17 @@
         <div class="list-group list-group-flush mx-3 mt-4">
 
             <a href="home" class="list-group-item list-group-item-action py-2 ripple">
-                <i class="fas fa-home fa-fw me-3"></i><span>Home</span>
+                <i class="fas fa-home fa-fw me-3"></i><span>Trang chủ</span>
             </a>
 
             <a href="ManageAccount" class="list-group-item list-group-item-action py-2 ripple">
                 <i class="fas fa-user-circle fa-fw me-3"></i><span>Quản lý tài khoản</span>
             </a>
             <a href="editcategory" class="list-group-item list-group-item-action py-2 ripple">
-                <i class="fas fa-user-circle fa-fw me-3"></i><span>Category</span>
+                <i class="fas fa-user-circle fa-fw me-3"></i><span>Quản lý danh mục</span>
             </a>
             <a href="ReportServlet" class="list-group-item list-group-item-action py-2 ripple">
-                <i class="fas fa-exclamation-triangle fa-fw me-3"></i><span>Manage Report</span>
+                <i class="fas fa-exclamation-triangle fa-fw me-3"></i><span>Quản lý khiếu nại</span>
             </a>
         </div>
     </div>

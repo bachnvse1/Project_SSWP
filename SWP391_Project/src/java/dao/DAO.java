@@ -7,6 +7,7 @@ package dao;
 import Context.DBContext;
 import Entity.Category;
 import Entity.Feedback;
+import Entity.OrderHistory;
 import Entity.Product;
 import Entity.Report;
 import Entity.User;
@@ -200,7 +201,7 @@ public class DAO extends DBContext {
         }
         return list;
     }
-
+    
     public void editReportStatus(int id, boolean status) {
         String sql = "Update report set status=? where id =? ";
         try {
@@ -266,6 +267,48 @@ public class DAO extends DBContext {
 
         }
         return null;
+    }
+    
+    public List<OrderHistory> getOrderHistory(int orderID) {
+        List<OrderHistory> list = new ArrayList<>();
+        String query = """
+                       select * from swp_demo.Order_History
+                       where orderID =?""";
+        
+        try {
+            con = new DBContext().connection; //connect sql
+            ps = con.prepareStatement(query);
+            ps.setInt(1, orderID);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new OrderHistory(rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getInt(5),
+                        rs.getTimestamp(6)));
+            }
+        } catch (Exception e) {
+
+        }
+        return list;
+    }
+    
+        public void insertOrderHistory(int orderID, String order_status, String description, int create_by) {
+        String query = "INSERT INTO order_history (orderID, order_status, description, create_by)\n"
+                + "VALUES (?, ?, ?, ?)";
+        try {
+            con = new DBContext().connection; //connect sql
+            ps = con.prepareStatement(query);
+            ps.setInt(1, orderID);
+            ps.setString(2, order_status);
+            ps.setString(3, description);
+            ps.setInt(4, create_by);
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+
+        }
     }
 
     public User getEmail(String email) {
@@ -1681,10 +1724,11 @@ public class DAO extends DBContext {
 
     public static void main(String[] args) {
         DAO dao = new DAO();
-         List<Report> list = dao.getTopNext3Report(3, 1);
+        /* List<Report> list = dao.getTopNext3Report(3, 1);
          for (Report report : list) {
              System.out.println(report.getId());
         }
-        
+        */
+        dao.insertReport(1, 7, 1, false, "Có khiếu nại từ người mua rằng đơn hàng  không đúng mô tả ", 2, false);
     }
 }
