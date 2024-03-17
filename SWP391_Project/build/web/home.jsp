@@ -151,8 +151,7 @@
 
                                                     <p class="product-category">Danh mục</p>
                                                     <h3 class="product-name"><a href="ProductDetail?id=${p.id}">${p.name}</a></h3>
-                                                    <h4 class="product-price">${p.price} <del
-                                                            class="product-old-price">$990.00</del></h4>
+                                                    <h4 class="product-price"><c:out value="${String.format('%,.0f', p.price)}" /></h4> 
 
                                                     <div class="product-btns">
                                                         <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span

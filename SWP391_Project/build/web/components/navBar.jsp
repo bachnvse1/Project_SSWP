@@ -241,7 +241,7 @@
                                 <li id="notification-Button"><a href="withdrawal"><i class="fa fa-map-marker"></i>
                                         Quan lí thanh toán</a></li>
 
-                                <li><a>${balance} VND</a></li>
+                                <li><a><c:out value="${String.format('%,.0f', balance)}" /> VND</a></li>
                                 <li id="info-Button"><a><i class="fa fa-user-o"></i>${user.display_name}</a></li>
                                         </c:if>
                                         <c:if test="${user == null}">
@@ -489,7 +489,8 @@
                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
                 display: inline-block;
             }
-        </style>
+        </style> 
+        
         <!-- Font Awesome CSS 
          Font Awesome CSS 
         

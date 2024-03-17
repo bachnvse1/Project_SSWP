@@ -48,7 +48,9 @@ public class WithdrawalProcessingServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    
+    
+         protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
    //   processRequest(request, response);
          DAO dao = new DAO();
@@ -57,6 +59,8 @@ public class WithdrawalProcessingServlet extends HttpServlet {
         request.getRequestDispatcher("withdrawalProcessing.jsp").forward(request, response);
     
     } 
+
+    
 
     /** 
      * Handles the HTTP <code>POST</code> method.

@@ -74,7 +74,7 @@ function SignIn()
             capchaRespone: captcha
         },
         success: function (response) {
-            if (response === "success") {
+            if (response === "success" || response ==="admin") {
                 Swal.fire({
                     position: "bot-end",
                     icon: "success",
@@ -83,10 +83,9 @@ function SignIn()
                     timer: 1000
                 });
                 setTimeout(function () {
-                    window.location.href = "home"; // thế cái này chạy tới đâu home, cai nay la dang nhap tk cus ? ho
+                    window.location.href = "home"; 
                 }, 1000);
-            } else if (response === "admin") {
-                window.location.href = "ManageAccount"; // cai nay dnhap tk admin 
+            
             } else if (response === "verify") {
                 window.location.href = "verify.jsp"; // cai nay dnhap tk admin 
             } else {

@@ -21,7 +21,12 @@
 
 
     </head>
-    <body>            
+    <body>       
+        <div class="row">
+        <div class="col-md-2">
+          <jsp:include page="LeftAdmin.jsp"></jsp:include>
+          </div>
+           <div class="col-md-9">
         <table id="drawalProcessing" class="display" style="width:100%">
             <thead>
                 <tr>
@@ -101,7 +106,9 @@
                     </tr>
                 </c:forEach>
             </tbody>
-        </table>      
+        </table> 
+                </div>
+          </div>
         <script>
             $(document).ready(function () {
                 // Khởi tạo DataTable

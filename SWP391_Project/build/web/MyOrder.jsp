@@ -387,10 +387,10 @@
                                 <tr>
                                     <td>${p.getOrder().getCode()}</td>
                                     <td>${p.getProduct().getName()}</td>
-                                    <td>${p.getProduct().getPrice()}</td>
-                                    <td>${p.getOrder().getTotal_received_amount()}</td>
-                                    <td>${p.getOrder().getTotal_paid_amount()}</td>
-                                    <td>${p.getOrder().getIntermediary_fee()}</td>
+                                    <td><c:out value="${String.format('%,.0f', p.getProduct().getPrice())}" /></td>
+                                    <td><c:out value="${String.format('%,.0f',p.getOrder().getTotal_received_amount())}" /></td>
+                                    <td><c:out value="${String.format('%,.0f',p.getOrder().getTotal_paid_amount())}" /></td>
+                                    <td><c:out value="${String.format('%,.0f', p.getOrder().getIntermediary_fee())}" /></td>
                                     <td>${p.getOrder().getStatus()}</td>
                                     <td>${p.getProduct().isTransaction_fee() ? "Bên Bán" : "Bên Mua"}</td>
                                     <td>
@@ -442,10 +442,10 @@
                                 <tr>
                                     <td>${c.getOrder().getCode()}</td>
                                     <td>${c.getProduct().getName()}</td>
-                                    <td>${c.getProduct().getPrice()}</td>
-                                    <td>${c.getOrder().getTotal_received_amount()}</td>
-                                    <td>${c.getOrder().getTotal_paid_amount()}</td>
-                                    <td>${c.getOrder().getIntermediary_fee()}</td>
+                                     <td><c:out value="${String.format('%,.0f', c.getProduct().getPrice())}" /></td>
+                                    <td><c:out value="${String.format('%,.0f',c.getOrder().getTotal_received_amount())}" /></td>
+                                    <td><c:out value="${String.format('%,.0f',c.getOrder().getTotal_paid_amount())}" /></td>
+                                    <td><c:out value="${String.format('%,.0f', c.getOrder().getIntermediary_fee())}" /></td>
                                     <td>${c.getOrder().getStatus()}</td>
                                     <td>${c.getProduct().isTransaction_fee() ? "Người bán" : "Người mua"}</td>
                                     <td>
@@ -493,10 +493,10 @@
                                 <tr>
                                     <td>${o.getOrder().getCode()}</td>
                                     <td>${o.getProduct().getName()}</td>
-                                    <td>${o.getProduct().getPrice()}</td>
-                                    <td>${o.getOrder().getTotal_received_amount()}</td>
-                                    <td>${o.getOrder().getTotal_paid_amount()}</td>
-                                    <td>${o.getOrder().getIntermediary_fee()}</td>
+                                      <td><c:out value="${String.format('%,.0f', o.getProduct().getPrice())}" /></td>
+                                    <td><c:out value="${String.format('%,.0f',o.getOrder().getTotal_received_amount())}" /></td>
+                                    <td><c:out value="${String.format('%,.0f',o.getOrder().getTotal_paid_amount())}" /></td>
+                                    <td><c:out value="${String.format('%,.0f', o.getOrder().getIntermediary_fee())}" /></td>
                                     <td>${o.getOrder().getStatus()}</td>
                                     <td>${o.getProduct().isTransaction_fee() ? "Người bán" : "Người mua"}</td>
                                     <td>

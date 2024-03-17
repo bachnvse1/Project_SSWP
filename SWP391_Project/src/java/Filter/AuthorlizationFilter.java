@@ -12,12 +12,10 @@ import java.io.StringWriter;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.FilterConfig;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 /**
@@ -99,8 +97,8 @@ public class AuthorlizationFilter implements Filter {
      * @exception ServletException if a servlet error occurs
      */
     private HttpServletRequest httpRequest;
-    private static final String[] loginRequiredURLs = {"/Cart.jsp", "/Feedback", "/manageMyOrder", "/editprofile.jsp", "/notification"};
-    private static final String[] adminRequiredURLs = {"/ManageAccount", "/editcategory", "/ReportServlet"};
+    private static final String[] loginRequiredURLs = {"/Cart.jsp", "/Feedback", "/manageMyOrder", "/EditProfile", "/notification", "/withdrawal","/ChangePassword"};
+    private static final String[] adminRequiredURLs = {"/ManageAccount", "/editcategory", "/ReportServlet", "/RevenueAdmin", "/withdrawalprocessing"};
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
@@ -113,36 +111,33 @@ public class AuthorlizationFilter implements Filter {
 
         doBeforeProcessing(request, response);
         httpRequest = (HttpServletRequest) request;
-//       HttpServletResponse  httpResponse = (HttpServletResponse) response;
-//        HttpSession session = httpRequest.getSession();        
-//
-//        User u = (User) session.getAttribute("user");
-//        boolean isLoggedIn = (session != null && u != null);
-//        String url = httpRequest.getServletPath();
-//        if (!isLoggedIn) {
-//            if (isLoginRequired() || isAdminRequired()) {
-//                httpRequest.getRequestDispatcher("/login").forward(request, response);
-//            } //else if (url.endsWith(".jsp")) {              
-//             //  httpResponse.sendRedirect("/home");
-//         //  }
-//        } else if (isLoggedIn) {
-//            if (!u.isIs_Admin() && isAdminRequired()) {
-//                
-//                httpRequest.getRequestDispatcher("/error-404.html").forward(request, response);
-//           }  //else if (url.endsWith(".jsp")) {  
-//              // session.removeAttribute("user");
-//              //  httpRequest.getRequestDispatcher("/home").forward(request, response);
-//           //}
-//        }
+        HttpSession session = httpRequest.getSession();        
+
+        User u = (User) session.getAttribute("user");
+        
+        String url = httpRequest.getServletPath();
+        if (u != null) {
+             if (!u.isIs_Admin() && isAdminRequired()) {               
+                httpRequest.getRequestDispatcher("/error-404.html").forward(request, response);
+                } else if (url.endsWith(".jsp")) {  
+             
+                httpRequest.getRequestDispatcher("/home").forward(request, response);
+           }
+         } else {
+            if (isLoginRequired() || isAdminRequired()) {
+                httpRequest.getRequestDispatcher("/login").forward(request, response);
+            } else if (url.endsWith(".jsp")) {              
+               httpRequest.getRequestDispatcher("/home").forward(request, response);
+           }
+       }
         Throwable problem = null;
         try {
             chain.doFilter(request, response);
-        } catch (Throwable t) {
+        } catch (ServletException | IOException t) {
             // If an exception is thrown somewhere down the filter chain,
             // we still want to execute our after processing, and then
             // rethrow the problem after that.
             problem = t;
-            t.printStackTrace();
         }
 
         doAfterProcessing(request, response);
@@ -150,11 +145,11 @@ public class AuthorlizationFilter implements Filter {
         // If there was a problem, we want to rethrow it if it is
         // a known type, otherwise log it.
         if (problem != null) {
-            if (problem instanceof ServletException) {
-                throw (ServletException) problem;
+            if (problem instanceof ServletException servletException) {
+                throw servletException;
             }
-            if (problem instanceof IOException) {
-                throw (IOException) problem;
+            if (problem instanceof IOException iOException) {
+                throw iOException;
             }
             sendProcessingError(problem, response);
         }
