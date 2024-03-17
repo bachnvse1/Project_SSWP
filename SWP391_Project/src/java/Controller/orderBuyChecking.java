@@ -143,7 +143,7 @@ public class orderBuyChecking extends HttpServlet {
                 orderInfo.put("Intermediary_fee", intermediateOrder.getIntermediary_fee() + " VND");
                 orderInfo.put("isTransaction_fee", s);
                 orderInfo.put("totalPaid", intermediateOrder.getTotal_paid_amount() + " VND");
-                orderInfo.put("HD", "hihi");
+                
                 jsonList.add(orderInfo);
             }
         }
@@ -166,47 +166,42 @@ public class orderBuyChecking extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("application/json");
+        List<Map<String, String>> jsonList = new ArrayList<>();
         PrintWriter out = response.getWriter();
         DAO dao = new DAO();
         HttpSession session = request.getSession();
-        User u = (User) session.getAttribute("user");
-        List<intermediateOrders> listOrderBuy = dao.getOrderBuy(u.getId());
-        List<ProductOrderPair> productOrderPairs = new ArrayList<>();
-        for (intermediateOrders o : listOrderBuy) {
-            Product product = dao.getProductByID(o.getProductId());
-            productOrderPairs.add(new ProductOrderPair(product, o));
+        User user = (User) session.getAttribute("user");
+        List<intermediateOrders> listOrderBuy = dao.getOrderBuy(user.getId());
+        Gson gson = new Gson();
 
-        }
-        String s = "";
-        for (ProductOrderPair o : productOrderPairs) {
-            if (o.getOrder().getStatus().equals("Đơn hàng đã hoàn thành")) {
-                if (o.getProduct().isTransaction_fee() == true) {
-                    s = "Người bán";
-                } else {
-                    s = "Người mua";
-                }
-                out.print("\n"
-                        + "<tr class=\"cell-1\">\n"
-                        + "                                                    <td>" + o.getOrder().getCode() + "</td>\n"
-                        + "                                                    <td>" + o.getOrder().getStatus() + "</td>\n"
-                        + "                                                    <td>" + dao.getUserById(o.getProduct().getCreate_by()).getDisplay_name() + "</td>\n"
-                        + "                                                    <td>" + dao.getCategoryById(o.getProduct().getCategoryID()).getName() + "</td>\n"
-                        + "                                                    <td>" + o.getProduct().getContact_Method() + "</td>\n"
-                        + "                                                    <td>" + o.getProduct().getPrice() + " VND" + "</td>\n"
-                        + "                                                    <td>" + o.getOrder().getIntermediary_fee() + " VND" + "</td>\n"
-                        + "                                                    <td><span class=\"badge badge-success\">" + s + "</span></td>\n"
-                        + "                                                    <td>" + o.getOrder().getTotal_paid_amount() + " VND" + "</td>\n"
-                        + "                                                    <td>\n"
-                        + "  <div class=\"buttonContainer\">\n"
-                        + "    <a class=\"reportButton\" data-orderid=\"" + o.getOrder().getId() + "\" data-ordercode=\"" + o.getOrder().getCode() + "\" data-productname=\"" + o.getProduct().getName() + "\" data-price = \"" + o.getProduct().getPrice() + "\" data-inter = \"" + o.getOrder().getIntermediary_fee() + "\" data-party = \"" + s + "\" data-totalpaids = \"" + o.getOrder().getTotal_paid_amount() + "\" data-proimg = \"" + o.getProduct().getImage1() + "\" data-des = \"" + o.getProduct().getDescription() + "\" data-hiddeninfo = \"" + o.getProduct().getHidden_content() + "\" data-contact = \"" + o.getProduct().getContact_Method() + "\" data-status1 = \"" + o.getOrder().getStatus() + "\" data-buyers = \"" + dao.getUserById(o.getProduct().getCreate_by()).getDisplay_name() + "\" data-create = \"" + o.getProduct().getCreate_At() + "\">\n"
-                        + "      <i style=\"color: #0061f2\" class=\"fa fa-info-circle\"></i>\n"
-                        + "    </a>\n"
-                        + "  </div>\n"
-                        + "</td>\n"
-                        + " </tr>");
+        for (intermediateOrders intermediateOrder : listOrderBuy) {
+            Product product = dao.getProductByID(intermediateOrder.getProductId());
+
+            if (intermediateOrder.getStatus().equals("Đơn hàng đã hoàn thành")) {
+
+                ProductOrderPair productOrderPair = new ProductOrderPair(product, intermediateOrder);
+                String s = product.isTransaction_fee() ? "Người bán" : "Người mua";
+
+                Map<String, String> orderInfo = new HashMap<>();
+                orderInfo.put("orderCode", productOrderPair.getOrder().getCode());
+                orderInfo.put("orderStatus", productOrderPair.getOrder().getStatus());
+                orderInfo.put("sellerName", dao.getUserById(product.getCreate_by()).getDisplay_name());
+                orderInfo.put("categoryName", dao.getCategoryById(product.getCategoryID()).getName());
+                orderInfo.put("contactMethod", product.getContact_Method());
+                orderInfo.put("Price", product.getPrice() + " VND");
+                orderInfo.put("Intermediary_fee", intermediateOrder.getIntermediary_fee() + " VND");
+                orderInfo.put("isTransaction_fee", s);
+                orderInfo.put("totalPaid", intermediateOrder.getTotal_paid_amount() + " VND");
+                
+                jsonList.add(orderInfo);
             }
         }
+
+        String jsonData = gson.toJson(jsonList);
+        out.print(jsonData);
+        out.flush();
+
 
     }
 

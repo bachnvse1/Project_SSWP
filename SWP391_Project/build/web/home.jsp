@@ -149,7 +149,7 @@
                                                 </div>
                                                 <div class="product-body">
 
-                                                    <p class="product-category">Category</p>
+                                                    <p class="product-category">Danh mục</p>
                                                     <h3 class="product-name"><a href="ProductDetail?id=${p.id}">${p.name}</a></h3>
                                                     <h4 class="product-price">${p.price} <del
                                                             class="product-old-price">$990.00</del></h4>
@@ -166,11 +166,11 @@
                                                 <div class="add-to-cart">
                                                     <!-- Thêm một ID động cho nút "Thêm vào giỏ hàng" -->
                                                     <button class="add-to-cart-btn" id="buyButton_${loop.index}" data-target="cookiesPopup_${loop.index}">
-                                                        <i class="fa fa-shopping-cart"></i>BUY
+                                                        <i class="fa fa-shopping-cart"></i>Mua
                                                     </button>
                                                     <!-- Thêm nút "Buy" -->
                                                     <button class="add-to-cart-btn" onclick="addToCart(${p.id})">
-                                                        <i class="fa fa-shopping-cart"></i>CART
+                                                        <i class="fa fa-shopping-cart"></i>Thêm
                                                    
                                                         
                                                 </div>
@@ -179,7 +179,8 @@
                                                 <div class="cookiesContent" id="cookiesPopup_${loop.index}">
                                                     <button class="close">✖</button>
                                                     <img src="https://dichthuatmientrung.com.vn/wp-content/uploads/2022/06/important-sticky-note.jpg" alt="cookies-img" style="width: 50%;"/>
-                                                    <p style="color:red; margin-top: 5%;">We will hold your intermediary funds and wait until you confirm the transaction is completely successful</p>
+                                                    <p style="color:red; margin-top: 5%;">Bạn sẽ phải trả tổng số tiền là: ${dao.getOrderByProductID(p.id).getTotal_paid_amount()} cho sản phẩm này!</p>
+                                                    <p style="color:red;">Bấm mua nếu bạn chấp nhận hệ thống giữ tiền trung gian !!!</p>
                                                     <button class="button-buy" data-id="${p.id}">BUY</button>
                                                 </div>
                                             </div>               

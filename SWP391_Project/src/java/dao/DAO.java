@@ -1716,7 +1716,10 @@ public class DAO extends DBContext {
 
     public static void main(String[] args) {
         DAO dao = new DAO();
-         System.out.println(dao.getOrderByCode("SP0026").getId());
+       List<Report> list = dao.getTopNext3Report(3, 0);
+        for (Report report : list) {
+            System.out.println(report.getDescription());
+        }
         
     }
 }

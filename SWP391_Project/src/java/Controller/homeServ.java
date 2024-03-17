@@ -99,7 +99,7 @@ public class homeServ extends HttpServlet {
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("user");
         if (u != null) {
-            List<Report> listReport = dao.getTopNext3Report(u.getId(), 1);
+            List<Report> listReport = dao.getTopNext3Report(u.getId(), 0);
             request.setAttribute("listR", listReport);
             session.setAttribute("balance", dao.getWallet(u.getId()).getBalance());
         }

@@ -94,7 +94,14 @@ public class buyServ extends HttpServlet {
         String id = request.getParameter("id");
         int idx = Integer.parseInt(id);
         Product p = dao.getProductByID(idx);
-        if (dao.getWallet(u.getId()).getBalance() < p.getPrice()) {
+        intermediateOrders o = dao.getOrderByProductID(p.id);
+        double price = 0;
+        if(p.Transaction_fee == true) {
+            price = p.getPrice();
+        } else {
+            price = p.getPrice() + o.getIntermediary_fee();
+        }
+        if (dao.getWallet(u.getId()).getBalance() < price) {
             response.getWriter().print("Số dư của bạn không đủ để mua sản phẩm!");
             return;
         }
@@ -114,7 +121,7 @@ public class buyServ extends HttpServlet {
                     transactionQueue.addTransaction(new Transaction(transactionId, u.getId(), idx, amount));
                     dao.updateOrder(u.id, "Người mua đang kiểm tra đơn hàng", idx);
                     
-                    dao.insertReport(2, dao.getOrderByProductID(idx).getId(), u.getId(), true, "Bạn đã thanh toán đơn hàng có mã sản phẩm là: " + dao.getOrderByProductID(idx).getCode() + ". Hãy kiểm tra thông tin đơn hàng!", u.getId(), false);
+                    dao.insertReport(2, dao.getOrderByProductID(idx).getId(), u.getId(), true, "Bạn đã thanh toán đơn hàng có mã sản phẩm là: " + dao.getOrderByProductID(idx).getTotal_paid_amount() + ". Hãy kiểm tra thông tin đơn hàng!", u.getId(), false);
                     
                     response.getWriter().print("Bạn vừa mua sản phẩm, hãy kiểm tra đơn hàng!");
                     new Thread(() -> transactionQueue.processTransactions()).start();

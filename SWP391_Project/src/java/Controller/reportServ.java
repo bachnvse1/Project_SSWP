@@ -107,6 +107,7 @@ public class reportServ extends HttpServlet {
                     if (!dao.getOrderByID(id).getStatus().equals("Đơn hàng đã hoàn thành")) {
                         dao.insertReport(7, id, 1, false, "2 bên không tự giải quyết được yêu cầu admin tham gia giải quyết đơn hàng mã code: " + dao.getOrderByID(id).getCode(), u.getId(), false);
                         dao.updateOrderStatus(u.getId(), "Yêu cầu admin giải quyết", id);
+                        
                         response.getWriter().print("Yêu cầu admin giải quyết thành công. Chờ giải quyết nhé!");
                     } else {
                         response.getWriter().print("Đơn hàng đã hoàn thành không thể khiếu nại");

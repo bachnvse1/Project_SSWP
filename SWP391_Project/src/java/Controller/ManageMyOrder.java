@@ -107,7 +107,7 @@ public class ManageMyOrder extends HttpServlet {
         request.setAttribute("productOrderPairs", productOrderPairsAll);
         request.setAttribute("productOrderPairsComplete", productOrderPairsComplete);
         request.setAttribute("productOrderPairsProcess", productOrderPairsProcess);
-        List<Report> listReport = dao.getTopNext3Report(u.getId(), 1);
+        List<Report> listReport = dao.getTopNext3Report(u.getId(), 0);
         request.setAttribute("listR", listReport);
         request.getRequestDispatcher("MyOrder.jsp").forward(request, response);
     }

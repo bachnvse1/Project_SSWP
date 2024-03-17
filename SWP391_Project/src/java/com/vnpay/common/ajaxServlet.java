@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package com.vnpay.common;
+
 import Entity.User;
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -38,20 +39,34 @@ public class ajaxServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession sesion = req.getSession();
-        User u = (User) sesion.getAttribute("user");
-        if(u == null) {
+        HttpSession session = req.getSession();
+        User u = (User) session.getAttribute("user");
+        if (u == null) {
             resp.sendRedirect("home");
         }
+
         String vnp_Version = "2.1.0";
         String vnp_Command = "pay";
         String orderType = "other";
         String xAmount = req.getParameter("amount");
+        long amount = 0;
         String des = req.getParameter("description");
-        xAmount = xAmount.substring(0, xAmount.length() - 2);
-        xAmount = xAmount.replace(".", "");
-        HttpSession session = req.getSession();
-        long amount = Integer.parseInt(xAmount) * 10000;
+        try {
+            int amountx = Integer.parseInt(xAmount);
+            if (amountx < 100000) {
+
+                xAmount = xAmount.substring(0, xAmount.length() - 2);
+                xAmount = xAmount.replace(".", "");
+                amount = Integer.parseInt(xAmount) * 10000 + 300000;
+            } else {
+                xAmount = xAmount.substring(0, xAmount.length() - 2);
+                xAmount = xAmount.replace(".", "");
+                amount = Integer.parseInt(xAmount) * 10000;
+            }
+        } catch (Exception e) {
+            System.out.println("Error");
+        }
+
         //long amount = 10000 * 100;
         //String bankCode = req.getParameter("deposit_method");
         String vnp_TxnRef = Config.getRandomNumber(8);
@@ -77,7 +92,7 @@ public class ajaxServlet extends HttpServlet {
 //        }
 //        else {
         vnp_Params.put("vnp_OrderInfo", des);
-        if(des.equals("")){
+        if (des.equals("")) {
             vnp_Params.put("vnp_OrderInfo", "Thanh toan don hang: " + vnp_TxnRef);
         }
 //          }
@@ -98,7 +113,7 @@ public class ajaxServlet extends HttpServlet {
         vnp_Params.put("vnp_CreateDate", vnp_CreateDate);
 
         SimpleDateFormat formatter2 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        
+
         String vnp_time = formatter2.format(cld.getTime());
         Timestamp createdTimestamp = Timestamp.valueOf(vnp_time);
 

@@ -138,7 +138,7 @@ public class vnpayReturnServ extends HttpServlet {
                     if (transactionId != -1) {
                         transactionQueue.addTransaction(new Transaction(transactionId, u.getId(), request.getParameter("vnp_TxnRef"), amount));
                         transactionQueue.processTransactionsvnpay();
-                        dao.insertReport(2, vnpayDao.getStatus(request.getParameter("vnp_TxnRef")).getID(), u.getId(), true, "Bạn đã nạp tiền thành công vào lúc: " + dateTime + " với số tiền là: " + amount + ". Hãy kiểm tra số dư tài khoản!", u.getId(), false);
+                        dao.insertReport(5, vnpayDao.getStatus(request.getParameter("vnp_TxnRef")).getID(), u.getId(), true, "Bạn đã nạp tiền thành công vào lúc: " + dateTime + " với số tiền là: " + amount + ". Hãy kiểm tra số dư tài khoản!", u.getId(), false);
                         session.setAttribute("balance", w.getBalance());
                         request.setAttribute("transactionCode", vnpay.getPayment_Code());
                         request.setAttribute("money", amount);

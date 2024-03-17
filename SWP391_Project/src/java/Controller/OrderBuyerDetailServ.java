@@ -70,6 +70,7 @@ public class OrderBuyerDetailServ extends HttpServlet {
         } else {
             s = "Người mua";
         }
+        
         response.getWriter().print("<h2 style=\"text-align: center;\">Chi tiết đơn hàng</h2>\n"
                 + "                            <button class=\"requestAdmin\" type=\"submit\" style=\"float: right; color: white; background-color: #007bff; border: 1px solid; padding: 10px; border-radius: 3px; \" data-orderi=\"3\">Yêu cầu admin tham gia giải quyết</button>\n"
                 + "                            <input type=\"text\" id=\"order_id\" name=\"order_id\" readonly=\"\" hidden=\"\" value=\"" + o.getId() + "\"><br>\n"
@@ -102,6 +103,7 @@ public class OrderBuyerDetailServ extends HttpServlet {
                 + "                            <button type=\"submit\" class=\"complainOrder\" style=\"float: left; color: white; background-color: red; border: 1px solid red; padding: 10px; border-radius: 3px;\" data-orderi=\"1\">Khiếu nại đơn hàng không đúng mô tả</button>\n"
                 + "                            <button type=\"submit\" class=\"confirmOrder\" style=\"float: right; color: white; background-color: #4CAF50; border: 1px solid #4CAF50; padding: 10px; border-radius: 3px;\" data-orderi=\"2\">Xác nhận đơn hàng đúng mô tả</button>");
 
+        
         // HttpSession session = request.getSession();
         //  User u = (User) session.getAttribute("user");
     }
