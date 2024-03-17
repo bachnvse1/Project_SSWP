@@ -137,9 +137,10 @@
                             <ul class="product-links">
                                 <h4>Contact:</h4>
                                 <p>  ${ProductDetails.contact_Method}</p>
-                                <h4>Bên chịu phí: người mua / người bán</h4>
+                                <h4>Bên chịu phí: </h4>
                                 <c:if test="${ProductDetails.transaction_fee eq true}">
                                     <p>Người bán</p>
+                                    <p>${ProductDetails.username}</p>
                                 </c:if>
                                 <c:if test="${ProductDetails.transaction_fee eq false}">
                                     <p>Người mua</p>

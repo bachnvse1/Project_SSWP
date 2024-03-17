@@ -60,12 +60,42 @@ public class Feedback extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        HttpSession session = request.getSession();     
-        User u = (User) session.getAttribute("user");
-        DAO fdao = new DAO();
-        ArrayList<Entity.Feedback> listF =fdao.getFeedbackList();
-        request.setAttribute("listF", listF);
-        request.getRequestDispatcher("Feedback.jsp").forward(request, response);
+//        HttpSession session = request.getSession();     
+//        User u = (User) session.getAttribute("user");
+//        DAO fdao = new DAO();
+//        
+//        ArrayList<Entity.Feedback> listF =fdao.getFeedbackList();
+//        request.setAttribute("listF", listF);
+//        request.getRequestDispatcher("Feedback.jsp").forward(request, response);
+ HttpSession session = request.getSession();
+    User u = (User) session.getAttribute("user");
+    DAO fdao = new DAO();
+    
+    // Set the number of items per page
+    int itemsPerPage = 5;
+    
+    // Get the current page from the request parameter
+    int currentPage = 1;
+    String pageParam = request.getParameter("page");
+    if (pageParam != null) {
+        currentPage = Integer.parseInt(pageParam);
+    }
+    
+    // Get the total number of feedback items
+    int totalFeedback = fdao.getTotalFeedbackCount();
+    
+    // Calculate the total number of pages
+    int totalPages = (int) Math.ceil((double) totalFeedback / itemsPerPage);
+    
+    // Get the feedback list for the current page
+    ArrayList<Entity.Feedback> listF = fdao.getFeedbackList(currentPage, itemsPerPage);
+    
+    // Set attributes for JSP
+    request.setAttribute("listF", listF);
+    request.setAttribute("currentPage", currentPage);
+    request.setAttribute("totalPages", totalPages);
+    
+    request.getRequestDispatcher("Feedback.jsp").forward(request, response);
     } 
 
     /** 

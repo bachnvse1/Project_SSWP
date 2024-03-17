@@ -393,8 +393,9 @@ public class DAO extends DBContext {
 
         }
     }
-public void deleteOrder(int id, boolean is_delete){
-String query = "Update intermediate_Orders set is_delete = ? where id =? ";
+
+    public void deleteOrder(int id, boolean is_delete) {
+        String query = "Update intermediate_Orders set is_delete = ? where id =? ";
         try {
             con = new DBContext().connection; //connect sql
             ps = con.prepareStatement(query);
@@ -404,19 +405,20 @@ String query = "Update intermediate_Orders set is_delete = ? where id =? ";
         } catch (Exception e) {
 
         }
-}
+    }
+
     public void insertWallet(double balance, int uid) {
         String query = "INSERT INTO Wallet (balance, create_by, updated_by)\n"
                 + "VALUES (?, ?, ?)";
         try {
-             con = new DBContext().connection; //connect sql
+            con = new DBContext().connection; //connect sql
             ps = con.prepareStatement(query);
             ps.setDouble(1, balance);
             ps.setInt(2, uid);
             ps.setInt(3, uid);
             ps.executeUpdate();
         } catch (Exception e) {
-            
+
         }
     }
 
@@ -1157,8 +1159,10 @@ String query = "Update intermediate_Orders set is_delete = ? where id =? ";
 
     public Product getProductDetailsById(int id) {
         Product p = null;
-        String sql = "SELECT * FROM swp_demo.product\n"
-                + "where id=?;";
+        String sql = "SELECT p.*, u.username\n"
+                + "FROM swp_demo.product p\n"
+                + "JOIN swp_demo.users u ON p.create_by = u.id\n"
+                + "WHERE p.id = ?;";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, id);
@@ -1180,7 +1184,7 @@ String query = "Update intermediate_Orders set is_delete = ? where id =? ";
                         rs.getTimestamp(14),
                         rs.getInt(15),
                         rs.getTimestamp(16),
-                        rs.getBoolean(17)));
+                        rs.getBoolean(17), rs.getString(18)));
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -1188,21 +1192,208 @@ String query = "Update intermediate_Orders set is_delete = ? where id =? ";
         return p;
     }
 
-    public ArrayList<Feedback> getFeedbackList() {
+    public List<Product> getAllProductByCategory(int categoryId) {
+         List<Product> list = new ArrayList<>();
+        String sql = "SELECT * FROM swp_demo.product where is_delete = false AND categoryID = ?";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, categoryId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Product(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getDouble(3),
+                        rs.getInt(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getBoolean(10),
+                        rs.getString(11),
+                        rs.getInt(12),
+                        rs.getString(13),
+                        rs.getTimestamp(14),
+                        rs.getInt(15),
+                        rs.getTimestamp(16),
+                        rs.getBoolean(17)));
+            }
+
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return list;
+    }
+
+    public HashMap<Integer, Double> getDataForChart(int user_id, int year) {
+        try {
+            HashMap<Integer, Double> map = new HashMap<>();
+
+            for (int i = 1; i <= 12; i++) {
+                String sqlCount = "SELECT COUNT(id) FROM swp_demo.product where  MONTH(create_at) = ?";
+                PreparedStatement countStatement = connection.prepareStatement(sqlCount);
+                 countStatement.setInt(1, i);
+                
+                ResultSet countResultSet = countStatement.executeQuery();
+                countResultSet.next(); // Move to the first row
+                int productCount = countResultSet.getInt(1);
+
+                String sql = "SELECT "
+                        + "    io.create_by AS user_id, "
+                        + "    u.is_admin, "
+                        + "    (CASE WHEN u.is_admin = 1 THEN 0.5 * ? ELSE 0 END )+ SUM(io.total_received_amount) AS total_received_amount_by_user "
+                        + "FROM "
+                        + "    swp_demo.intermediate_orders io "
+                        + "JOIN "
+                        + "    swp_demo.users u ON io.create_by = u.id "
+                        + "WHERE "
+                        + "    YEAR(io.create_at) = ? "
+                        + "    AND io.create_by = ? "
+                        + "    AND io.status = 'complete' "
+                        + "    AND MONTH(io.create_at) = ? "
+                        + "GROUP BY "
+                        + "    io.create_by, u.is_admin";
+
+                PreparedStatement st = connection.prepareStatement(sql);
+                st.setDouble(1, productCount);
+                st.setInt(2, year);
+                st.setInt(3, user_id);
+                st.setInt(4, i);
+                ResultSet rs = st.executeQuery();
+
+                if (rs.next()) {
+                    map.put(i, rs.getDouble("total_received_amount_by_user"));
+                } else {
+                    map.put(i, 0.0);
+                }
+
+                // Close result set and statements
+                rs.close();
+                st.close();
+                countResultSet.close();
+                countStatement.close();
+            }
+
+            return map;
+        } catch (SQLException e) {
+            System.out.println(e + "hihi");
+        }
+        return null;
+    }
+
+    public double totalMoneyDay(int day, int user_id) {
+        String sql = "SELECT SUM(total_received_amount) FROM swp_demo.intermediate_orders WHERE DAYOFWEEK(create_at) = ? AND create_by = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+
+            st.setInt(1, day);
+            st.setInt(2, user_id);
+            ResultSet rs = st.executeQuery();
+
+            if (rs.next()) {
+                return rs.getDouble(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // It's important to log or handle exceptions appropriately
+        }
+        return 0;
+    }
+
+    public int getQuantityAll(int user_id) {
+        try {
+            String sql = "SELECT COUNT(id) FROM swp_demo.product WHERE create_by = ?;";
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, user_id);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+
+    public double getRevenueData(int user_id) {
+        try {
+            String sql = "SELECT io.create_by AS user_id,\n"
+                    + "    u.is_admin,\n"
+                    + "    (CASE WHEN u.is_admin = 1 THEN 0.5 * (SELECT COUNT(id) FROM swp_demo.product) ELSE 0 END )+ SUM(io.total_received_amount) AS total_received_amount_by_user\n"
+                    + "FROM \n"
+                    + "    swp_demo.intermediate_orders io\n"
+                    + "JOIN \n"
+                    + "    swp_demo.users u ON io.create_by = u.id\n"
+                    + "WHERE \n"
+                    + "    io.create_by = ?\n"
+                    + "    AND io.status = 'complete'\n"
+                    + "    AND YEAR(io.create_at) = YEAR(CURDATE())\n"
+                    + "GROUP BY \n"
+                    + "    io.create_by, u.is_admin;";
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, user_id);
+            ResultSet rs = st.executeQuery();
+
+            if (rs.next()) {
+                // Thay đổi ở đây, vì cột total_received_amount_by_user được đặt tên trong truy vấn SQL
+                return rs.getDouble("total_received_amount_by_user");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+
+//    public ArrayList<Feedback> getFeedbackList() {
+//        ArrayList<Feedback> list = new ArrayList<>();
+//        try {
+//            
+//            String sql = "SELECT f.*, u.username FROM swp_demo.feedback f JOIN swp_demo.users u ON f.user_id = u.id ORDER BY f.id DESC";
+//
+//            PreparedStatement st = connection.prepareStatement(sql);
+////            st.setInt(1, userId);
+//            ResultSet rs = st.executeQuery();
+//            while (true) {
+//                if (rs.next()) {
+//                    list.add(new Feedback(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getTimestamp(4), rs.getInt(5), rs.getInt(6), rs.getString(7)));
+//                } else {
+//                    break;
+//                }
+//            }
+//        } catch (SQLException e) {
+//            System.out.println(e);
+//        }
+//        return list;
+//    }
+    public int getTotalFeedbackCount() {
+        int count = 0;
+        try {
+            String sql = "SELECT COUNT(*) FROM swp_demo.feedback";
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return count;
+    }
+
+    public ArrayList<Feedback> getFeedbackList(int currentPage, int itemsPerPage) {
         ArrayList<Feedback> list = new ArrayList<>();
         try {
-            
-            String sql = "SELECT f.*, u.username FROM swp_demo.feedback f JOIN swp_demo.users u ON f.user_id = u.id ORDER BY f.id DESC";
+            // Calculate the offset for pagination
+            int offset = (currentPage - 1) * itemsPerPage;
 
+            String sql = "SELECT f.*, u.username FROM swp_demo.feedback f JOIN swp_demo.users u ON f.user_id = u.id ORDER BY f.id DESC LIMIT ?, ?";
             PreparedStatement st = connection.prepareStatement(sql);
-//            st.setInt(1, userId);
+            st.setInt(1, offset);
+            st.setInt(2, itemsPerPage);
+
             ResultSet rs = st.executeQuery();
-            while (true) {
-                if (rs.next()) {
-                    list.add(new Feedback(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getTimestamp(4), rs.getInt(5), rs.getInt(6), rs.getString(7)));
-                } else {
-                    break;
-                }
+            while (rs.next()) {
+                list.add(new Feedback(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getTimestamp(4), rs.getInt(5), rs.getInt(6), rs.getString(7)));
             }
         } catch (SQLException e) {
             System.out.println(e);
@@ -1525,9 +1716,11 @@ String query = "Update intermediate_Orders set is_delete = ? where id =? ";
 
         }
     }
-public void Updatecategory(Category c){
-      String query = "Update `swp_demo`.`category` SET name=? WHERE id = ?";
-     try{      con = new DBContext().connection; //connect sql
+
+    public void Updatecategory(Category c) {
+        String query = "Update `swp_demo`.`category` SET name=? WHERE id = ?";
+        try {
+            con = new DBContext().connection; //connect sql
             ps = con.prepareStatement(query);
             ps.setString(1, c.getName());
             ps.setInt(2, c.getId());
@@ -1536,7 +1729,8 @@ public void Updatecategory(Category c){
         } catch (Exception e) {
 
         }
-}
+    }
+
     public static void main(String[] args) {
         DAO dao = new DAO();
         dao.insertWallet(5000000, 4);
