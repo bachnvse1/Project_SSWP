@@ -1547,7 +1547,7 @@ public class DAO extends DBContext {
     }
 
     public HistoryTransaction InsertHistory_Transaction(double money, String Transaction_type, boolean status, String note, int create_by, int nguoinhan) {
-        String query = "INSERT INTO History_Transaction (Money_Transaction, Transaction_Type, Status, Note, Create_by, nguoioinhan)\n"
+        String query = "INSERT INTO `swp_demo`.`history_transaction` (`Money_Transaction`, `Transaction_Type`, `Status`,`Note`, `Create_by`, `nguoinhan`) \n"
                 + "VALUES(?, ?, ?, ?, ?, ?)";
         try {
             con = new DBContext().connection;
@@ -1568,7 +1568,7 @@ public class DAO extends DBContext {
     public List<HistoryTransaction> GetHistory_TransactionbyID(int uid) {
         List<HistoryTransaction> list = new ArrayList<>();
         String sql = "SELECT *FROM swp_demo.history_transaction h \n"
-                + "WHERE   h.Create_by = ? OR h.nguoioinhan = ?;";
+                + "WHERE   h.Create_by = ? OR h.nguoinhan = ?;";
         try {
             con = new DBContext().connection;
             ps = con.prepareStatement(sql);
