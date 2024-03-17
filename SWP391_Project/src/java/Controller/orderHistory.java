@@ -64,6 +64,8 @@ public class orderHistory extends HttpServlet {
         DAO dao = new DAO();
         List<OrderHistory> list = dao.getOrderHistory(idr);
         request.setAttribute("listO", list);
+        request.setAttribute("dao", dao);
+        
         request.getRequestDispatcher("historyOrder.jsp").forward(request, response);
     } 
 

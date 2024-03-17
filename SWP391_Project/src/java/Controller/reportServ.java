@@ -93,41 +93,28 @@ public class reportServ extends HttpServlet {
                 response.getWriter().print("Bạn đã khiếu nại hoặc xác thực đơn hàng rồi. Chờ giải quyết!");
             }
         } else if (index == 2) {
-<<<<<<< HEAD
             if (dao.getOrderByID(id).getStatus().equals("Đơn hàng đã hoàn thành")) {
                 response.getWriter().print("Đơn hàng đã hoàn thành rồi nhé!");
             } else {
+
                 dao.insertReport(4, id, u.getId(), true, "Bạn đã hoàn tất mua đơn hàng với mã sản code: " + dao.getOrderByID(id).getCode(), u.getId(), false);
                 dao.updateOrderStatus(u.getId(), "Đơn hàng đã hoàn thành", id);
-                
+                dao.insertOrderHistory(id, "Hoàn thành giao dịch", "Người mua xác nhận hoàn thành đơn hàng", dao.getOrderByID(id).getBuyer_id());
                 response.getWriter().print("Bạn đã xác thực đơn hàng thành công. Xin cảm ơn!");
-            }
-=======
-            dao.insertReport(4, id, u.getId(), true, "Bạn đã hoàn tất mua đơn hàng với mã sản code: " + dao.getOrderByID(id).getCode(), u.getId(), false);
-            dao.updateOrderStatus(u.getId(), "Đơn hàng đã hoàn thành", id);
-            dao.insertOrderHistory(id, "Hoàn thành giao dịch", "Người mua xác nhận hoàn thành đơn hàng", dao.getOrderByID(id).getBuyer_id());
-            response.getWriter().print("Bạn đã xác thực đơn hàng thành công. Xin cảm ơn!");
->>>>>>> origin/branch-khoaiter3
 
+            }
         } else {
             if (dao.getWallet(u.getId()).getBalance() > 10000) {
                 if (!dao.getOrderByID(id).getStatus().equals("Yêu cầu admin giải quyết")) {
-<<<<<<< HEAD
                     if (!dao.getOrderByID(id).getStatus().equals("Đơn hàng đã hoàn thành")) {
                         dao.insertReport(7, id, 1, false, "2 bên không tự giải quyết được yêu cầu admin tham gia giải quyết đơn hàng mã code: " + dao.getOrderByID(id).getCode(), u.getId(), false);
                         dao.updateOrderStatus(u.getId(), "Yêu cầu admin giải quyết", id);
-                        
+                        dao.insertOrderHistory(id, "Chờ Admin giải quyết", "Giao dịch được khiếu nại và chờ Admin giải quyết", dao.getOrderByID(id).getBuyer_id());
                         response.getWriter().print("Yêu cầu admin giải quyết thành công. Chờ giải quyết nhé!");
                     } else {
                         response.getWriter().print("Đơn hàng đã hoàn thành không thể khiếu nại");
                     }
 
-=======
-                    dao.insertReport(7, id, 1, false, "2 bên không tự giải quyết được yêu cầu admin tham gia giải quyết đơn hàng mã code: " + dao.getOrderByID(id).getCode(), u.getId(), false);
-                    dao.updateOrderStatus(u.getId(), "Yêu cầu admin giải quyết", id);
-                    dao.insertOrderHistory(id, "Chờ Admin giải quyết", "Giao dịch được khiếu nại và chờ Admin giải quyết", dao.getOrderByID(id).getBuyer_id());
-                    response.getWriter().print("Yêu cầu admin giải quyết thành công. Chờ giải quyết nhé!");
->>>>>>> origin/branch-khoaiter3
                 } else {
                     response.getWriter().print("Bạn đã yêu cầu admin giải quyết rồi. Cùng chờ nhé!");
                 }

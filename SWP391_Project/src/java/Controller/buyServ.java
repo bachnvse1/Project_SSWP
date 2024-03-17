@@ -120,14 +120,9 @@ public class buyServ extends HttpServlet {
                     // Add the purchase transaction to the queue
                     transactionQueue.addTransaction(new Transaction(transactionId, u.getId(), idx, amount));
                     dao.updateOrder(u.id, "Người mua đang kiểm tra đơn hàng", idx);
-                    
-<<<<<<< HEAD
-                    dao.insertReport(2, dao.getOrderByProductID(idx).getId(), u.getId(), true, "Bạn đã thanh toán đơn hàng có mã sản phẩm là: " + dao.getOrderByProductID(idx).getTotal_paid_amount() + ". Hãy kiểm tra thông tin đơn hàng!", u.getId(), false);
-                    
-=======
+
                     dao.insertReport(2, dao.getOrderByProductID(idx).getId(), u.getId(), true, "Bạn đã thanh toán đơn hàng có mã sản phẩm là: " + dao.getOrderByProductID(idx).getCode() + ". Hãy kiểm tra thông tin đơn hàng!", u.getId(), false);
                     dao.insertOrderHistory(dao.getOrderByProductID(idx).getId(), "Bên mua đang kiểm tra hàng", "Người mua đã thanh toán và đang kiểm tra hàng", u.getId());
->>>>>>> origin/branch-khoaiter3
                     response.getWriter().print("Bạn vừa mua sản phẩm, hãy kiểm tra đơn hàng!");
                     new Thread(() -> transactionQueue.processTransactions()).start();
                 } else {

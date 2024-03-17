@@ -288,7 +288,7 @@
                                         function deleteProduct(deleteProductId) {
 
                                             $.ajax({
-                                                type: "POST", // Hoặc "GET" tùy thuộc vào yêu cầu của bạn
+                                                type: "GET", // Hoặc "GET" tùy thuộc vào yêu cầu của bạn
                                                 url: "AddToCartController", // Thay thế bằng URL của servlet của bạn
                                                 data: {deleteProductId: deleteProductId},
                                                 success: function (response) {

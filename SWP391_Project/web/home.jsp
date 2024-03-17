@@ -259,7 +259,7 @@
             function addToCart(productId) {
                 // Gửi giá trị productId đến servlet bằng Ajax
                 $.ajax({
-                    type: "GET", // Hoặc "GET" tùy thuộc vào yêu cầu của bạn
+                    type: "POST", // Hoặc "GET" tùy thuộc vào yêu cầu của bạn
                     url: "AddToCartController", // Thay thế bằng URL của servlet của bạn
                     data: {productId: productId},
                     success: function (response) {

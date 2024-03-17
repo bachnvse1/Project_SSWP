@@ -113,7 +113,7 @@
                                     <td>${o.create_At}</td>
                                     <td>${o.order_status}</td>
                                     <td>${o.description}</td>
-                                    <td>${o.create_by}</td>
+                                    <td>${dao.getUserById(o.create_by).getDisplay_name()}</td>
                                 </tr>  
                         
 

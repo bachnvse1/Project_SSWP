@@ -164,6 +164,14 @@ BankCode varchar(10),
 primary key(id)
 );
 
+create table order_history(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	orderID int,
+	order_status varchar(255),
+	description varchar(255),
+	create_by int,
+	create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
 
 INSERT INTO swp_demo.feedback (id, title, content, create_at, user_id, intermediary_order_id)

@@ -517,8 +517,6 @@
                                         $(document).ready(function () {
                                             $("#oder-Button").click(function () {
                                                 window.location.href = "manageMyOrder";
-
-<<<<<<< HEAD
                                             });
                                         });
 
@@ -544,7 +542,7 @@
                                                 window.location.href = "Cart.jsp";
                                             });
                                         });
-                                        
+
                                         $(".close").click(function () {
                                             const popupContainer = document.getElementById('popupContainer');
                                             const tablePopup = document.getElementById('notificationTable');
@@ -571,56 +569,7 @@
 
                                             });
                                         }
-=======
-            $(document).ready(function () {
-                $("#logout-Button").click(function () {
-                    $.ajax({
-                        type: 'POST',
-                        url: "logout",
-                        success: function (response) {
-                            $("body").html(response);
-                        },
-                        error: function () {
-                            // Xử lý lỗi nếu có
-                            alert("Đã xảy ra lỗi khi tải trang");
-                        }
-                    });
-                });
-            });
-            $(document).ready(function () {
-                // Xử lý khi nhấp vào nút "Your Cart"
-                $("#your-cart-button").click(function () {
-                    // Thực hiện chuyển hướng đến trang mong muốn (thay "your-cart-page" bằng đường dẫn thực tế)
-                    window.location.href = "AddToCartController";
-                });
-            });
-            $(".close").click(function () {
-                const popupContainer = document.getElementById('popupContainer');
-                const tablePopup = document.getElementById('notificationTable');
-                popupContainer.style.display = 'none';
-                tablePopup.style.display = 'none';
-        });
-        
-        function loadMore(){
-            var amount = document.getElementsByClassName("abc").length;
-            $.ajax({
-                url: 'notification',
-                type: 'get',
-                data: {
-                    exists: amount
-                },
-                success: function(response) {
-                    document.getElementById("table123").innerHTML += response;
- 
-                },
-                error: function(xhr) {
-                    console.error(xhr.response);
-                }
-                
-                
-            });
-        }
->>>>>>> origin/branch-khoaiter3
+
         </script>
         <script src="js1/main.js"></script>
         <script src="jscript/signin_captcha.js"></script>

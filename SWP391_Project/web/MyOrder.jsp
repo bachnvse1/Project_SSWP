@@ -307,6 +307,7 @@
                                                 <th>Phí trung gian</th>
                                                 <th>Người chịu phí</th>
                                                 <th>Hành động</th>
+                                                <th>Lịch sử trạng thái</th>
                                             </tr>
                                         </thead>
                                         <tbody class="table-body" id="cell-info">
@@ -324,9 +325,6 @@
                                                 <th>Phí trung gian</th>
                                                 <th>Người chịu phí</th>
                                                 <th>Hành động</th>
-<<<<<<< HEAD
-
-=======
                                                 <th>Lịch sử trạng thái</th>
                                             </tr>
                                         </thead>
@@ -334,37 +332,6 @@
 
                                         </tbody>
                                     </table>
-
-                                    <table class="text-nowrap mb-0 table" id="orderBuy-complete"  style="display: none;">
-                                        <thead class="table-light">
-                                            <tr>
-                                                <th>Mã đơn hàng</th>
-                                                <th>Trạng thái</th>
-                                                <th>Người bán</th>                        
-                                                <th>Danh mục</th>
-                                                <th>Thông tin ẩn</th>
-                                                <th>Liên hệ</th>
-                                                <th>Giá sản phẩm
-
-
-                                                </th>
-                                                <th>Phí trung gian</th>
-                                                <th>Người chịu phí</th>
-                                                <th>Tổng tiền thanh toán</th>
-                                                <th>Thời gian tạo</th>
-                                                <th>Lịch sử trạng thái</th>
->>>>>>> origin/branch-khoaiter3
-                                            </tr>
-                                        </thead>
-                                        <tbody class="table-body" id="cell-info1">
-
-                                        </tbody>
-                                    </table>
-                                    <div class="d-flex">
-                                        <div id="pagination-container" class="mx-auto mt-3">
-
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -454,7 +421,7 @@
 
                     <thead class="table-light">
                         <tr>
-<<<<<<< HEAD
+
                             <th>Mã đơn hàng</th>
                             <th>Tên sản phẩm</th>
                             <th>Giá</th>                        
@@ -464,18 +431,8 @@
                             <th>Trạng Thái</th>
                             <th>Bên chịu phí</th>
                             <th>Hành động</th>
-=======
-                            <th>Code</th>
-                            <th>Product Name</th>
-                            <th>Price</th>                        
-                            <th>Total amount received</th>
-                            <th>Total payment</th>
-                            <th>Transaction fees</th>
-                            <th>Status</th>
-                            <th>Party bears the fee</th>
-                            <th>Action</th>
                             <th>Lịch sử trạng thái</th>
->>>>>>> origin/branch-khoaiter3
+
                         </tr>
                     </thead>
                     <tbody>
@@ -502,8 +459,8 @@
                                         </a>                                        
                                     </td>
                                 </tr>
-                        </c:if>
-                    </c:forEach>
+                            </c:if>
+                        </c:forEach>
                     </tbody>
                 </table>
 
@@ -515,7 +472,7 @@
 
                     <thead class="table-light">
                         <tr>
-<<<<<<< HEAD
+
                             <th>Mã đơn hàng</th>
                             <th>Tên sản phẩm</th>
                             <th>Giá</th>                        
@@ -525,18 +482,8 @@
                             <th>Trạng Thái</th>
                             <th>Bên chịu phí</th>
                             <th>Hành động</th>
-=======
-                            <th>Code</th>
-                            <th>Product Name</th>
-                            <th>Price</th>                        
-                            <th>Total amount received</th>
-                            <th>Total payment</th>
-                            <th>Transaction fees</th>
-                            <th>Status</th>
-                            <th>Party bears the fee</th>
-                            <th>Action</th>
                             <th>Lịch sử trạng thái</th>
->>>>>>> origin/branch-khoaiter3
+
                         </tr>
                     </thead>
                     <tbody>
@@ -800,7 +747,7 @@
                     <div class="container-complain">
                         <form id="complaintForm">
                             <h2 style="text-align: center;">Chi tiết đơn hàng</h2>
-                            <button id="hihi" style="float: right; color: #007bff; ">Yêu cầu admin tham gia giải quyết</button>
+                            <button id="requestAdmin" type="submit" style="float: right; color: white; background-color: #007bff; border: 1px solid; padding: 10px; border-radius: 3px; " data-orderi="3">Yêu cầu admin tham gia giải quyết</button>
                             <input type="text" id="order_id" name="order_id" readonly="" hidden=""><br>
                             <label for="order_code">Mã đơn hàng trung gian</label><br>
                             <input type="text" id="order_code" name="code" value="" readonly><br>
@@ -828,82 +775,57 @@
                             <input type="text" id="buyer1"  value="" readonly><br>
                             <label for="hidden_info">Thời gian tạo</label><br>
                             <input type="text" id="create" name="" value="" readonly><br><br><br>
-                            <!--                            <label for="description">Description</label><br>
-                                                        <textarea id="description1" name="description" placeholder="Write something, as detailed as possible..." style="height:200px" required></textarea><br>-->
-<<<<<<< HEAD
-                            <button id="hihi1" style="float: left; color: red; ">Khiếu nại đơn hàng không đúng mô tả</button>
-                            <button id="hihi2" style="float: right; color: #4CAF50;">Xác nhận đơn hàng đúng mô tả</button>
-=======
                             <button type="submit" style="float: left; color: white; background-color: red; border: 1px solid red; padding: 10px; border-radius: 3px;" data-orderi="1">Khiếu nại đơn hàng không đúng mô tả</button>
                             <button type="submit" style="float: right; color: white; background-color: #4CAF50; border: 1px solid #4CAF50; padding: 10px; border-radius: 3px;" data-orderi="2">Xác nhận đơn hàng đúng mô tả</button>
 
-
->>>>>>> origin/branch-khoaiter3
                         </form>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="loader" id="loader"></div>
 
 
-<<<<<<< HEAD
-=======
-                    </div>
-                    <div class="loader" id="loader"></div>
-                </form>
-            </div>
 
+    <div id="exampleModalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  style="height:580px;padding:0px;display: none;">
+        <div class="modal-dialog" style="max-width: 700px;display: none" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Đánh giá</h5>
+                    <span class="close1">&times;</span>
+                </div>
+                <div class="modal-body" style="padding: 40px;">
 
-            <div id="exampleModalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  style="height:580px;padding:0px; display: none;">
-                <div class="modal-dialog" style="max-width: 700px;" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Feedback</h5>
-                            <span class="close1">&times;</span>
-                        </div>
-                        <div class="modal-body" style="padding: 40px;">
->>>>>>> origin/branch-khoaiter3
+                    <form action="Feedback" method="post">   
+                        <div class="row">
 
-                    <div id="exampleModalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  style="height:580px;padding:0px">
-                        <div class="modal-dialog" style="max-width: 700px;display: none" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Đánh giá</h5>
-                                    <span class="close1">&times;</span>
+                            <div class="card">
+                                <div class="card-body">
+
+                                    <input type="text" name="action" value="create" hidden="">
+
+                                    <h2 class="card-title">Tiêu đề</h2>
+                                    <input type="text" name="title" value="" required="" class="form-control"><br/>
+                                    <h2 class="card-title">Nội dung</h2>
+                                    <input type="text" name="content" value="" required="" class="form-control"><br/>
                                 </div>
-                                <div class="modal-body" style="padding: 40px;">
-
-                                    <form action="Feedback" method="post">   
-                                        <div class="row">
-
-                                            <div class="card">
-                                                <div class="card-body">
-
-                                                    <input type="text" name="action" value="create" hidden="">
-
-                                                    <h2 class="card-title">Tiêu đề</h2>
-                                                    <input type="text" name="title" value="" required="" class="form-control"><br/>
-                                                    <h2 class="card-title">Nội dung</h2>
-                                                    <input type="text" name="content" value="" required="" class="form-control"><br/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="submit" class="btn btn btn-primary">Thêm đánh giá</button>
-                                        </div>    
-                                    </form>
-
-                                </div>
-
                             </div>
-                            <!-- ============================================================== -->
                         </div>
-                    </div> 
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn btn-primary">Thêm đánh giá</button>
+                        </div>    
+                    </form>
 
                 </div>
-                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-                <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-                <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
-                <script src="jscript/myorder.js"></script>
-                </body>
-                </html>
+
+            </div>
+            <!-- ============================================================== -->
+        </div>
+    </div> 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+<script src="jscript/myorder.js"></script>
+</body>
+</html>

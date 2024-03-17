@@ -2091,14 +2091,6 @@ public class DAO extends DBContext {
 
     public static void main(String[] args) {
         DAO dao = new DAO();
-<<<<<<< HEAD
-=======
-        /* List<Report> list = dao.getTopNext3Report(3, 1);
-         for (Report report : list) {
-             System.out.println(report.getId());
-        }
-        */
-        dao.insertReport(1, 7, 1, false, "Có khiếu nại từ người mua rằng đơn hàng  không đúng mô tả ", 2, false);
->>>>>>> origin/branch-khoaiter3
+
     }
 }
