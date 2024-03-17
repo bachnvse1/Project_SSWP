@@ -69,40 +69,40 @@ public class ManageMyOrder extends HttpServlet {
             throws ServletException, IOException {
 
         response.setContentType("text/html;charset=UTF-8");
-       
+
         DAO dao = new DAO();
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("user");
         String complete = "Đơn hàng đã hoàn thành";
         List<Category> category = dao.getAllCategory();
-         
-         // Get All Order
-         List<Product> listProduct = dao.getProductByUserID(u.getId());
-             List<ProductOrderPair> productOrderPairsAll = new ArrayList<>();
-             for (Product product : listProduct) {
+
+        // Get All Order
+        List<Product> listProduct = dao.getProductByUserID(u.getId());
+        List<ProductOrderPair> productOrderPairsAll = new ArrayList<>();
+        for (Product product : listProduct) {
             intermediateOrders order = dao.getOrderByProductID(product.getId());
             productOrderPairsAll.add(new ProductOrderPair(product, order));
         }
-             // Get Complete Order
-            List<ProductOrderPair> productOrderPairsComplete = new ArrayList<>();
-         List<intermediateOrders> orderCom = dao.getOrderByStatus(complete, u.getId());
-               for (intermediateOrders orders : orderCom) {
+        // Get Complete Order
+        List<ProductOrderPair> productOrderPairsComplete = new ArrayList<>();
+        List<intermediateOrders> orderCom = dao.getOrderByStatus(complete, u.getId());
+        for (intermediateOrders orders : orderCom) {
             Product product = dao.getProductByID(orders.getProductId());
             productOrderPairsComplete.add(new ProductOrderPair(product, orders));
         }
-               //Get Processing Order  
-              List<ProductOrderPair> productOrderPairsProcess = new ArrayList<>();
-         List<intermediateOrders> orderReady = dao.getOrderByStatus("Sẵn sàng giao dịch", u.getId());
-               for (intermediateOrders orders : orderReady) {
+        //Get Processing Order  
+        List<ProductOrderPair> productOrderPairsProcess = new ArrayList<>();
+        List<intermediateOrders> orderReady = dao.getOrderByStatus("Sẵn sàng giao dịch", u.getId());
+        for (intermediateOrders orders : orderReady) {
             Product product = dao.getProductByID(orders.getProductId());
             productOrderPairsProcess.add(new ProductOrderPair(product, orders));
         }
-               List<intermediateOrders> orderCheck = dao.getOrderByStatus("Người mua đang kiểm tra đơn hàng", u.getId());
-               for (intermediateOrders orders : orderCheck) {
+        List<intermediateOrders> orderCheck = dao.getOrderByStatus("Người mua đang kiểm tra đơn hàng", u.getId());
+        for (intermediateOrders orders : orderCheck) {
             Product product = dao.getProductByID(orders.getProductId());
             productOrderPairsProcess.add(new ProductOrderPair(product, orders));
         }
-               
+
         request.setAttribute("category", category);
         request.setAttribute("productOrderPairs", productOrderPairsAll);
         request.setAttribute("productOrderPairsComplete", productOrderPairsComplete);
@@ -125,28 +125,27 @@ public class ManageMyOrder extends HttpServlet {
             throws ServletException, IOException {
         // processRequest(request, response);
 
-<<<<<<< HEAD
         DAO dao = new DAO();
         int id = Integer.parseInt(request.getParameter("pid").trim());
-=======
-       
-  DAO dao = new DAO();
-        int id = Integer.parseInt(request.getParameter("pid"));
->>>>>>> origin/branch-10
         intermediateOrders order = dao.getOrderByID(id);
         // HttpSession session = request.getSession();
         //  User u = (User) session.getAttribute("user");
-        
+
         Product product = dao.getProductByID(order.getProductId());
-        
+        String buyerName = null;
         ProductOrderPair productOrderPair = new ProductOrderPair(product, order);
+        if (dao.getUserById(productOrderPair.getOrder().getBuyer_id()) != null) {
+            buyerName = dao.getUserById(productOrderPair.getOrder().getBuyer_id()).display_name;
+        } else{
+            buyerName = "Chưa xác định";
+        }
         String data = productOrderPair.getOrder().getCode() + ";"
                 + productOrderPair.getProduct().getName() + ";"
-                + String.format("%,.0f",(double) productOrderPair.getProduct().getPrice()) + " ₫" + ";"
-                +  String.format("%,.0f",(double)productOrderPair.getOrder().getIntermediary_fee()) + " ₫"   + ";"
+                + String.format("%,.0f", (double) productOrderPair.getProduct().getPrice()) + " ₫" + ";"
+                + String.format("%,.0f", (double) productOrderPair.getOrder().getIntermediary_fee()) + " ₫" + ";"
                 + (productOrderPair.getProduct().isTransaction_fee() ? "Bên Bán" : "Bên Mua") + ";"
-                +  String.format("%,.0f",(double) productOrderPair.getOrder().getTotal_received_amount()) + " ₫"  + ";"
-                +  String.format("%,.0f",(double) productOrderPair.getOrder().getTotal_paid_amount()) + " ₫"  + ";"
+                + String.format("%,.0f", (double) productOrderPair.getOrder().getTotal_received_amount()) + " ₫" + ";"
+                + String.format("%,.0f", (double) productOrderPair.getOrder().getTotal_paid_amount()) + " ₫" + ";"
                 + productOrderPair.getProduct().getImage1() + ";"
                 + productOrderPair.getProduct().getImage2() + ";"
                 + productOrderPair.getProduct().getImage3() + ";"
@@ -155,20 +154,14 @@ public class ManageMyOrder extends HttpServlet {
                 + productOrderPair.getProduct().getHidden_content() + ";"
                 + productOrderPair.getProduct().getContact_Method() + ";"
                 + productOrderPair.getOrder().getStatus() + ";"
-<<<<<<< HEAD
-                + dao.getUserById(productOrderPair.getOrder().getBuyer_id()) + ";"
-=======
-                + productOrderPair.getOrder().getBuyer_id() + ";"
->>>>>>> origin/branch-10
+                + buyerName + ";"
                 + productOrderPair.getOrder().getCreate_at() + ";"
                 + productOrderPair.getOrder().getUpdate_at();
         response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(data);
 
-
     }
-    
 
     /**
      * Returns a short description of the servlet.

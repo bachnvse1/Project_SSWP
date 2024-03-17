@@ -277,11 +277,8 @@
                             <div class="rounded">
                                 <div class="table-responsive table-borderless" style="margin-top: 5%;width: fit-content;">
 
-<<<<<<< HEAD
                                     <table id="orderBuy" class="text-nowrap mb-0 table" style="display: none;">
-=======
-                                    <table id="orderBuy" class="text-nowrap mb-0 table" border="1" style="display: none"> 
->>>>>>> origin/branch-10
+
                                         <thead class="table-light">
                                             <tr>
                                                 <th>Mã đơn hàng</th>
@@ -298,13 +295,7 @@
                                         <tbody class="table-body" id="cell-info">
                                         </tbody>
                                     </table>
-
-<<<<<<< HEAD
-
-                                    <table class="text-nowrap mb-0 table" id="orderBuy-complete"  style="display: none;">
-=======
                                     <table class="text-nowrap mb-0 table" id="orderBuy-complete" border="1" style="display: none">
->>>>>>> origin/branch-10
                                         <thead class="table-light">
                                             <tr>
                                                 <th>Mã đơn hàng</th>
@@ -333,13 +324,9 @@
                         </div>
                     </div>
                 </div>
-<<<<<<< HEAD
                 <form action="filtermyorder" >
                     <table id="Filter" class="text-nowrap mb-0 table" style="display: none;">
-=======
-                <form action="filtermyorder">
-                    <table id="Filter" class="text-nowrap mb-0 table" border="1" style="display: none">
->>>>>>> origin/branch-10
+
                         <tr>
                             <th>Tìm kiếm bằng tên</th>
                             <th>Lọc theo giá</th>
@@ -364,11 +351,8 @@
                         </tr>
                     </table>
                 </form>
-<<<<<<< HEAD
                 <table id="ProductDisplay" class="text-nowrap mb-0 table"  style="display: none;">
-=======
-                <table id="ProductDisplay" class="text-nowrap mb-0 table" border="1" style="display: none">
->>>>>>> origin/branch-10
+
 
                     <thead class="table-light">
                         <tr>
@@ -395,11 +379,7 @@
                                     <td>${p.getOrder().getTotal_paid_amount()}</td>
                                     <td>${p.getOrder().getIntermediary_fee()}</td>
                                     <td>${p.getOrder().getStatus()}</td>
-<<<<<<< HEAD
-                                    <td>${p.getProduct().isTransaction_fee() ? "Người bán" : "Người mua"}</td>
-=======
                                     <td>${p.getProduct().isTransaction_fee() ? "Bên Bán" : "Bên Mua"}</td>
->>>>>>> origin/branch-10
                                     <td>
                                         <a class="productInfo" data-action="view"  href="#" data-product-id="${p.getOrder().getId()}">
                                             <i style="color: #0061f2" class="fa fa-info-circle"></i>
@@ -423,11 +403,8 @@
 
 
                 <!--Complete Table-->
-<<<<<<< HEAD
                 <table id="ProductCompleteDisplay" class="text-nowrap mb-0 table"  style="display: none;">
-=======
-                <table id="ProductCompleteDisplay" class="text-nowrap mb-0 table" border="1" style="display: none">
->>>>>>> origin/branch-10
+
 
                     <thead class="table-light">
                         <tr>
@@ -518,11 +495,7 @@
 
 
                 <!--                  Add Form-->
-<<<<<<< HEAD
                 <div id="addProductForm" class="addProduct" style="display: none;">
-=======
-                <div id="addProductForm" class="addProduct" style="display: none">
->>>>>>> origin/branch-10
                     <div class="modal-content3">                      
                         <div class="container-complain">
                             <form id="addForm" enctype="multipart/form-data">
@@ -557,20 +530,12 @@
                                 <label for="transactionFee">Bên chịu phí:</label>
 
                                 <div class="radio-buttons">
-<<<<<<< HEAD
-                                    <input type="radio" id="seller" name="Transaction_fee" value="Người bán" checked>
-                                    <label for="seller">Seller</label>
 
-                                    <input type="radio" id="buyer" name="Transaction_fee" value="Người mua">
-                                    <label for="buyer">Buyer</label>
-=======
                                     <input type="radio" id="seller" name="Transaction_fee" value="seller" checked>
                                     <label for="seller">Bên bán</label>
 
                                     <input type="radio" id="buyer" name="Transaction_fee" value="buyer">
-                                    <label for="buyer">Bên mua</label>
->>>>>>> origin/branch-10
-                                </div>
+                                    <label for="buyer">Bên mua</label>      </div>
                                 <label for="contactMethod">Phương thức liên hệ:</label>
                                 <input type="text" name="Contact_Method" placeholder="Số điện thoại / Zalo / Link Facebook / Telegram / discord ..." required><br>
                                 <label for="hiddenContent">Nội dung ẩn:</label>
@@ -594,7 +559,7 @@
                         <label for="productName">Tên sản phẩm:</label>
                         <input type="text" id="productName" value="" readonly><br>
 
-                        <label for="price">Giá:</label>
+                        <label for="price">Giá:</label><br>
                         <input type="text" id="price" value="" readonly><br>
 
                         <label for="intermediaryFee">Phí giao dịch:</label>
@@ -657,7 +622,7 @@
                             <label for="productName">Tên sản phẩm:</label>
                             <input type="text" id="productName_ud" value="" ><br>
 
-                            <label for="price">Giá:</label>
+                            <label for="price">Giá:</label><br>
                             <input type="text" id="price_ud" value="" ><br>
 
                             <label for="intermediaryFee">Phí giao dịch:</label>
@@ -751,11 +716,6 @@
                 <div class="modal-content3">
                     <span class="close">&times;</span>
                     <div class="container-complain">
-<<<<<<< HEAD
-                        <form id="complaintForm" >
-
-
-=======
                         <form id="complaintForm">
                             <h2 style="text-align: center;">Chi tiết đơn hàng</h2>
                             <button id="hihi" style="float: right; color: #007bff; ">Yêu cầu admin tham gia giải quyết</button>
@@ -790,88 +750,54 @@
                                                         <textarea id="description1" name="description" placeholder="Write something, as detailed as possible..." style="height:200px" required></textarea><br>-->
                             <button id="hihi1" style="float: left; color: red; ">Khiếu nại đơn hàng không đúng mô tả</button>
                             <button id="hihi2" style="float: right; color: #4CAF50;">Xác nhận đơn hàng đúng mô tả</button>
->>>>>>> origin/branch-10
                         </form>
                     </div>
                 </div>
             </div>
 
-<<<<<<< HEAD
-            <div id="myModalVerify" class="modal4" style="display:none;">
-                <span class="close1">&times;</span></br></br>
-                <h3>Verify Order</h3>
-                <p>Order matches the description</p>
-                <div class="options1">
-                    <button class="option1 yes">Yes</button>
-                </div>
-                <div class="loader" id="loader"></div>
-            </div>
 
 
-            <div id="exampleModalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  style="height:580px;padding:0px; display: none;">
-                <div class="modal-dialog" style="max-width: 700px;" role="document">
-=======
-            <div id="myModalVerify" class="modal4" style="display: none">
-                <span class="close1">&times;</span></br></br>
-                <h3>Xác nhận đơn hàng</h3>
-                <p>Đơn hàng đúng với thông tin mô tả</p>
-                <form id="authForm">
-                    <input type="text" id="pro_id1" name="pro_id" hidden="">
-                    <div class="options1">
-                        <button type="submit" class="option1 yes">Đồng ý</button>
-
-                    </div>
-                    <div class="loader" id="loader"></div>
-                </form>
-            </div>
-            <div id="exampleModalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  style="height:580px;padding:0px">
-                <div class="modal-dialog" style="max-width: 700px;display: none" role="document">
->>>>>>> origin/branch-10
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Đánh giá</h5>
-                            <span class="close1">&times;</span>
-                        </div>
-                        <div class="modal-body" style="padding: 40px;">
-
-                            <form action="Feedback" method="post">   
-                                <div class="row">
-
-                                    <div class="card">
-                                        <div class="card-body">
-
-                                            <input type="text" name="action" value="create" hidden="">
-
-                                            <h2 class="card-title">Tiêu đề</h2>
-                                            <input type="text" name="title" value="" required="" class="form-control"><br/>
-                                            <h2 class="card-title">Nội dung</h2>
-                                            <input type="text" name="content" value="" required="" class="form-control"><br/>
-                                        </div>
-                                    </div>
+                    <div id="exampleModalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  style="height:580px;padding:0px">
+                        <div class="modal-dialog" style="max-width: 700px;display: none" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Đánh giá</h5>
+                                    <span class="close1">&times;</span>
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn btn-primary">Thêm đánh giá</button>
-                                </div>    
-                            </form>
+                                <div class="modal-body" style="padding: 40px;">
 
+                                    <form action="Feedback" method="post">   
+                                        <div class="row">
+
+                                            <div class="card">
+                                                <div class="card-body">
+
+                                                    <input type="text" name="action" value="create" hidden="">
+
+                                                    <h2 class="card-title">Tiêu đề</h2>
+                                                    <input type="text" name="title" value="" required="" class="form-control"><br/>
+                                                    <h2 class="card-title">Nội dung</h2>
+                                                    <input type="text" name="content" value="" required="" class="form-control"><br/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn btn-primary">Thêm đánh giá</button>
+                                        </div>    
+                                    </form>
+
+                                </div>
+
+                            </div>
+                            <!-- ============================================================== -->
                         </div>
+                    </div> 
 
-                    </div>
-                    <!-- ============================================================== -->
                 </div>
-            </div> 
-
-        </div>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-
-        <!-- DataTables CSS -->
-
-
-        <!-- DataTables JS -->
-        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
-        <script src="jscript/myorder.js"></script>
-
-    </body>
-</html>
+                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+                <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+                <script src="jscript/myorder.js"></script>
+                </body>
+                </html>

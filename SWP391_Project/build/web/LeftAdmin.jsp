@@ -24,17 +24,13 @@
             <a href="ReportServlet" class="list-group-item list-group-item-action py-2 ripple">
                 <i class="fas fa-exclamation-triangle fa-fw me-3"></i><span>Manage Report</span>
             </a>
-<<<<<<< HEAD
             <a href="RevenueAdmin" class="list-group-item list-group-item-action py-2 ripple">
                 <i class="fa fa-money fa-fw me-3"></i><span>Quản Lý Doanh Thu</span>
             </a>
 
-=======
             <a href="withdrawalprocessing" class="list-group-item list-group-item-action py-2 ripple">
                 <i class="fas fa-money fa-fw me-3"></i><span>Yêu cầu rút tiền</span>
             </a>
-            
->>>>>>> origin/branch-10
         </div>
     </div>
 </nav>

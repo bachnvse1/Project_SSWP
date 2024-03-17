@@ -238,7 +238,7 @@
                             <c:if test="${user != null}">
                                 <li id="notification-Button"><a><i class="fa fa-bell"></i>
                                         Thông báo</a></li>\
-                                <li id="notification-Button"><a href="ManagePayment.jsp"><i class="fa fa-map-marker"></i>
+                                <li id="notification-Button"><a href="withdrawal"><i class="fa fa-map-marker"></i>
                                         Quan lí thanh toán</a></li>
 
                                 <li><a>${balance} VND</a></li>
@@ -258,49 +258,8 @@
                                             background-color: #1E1F29;" id="logout-Button">Đăng xuất</button></li>
                                 </c:if>
 
-<<<<<<< HEAD
                         </ul>
-=======
-                                <c:if test="${user == null}">
-                                    <div>
-                                        <a href="#">
-                                            <i class="fa fa-heart-o"></i>
-                                            <span>My Order</span>
-                                        </a>
-                                    </div>
-                                </c:if>
 
-                               
-                                <div class="row">
-                                    <a href="withdrawal" >
-                                        <span>Rút tiền</span>
-                                        <!--<div class="qty">3</div> -->
-                                    </a>
-                                </div>
-                                <!-- Cart -->
-                                <div class="row">
-                                    <a id="your-cart-button" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-                                        <i class="fa fa-shopping-cart"></i>
-                                        <span>Your Cart</span>
-                                        <!--<div class="qty">3</div> -->
-                                    </a>
-                                </div>
-                                <!-- /Cart -->
-
-                                <!-- Feedback -->
-                                <div class="row">
-                                    <a  href="Feedback" >
-                                        <i class="fa fa-comments"></i>
-                                        <span>Feedback</span>
-
-                                    </a>
-                                </div>
-                                <!-- /Feedback -->
-
-                            </div>
-                        </div>
-                        <!-- /ACCOUNT -->
->>>>>>> origin/branch-10
                     </div>
                 </div>
                 <!-- /TOP HEADER -->
@@ -375,7 +334,7 @@
                                     <!-- /Cart -->
 
                                     <!-- Feedback -->
-                                    
+
                                     <!-- Feedback -->
                                     <div class="row">
                                         <a  href="Feedback" >
@@ -549,17 +508,7 @@
         <script>
                                         $(document).ready(function () {
                                             $("#info-Button").click(function () {
-                                                $.ajax({
-                                                    type: 'GET',
-                                                    url: "editprofile.jsp",
-                                                    success: function (response) {
-                                                        window.location.href = "editprofile.jsp";
-                                                    },
-                                                    error: function () {
-                                                        // Xử lý lỗi nếu có
-                                                        alert("Đã xảy ra lỗi khi tải trang");
-                                                    }
-                                                });
+                                                window.location.href = "EditProfile";
                                             });
 
                                         });
@@ -567,17 +516,8 @@
 
                                         $(document).ready(function () {
                                             $("#oder-Button").click(function () {
-                                                $.ajax({
-                                                    type: 'GET',
-                                                    url: "manageMyOrder",
-                                                    success: function (response) {
-                                                        window.location.href = "manageMyOrder";
-                                                    },
-                                                    error: function () {
-                                                        // Xử lý lỗi nếu có
-                                                        alert("Đã xảy ra lỗi khi tải trang");
-                                                    }
-                                                });
+                                                window.location.href = "manageMyOrder";
+
                                             });
                                         });
 
@@ -603,6 +543,7 @@
                                                 window.location.href = "Cart.jsp";
                                             });
                                         });
+                                        
                                         $(".close").click(function () {
                                             const popupContainer = document.getElementById('popupContainer');
                                             const tablePopup = document.getElementById('notificationTable');
@@ -632,47 +573,5 @@
         </script>
         <script src="js1/main.js"></script>
         <script src="jscript/signin_captcha.js"></script>
-<<<<<<< HEAD
-=======
-        <script>
-            $(document).ready(function () {
-                $("#info-Button").click(function () {
-                   window.location.href="EditProfile";
-                });
-
-            });
-
-
-            $(document).ready(function () {
-                $("#oder-Button").click(function () {                   
-                    window.location.href = "manageMyOrder";
-              
-                });
-            });
-
-            $(document).ready(function () {
-                $("#logout-Button").click(function () {
-                    $.ajax({
-                        type: 'POST',
-                        url: "logout",
-                        success: function (response) {
-                            $("body").html(response);
-                        },
-                        error: function () {
-                            // Xử lý lỗi nếu có
-                            alert("Đã xảy ra lỗi khi tải trang");
-                        }
-                    });
-                });
-            });
-            $(document).ready(function () {
-                // Xử lý khi nhấp vào nút "Your Cart"
-                $("#your-cart-button").click(function () {
-                    // Thực hiện chuyển hướng đến trang mong muốn (thay "your-cart-page" bằng đường dẫn thực tế)
-                    window.location.href = "Cart.jsp";
-                });
-            });
-        </script>
->>>>>>> origin/branch-10
     </body>
 </html>

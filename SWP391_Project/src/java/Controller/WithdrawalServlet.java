@@ -74,7 +74,7 @@ public class WithdrawalServlet extends HttpServlet {
         }   
        
        
-       request.getRequestDispatcher("withdrawal.jsp").forward(request, response);
+        request.getRequestDispatcher("ManagePayment.jsp").forward(request, response);
     }
 
     /**

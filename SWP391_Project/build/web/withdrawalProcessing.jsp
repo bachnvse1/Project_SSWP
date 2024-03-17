@@ -18,10 +18,10 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
         <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-       
-        
+
+
     </head>
-    <body>                                     
+    <body>            
         <table id="drawalProcessing" class="display" style="width:100%">
             <thead>
                 <tr>
@@ -94,40 +94,40 @@
                                     <button name="action2" value="complete" data-id="${lw.getId()}" class="action btn btn-success">Đã xong</button>
                                 </c:when>
                                 <c:otherwise>
-                                
+
                                 </c:otherwise>
                             </c:choose>
                         </th>
                     </tr>
                 </c:forEach>
             </tbody>
-     </table>      
+        </table>      
         <script>
-          $(document).ready(function () {
-    // Khởi tạo DataTable
-    // var table = $('#drawalProcessing').DataTable();
+            $(document).ready(function () {
+                // Khởi tạo DataTable
+                // var table = $('#drawalProcessing').DataTable();
 
-    // Gọi sự kiện click của button
-    $('.action').click(function(e) {
-        e.preventDefault();
-        var action = $(this).attr('value');
-        var lwid = $(this).attr('data-id');
-        $.ajax({
-            type: "POST",
-            url: "withdrawalprocessing",
-            data: { actions: action, lwids: lwid },
-            success: function(response){
-                // Xử lý phản hồi từ server nếu cần
-                alert(response);
-                window.location.href = "withdrawalprocessing";
-            },
-            error: function(xhr, status, error){
-                // Xử lý lỗi nếu có
-                console.error(xhr.responseText);
-            }
-        });
-    });
-});
+                // Gọi sự kiện click của button
+                $('.action').click(function (e) {
+                    e.preventDefault();
+                    var action = $(this).attr('value');
+                    var lwid = $(this).attr('data-id');
+                    $.ajax({
+                        type: "POST",
+                        url: "withdrawalprocessing",
+                        data: {actions: action, lwids: lwid},
+                        success: function (response) {
+                            // Xử lý phản hồi từ server nếu cần
+                            alert(response);
+                            window.location.href = "withdrawalprocessing";
+                        },
+                        error: function (xhr, status, error) {
+                            // Xử lý lỗi nếu có
+                            console.error(xhr.responseText);
+                        }
+                    });
+                });
+            });
 
         </script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

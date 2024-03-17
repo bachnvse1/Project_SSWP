@@ -12,7 +12,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Yêu cầu rút tiền</title>
         <link rel="stylesheet" href="css/font-awesome.min.css">
-        <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
+        
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
@@ -20,18 +20,16 @@
         <!-- Bootstrap -->
         <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
         <!-- Slick -->
-        <link type="text/css" rel="stylesheet" href="css/slick.css"/>
-        <link type="text/css" rel="stylesheet" href="css/slick-theme.css"/>
+        
         <!-- nouislider -->
         <link type="text/css" rel="stylesheet" href="css/nouislider.min.css"/>
         <!-- Font Awesome Icon -->
         <link rel="stylesheet" href="css/font-awesome.min.css"/>
         <!-- Custom stlylesheet -->
-        <link type="text/css" rel="stylesheet" href="css/style.css" />   
+
         <!--Table-->
     </head>
     <body>
-        <%@include file="components/navBar.jsp" %>
         <section class="ftco-section">
             <div class="container">
                 <div class="row justify-content-center">				
@@ -102,7 +100,7 @@
             <i class="fa fa-plus"></i> Gửi yêu cầu
         </button>
         <div class="modal-dialog modal-lg" role="document">
-            <div id="withdrawalModal" class="modal-content" style="display: none">
+            <div id="withdrawalModal" class="modal-content" style="display: none;">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12">

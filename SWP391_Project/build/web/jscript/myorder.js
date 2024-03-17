@@ -7,7 +7,6 @@
 
 $(document).ready(function () {
     // Ẩn form khi trang được tải
-<<<<<<< HEAD
     document.getElementById("ProductDisplay").style.display = 'block';
     document.getElementById("Filter").style.display = 'block';
     if ($.fn.DataTable.isDataTable('#orderBuy')) {
@@ -19,16 +18,6 @@ $(document).ready(function () {
         $('#orderBuy-complete').DataTable().destroy();
     }
 
-=======
-//    $("#addProductForm").hide();
-//    $("#orderBuy").hide();
-//    $("#myModalComplain").hide();
-//    $("#myModalVerify").hide();
-//    $("#orderBuy-complete").hide();
-//    $("#exampleModalCreate").hide();
-//    $("#ProductCompleteDisplay").hide();
-//    $("#ProductProcessingDisplay").hide();  
->>>>>>> origin/branch-10
     // Xử lý sự kiện khi nhấn nút "Add Product"
     $("#addProductButton").click(function () {
         document.getElementById("addProductForm").style.display = 'block';
@@ -611,11 +600,6 @@ showPopupButton.addEventListener('click', function () {
     // Khóa cuộn trang
     document.body.style.overflow = 'hidden';
 });
-
-
-
-
-
 
 
 

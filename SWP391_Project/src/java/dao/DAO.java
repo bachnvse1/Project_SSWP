@@ -328,7 +328,7 @@ public class DAO extends DBContext {
 
         }
     }
-    
+
     public void updateOrderStatus(int uid, String status, int oid) {
         String query = "UPDATE intermediate_Orders\n"
                 + "SET \n"
@@ -349,7 +349,6 @@ public class DAO extends DBContext {
 
         }
     }
-    
 
     public Product getProductByID(int id) {
 
@@ -569,7 +568,7 @@ public class DAO extends DBContext {
         }
         return generatedId;
     }
-    
+
     public int insertTransactionVnpay(int uid, String paymentCode, String status) {
         int generatedId = -1; // Giá trị mặc định nếu không có ID được sinh ra
         String query = "INSERT INTO transactions (user_id, paymentCode, status)\n"
@@ -1093,7 +1092,7 @@ public class DAO extends DBContext {
         return list;
 
     }
-    
+
     public List<intermediateOrders> getAllOrderByStatus(String status) {
         List<intermediateOrders> list = new ArrayList<>();
         String sql = "SELECT * FROM swp_demo.intermediate_orders\n"
@@ -1126,8 +1125,6 @@ public class DAO extends DBContext {
         return list;
 
     }
-    
-    
 
     public intermediateOrders getOrderByProductID(int id) {
         String sql = "SELECT * FROM swp_demo.intermediate_orders\n"
@@ -1159,8 +1156,6 @@ public class DAO extends DBContext {
         return null;
 
     }
-    
-    
 
     public intermediateOrders getOrderByID(int id) {
         String sql = "SELECT * FROM swp_demo.intermediate_orders\n"
@@ -1336,7 +1331,7 @@ public class DAO extends DBContext {
     }
 
     public List<Product> getAllProductByCategory(int categoryId) {
-         List<Product> list = new ArrayList<>();
+        List<Product> list = new ArrayList<>();
         String sql = "SELECT * FROM swp_demo.product where is_delete = false AND categoryID = ?";
         try {
             con = new DBContext().connection;
@@ -1376,8 +1371,8 @@ public class DAO extends DBContext {
             for (int i = 1; i <= 12; i++) {
                 String sqlCount = "SELECT COUNT(id) FROM swp_demo.product where  MONTH(create_at) = ?";
                 PreparedStatement countStatement = connection.prepareStatement(sqlCount);
-                 countStatement.setInt(1, i);
-                
+                countStatement.setInt(1, i);
+
                 ResultSet countResultSet = countStatement.executeQuery();
                 countResultSet.next(); // Move to the first row
                 int productCount = countResultSet.getInt(1);
@@ -1872,9 +1867,8 @@ public class DAO extends DBContext {
 
         }
     }
-    
-<<<<<<< HEAD
-    public List<Report> getTopNext3Report(int uid,int amount) {
+
+    public List<Report> getTopNext3Report(int uid, int amount) {
         List<Report> list = new ArrayList<>();
         String query = "SELECT * FROM Report where create_by = ? ORDER BY id desc LIMIT 3 OFFSET ?;";
         try {
@@ -1902,35 +1896,32 @@ public class DAO extends DBContext {
         return list;
     }
 
-=======
-   public List<Withdrawal> getWitdrawalbyUser(int id) {
+    public List<Withdrawal> getWitdrawalbyUser(int id) {
         List<Withdrawal> list = new ArrayList<>();
         String sql = "SELECT * FROM withdrawals WHERE created_by = ? ORDER BY withdrawal_id DESC";
         try {
             con = new DBContext().connection;
->>>>>>> origin/branch-10
-
             ps = con.prepareStatement(sql);
-          //  if(status.equals("")){
+            //  if(status.equals("")){
             ps.setInt(1, id);
-           // }//else{
-                
-         //   ps.setString(2,"AND status = " + status);    
-           // }
+            // }//else{
+
+            //   ps.setString(2,"AND status = " + status);    
+            // }
             rs = ps.executeQuery();
             while (rs.next()) {
 
                 list.add(new Withdrawal(rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
-                        rs.getDouble(4), 
+                        rs.getDouble(4),
                         rs.getString(5),
                         rs.getString(6),
-                        rs.getString(7), 
-                        rs.getString(8), 
-                        rs.getString(9), 
-                        rs.getInt(10), 
-                        rs.getTimestamp(11), 
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getInt(10),
+                        rs.getTimestamp(11),
                         rs.getTimestamp(12),
                         rs.getInt(13)));
             }
@@ -1940,26 +1931,27 @@ public class DAO extends DBContext {
         }
         return list;
     }
-   public List<Withdrawal> getAllWithdrawal(){
+
+    public List<Withdrawal> getAllWithdrawal() {
         List<Withdrawal> list = new ArrayList<>();
         String sql = "SELECT * FROM withdrawals ORDER BY withdrawal_id DESC ";
         try {
             con = new DBContext().connection;
-            ps = con.prepareStatement(sql);          
+            ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
 
                 list.add(new Withdrawal(rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
-                        rs.getDouble(4), 
+                        rs.getDouble(4),
                         rs.getString(5),
                         rs.getString(6),
-                        rs.getString(7), 
-                        rs.getString(8), 
-                        rs.getString(9), 
-                        rs.getInt(10), 
-                        rs.getTimestamp(11), 
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getInt(10),
+                        rs.getTimestamp(11),
                         rs.getTimestamp(12),
                         rs.getInt(13)));
             }
@@ -1968,14 +1960,15 @@ public class DAO extends DBContext {
             System.out.println(ex);
         }
         return list;
-   }
-   public void InsertWithdrawal(Withdrawal withdrawal){
-       String sql = "INSERT INTO withdrawals (withdrawal_code, status, amount, account_number, account_holder, bank_name, bank_branch, response, created_by, updated_by)"
-               + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-             try {
+    }
+
+    public void InsertWithdrawal(Withdrawal withdrawal) {
+        String sql = "INSERT INTO withdrawals (withdrawal_code, status, amount, account_number, account_holder, bank_name, bank_branch, response, created_by, updated_by)"
+                + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try {
             con = new DBContext().connection; //connect sql
             ps = con.prepareStatement(sql);
-            
+
             ps.setString(1, withdrawal.getCode());
             ps.setString(2, withdrawal.getStatus());
             ps.setDouble(3, withdrawal.getAmount());
@@ -1990,9 +1983,10 @@ public class DAO extends DBContext {
 
         } catch (Exception e) {
 
-        } 
-   }
-   public int getIdWithdrawal() {
+        }
+    }
+
+    public int getIdWithdrawal() {
         String query = "SELECT MAX(withdrawal_id) AS max_id FROM swp_demo.withdrawals";
         try {
             con = new DBContext().connection; //connect sql
@@ -2006,64 +2000,53 @@ public class DAO extends DBContext {
         }
         return 0;
     }
-   public void UpdateWithdrawal(String status,String response, int wid){
-            String sql = "UPDATE withdrawals SET status = ?, response = ? WHERE withdrawal_id = ?";
+
+    public void UpdateWithdrawal(String status, String response, int wid) {
+        String sql = "UPDATE withdrawals SET status = ?, response = ? WHERE withdrawal_id = ?";
         try {
             con = new DBContext().connection;
             ps = con.prepareStatement(sql);
             ps.setString(1, status);
             ps.setString(2, response);
-             ps.setInt(3, wid);
+            ps.setInt(3, wid);
             ps.executeUpdate();
             // Execute the update query         
         } catch (SQLException e) {
             System.out.println(e);
         }
-   }
-   public Withdrawal getWithdrawalByID(int wid){
-     String sql = "SELECT * FROM swp_demo.withdrawals where withdrawal_id = ?";
+    }
+
+    public Withdrawal getWithdrawalByID(int wid) {
+        String sql = "SELECT * FROM swp_demo.withdrawals where withdrawal_id = ?";
         try {
             con = new DBContext().connection;
             ps = con.prepareStatement(sql);
-            ps.setInt(1,wid);
+            ps.setInt(1, wid);
             rs = ps.executeQuery();
             while (rs.next()) {
                 return new Withdrawal(rs.getInt(1),
                         rs.getString(2),
-                        rs.getString(3), 
-                        rs.getDouble(4), 
-                        rs.getString(5), 
-                        rs.getString(6), 
-                        rs.getString(7), 
+                        rs.getString(3),
+                        rs.getDouble(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
                         rs.getString(8),
-                        rs.getString(9), 
+                        rs.getString(9),
                         rs.getInt(10),
-                        rs.getTimestamp(11), 
+                        rs.getTimestamp(11),
                         rs.getTimestamp(12),
-                        rs.getInt(13))
-                        ;
-                        
+                        rs.getInt(13));
+
             }
 
         } catch (SQLException ex) {
             System.out.println(ex);
         }
         return null;
-   }
-    
+    }
+
     public static void main(String[] args) {
         DAO dao = new DAO();
-<<<<<<< HEAD
-       List<Report> list = dao.getTopNext3Report(3, 0);
-        for (Report report : list) {
-            System.out.println(report.getDescription());
-        }
-        
-=======
-        
-        Withdrawal w = dao.getWithdrawalByID(1);
-        System.out.println(w.toString());
-     
->>>>>>> origin/branch-10
     }
 }
