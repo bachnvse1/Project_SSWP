@@ -19,7 +19,7 @@ public class Withdrawal {
     public Withdrawal() {
     }
 
-    public Withdrawal(int id, String code, String status, double amount, String account_number, String account_holder, String bankname, String bankbranch, String response, int created_by, Timestamp created_at, int updated_by, Timestamp updated_at) {
+    public Withdrawal(int id, String code, String status, double amount, String account_number, String account_holder, String bankname, String bankbranch, String response, int created_by, Timestamp created_at, Timestamp updated_at, int updated_by) {
         this.id = id;
         this.created_by = created_by;
         this.updated_by = updated_by;

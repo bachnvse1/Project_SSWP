@@ -1647,7 +1647,7 @@ public class DAO extends DBContext {
     
    public List<Withdrawal> getWitdrawalbyUser(int id) {
         List<Withdrawal> list = new ArrayList<>();
-        String sql = "SELECT * FROM withdrawals WHERE created_by = ?";
+        String sql = "SELECT * FROM withdrawals WHERE created_by = ? ORDER BY withdrawal_id DESC";
         try {
             con = new DBContext().connection;
 
@@ -1672,8 +1672,8 @@ public class DAO extends DBContext {
                         rs.getString(9), 
                         rs.getInt(10), 
                         rs.getTimestamp(11), 
-                        rs.getInt(13),
-                        rs.getTimestamp(12)));
+                        rs.getTimestamp(12),
+                        rs.getInt(13)));
             }
 
         } catch (Exception ex) {
@@ -1683,7 +1683,7 @@ public class DAO extends DBContext {
     }
    public List<Withdrawal> getAllWithdrawal(){
         List<Withdrawal> list = new ArrayList<>();
-        String sql = "SELECT * FROM withdrawals";
+        String sql = "SELECT * FROM withdrawals ORDER BY withdrawal_id DESC ";
         try {
             con = new DBContext().connection;
             ps = con.prepareStatement(sql);          
@@ -1701,8 +1701,8 @@ public class DAO extends DBContext {
                         rs.getString(9), 
                         rs.getInt(10), 
                         rs.getTimestamp(11), 
-                        rs.getInt(13),
-                        rs.getTimestamp(12)));
+                        rs.getTimestamp(12),
+                        rs.getInt(13)));
             }
 
         } catch (Exception ex) {
@@ -1780,8 +1780,9 @@ public class DAO extends DBContext {
                         rs.getString(9), 
                         rs.getInt(10),
                         rs.getTimestamp(11), 
-                        rs.getInt(12),
-                        rs.getTimestamp(13));
+                        rs.getTimestamp(12),
+                        rs.getInt(13))
+                        ;
                         
             }
 

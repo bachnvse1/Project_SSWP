@@ -6,6 +6,7 @@
 package Controller;
 
 import Entity.User;
+import Entity.Wallet;
  import Entity.Withdrawal;
 import dao.DAO;
 import java.io.IOException;
@@ -34,11 +35,7 @@ public class WithdrawalProcessingServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-     DAO dao = new DAO();
-       List<Withdrawal> listWithdrawal = dao.getAllWithdrawal();     
-        
-       request.setAttribute("listWithdrawal", listWithdrawal);
-       request.getRequestDispatcher("withdrawalProcessing.jsp").forward(request, response);
+      
        
     } 
 
@@ -53,8 +50,11 @@ public class WithdrawalProcessingServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-      // processRequest(request, response);
-      DAO dao = new DAO();
+   //   processRequest(request, response);
+         DAO dao = new DAO();
+        List<Withdrawal> listWithdrawal = dao.getAllWithdrawal();     
+        request.setAttribute("listWithdrawal", listWithdrawal);
+        request.getRequestDispatcher("withdrawalProcessing.jsp").forward(request, response);
     
     } 
 
@@ -68,7 +68,40 @@ public class WithdrawalProcessingServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+      //  processRequest(request, response);
+      String wid_st = request.getParameter("lwids");
+      String action = request.getParameter("actions");
+      DAO dao = new DAO();
+        try {
+            int wid = Integer.parseInt(wid_st);
+             Withdrawal w = dao.getWithdrawalByID(wid);
+          switch (action) {
+              case "complete" -> {
+                  dao.UpdateWithdrawal("Hoàn thành", w.getResponse(), wid);
+                  response.getWriter().write("success");
+              }
+              case "error" ->  {
+                      dao.UpdateWithdrawal("Bị lỗi", w.getResponse(), wid);
+                      Wallet wa = dao.getWallet(w.getCreated_by());
+                      dao.updateAmount(wa.getBalance()+(w.getAmount()*9/10), w.getCreated_by());
+                      response.getWriter().write("success");
+                  }
+              case "accept" -> {
+                  dao.UpdateWithdrawal("Chờ chuyển khoản", w.getResponse(), wid);
+                  response.getWriter().write("success");
+              }
+              default ->                   {
+                      dao.UpdateWithdrawal("Bị từ chối", w.getResponse(), wid);
+                      Wallet wa = dao.getWallet(w.getCreated_by());
+                      dao.updateAmount(wa.getBalance()+(w.getAmount()*9/10), w.getCreated_by());
+                      response.getWriter().write("success");
+                  }
+          }
+        } catch (IOException | NumberFormatException e) {
+            response.getWriter().write("error");
+        }
+     
+      
     }
 
     /** 

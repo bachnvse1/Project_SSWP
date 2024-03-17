@@ -18,8 +18,8 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
         <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-
-
+       
+        
     </head>
     <body>                                     
         <table id="drawalProcessing" class="display" style="width:100%">
@@ -52,14 +52,14 @@
                                 <c:when test="${lw.getStatus() eq 'Mới tạo'}">
                                     <a href="#" class="btn btn-info">${lw.getStatus()}</a>
                                 </c:when>
-                                <c:when test="${w.getStatus() eq 'Bị từ chối'}">
+                                <c:when test="${lw.getStatus() eq 'Bị từ chối'}">
                                     <a href="#" class="btn btn-danger">${lw.getStatus()}</a>
                                 </c:when>                                                                                                                          
-                                <c:when test="${w.getStatus() eq 'Bị lỗi'}">
+                                <c:when test="${lw.getStatus() eq 'Bị lỗi'}">
                                     <a href="#" class="btn btn-warning">${lw.getStatus()}</a>
                                 </c:when>
-                                <c:when test="${w.getStatus() eq 'Chờ chuyển khoản'}">
-                                    <a href="#" class="btn btn-color">${lw.getStatus()}</a>
+                                <c:when test="${lw.getStatus() eq 'Chờ chuyển khoản'}">
+                                    <a href="#" class="btn btn-dark">${lw.getStatus()}</a>
                                 </c:when>
                                 <c:otherwise>
                                     <a href="#" class="btn btn-secondary">${lw.getStatus()}</a>
@@ -74,98 +74,61 @@
                         <th>${lw.getResponse()}</th>
                         <th>${lw.getCreated_at()}</th>
                         <th>${lw.getUpdated_at()}</th>
-                        <th><button id="updateWithdrawalButton" type="button" class="btn btn-success" data-lw-id="${lw.getId()}>
-                                <i class="fas fa-pencil-alt"> Update
-                            </button></th>
+                        <th style="display: flex"> 
+                            <c:choose>
+                                <c:when test="${lw.getStatus() eq 'Hoàn thành'}">
+                                    <button  href="#" class="btn btn-success">Hoàn thành</button>
+                                </c:when>
+                                <c:when test="${lw.getStatus() eq 'Mới tạo'}">
+                                    <button name="action2" value="delete" data-id="${lw.getId()}" href="#" class="action btn btn-danger">Hủy bỏ</button>
+                                    <button name="action2" value="accept" data-id="${lw.getId()}" href="#" class="action btn btn-info">Xác nhận</button>                                   
+                                </c:when>
+                                <c:when test="${lw.getStatus() eq 'Bị từ chối'}">
+                                    <button  href="#" class="btn btn-danger">Đã từ chối</button>
+                                </c:when>                                                                                                                          
+                                <c:when test="${lw.getStatus() eq 'Bị lỗi'}">
+                                    <button href="#" class="btn btn-danger">Sai thông tin</button>
+                                </c:when>
+                                <c:when test="${lw.getStatus() eq 'Chờ chuyển khoản'}">
+                                    <button name="action2" value="error" data-id="${lw.getId()}" class="action btn btn-danger">Bị lỗi</button>
+                                    <button name="action2" value="complete" data-id="${lw.getId()}" class="action btn btn-success">Đã xong</button>
+                                </c:when>
+                                <c:otherwise>
+                                
+                                </c:otherwise>
+                            </c:choose>
+                        </th>
                     </tr>
                 </c:forEach>
             </tbody>
-
-        </table>
-        <div class="modal fade" id="updateForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Update Form</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="updateWithdrawalForm">
-                            <div class="form-group">
-                                <label for="code">Mã yêu cầu</label>
-                                <input type="text" class="form-control" id="code" name="code">
-                            </div>
-                            <div class="form-group">
-                                <label for="amount">Số tiền rút</label>
-                                <input type="text" class="form-control" id="amount" name="amount">
-                            </div>
-                            <div class="form-group">
-                                <label for="accountNumber">Số tài khoản</label>
-                                <input type="text" class="form-control" id="accountNumber" name="accountNumber">
-                            </div>
-                            <div class="form-group">
-                                <label for="accountHolder">Chủ tài khoản</label>
-                                <input type="text" class="form-control" id="accountHolder" name="accountHolder">
-                            </div>
-                            <div class="form-group">
-                                <label for="bankName">Tên ngân hàng</label>
-                                <input type="text" class="form-control" id="bankName" name="bankName">
-                            </div>
-                            <div class="form-group">
-                                <label for="status">Trạng thái</label>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="status" id="status1" value="Hoàn thành">
-                                    <label class="form-check-label" for="status1">Hoàn thành</label>
-                                </div>                                
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="status" id="status3" value="Bị từ chối">
-                                    <label class="form-check-label" for="status2">Từ chối</label>
-                                </div>
-                                 <div class="form-check">
-                                     <input class="form-check-input" type="radio" name="status" id="status3" value="Chờ chuyển khoản" checked>
-                                    <label class="form-check-label" for="status3">Chờ chuyển khoản</label>
-                                </div>
-                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="status" id="status3" value="Bị lỗi">
-                                    <label class="form-check-label" for="status3">Bị Lỗl</label>
-                                </div>
-                               
-                            </div>
-                            <div class="form-group">
-                                <label for="response">Phản hồi</label>
-                                <input type="text" class="form-control" id="response" name="response">
-                            </div>
-                            <button type="submit" class="btn btn-primary">Cập nhật</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+     </table>      
         <script>
-            $(document).ready(function () {
-                // Initialize DataTable
-                $('#drawalProcessing').DataTable();
+          $(document).ready(function () {
+    // Khởi tạo DataTable
+    // var table = $('#drawalProcessing').DataTable();
 
-                // Show modal when "Update" button is clicked
-                $('#drawalProcessing').on('click', '#updateWithdrawalButton', function () {
-                     var withdrawalid = $(this).data('lw-id');
-                  
-                     $.ajax({
-            type: 'GET',
-            url: 'withdrawalprocessing',
-            data: {wid: withdrawalid},
-            success: function (response) {
-                    $('#updateForm').modal('show');
-                    
-                // Code xử lý dữ liệu phản hồi cho modal2
-                var responseData = response.split(";");
-              
+    // Gọi sự kiện click của button
+    $('.action').click(function(e) {
+        e.preventDefault();
+        var action = $(this).attr('value');
+        var lwid = $(this).attr('data-id');
+        $.ajax({
+            type: "POST",
+            url: "withdrawalprocessing",
+            data: { actions: action, lwids: lwid },
+            success: function(response){
+                // Xử lý phản hồi từ server nếu cần
+                alert(response);
+                window.location.href = "withdrawalprocessing";
+            },
+            error: function(xhr, status, error){
+                // Xử lý lỗi nếu có
+                console.error(xhr.responseText);
             }
         });
-                });
-            });
+    });
+});
+
         </script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     </body>

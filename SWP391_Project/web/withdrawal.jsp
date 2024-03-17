@@ -90,24 +90,7 @@
                                     <th>${w.getUpdated_at()}</th>
 
                                     </tr>
-                                </c:forEach>
-                                <!--						    <tr>
-                                                                                      <th scope="row">1001</th>
-                                                                                      <td>Mark Otto</td>
-                                                                                      <td>Japan</td>
-                                                                                      <td>$3000</td>
-                                                                                      <td>$1200</td>
-                                                                                      <td><a href="#" class="btn btn-warning">Open</a></td>
-                                                                                    </tr>
-                                
-                                                                                    <tr>
-                                                                                      <th scope="row">1001</th>
-                                                                                      <td>Mark Otto</td>
-                                                                                      <td>Japan</td>
-                                                                                      <td>$3000</td>
-                                                                                      <td>$1200</td>
-                                                                                      <td><a href="#" class="btn btn-danger">On hold</a></td>
-                                                                                    </tr>-->
+                                </c:forEach>                            
                                 </tbody>
                             </table>
                         </div>
