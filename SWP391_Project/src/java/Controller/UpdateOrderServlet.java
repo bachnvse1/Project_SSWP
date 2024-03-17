@@ -119,7 +119,11 @@ public class UpdateOrderServlet extends HttpServlet {
 //       request.getRequestDispatcher("manageMyOrder").forward(request, response);
             response.getWriter().write("success");
         } else {
+<<<<<<< HEAD
             response.getWriter().print("Không thể chỉnh sửa sản phẩm!");
+=======
+            response.getWriter().print("Không thể cập nhật đơn hàng!");
+>>>>>>> origin/branch-10
         }
 
     }

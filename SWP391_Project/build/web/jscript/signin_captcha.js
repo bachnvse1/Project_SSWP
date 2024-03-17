@@ -8,21 +8,33 @@
 /* global Swal */
 
 $(document).ready(function () {
-    $("#signin-Button").click(function () {
-        $.ajax({
-            type: 'GET',
-            url: "signin.jsp",
-            success: function (response) {
-                $("body").html(response);
-            },
-            error: function () {
-                // Xử lý lỗi nếu có
-                alert("Đã xảy ra lỗi khi tải trang");
-            }
-        });
-
-    });
+    $("#signin-Button").click(function () {                   
+                    window.location.href = "login";
+              });
 });
+
+$(document).ready(function() {            
+            $("#user-Signin").keypress(function(event) {
+                if (event.keyCode === 13) {
+                    event.preventDefault();
+                    SignIn(); 
+                }
+            });
+       
+            $("#password-field").keypress(function(event) {
+                if (event.keyCode === 13) {
+                    event.preventDefault();
+                    SignIn();
+                }
+            });
+
+            $("#captcha").keypress(function(event) {
+                if (event.keyCode === 13) {
+                    event.preventDefault();
+                    SignIn(); 
+                }
+            });
+        });
 
 
 $(document).ready(function() {            

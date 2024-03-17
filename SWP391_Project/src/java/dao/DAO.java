@@ -11,15 +11,14 @@ import Entity.Product;
 import Entity.Report;
 import Entity.User;
 import Entity.Wallet;
+import Entity.Withdrawal;
 import Entity.intermediateOrders;
 import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
 import java.sql.SQLException;
 import java.util.*;
-import java.sql.Timestamp;
 import java.text.Normalizer;
 
 /**
@@ -1874,6 +1873,7 @@ public class DAO extends DBContext {
         }
     }
     
+<<<<<<< HEAD
     public List<Report> getTopNext3Report(int uid,int amount) {
         List<Report> list = new ArrayList<>();
         String query = "SELECT * FROM Report where create_by = ? ORDER BY id desc LIMIT 3 OFFSET ?;";
@@ -1902,13 +1902,168 @@ public class DAO extends DBContext {
         return list;
     }
 
+=======
+   public List<Withdrawal> getWitdrawalbyUser(int id) {
+        List<Withdrawal> list = new ArrayList<>();
+        String sql = "SELECT * FROM withdrawals WHERE created_by = ? ORDER BY withdrawal_id DESC";
+        try {
+            con = new DBContext().connection;
+>>>>>>> origin/branch-10
 
+            ps = con.prepareStatement(sql);
+          //  if(status.equals("")){
+            ps.setInt(1, id);
+           // }//else{
+                
+         //   ps.setString(2,"AND status = " + status);    
+           // }
+            rs = ps.executeQuery();
+            while (rs.next()) {
+
+                list.add(new Withdrawal(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getDouble(4), 
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7), 
+                        rs.getString(8), 
+                        rs.getString(9), 
+                        rs.getInt(10), 
+                        rs.getTimestamp(11), 
+                        rs.getTimestamp(12),
+                        rs.getInt(13)));
+            }
+
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return list;
+    }
+   public List<Withdrawal> getAllWithdrawal(){
+        List<Withdrawal> list = new ArrayList<>();
+        String sql = "SELECT * FROM withdrawals ORDER BY withdrawal_id DESC ";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(sql);          
+            rs = ps.executeQuery();
+            while (rs.next()) {
+
+                list.add(new Withdrawal(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getDouble(4), 
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7), 
+                        rs.getString(8), 
+                        rs.getString(9), 
+                        rs.getInt(10), 
+                        rs.getTimestamp(11), 
+                        rs.getTimestamp(12),
+                        rs.getInt(13)));
+            }
+
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return list;
+   }
+   public void InsertWithdrawal(Withdrawal withdrawal){
+       String sql = "INSERT INTO withdrawals (withdrawal_code, status, amount, account_number, account_holder, bank_name, bank_branch, response, created_by, updated_by)"
+               + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+             try {
+            con = new DBContext().connection; //connect sql
+            ps = con.prepareStatement(sql);
+            
+            ps.setString(1, withdrawal.getCode());
+            ps.setString(2, withdrawal.getStatus());
+            ps.setDouble(3, withdrawal.getAmount());
+            ps.setString(4, withdrawal.getAccount_number());
+            ps.setString(5, withdrawal.getAccount_holder());
+            ps.setString(6, withdrawal.getBankname());
+            ps.setString(7, withdrawal.getBankbranch());
+            ps.setString(8, withdrawal.getResponse());
+            ps.setInt(9, withdrawal.getCreated_by());
+            ps.setInt(10, withdrawal.getUpdated_by());
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+
+        } 
+   }
+   public int getIdWithdrawal() {
+        String query = "SELECT MAX(withdrawal_id) AS max_id FROM swp_demo.withdrawals";
+        try {
+            con = new DBContext().connection; //connect sql
+            ps = con.prepareStatement(query);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("max_id"); // Lấy giá trị id từ cột max_id trong ResultSet
+                return id;
+            }
+        } catch (Exception e) {
+        }
+        return 0;
+    }
+   public void UpdateWithdrawal(String status,String response, int wid){
+            String sql = "UPDATE withdrawals SET status = ?, response = ? WHERE withdrawal_id = ?";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(sql);
+            ps.setString(1, status);
+            ps.setString(2, response);
+             ps.setInt(3, wid);
+            ps.executeUpdate();
+            // Execute the update query         
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+   }
+   public Withdrawal getWithdrawalByID(int wid){
+     String sql = "SELECT * FROM swp_demo.withdrawals where withdrawal_id = ?";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(sql);
+            ps.setInt(1,wid);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return new Withdrawal(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3), 
+                        rs.getDouble(4), 
+                        rs.getString(5), 
+                        rs.getString(6), 
+                        rs.getString(7), 
+                        rs.getString(8),
+                        rs.getString(9), 
+                        rs.getInt(10),
+                        rs.getTimestamp(11), 
+                        rs.getTimestamp(12),
+                        rs.getInt(13))
+                        ;
+                        
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return null;
+   }
+    
     public static void main(String[] args) {
         DAO dao = new DAO();
+<<<<<<< HEAD
        List<Report> list = dao.getTopNext3Report(3, 0);
         for (Report report : list) {
             System.out.println(report.getDescription());
         }
         
+=======
+        
+        Withdrawal w = dao.getWithdrawalByID(1);
+        System.out.println(w.toString());
+     
+>>>>>>> origin/branch-10
     }
 }

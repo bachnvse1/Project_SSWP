@@ -7,6 +7,7 @@
 
 $(document).ready(function () {
     // Ẩn form khi trang được tải
+<<<<<<< HEAD
     document.getElementById("ProductDisplay").style.display = 'block';
     document.getElementById("Filter").style.display = 'block';
     if ($.fn.DataTable.isDataTable('#orderBuy')) {
@@ -18,6 +19,16 @@ $(document).ready(function () {
         $('#orderBuy-complete').DataTable().destroy();
     }
 
+=======
+//    $("#addProductForm").hide();
+//    $("#orderBuy").hide();
+//    $("#myModalComplain").hide();
+//    $("#myModalVerify").hide();
+//    $("#orderBuy-complete").hide();
+//    $("#exampleModalCreate").hide();
+//    $("#ProductCompleteDisplay").hide();
+//    $("#ProductProcessingDisplay").hide();  
+>>>>>>> origin/branch-10
     // Xử lý sự kiện khi nhấn nút "Add Product"
     $("#addProductButton").click(function () {
         document.getElementById("addProductForm").style.display = 'block';
@@ -224,9 +235,9 @@ $(document).ready(function () {
                 document.getElementById("productName_ud").value = responseData[1];
                 document.getElementById("price_ud").value = responseData[2];
                 document.getElementById("intermediaryFee_ud").value = responseData[3];
-                if (responseData[4] === 'Seller') {
+                if (responseData[4] === 'Bên Bán') {
                     document.getElementById("partySeller_ud").checked = true;
-                } else if (responseData[4] === 'Buyer') {
+                } else if (responseData[4] === 'Bên Mua') {
                     document.getElementById("partyBuyer_ud").checked = true;
                 }
                 document.getElementById("receivedAmount_ud").value = responseData[5];
@@ -280,6 +291,7 @@ $(document).ready(function () {
             error: function (xhr, status, error) {
                 // Xử lý lỗi (nếu có)
                 alert("loi");
+                console.error(xhr.responseText);
             }
         });
     });
