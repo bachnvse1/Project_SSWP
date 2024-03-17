@@ -30,9 +30,30 @@ public class Product {
 
     public Timestamp update_At;
     public boolean is_delete;
-
+    public String Username;
     public Product() {
         
+    }
+
+    public Product(int id, String name, double price, int CategoryID, String Description, String image1, String image2, String image3, String image4, boolean Transaction_fee, String Contact_Method, int create_by, String hidden_content, Timestamp create_At, int update_by, Timestamp update_At, boolean is_delete, String Username) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.CategoryID = CategoryID;
+        this.Description = Description;
+        this.image1 = image1;
+        this.image2 = image2;
+        this.image3 = image3;
+        this.image4 = image4;
+        this.Transaction_fee = Transaction_fee;
+        this.Contact_Method = Contact_Method;
+        this.create_by = create_by;
+        this.hidden_content = hidden_content;
+        this.create_At = create_At;
+        this.update_by = update_by;
+        this.update_At = update_At;
+        this.is_delete = is_delete;
+        this.Username = Username;
     }
 
     public Product(int id, String name, double price, int CategoryID, String Description, String image1, String image2, String image3, String image4, boolean Transaction_fee, String Contact_Method, int create_by, String hidden_content, Timestamp create_At, int update_by, Timestamp update_At, boolean is_delete) {
@@ -53,6 +74,14 @@ public class Product {
         this.update_by = update_by;
         this.update_At = update_At;
         this.is_delete = is_delete;
+    }
+
+    public String getUsername() {
+        return Username;
+    }
+
+    public void setUsername(String Username) {
+        this.Username = Username;
     }
 
     public String getContact_Method() {
@@ -196,6 +225,10 @@ public class Product {
     @Override
     public String toString() {
         return "Product{" + "id=" + id + ", name=" + name + ", price=" + price + ", CategoryID=" + CategoryID + ", Description=" + Description + ", image1=" + image1 + ", image2=" + image2 + ", image3=" + image3 + ", image4=" + image4 + ", Transaction_fee=" + Transaction_fee + ", Contact_Method=" + Contact_Method + ", create_by=" + create_by + ", hidden_content=" + hidden_content + ", create_At=" + create_At + ", update_by=" + update_by + ", update_At=" + update_At + ", is_delete=" + is_delete + '}';
+    }
+
+    public int getCategoryId() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
 
