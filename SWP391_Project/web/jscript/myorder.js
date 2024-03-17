@@ -531,16 +531,6 @@ $(document).ready(function () {
         document.getElementById("myModalComplain").style.display = 'block';
     });
 
-//    $(document).on("click", ".verifyButton", function (e) {
-//        e.preventDefault();
-//        var orderId = $(this).data("orderid");
-//        var proid = $(this).data("proid");
-//        $("#order_id").val(orderId); // Cập nhật giá trị của trường input // Cập nhật giá trị của trường input
-//        $("#pro_id1").val(proid);
-//        document.getElementById("myModalVerify").style.display = 'block';
-//    });
-
-
     // Khi người dùng nhấn vào nút đóng (×), đóng modal
     $(".close").click(function () {
         document.getElementById("myModalComplain").style.display = 'none';

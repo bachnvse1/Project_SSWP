@@ -1527,14 +1527,8 @@ public class DAO extends DBContext {
     public ArrayList<Feedback> getFeedbackList(int currentPage, int itemsPerPage) {
         ArrayList<Feedback> list = new ArrayList<>();
         try {
-<<<<<<< HEAD
-
-            String sql = "SELECT f.*, u.username FROM swp_demo.feedback f JOIN swp_demo.users u ON f.user_id = u.id ORDER BY f.id DESC";
-=======
             // Calculate the offset for pagination
             int offset = (currentPage - 1) * itemsPerPage;
->>>>>>> origin/branch-31
-
             String sql = "SELECT f.*, u.username FROM swp_demo.feedback f JOIN swp_demo.users u ON f.user_id = u.id ORDER BY f.id DESC LIMIT ?, ?";
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, offset);
@@ -1879,7 +1873,6 @@ public class DAO extends DBContext {
 
         }
     }
-<<<<<<< HEAD
     
     public List<Report> getTopNext3Report(int uid,int amount) {
         List<Report> list = new ArrayList<>();
@@ -1908,8 +1901,7 @@ public class DAO extends DBContext {
         }
         return list;
     }
-=======
->>>>>>> origin/branch-31
+
 
     public static void main(String[] args) {
         DAO dao = new DAO();
