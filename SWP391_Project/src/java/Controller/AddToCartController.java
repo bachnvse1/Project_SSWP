@@ -68,6 +68,60 @@ public class AddToCartController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
+        String productId = request.getParameter("productId");
+        int id = Integer.parseInt(productId);
+        DAO dao = new DAO();
+        //Product product = dao.getProductById(id);
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            if (session.getAttribute("cart") == null) {
+                Cart cart = new Cart();
+                List<Product> listProduct = new ArrayList<>();
+                Product product = dao.getProductById(id);
+                listProduct.add(product);
+                cart.setProduct(listProduct);
+                session.setAttribute("cart", cart);
+            } else {
+                // Giỏ hàng đã tồn tại
+                Cart cart = (Cart) session.getAttribute("cart");
+                List<Product> listProduct = cart.getProduct();
+
+                // Kiểm tra xem sản phẩm có "id" đã tồn tại trong giỏ hàng hay không
+                boolean productExists = false;
+                for (Product p : listProduct) {
+                    if (p.getId() == id) {
+                        productExists = true;
+                        break;
+                    }
+                }
+
+                // Nếu sản phẩm chưa tồn tại, thêm vào list
+                if (!productExists) {
+                    Product product = dao.getProductById(id);
+                    listProduct.add(product);
+                    cart.setProduct(listProduct);
+                    session.setAttribute("cart", cart);
+                }
+            }
+            request.getRequestDispatcher("Cart.jsp").forward(request, response);
+        } else {
+            //
+        }
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession();
         String deleteProductId = request.getParameter("deleteProductId");
         if (deleteProductId != null && !deleteProductId.isEmpty()) {
             int deleteId = Integer.parseInt(deleteProductId);
@@ -110,60 +164,6 @@ public class AddToCartController extends HttpServlet {
 
                 }
             }
-        }
-    }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
-        String productId = request.getParameter("productId");
-        int id = Integer.parseInt(productId);
-        DAO dao = new DAO();
-        //Product product = dao.getProductById(id);
-        User user = (User) session.getAttribute("user");
-        if (user != null) {
-            if (session.getAttribute("cart") == null) {
-                Cart cart = new Cart();
-                List<Product> listProduct = new ArrayList<>();
-                Product product = dao.getProductById(id);
-                listProduct.add(product);
-                cart.setProduct(listProduct);
-                session.setAttribute("cart", cart);
-            } else {
-                // Giỏ hàng đã tồn tại
-                Cart cart = (Cart) session.getAttribute("cart");
-                List<Product> listProduct = cart.getProduct();
-
-                // Kiểm tra xem sản phẩm có "id" đã tồn tại trong giỏ hàng hay không
-                boolean productExists = false;
-                for (Product p : listProduct) {
-                    if (p.getId() == id) {
-                        productExists = true;
-                        break;
-                    }
-                }
-
-                // Nếu sản phẩm chưa tồn tại, thêm vào list
-                if (!productExists) {
-                    Product product = dao.getProductById(id);
-                    listProduct.add(product);
-                    cart.setProduct(listProduct);
-                    session.setAttribute("cart", cart);
-                }
-            }
-            request.getRequestDispatcher("Cart.jsp").forward(request, response);
-        } else {
-            //
         }
     }
 
