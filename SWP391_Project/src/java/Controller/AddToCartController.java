@@ -68,6 +68,7 @@ public class AddToCartController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
+<<<<<<< HEAD
         String deleteProductId = request.getParameter("deleteProductId");
         if (deleteProductId != null && !deleteProductId.isEmpty()) {
             int deleteId = Integer.parseInt(deleteProductId);
@@ -127,6 +128,8 @@ public class AddToCartController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
+=======
+>>>>>>> origin/branch-khoaiter3
         String productId = request.getParameter("productId");
         int id = Integer.parseInt(productId);
         DAO dao = new DAO();
@@ -165,6 +168,64 @@ public class AddToCartController extends HttpServlet {
             request.getRequestDispatcher("Cart.jsp").forward(request, response);
         } else {
             //
+        }
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession();
+        String deleteProductId = request.getParameter("deleteProductId");
+        if (deleteProductId != null && !deleteProductId.isEmpty()) {
+            int deleteId = Integer.parseInt(deleteProductId);
+            Cart cart = (Cart) session.getAttribute("cart");
+            if (cart != null) {
+                List<Product> listProduct = cart.getProduct();
+                // Xóa sản phẩm có id tương ứng
+                listProduct.removeIf(product -> product.getId() == deleteId);
+                cart.setProduct(listProduct);
+                session.setAttribute("cart", cart);
+            }
+        }
+        // In trực tiếp HTML chứa danh sách sản phẩm mới
+        try (PrintWriter out = response.getWriter()) {
+            Cart cart = (Cart) session.getAttribute("cart");
+            if (cart != null) {
+                int index = 0; // Khai báo một biến đếm hoặc index
+                for (Product product : cart.getProduct()) {
+                    if (!product.is_delete) {
+                        out.print("<tr>\n"
+                                + "                                <td>" + product.getName() + "</td>\n"
+                                + "                                <td><img src=\"" + product.getImage1() + "\" alt=\"\" style=\"height: 50px;\"/></td>\n"
+                                + "                                <td>" + product.getPrice() + "</td>\n"
+                                + "                                <td><span class=\"delete-icon\" onclick=\"deleteProduct(" + product.getId() + ")\"><i class=\"fa fa-trash\"></i></span></td>\n"
+                                + "                                <td><button class=\"add-to-cart-btn\"  data-target=\"cookiesPopup_" + index + "\">\n"
+                                + "                                        <i class=\"fa fa-shopping-cart\"></i> MUA\n"
+                                + "                                    </button></td>\n"
+                                + "                            </tr>\n"
+                                + "                        <div class=\"container-2\">\n"
+                                + "                            <div class=\"cookiesContent\" id=\"cookiesPopup_" + index + "\">\n"
+                                + "                                <button class=\"close\">✖</button>\n"
+                                + "                                <img src=\"https://dichthuatmientrung.com.vn/wp-content/uploads/2022/06/important-sticky-note.jpg\" alt=\"cookies-img\" style=\"width: 50%;\"/>\n"
+                                + "                                <p style=\"color:red; margin-top: 5%;\">We will hold your intermediary funds and wait until you confirm the transaction is completely successful</p>\n"
+                                + "                                <button class=\"button-buy\" data-id=\"" + product.getId() + "\">MUA</button>\n"
+                                + "                            </div>\n"
+                                + "                        </div>   ");
+                        index++;
+
+                    }
+
+                }
+            }
         }
     }
 

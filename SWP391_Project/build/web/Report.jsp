@@ -93,7 +93,50 @@
                 overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
             }
 
+            /* Modal Content */
+            .modal-content3 {
+                background-color: #fefefe;
+                margin: 5% auto; /* Độ cao từ trên xuống modal */
+                padding: 20px;
+                border: 1px solid #888;
+                width: 90%; /* Độ rộng của modal */
+                border-radius: 10px; /* Bo tròn các góc */
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Hiệu ứng đổ bóng */
+                display: flex; /* Sử dụng flexbox để sắp xếp các cột hàng dọc */
+                flex-direction: column; /* Sắp xếp các phần tử thành cột hàng dọc */
+            }
+            .form-row {
+                display: flex;
+                align-items: baseline; /* Đảm bảo các input thẳng hàng theo baseline của label */
+                margin-bottom: 10px; /* Khoảng cách giữa các cặp label và input */
+            }
 
+            .form-row label {
+                width: 30%; /* Độ rộng của label */
+                margin-right: 10px; /* Khoảng cách giữa label và input */
+            }
+
+            .form-row input {
+                flex: 1; /* Input mở rộng để lấp đầy phần còn lại của container */
+            }
+            .modal-content3 label,
+            .modal-content3 input,
+            .modal-content3 textarea {
+                margin-bottom: 10px; /* Khoảng cách giữa các phần tử */
+            }
+
+            .modal-content3 input,
+            .modal-content3 textarea {
+
+                width: calc(50% - 40px); /* Độ rộng của input và textarea */
+                padding: 10px; /* Khoảng cách giữa nội dung và viền */
+                border-radius: 5px; /* Bo tròn các góc */
+                border: 1px solid #ccc; /* Viền */
+            }
+
+            .modal-content3 textarea {
+                height: 150px; /* Độ cao của textarea */
+            }
 
         </style>
     </head>
@@ -122,9 +165,9 @@
                     <section class="mb-4">
                         <div class="card">
                             <div class="card-header py-3 row">
-                                <div class="col-sm-3">
+                                <div class="col-sm-5">
                                     <h5 class="mb-0 text-left" id="">
-                                        <strong>MANAGE REPORT</strong>
+                                        <strong>QUẢN LÝ KHIẾU NẠI YÊU CẦU XỬ LÝ</strong>
                                     </h5>
                                 </div>
 
@@ -135,69 +178,129 @@
                                     <table class="table table-hover text-nowrap">
                                         <thead>
                                             <tr>
-                                                <th scope="col">Order_ID</th>
-                                                <th scope="col">Type_Report</th>
-                                                <th scope="col">Status</th>
-                                                <th scope="col">Description</th>
-                                                <th scope="col">Created_by</th>                                                
-                                                <th scope="col">Created_at</th>
+                                                <th scope="col">Phân loại</th>
+                                                <th scope="col">Trạng thái</th>
+                                                <th scope="col">Mô tả</th>
+                                                <th scope="col">Tạo bởi</th>                                                
+                                                <th scope="col">Thời gian</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        <c:forEach items="${listR}" var="r">
-                                            <c:if test="${r.type_report == 1}">
+
+                                        <c:forEach items="${combo3}" var="c" varStatus="loop">
+                                            <c:if test="${c.getReport().getType_report() == 7}">
                                                 <tr>
-
-                                                    <td>${r.orderID}</td>
-                                                    <td>${r.type_report}</td>
-                                                    <td>${r.status}</td>
-                                                    <td>${r.description}</td>
-                                                    <td>${r.create_by}</td>
-                                                    <td>${r.create_At}</td>
-
+                                                    <td>${c.getReport().getType_report()}</td>
+                                                    <td>${c.getReport().isStatus()}</td>
+                                                    <td>${c.getReport().getDescription()}</td>
+                                                    <td>${c.getReport().getCreate_by()}</td>
+                                                    <td>${c.getReport().getCreate_At()}</td>
+                                                    
                                                     <td>
-                                                        <c:if test="${r.type_report == 1}">
-                                                            <c:choose>
-                                                                <c:when test="${r.status == true}">
-                                                                    <a class="btn btn-success edit-btn" data-toggle="modal" data-target="#confirmationModal">
-                                                                        Done
-                                                                    </a>
-                                                                </c:when>
-                                                                <c:when test="${r.status != true}">
-                                                                    <a class= "btn btn-danger edit-btn" data-toggle="modal" data-target="#confirmationModal">
-                                                                        Pending
-                                                                    </a>
-                                                                </c:when>
-                                                            </c:choose>
-                                                        </c:if>
+
+                                                        <c:choose>
+                                                            <c:when test="${c.getReport().isStatus() == true}">
+                                                                <a class="btn btn-success edit-btn" data-toggle="modal" data-target="#confirmationModal_${loop.index}">
+                                                                    Done
+                                                                </a>
+                                                            </c:when>
+                                                            <c:when test="${c.getReport().isStatus() != true}">
+                                                                <a class= "btn btn-danger edit-btn" data-toggle="modal" data-target="#confirmationModal_${loop.index}">
+                                                                    Pending
+                                                                </a>
+                                                            </c:when>
+                                                        </c:choose>
+
                                                     </td>
-
+                                                    <td>
+                                                        <span class="info-icon" data-toggle="modal" data-target="#detailModal_${loop.index}">&#8505;</span>
+                                                    </td>
                                                 </tr>
-                                                <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Manage Report</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p>Have you processed this report yet?</p>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <div class="modal-footer">
-                                                            <a href="#" class="btn btn-secondary" onclick="updateReportStatus(${r.id}, false);" data-dismiss="modal">No</a>
-                                                            <a href="#" class="btn btn-primary" onclick="updateReportStatus(${r.id}, true);" data-dismiss="modal">Yes</a>
+                                            <div class="modal fade" id="confirmationModal_${loop.index}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Quản lý khiếu nại</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
                                                         </div>
-                                                    </div>
+                                                        <div class="modal-body">
+                                                            <p>Have you processed this report yet?</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <div class="modal-footer">
+                                                                <a href="#" class="btn btn-secondary" onclick="updateReportStatus(${c.getReport().getId()}, false);" data-dismiss="modal">No</a>
+                                                                <a href="#" class="btn btn-primary" onclick="updateReportStatus(${c.getReport().getId()}, true);" data-dismiss="modal">Yes</a>
+                                                            </div>
+                                                        </div>
 
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                            </c:if>
 
-                                        
+                                            <!-- Modal for displaying details -->
+                                            <div class="modal fade" id="detailModal_${loop.index}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-lg" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Detail Information</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-content3">
+
+
+                                                            <!-- Add your input fields for Name, Price, Image, Content here -->
+                                                            <div class="form-row">
+                                                                <label for="orderCode">Mã giao dịch:</label>
+                                                                <input type="text" id="orderCode" value="${c.getOrder().getCode()}" readonly><br>
+                                                            </div>
+
+                                                            <div class="form-row">
+                                                                <label for="productName">Tên sản phẩm:</label>
+                                                                <input type="text" id="productName" value="${c.getProduct().getName()}" readonly><br>
+                                                            </div>
+                                                            <div class="form-row">
+                                                                <label for="price">Giá:</label>
+                                                                <input type="text" id="price" value="${c.getProduct().getPrice()}" readonly><br>
+                                                            </div>
+
+                                                            <label for="productImage">Hình ảnh:</label>
+                                                            <img style="max-width: 150px; max-height: 150px" id="img1" src="" >
+                                                            <img style="max-width: 150px; max-height: 150px" id="img2" src="" >
+                                                            <img style="max-width: 150px; max-height: 150px" id="img3" src="" >
+                                                            <img style="max-width: 150px; max-height: 150px" id="img4" src="" ><br>
+                                                            <div class="form-row">
+                                                                <label for="description">Mô tả:</label>
+                                                                <input id="description" value="${c.getProduct().getDescription()}" readonly></input><br>
+                                                            </div>
+                                                            <div class="form-row">
+                                                                <label for="hiddenContent">Nội dung ẩn:</label>
+                                                                <input type="text" id="hiddenContent" value="${c.getProduct().getHidden_content()}" readonly><br>
+                                                            </div>
+                                                            <div class="form-row">
+                                                                <label for="party">Người mua:</label>                          
+                                                                <input type="text" id="partyBuyer" name="party" value="${c.getOrder().getBuyer_id()}" readonly><br>
+                                                            </div>
+                                                            <div class="form-row">
+                                                                <label for="party">Người bán:</label>                          
+                                                                <input type="text" id="partySeller" name="party" value="${c.getOrder().getCreate_by()}" readonly><br>
+                                                            </div>
+                                                            <div class="form-row">
+                                                                <label for="contactMethod">Thông tin liên hệ:</label><br>
+                                                                <input type="text" id="contactMethod" value="${c.getProduct().getContact_Method()}"  readonly><br>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- End of Modal -->
+                                        </c:if>
+
+
                                     </c:forEach>
                                     </tbody>
                                 </table>
@@ -243,10 +346,10 @@
         <!-- Custom scripts -->
         <script type="text/javascript" src="js/script.js"></script>  
         <script>
-                                                                function updateReportStatus(id, status) {
-                                                                    // Gọi servlet với các tham số id và status
-                                                                    window.location.href = 'EditReportStatus?id=' + id + '&status=' + status;
-                                                                }
+                                                                    function updateReportStatus(id, status) {
+                                                                        // Gọi servlet với các tham số id và status
+                                                                        window.location.href = 'EditReportStatus?id=' + id + '&status=' + status;
+                                                                    }                                                                    
         </script>
     </body>
 </html>

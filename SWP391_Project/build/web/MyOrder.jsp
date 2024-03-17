@@ -226,6 +226,23 @@
                 left: 50%;
                 transform: translate(-50%, -50%);
             }
+            .historyOrder {
+                background-color: #0061f2; /* Màu nền xanh */
+                color: #ffffff; /* Màu chữ màu trắng */
+                border: none;
+                border-radius: 10px; /* Bo góc */
+                padding: 8px 15px;
+                cursor: pointer;
+                transition: ease-out 0.5s;
+            }
+
+            .historyOrder:hover {
+                background-color: #008000; /* Màu nền khi di chuột qua */
+            }
+
+            .historyOrder:hover i {
+                color: #ffffff; /* Màu biểu tượng màu trắng khi di chuột qua */
+            }
 
         </style>
 
@@ -307,7 +324,36 @@
                                                 <th>Phí trung gian</th>
                                                 <th>Người chịu phí</th>
                                                 <th>Hành động</th>
+<<<<<<< HEAD
 
+=======
+                                                <th>Lịch sử trạng thái</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="table-body" id="cell-info">
+
+                                        </tbody>
+                                    </table>
+
+                                    <table class="text-nowrap mb-0 table" id="orderBuy-complete"  style="display: none;">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>Mã đơn hàng</th>
+                                                <th>Trạng thái</th>
+                                                <th>Người bán</th>                        
+                                                <th>Danh mục</th>
+                                                <th>Thông tin ẩn</th>
+                                                <th>Liên hệ</th>
+                                                <th>Giá sản phẩm
+
+
+                                                </th>
+                                                <th>Phí trung gian</th>
+                                                <th>Người chịu phí</th>
+                                                <th>Tổng tiền thanh toán</th>
+                                                <th>Thời gian tạo</th>
+                                                <th>Lịch sử trạng thái</th>
+>>>>>>> origin/branch-khoaiter3
                                             </tr>
                                         </thead>
                                         <tbody class="table-body" id="cell-info1">
@@ -408,6 +454,7 @@
 
                     <thead class="table-light">
                         <tr>
+<<<<<<< HEAD
                             <th>Mã đơn hàng</th>
                             <th>Tên sản phẩm</th>
                             <th>Giá</th>                        
@@ -417,6 +464,18 @@
                             <th>Trạng Thái</th>
                             <th>Bên chịu phí</th>
                             <th>Hành động</th>
+=======
+                            <th>Code</th>
+                            <th>Product Name</th>
+                            <th>Price</th>                        
+                            <th>Total amount received</th>
+                            <th>Total payment</th>
+                            <th>Transaction fees</th>
+                            <th>Status</th>
+                            <th>Party bears the fee</th>
+                            <th>Action</th>
+                            <th>Lịch sử trạng thái</th>
+>>>>>>> origin/branch-khoaiter3
                         </tr>
                     </thead>
                     <tbody>
@@ -437,9 +496,14 @@
                                             <i style="color: #0061f2" class="fa fa-info-circle"></i>
                                         </a>                                                                                 
                                     </td>
+                                    <td>
+                                        <a class="historyOrder" href="orderHistory?idor=${c.getOrder().getId()}">
+                                            <i style="color: #FFFFFF" class="fa fa-calendar"></i> Lịch sử
+                                        </a>                                        
+                                    </td>
                                 </tr>
-                            </c:if>
-                        </c:forEach>
+                        </c:if>
+                    </c:forEach>
                     </tbody>
                 </table>
 
@@ -451,6 +515,7 @@
 
                     <thead class="table-light">
                         <tr>
+<<<<<<< HEAD
                             <th>Mã đơn hàng</th>
                             <th>Tên sản phẩm</th>
                             <th>Giá</th>                        
@@ -460,6 +525,18 @@
                             <th>Trạng Thái</th>
                             <th>Bên chịu phí</th>
                             <th>Hành động</th>
+=======
+                            <th>Code</th>
+                            <th>Product Name</th>
+                            <th>Price</th>                        
+                            <th>Total amount received</th>
+                            <th>Total payment</th>
+                            <th>Transaction fees</th>
+                            <th>Status</th>
+                            <th>Party bears the fee</th>
+                            <th>Action</th>
+                            <th>Lịch sử trạng thái</th>
+>>>>>>> origin/branch-khoaiter3
                         </tr>
                     </thead>
                     <tbody>
@@ -485,6 +562,11 @@
                                         <a class="deleteProductButton" data-product-id="${o.getOrder().getId()}">
                                             <i style="color: red" class="fa fa-trash"></i>
                                         </a>  
+                                    </td>
+                                    <td>
+                                        <a class="historyOrder" href="orderHistory?idor=${o.getOrder().getId()}">
+                                            <i style="color: #FFFFFF" class="fa fa-calendar"></i> Lịch sử
+                                        </a>                                        
                                     </td>
                                 </tr>
                             </c:if>
@@ -748,14 +830,38 @@
                             <input type="text" id="create" name="" value="" readonly><br><br><br>
                             <!--                            <label for="description">Description</label><br>
                                                         <textarea id="description1" name="description" placeholder="Write something, as detailed as possible..." style="height:200px" required></textarea><br>-->
+<<<<<<< HEAD
                             <button id="hihi1" style="float: left; color: red; ">Khiếu nại đơn hàng không đúng mô tả</button>
                             <button id="hihi2" style="float: right; color: #4CAF50;">Xác nhận đơn hàng đúng mô tả</button>
+=======
+                            <button type="submit" style="float: left; color: white; background-color: red; border: 1px solid red; padding: 10px; border-radius: 3px;" data-orderi="1">Khiếu nại đơn hàng không đúng mô tả</button>
+                            <button type="submit" style="float: right; color: white; background-color: #4CAF50; border: 1px solid #4CAF50; padding: 10px; border-radius: 3px;" data-orderi="2">Xác nhận đơn hàng đúng mô tả</button>
+
+
+>>>>>>> origin/branch-khoaiter3
                         </form>
                     </div>
                 </div>
             </div>
 
 
+<<<<<<< HEAD
+=======
+                    </div>
+                    <div class="loader" id="loader"></div>
+                </form>
+            </div>
+
+
+            <div id="exampleModalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  style="height:580px;padding:0px; display: none;">
+                <div class="modal-dialog" style="max-width: 700px;" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Feedback</h5>
+                            <span class="close1">&times;</span>
+                        </div>
+                        <div class="modal-body" style="padding: 40px;">
+>>>>>>> origin/branch-khoaiter3
 
                     <div id="exampleModalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  style="height:580px;padding:0px">
                         <div class="modal-dialog" style="max-width: 700px;display: none" role="document">

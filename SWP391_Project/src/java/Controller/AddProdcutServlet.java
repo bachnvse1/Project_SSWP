@@ -133,9 +133,11 @@ public class AddProdcutServlet extends HttpServlet {
         order.setCreate_by(u.getId());
         order.setUpdate_by(u.getId());
         dal.insertOrder(order);
+        int orderID = dal.getOrderByCode(order.getCode()).getId();
         dal.updateAmount(walet.getBalance(), u.getId());
         session.setAttribute("balance", dal.getWallet(u.getId()).getBalance());
-        dal.insertReport(3, order.getId(), u.getId(), true, "Bạn vừa đăng sản phẩm với mã code: " + order.getCode(), u.getId(), false);
+        dal.insertReport(3, orderID, u.getId(), true, "Bạn vừa đăng sản phẩm với mã code: " + order.getCode(), u.getId(), false);
+        dal.insertOrderHistory(orderID, "Sẵn sàng giao dịch", "Người bán đăng bán thành công sản phẩm", order.getCreate_by());
         response.getWriter().write("success");
         }else{
             response.getWriter().write("Insufficient_balance");

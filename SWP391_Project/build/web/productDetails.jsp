@@ -123,7 +123,7 @@
 
                             <div class="add-to-cart">
 
-                                <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                <button class="add-to-cart-btn"  onclick="addToCart(${ProductDetails.id})"><i class="fa fa-shopping-cart"></i> add to cart</button>
                             </div>
 
 
@@ -396,7 +396,7 @@
                                         </div>
                                     </div>
                                     <div class="add-to-cart">
-                                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                        <button class="add-to-cart-btn" onclick="addToCart(${p.id})"><i class="fa fa-shopping-cart"></i> add to cart</button>
                                     </div>
                                 </div>
                             </div>
@@ -440,7 +440,23 @@
             <!-- /container -->
         </div>
         <!-- /NEWSLETTER -->
-
+        <script>
+            function addToCart(productId) {
+                // Gửi giá trị productId đến servlet bằng Ajax
+                $.ajax({
+                    type: "GET", // Hoặc "GET" tùy thuộc vào yêu cầu của bạn
+                    url: "AddToCartController", // Thay thế bằng URL của servlet của bạn
+                    data: {productId: productId},
+                    success: function (response) {
+                        // Xử lý kết quả từ servlet nếu cần
+                        console.log(response);
+                    },
+                    error: function (error) {
+                        console.log("Error:", error);
+                    }
+                });
+            }
+        </script> 
         <!-- FOOTER -->
         <%@include file="components/footer.jsp" %>
         <!-- /FOOTER -->
