@@ -250,6 +250,8 @@ delete from swp_demo.intermediate_Orders where product.id = 5;
 delete  from swp_demo.Order_Detail
 delete from Report
 delete from transactions
+delete from withdrawals
+
 
 select * from Category
 select * from Product where is_delete = true
@@ -259,6 +261,7 @@ select * from swp_demo.Order_Detail
 select * from Wallet where create_by = 5
 select * from Report 
 select *  from transactions
+select * from withdrawals
  -- //1 là khiếu nại
 --             //2 là mua hàng
 --             //3 là đăng đơn hàng
