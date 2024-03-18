@@ -128,7 +128,7 @@ public class orderBuyChecking extends HttpServlet {
 
             if (intermediateOrder.getStatus().equals("Người mua đang kiểm tra đơn hàng")
                     || intermediateOrder.getStatus().equals("Người mua khiếu nại đơn hàng")
-                    || intermediateOrder.getStatus().equals("Yêu cầu admin giải quyết")) {
+                    || intermediateOrder.getStatus().equals("Yêu cầu admin giải quyết") || intermediateOrder.getStatus().equals("Chờ người mua xác nhận")) {
 
                 ProductOrderPair productOrderPair = new ProductOrderPair(product, intermediateOrder);
                 String s = product.isTransaction_fee() ? "Người bán" : "Người mua";

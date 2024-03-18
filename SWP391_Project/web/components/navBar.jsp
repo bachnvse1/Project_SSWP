@@ -223,6 +223,17 @@
                     margin: 0 auto 10px auto;
                 }
 
+                #headerCtnContent {
+                    display: flex;
+                    flex-wrap: wrap;
+                }
+
+                #headerCtnContent .inline-block {
+                    flex: 0 0 auto;
+                    margin-right: 10px; /* Khoảng cách giữa các nút */
+                }
+
+
             </style>
         </head>
         <body>
@@ -269,7 +280,7 @@
                     <!-- container -->
                     <div class="container">
                         <!-- row -->
-                        <div class="row">
+                        <div class="row" style="display: flex;">
                             <!-- LOGO -->
                             <div class="col-md-2">
                                 <div class="header-logo">
@@ -295,284 +306,304 @@
                             <!-- /SEARCH BAR -->
 
                             <!-- ACCOUNT -->
-                            <div class="col-md-4 clearfix">
-                                <div class="header-ctn">
+                            <div class="col-md-7 clearfix" id="headerCtnWrapper">
+                                <div class="header-ctn" id="headerCtnContent">
                                     <!-- Wishlist -->
                                     <c:if test="${user != null}">
-
-                                        <div>
+                                        <div class="inline-block">
                                             <a id="oder-Button" href="#">
                                                 <i class="fa fa-heart-o"></i>
                                                 <span>Đơn hàng</span>
                                             </a>
-
                                         </div>
-
-
                                     </c:if>
-
                                     <c:if test="${user == null}">
-                                        <div>
+                                        <div class="inline-block">
                                             <a href="">
                                                 <i class="fa fa-heart-o"></i>
                                                 <span>Đơn hàng</span>
                                             </a>
-
                                         </div>
                                     </c:if>
-
                                     <!-- /Wishlist -->
 
                                     <!-- Cart -->
-                                    <div class="row">
+                                    <div class="inline-block">
                                         <a id="your-cart-button" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                             <i class="fa fa-shopping-cart"></i>
                                             <span>Giỏ hàng</span>
-                                            <!--<div class="qty">3</div> -->
                                         </a>
                                     </div>
                                     <!-- /Cart -->
 
                                     <!-- Feedback -->
-
-                                    <!-- Feedback -->
-                                    <div class="row">
-                                        <a  href="Feedback" >
+                                    <div class="inline-block">
+                                        <a href="Feedback">
                                             <i class="fa fa-comments"></i>
                                             <span>Phản Hồi</span>
-
                                         </a>
                                     </div>
                                     <!-- /Feedback -->
+
                                     <!-- Revenue -->
-                                    <c:if test="${user != null and user.isIs_Admin()== false }">
-                                        <div class="row">                                     
-                                            <a  href="Revenue" >
+                                    <c:if test="${user != null and user.isIs_Admin() == false}">
+                                        <div class="inline-block">                                     
+                                            <a href="Revenue">
                                                 <i class="fa fa-money"></i>
                                                 <span>Doanh Thu</span>
-
                                             </a>
-                                        </c:if>
-
-                                        <c:if test="${user == null }">
-                                            <div class="row">                                     
-                                                <a  href="#" >
-                                                    <i class=""></i>
-                                                    <span></span>
-
-                                                </a>
-                                            </c:if>
-
                                         </div>
-                                    </div>
-
+                                    </c:if>
+                                    <c:if test="${user == null}">
+                                        <div class="inline-block">                                     
+                                            <a href="#">
+                                                <i class=""></i>
+                                                <span></span>
+                                            </a>
+                                        </div>
+                                    </c:if>
                                 </div>
                             </div>
-                            <!-- /ACCOUNT -->
-                        </div>
-                        <!-- row -->
-                    </div>
-                    <!-- container -->
-                </div>
-                <!-- /MAIN HEADER -->
-            </header>
 
-            <div id="popupContainer">
-                <span class="close">&times;</span>
-                <table id="notificationTable" class="popupTable" style="display: none;
-                       border: none" cellpadding="0" cellspacing="0" width="100%">
-                    <tr>
-                        <td>
-                            <table id="table123" style="border: none;
-                                   margin-left: auto;
-                                   margin-right: auto" cellpadding="0" cellspacing="0" width="900" class="content">
-                                <tr>
-                                    <td class="general center">
-                                        <h1 style="text-align: center;">Thông báo </h1>  
+
+                        </div>
+                    </div>
+                    <!-- /ACCOUNT -->
+                </div>
+                <!-- row -->
+            </div>
+            <!-- container -->
+        </div>
+        <!-- /MAIN HEADER -->
+    </header>
+
+    <div id="popupContainer">
+        <span class="close">&times;</span>
+        <table id="notificationTable" class="popupTable" style="display: none;
+               border: none" cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td>
+                    <table id="table123" style="border: none;
+                           margin-left: auto;
+                           margin-right: auto" cellpadding="0" cellspacing="0" width="900" class="content">
+                        <tr>
+                            <td class="general center">
+                                <h1 style="text-align: center;">Thông báo </h1>  
+                            </td>
+                        </tr>
+                        <c:forEach items="${listR}" var="r">
+                            <c:if test="${r.getType_report() == 1}">
+                                <tr class="abc">
+                                    <td class="failure notification">
+                                        <h1><span class="icon">&times;</span>Khiếu nại đơn hàng</h1>
+                                        <p class="small">${r.getDescription()}</p>
+
                                     </td>
                                 </tr>
-                                <c:forEach items="${listR}" var="r">
-                                    <c:if test="${r.getType_report() == 1}">
-                                        <tr class="abc">
-                                            <td class="failure notification">
-                                                <h1><span class="icon">&times;</span>Khiếu nại đơn hàng</h1>
-                                                <p class="small">${r.getDescription()}</p>
+                            </c:if>
 
-                                            </td>
-                                        </tr>
-                                    </c:if>
+                            <c:if test="${r.getType_report() == 2}">
+                                <tr class="abc">
+                                    <td class="warning notification">
+                                        <h1><span class="icon">&quest;</span>Đang kiểm tra đơn hàng</h1>
+                                        <p class="small">${r.getDescription()}</p>
 
-                                    <c:if test="${r.getType_report() == 2}">
-                                        <tr class="abc">
-                                            <td class="warning notification">
-                                                <h1><span class="icon">&quest;</span>Đang kiểm tra đơn hàng</h1>
-                                                <p class="small">${r.getDescription()}</p>
+                                    </td>
+                                </tr>
+                            </c:if>
 
-                                            </td>
-                                        </tr>
-                                    </c:if>
+                            <c:if test="${r.getType_report() == 3}">
+                                <tr class="abc">
+                                    <td class="healthy notification">
+                                        <h1><span class="icon">&check;</span>Sẵn sàng giao dịch</h1>
+                                        <p class="small">${r.getDescription()}</p>
 
-                                    <c:if test="${r.getType_report() == 3}">
-                                        <tr class="abc">
-                                            <td class="healthy notification">
-                                                <h1><span class="icon">&check;</span>Sẵn sàng giao dịch</h1>
-                                                <p class="small">${r.getDescription()}</p>
+                                    </td>
+                                </tr>
+                            </c:if>
 
-                                            </td>
-                                        </tr>
-                                    </c:if>
+                            <c:if test="${r.getType_report() == 4}">
+                                <tr class="abc">
+                                    <td class="healthy notification">
+                                        <h1><span class="icon">&check;</span>Đơn hàng đã hoàn tất</h1>
+                                        <p class="small">${r.getDescription()}</p>
 
-                                    <c:if test="${r.getType_report() == 4}">
-                                        <tr class="abc">
-                                            <td class="healthy notification">
-                                                <h1><span class="icon">&check;</span>Đơn hàng đã hoàn tất</h1>
-                                                <p class="small">${r.getDescription()}</p>
+                                    </td>
+                                </tr>
+                            </c:if>
 
-                                            </td>
-                                        </tr>
-                                    </c:if>
+                            <c:if test="${r.getType_report() == 5}">
+                                <tr class="abc">
+                                    <td class="warning notification">
+                                        <h1><span class="icon">&check;</span>Thông báo nạp tiền</h1>
+                                        <p class="small">${r.getDescription()}</p>
 
-                                    <c:if test="${r.getType_report() == 5}">
-                                        <tr class="abc">
-                                            <td class="warning notification">
-                                                <h1><span class="icon">&check;</span>Thông báo nạp tiền</h1>
-                                                <p class="small">${r.getDescription()}</p>
+                                    </td>
+                                </tr>
+                            </c:if>
+                                
+                                <c:if test="${r.getType_report() == 6}">
+                                <tr class="abc">
+                                    <td class="warning notification">
+                                        <h1><span class="icon">&check;</span>Thông báo rút tiền</h1>
+                                        <p class="small">${r.getDescription()}</p>
 
-                                            </td>
-                                        </tr>
-                                    </c:if>
+                                    </td>
+                                </tr>
+                            </c:if>
 
-                                    <c:if test="${r.getType_report() == 7}">
-                                        <tr class="abc">
-                                            <td class="information notification">
-                                                <h1><span class="icon">&check;</span>Yêu cầu admin giải quyết</h1>
-                                                <p class="small">${r.getDescription()}</p>
+                            <c:if test="${r.getType_report() == 7}">
+                                <tr class="abc">
+                                    <td class="information notification">
+                                        <h1><span class="icon">&check;</span>Yêu cầu admin giải quyết</h1>
+                                        <p class="small">${r.getDescription()}</p>
 
-                                            </td>
-                                        </tr>
-                                    </c:if>
-                                    <tr><!-- Thêm dòng trống trước button Load More -->
-                                        <td style="height: 20px;"></td>
-                                    </tr>
-                                </c:forEach>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: center;">
-                            <button style="padding: 10px 20px;
-                                    background-color: #0061f2;
-                                    color: #fff;
-                                    border: none;
-                                    cursor: pointer;
-                                    border-radius: 5px;" onclick="loadMore()">Load More</button>
-                        </td>
-                    </tr>
-                </table>
+                                    </td>
+                                </tr>
+                            </c:if>
+                                
+                                <c:if test="${r.getType_report() == 8}">
+                                <tr class="abc">
+                                    <td class="failure notification">
+                                        <h1><span class="icon">&check;</span>Người bán huỷ đơn</h1>
+                                        <p class="small">${r.getDescription()}</p>
 
-            </div>
+                                    </td>
+                                </tr>
+                            </c:if>
+                                <c:if test="${r.getType_report() == 9}">
+                                <tr class="abc">
+                                    <td class="information notification">
+                                        <h1><span class="icon">&check;</span>Chờ người mua xác nhận</h1>
+                                        <p class="small">${r.getDescription()}</p>
 
-        <marquee scrollamount="10">🚀 Khuyến mãi đặc biệt! Giảm giá 20% cho tất cả sản phẩm - Ưu đãi có hạn! 🛍️️</marquee>
+                                    </td>
+                                </tr>
+                            </c:if>
+                                
+                            <tr><!-- Thêm dòng trống trước button Load More -->
+                                <td style="height: 20px;"></td>
+                            </tr>
+                        </c:forEach>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: center;">
+                    <button style="padding: 10px 20px;
+                            background-color: #0061f2;
+                            color: #fff;
+                            border: none;
+                            cursor: pointer;
+                            border-radius: 5px;" onclick="loadMore()">Load More</button>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+
+<marquee scrollamount="10">🚀 Khuyến mãi đặc biệt! Giảm giá 20% cho tất cả sản phẩm - Ưu đãi có hạn! 🛍️️</marquee>
 
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <style>
-            /* Apply some basic styles to the marquee */
-            marquee {
-                font-family: 'Arial', sans-serif;
-                font-size: 18px;
-                color: red; /* Change text color to red */
-                background-color: #f0f0f0;
-                padding: 10px;
-                border: 1px solid #ccc;
-                border-radius: 5px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-                display: inline-block;
-            };
-        </style> 
-        
-        <!-- Font Awesome CSS 
-         Font Awesome CSS 
-        
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        
-        <script src="js1/jquery.min.js"></script>
-        <script src="js1/bootstrap.min.js"></script>
-        <script src="js1/slick.min.js"></script>
-        <script src="js1/nouislider.min.js"></script>
-        <script src="js1/jquery.zoom.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<style>
+    /* Apply some basic styles to the marquee */
+    marquee {
+        font-family: 'Arial', sans-serif;
+        font-size: 18px;
+        color: red; /* Change text color to red */
+        background-color: #f0f0f0;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        display: inline-block;
+    }
+    ;
+</style> 
 
-        <script src="js1/main"></script>-->
+<!-- Font Awesome CSS 
+ Font Awesome CSS 
 
-        <script src="jscript/signin_captcha.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-        <script>
-                                        $(document).ready(function () {
-                                            $("#info-Button").click(function () {
-                                                window.location.href = "EditProfile";
-                                            });
+<script src="js1/jquery.min.js"></script>
+<script src="js1/bootstrap.min.js"></script>
+<script src="js1/slick.min.js"></script>
+<script src="js1/nouislider.min.js"></script>
+<script src="js1/jquery.zoom.min.js"></script>
 
+<script src="js1/main"></script>-->
+
+<script src="jscript/signin_captcha.js"></script>
+
+<script>
+                                $(document).ready(function () {
+                                    $("#info-Button").click(function () {
+                                        window.location.href = "EditProfile";
+                                    });
+
+                                });
+
+
+                                $(document).ready(function () {
+                                    $("#oder-Button").click(function () {
+                                        window.location.href = "manageMyOrder";
+                                    });
+                                });
+
+                                $(document).ready(function () {
+                                    $("#logout-Button").click(function () {
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: "logout",
+                                            success: function (response) {
+                                                $("body").html(response);
+                                            },
+                                            error: function () {
+                                                // Xử lý lỗi nếu có
+                                                alert("Đã xảy ra lỗi khi tải trang");
+                                            }
                                         });
+                                    });
+                                });
+                                $(document).ready(function () {
+                                    // Xử lý khi nhấp vào nút "Your Cart"
+                                    $("#your-cart-button").click(function () {
+                                        // Thực hiện chuyển hướng đến trang mong muốn (thay "your-cart-page" bằng đường dẫn thực tế)
+                                        window.location.href = "Cart.jsp";
+                                    });
+                                });
 
+                                $(".close").click(function () {
+                                    const popupContainer = document.getElementById('popupContainer');
+                                    const tablePopup = document.getElementById('notificationTable');
+                                    popupContainer.style.display = 'none';
+                                    tablePopup.style.display = 'none';
+                                });
 
-                                        $(document).ready(function () {
-                                            $("#oder-Button").click(function () {
-                                                window.location.href = "manageMyOrder";
-                                            });
-                                        });
+                                function loadMore() {
+                                    var amount = document.getElementsByClassName("abc").length;
+                                    $.ajax({
+                                        url: 'notification',
+                                        type: 'get',
+                                        data: {
+                                            exists: amount
+                                        },
+                                        success: function (response) {
+                                            document.getElementById("table123").innerHTML += response;
 
-                                        $(document).ready(function () {
-                                            $("#logout-Button").click(function () {
-                                                $.ajax({
-                                                    type: 'POST',
-                                                    url: "logout",
-                                                    success: function (response) {
-                                                        $("body").html(response);
-                                                    },
-                                                    error: function () {
-                                                        // Xử lý lỗi nếu có
-                                                        alert("Đã xảy ra lỗi khi tải trang");
-                                                    }
-                                                });
-                                            });
-                                        });
-                                        $(document).ready(function () {
-                                            // Xử lý khi nhấp vào nút "Your Cart"
-                                            $("#your-cart-button").click(function () {
-                                                // Thực hiện chuyển hướng đến trang mong muốn (thay "your-cart-page" bằng đường dẫn thực tế)
-                                                window.location.href = "Cart.jsp";
-                                            });
-                                        });
-
-                                        $(".close").click(function () {
-                                            const popupContainer = document.getElementById('popupContainer');
-                                            const tablePopup = document.getElementById('notificationTable');
-                                            popupContainer.style.display = 'none';
-                                            tablePopup.style.display = 'none';
-                                        });
-
-                                        function loadMore() {
-                                            var amount = document.getElementsByClassName("abc").length;
-                                            $.ajax({
-                                                url: 'notification',
-                                                type: 'get',
-                                                data: {
-                                                    exists: amount
-                                                },
-                                                success: function (response) {
-                                                    document.getElementById("table123").innerHTML += response;
-
-                                                },
-                                                error: function (xhr) {
-                                                    console.error(xhr.response);
-                                                }
-
-
-                                            });
+                                        },
+                                        error: function (xhr) {
+                                            console.error(xhr.response);
                                         }
 
-        </script>
-        <script src="js1/main.js"></script>
-        <script src="jscript/signin_captcha.js"></script>
-    </body>
+
+                                    });
+                                }
+
+</script>
+<script src="js1/main.js"></script>
+<script src="jscript/signin_captcha.js"></script>
+</body>
 </html>

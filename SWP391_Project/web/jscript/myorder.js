@@ -17,6 +17,9 @@ $(document).ready(function () {
         // Nếu đã tồn tại, hủy DataTable hiện tại
         $('#orderBuy-complete').DataTable().destroy();
     }
+    $('#ProductDisplay').DataTable();
+
+
 
     // Xử lý sự kiện khi nhấn nút "Add Product"
     $("#addProductButton").click(function () {
@@ -35,6 +38,9 @@ $(document).ready(function () {
             // Nếu đã tồn tại, hủy DataTable hiện tại
             $('#orderBuy-complete').DataTable().destroy();
         }
+        $('.dataTable').each(function () {
+            $(this).DataTable().destroy();
+        });
 
     });
     $("#allProductButton").click(function () {
@@ -53,6 +59,10 @@ $(document).ready(function () {
             // Nếu đã tồn tại, hủy DataTable hiện tại
             $('#orderBuy-complete').DataTable().destroy();
         }
+        $('.dataTable').each(function () {
+            $(this).DataTable().destroy();
+        });
+        $('#ProductDisplay').DataTable();
 
     });
     $("#completedorder").click(function () {
@@ -72,6 +82,10 @@ $(document).ready(function () {
             // Nếu đã tồn tại, hủy DataTable hiện tại
             $('#orderBuy-complete').DataTable().destroy();
         }
+        $('.dataTable').each(function () {
+            $(this).DataTable().destroy();
+        });
+        $('#ProductCompleteDisplay').DataTable();
 
     });
     $("#processingorder").click(function () {
@@ -90,6 +104,10 @@ $(document).ready(function () {
             // Nếu đã tồn tại, hủy DataTable hiện tại
             $('#orderBuy-complete').DataTable().destroy();
         }
+        $('.dataTable').each(function () {
+            $(this).DataTable().destroy();
+        });
+        $('#ProductProcessingDisplay').DataTable();
     });
 });
 function toggleOptions(productId) {
@@ -352,7 +370,9 @@ function hideProductModal() {
 
 $(document).ready(function () {
     $("#order-checking").click(function () {
-
+        $('.dataTable').each(function () {
+            $(this).DataTable().destroy();
+        });
         if ($.fn.DataTable.isDataTable('#orderBuy-complete')) {
             // Nếu đã tồn tại, hủy DataTable hiện tại
             $('#orderBuy-complete').DataTable().destroy();
@@ -379,23 +399,23 @@ $(document).ready(function () {
                 $('#orderBuy').DataTable({
                     "paging": true, // Cho phép phân trang
                     "pageLength": 5,
+                    "searching": true,
                     "data": response, // Dữ liệu từ servlet
                     "columns": [
-                        {"data": "orderCode"},
-                        {"data": "orderStatus"},
-                        {"data": "sellerName"},
-                        {"data": "categoryName"},
-                        {"data": "contactMethod"},
-                        {"data": "Price"},
-                        {"data": "Intermediary_fee"},
-                        {"data": "isTransaction_fee"},
+                        {"data": "orderCode", "searchable": true}, // Cho phép tìm kiếm trong cột "orderCode"
+                        {"data": "orderStatus", "searchable": true}, // Cho phép tìm kiếm trong cột "orderStatus"
+                        {"data": "sellerName", "searchable": true}, // Cho phép tìm kiếm trong cột "sellerName"
+                        {"data": "categoryName", "searchable": true}, // Cho phép tìm kiếm trong cột "categoryName"
+                        {"data": "contactMethod", "searchable": true}, // Cho phép tìm kiếm trong cột "contactMethod"
+                        {"data": "Price", "searchable": true}, // Cho phép tìm kiếm trong cột "Price"
+                        {"data": "Intermediary_fee", "searchable": true}, // Cho phép tìm kiếm trong cột "Intermediary_fee"
+                        {"data": "isTransaction_fee", "searchable": true}, // Cho phép tìm kiếm trong cột "isTransaction_fee"
                         {
                             "data": null,
                             "render": function (data, type, row) {
                                 return '<button class="btn btn-info btn-detail" data-ordercode="' + row.orderCode + '">Detail</button>';
                             }
                         }
-
                         // Thêm các cột khác tại đây
                     ]
                 });
@@ -434,6 +454,9 @@ $(document).ready(function () {
 
 $(document).ready(function () {
     $("#order-complete").click(function () {
+        $('.dataTable').each(function () {
+            $(this).DataTable().destroy();
+        });
         if ($.fn.DataTable.isDataTable('#orderBuy')) {
             // Nếu đã tồn tại, hủy DataTable hiện tại
             $('#orderBuy').DataTable().destroy();
@@ -625,6 +648,48 @@ $("#complaintForm").submit(function (e) {
             },
             error: function (xhr, status, error) {
                 console.error(error); // Ghi log lỗi ra console
+            }
+        });
+    }
+
+    // Sử dụng SweetAlert2 để xác nhận trước khi thực hiện AJAX
+    Swal.fire({
+        title: "Bạn có chắc chắn xác nhận không?",
+        icon: "question",
+        iconHtml: "",
+        showCancelButton: true,
+        confirmButtonText: "Có",
+        cancelButtonText: "Không",
+        showCloseButton: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            performAjaxRequest(); // Nếu người dùng ấn đồng ý, thực hiện AJAX
+        }
+    });
+});
+
+$("#sellerForm").submit(function (e) {
+    e.preventDefault(); // Ngăn chặn hành vi gửi form mặc định
+
+    // Lấy giá trị của data-orderi từ nút submit đã được nhấn
+    var orderiValue = $(this).find("button[type='submit']:focus").attr("data-orderi");
+
+    // Hàm thực hiện AJAX
+    function performAjaxRequest() {
+        var formData = {
+            code: $("#orderCode").val(),
+            datax: orderiValue
+        };
+        $.ajax({
+            type: 'GET',
+            url: 'report', // URL của servlet xử lý
+            data: formData, // Gửi dữ liệu form tới servlet
+            success: function (response) {
+                alert(response); // Hiển thị thông báo từ server
+                window.location.href = 'manageMyOrder'; // Chuyển hướng đến trang manageMyOrder sau khi gửi thành công
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText); // Ghi log lỗi ra console
             }
         });
     }

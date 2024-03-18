@@ -105,12 +105,7 @@ public class buyServ extends HttpServlet {
             response.getWriter().print("Số dư của bạn không đủ để mua sản phẩm!");
             return;
         }
-        double amount = 0;
-        if(p.isTransaction_fee() == true) {
-            amount = p.getPrice();
-        } else {
-            amount = p.getPrice() + 500;
-        }
+
         if (p.getCreate_by() != u.getId()) {
             if (p.isIs_delete() == true) {
                 response.getWriter().print("Sản phẩm đã được bán");
@@ -118,7 +113,7 @@ public class buyServ extends HttpServlet {
                 int transactionId = dao.insertTransactionBuy(u.getId(), idx, "Pending"); // Insert transaction with pending status
                 if (transactionId != -1) {
                     // Add the purchase transaction to the queue
-                    transactionQueue.addTransaction(new Transaction(transactionId, u.getId(), idx, amount));
+                    transactionQueue.addTransaction(new Transaction(transactionId, u.getId(), idx, price));
                     dao.updateOrder(u.id, "Người mua đang kiểm tra đơn hàng", idx);
                     dao.InsertHistory_Transaction(price, "-", true, "Thanh toán đơn hàng mã số :"+dao.getOrderByProductID(idx).getCode()+".", u.id,u.id);
                     dao.insertReport(2, dao.getOrderByProductID(idx).getId(), u.getId(), true, "Bạn đã thanh toán đơn hàng có mã sản phẩm là: " + dao.getOrderByProductID(idx).getCode() + ". Hãy kiểm tra thông tin đơn hàng!", u.getId(), false);

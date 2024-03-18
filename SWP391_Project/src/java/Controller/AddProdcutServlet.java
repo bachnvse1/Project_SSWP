@@ -99,7 +99,7 @@ public class AddProdcutServlet extends HttpServlet {
         product.setImage2(request.getParameter("image2"));
         product.setImage3(request.getParameter("image3"));
         product.setImage4(request.getParameter("image4"));
-        if (request.getParameter("Transaction_fee").equals("Người bán")) {
+        if (request.getParameter("Transaction_fee").equals("seller")) {
             product.setTransaction_fee(true);
         } else {
             product.setTransaction_fee(false);
@@ -118,7 +118,8 @@ public class AddProdcutServlet extends HttpServlet {
             walet.setBalance(walet.getBalance() - 500);
         dal.insertProduct(product);
         intermediateOrders order = new intermediateOrders();
-        order.setCode("SP00" + dal.getIdProduct()+1);
+        int codeP = dal.getIdProduct() + 1;
+        order.setCode("SP00" + codeP);
         order.setProductId(dal.getIdProduct());
         if (product.isTransaction_fee() == true) {
             order.setTotal_paid_amount(product.getPrice());

@@ -244,6 +244,17 @@
                 color: #ffffff; /* Màu biểu tượng màu trắng khi di chuột qua */
             }
 
+            #sellerForm {
+                position: relative;
+            }
+
+            button[onclick="hideProductModal()"] {
+                position: absolute;
+                top: 0;
+                right: 0;
+                display: inline-block;
+            }
+
         </style>
 
     </head>
@@ -337,7 +348,7 @@
                         </div>
                     </div>
                 </div>
-                <form action="filtermyorder" >
+                <form action="filtermyorder" style="display: none;">
                     <table id="Filter" class="text-nowrap mb-0 table" style="display: none;">
 
                         <tr>
@@ -380,7 +391,7 @@
                             <th>Hành động</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="cellProductDisplay">
 
                         <c:forEach items="${productOrderPairs}" var="p">
                             <c:if test="${!p.getOrder().isIs_delete()}">
@@ -442,7 +453,7 @@
                                 <tr>
                                     <td>${c.getOrder().getCode()}</td>
                                     <td>${c.getProduct().getName()}</td>
-                                     <td><c:out value="${String.format('%,.0f', c.getProduct().getPrice())}" /></td>
+                                    <td><c:out value="${String.format('%,.0f', c.getProduct().getPrice())}" /></td>
                                     <td><c:out value="${String.format('%,.0f',c.getOrder().getTotal_received_amount())}" /></td>
                                     <td><c:out value="${String.format('%,.0f',c.getOrder().getTotal_paid_amount())}" /></td>
                                     <td><c:out value="${String.format('%,.0f', c.getOrder().getIntermediary_fee())}" /></td>
@@ -493,7 +504,7 @@
                                 <tr>
                                     <td>${o.getOrder().getCode()}</td>
                                     <td>${o.getProduct().getName()}</td>
-                                      <td><c:out value="${String.format('%,.0f', o.getProduct().getPrice())}" /></td>
+                                    <td><c:out value="${String.format('%,.0f', o.getProduct().getPrice())}" /></td>
                                     <td><c:out value="${String.format('%,.0f',o.getOrder().getTotal_received_amount())}" /></td>
                                     <td><c:out value="${String.format('%,.0f',o.getOrder().getTotal_paid_amount())}" /></td>
                                     <td><c:out value="${String.format('%,.0f', o.getOrder().getIntermediary_fee())}" /></td>
@@ -581,68 +592,72 @@
             <div style="height: 700px;overflow: auto;max-height: 800px; width: 1300px; display: none;" class="modal" id="modal">
                 <div class="modal-content3">                      
                     <div class="container-complain">
-                        <h2>Thông tin đơn hàng</h2>                   
-                        <label for="orderCode">Mã đơn hàng:</label>
-                        <input type="text" id="orderCode" value="" readonly><br>
+                        <form id="sellerForm">
+                            <h2 style="text-align: center">Thông tin đơn hàng</h2>     
+                            <div>
+                                <button onclick="hideProductModal()">x</button>
+                            </div>
+                            <button id="requestAdmin" type="submit" style="float: right; color: white; background-color: #007bff; border: 1px solid; padding: 10px; border-radius: 3px; margin-top: 30px; " data-orderid="" data-orderi="3">Yêu cầu admin tham gia giải quyết</button>
+                            <label for="orderCode" style="margin-top: 50px;">Mã đơn hàng:</label>
+                            <input type="text" id="orderCode" value="" readonly><br>
 
-                        <label for="productName">Tên sản phẩm:</label>
-                        <input type="text" id="productName" value="" readonly><br>
+                            <label for="productName">Tên sản phẩm:</label>
+                            <input type="text" id="productName" value="" readonly><br>
 
-                        <label for="price">Giá:</label><br>
-                        <input type="text" id="price" value="" readonly><br>
+                            <label for="price">Giá:</label><br>
+                            <input type="text" id="price" value="" readonly><br>
 
-                        <label for="intermediaryFee">Phí giao dịch:</label>
-                        <input type="text" id="intermediaryFee" value="" readonly><br>
+                            <label for="intermediaryFee">Phí giao dịch:</label>
+                            <input type="text" id="intermediaryFee" value="" readonly><br>
 
-                        <label for="party">Bên chịu phí:</label>
-                        <input type="text" id="party" name="party" value="" readonly><br>
+                            <label for="party">Bên chịu phí:</label>
+                            <input type="text" id="party" name="party" value="" readonly><br>
 
 
-                        <label for="receivedAmount">Tổng phí thực nhận:</label>
-                        <input type="text" id="receivedAmount" value="" readonly><br>
+                            <label for="receivedAmount">Tổng phí thực nhận:</label>
+                            <input type="text" id="receivedAmount" value="" readonly><br>
 
-                        <label for="paidAmount">Tổng phí phải trả:</label>
-                        <input type="text" id="paidAmount" value="" readonly><br>
+                            <label for="paidAmount">Tổng phí phải trả:</label>
+                            <input type="text" id="paidAmount" value="" readonly><br>
 
-                        <label for="productImage">Hình ảnh sản phẩm:</label><br>
-                        <img style="max-width: 150px; max-height: 150px" id="img1" src="" >
-                        <img style="max-width: 150px; max-height: 150px" id="img2" src="" >
-                        <img style="max-width: 150px; max-height: 150px" id="img3" src="" >
-                        <img style="max-width: 150px; max-height: 150px" id="img4" src="" ><br>
+                            <label for="productImage">Hình ảnh sản phẩm:</label><br>
+                            <img style="max-width: 150px; max-height: 150px" id="img1" src="" >
+                            <img style="max-width: 150px; max-height: 150px" id="img2" src="" >
+                            <img style="max-width: 150px; max-height: 150px" id="img3" src="" >
+                            <img style="max-width: 150px; max-height: 150px" id="img4" src="" ><br>
 
-                        <label for="description">Mô tả:</label>
-                        <textarea id="description" rows="4" value="" readonly></textarea><br>
+                            <label for="description">Mô tả:</label>
+                            <textarea id="description" rows="4" value="" readonly></textarea><br>
 
-                        <label for="hiddenContent">Thông tin ẩn:</label>
-                        <input type="text" id="hiddenContent_info" value=""  readonly><br>
+                            <label for="hiddenContent">Thông tin ẩn:</label>
+                            <input type="text" id="hiddenContent_info" value=""  readonly><br>
 
-                        <label for="contactMethod">Phương thức liên lạc:</label>
-                        <input type="text" id="contactMethod" value=""  readonly><br>
+                            <label for="contactMethod">Phương thức liên lạc:</label>
+                            <input type="text" id="contactMethod" value=""  readonly><br>
 
-                        <label for="status">Trạng thái:</label>
-                        <input type="text" id="status" value="" readonly><br>
+                            <label for="status">Trạng thái:</label>
+                            <input type="text" id="status" value="" readonly><br>
 
-                        <label for="buyer">Người mua:</label>
-                        <input type="text" id="buyer_info" value="" readonly><br>
-                        <label for="buyer">Thời gian tạo:</label>
-                        <input type="text" id="create_at" value="" readonly><br>
-                        <label for="buyer">Chỉnh sửa cuối:</label>
-                        <input type="text" id="update_at" value="" readonly><br>
-                        <c:if test="">
-
-                        </c:if>
+                            <label for="buyer">Người mua:</label>
+                            <input type="text" id="buyer_info" value="" readonly><br>
+                            <label for="buyer">Thời gian tạo:</label>
+                            <input type="text" id="create_at" value="" readonly><br>
+                            <label for="buyer">Chỉnh sửa cuối:</label>
+                            <input type="text" id="update_at" value="" readonly><br>
+                            <button type="submit" style="float: left; color: white; background-color: red; border: 1px solid red; padding: 10px; border-radius: 3px;" data-orderid="" data-orderi="1">Xác nhận đơn hàng sai và huỷ đơn</button>
+                            <button type="submit" style="float: right; color: white; background-color: #4CAF50; border: 1px solid #4CAF50; padding: 10px; border-radius: 3px;" data-orderid="" data-orderi="2">Yêu cầu người mua xác nhận lại</button>
+                        </form>
 
                     </div>
-                    <div style="margin-top: auto; text-align: center;">
-                        <button onclick="hideProductModal()">Close</button>
-                    </div>
+
                 </div>              
             </div>
 
             <div style="height: 700px;overflow: auto;max-height: 800px; display: none;" class="modal" id="modal2" >               
-                <button class="close-button"  onclick="hideProductModal()"><i class="fa fa-close"></i></button>
+                
                 <div class="modal-content3">                      
                     <div class="container-complain">
+                        <button class="close-button"  onclick="hideProductModal()" style="text-align: right;"><i class="fa fa-close"></i></button>
                         <h2>Cập nhật đơn hàng</h2>   
                         <form>
                             <label for="orderCode">Mã đơn hàng:</label>
@@ -787,45 +802,53 @@
 
 
 
-    <div id="exampleModalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  style="height:580px;padding:0px;display: none;">
-        <div class="modal-dialog" style="max-width: 700px;display: none" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Đánh giá</h5>
-                    <span class="close1">&times;</span>
-                </div>
-                <div class="modal-body" style="padding: 40px;">
+        <div id="exampleModalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  style="height:580px;padding:0px;display: none;">
+            <div class="modal-dialog" style="max-width: 700px;display: none" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Đánh giá</h5>
+                        <span class="close1">&times;</span>
+                    </div>
+                    <div class="modal-body" style="padding: 40px;">
 
-                    <form action="Feedback" method="post">   
-                        <div class="row">
+                        <form action="Feedback" method="post">   
+                            <div class="row">
 
-                            <div class="card">
-                                <div class="card-body">
+                                <div class="card">
+                                    <div class="card-body">
 
-                                    <input type="text" name="action" value="create" hidden="">
+                                        <input type="text" name="action" value="create" hidden="">
 
-                                    <h2 class="card-title">Tiêu đề</h2>
-                                    <input type="text" name="title" value="" required="" class="form-control"><br/>
-                                    <h2 class="card-title">Nội dung</h2>
-                                    <input type="text" name="content" value="" required="" class="form-control"><br/>
+                                        <h2 class="card-title">Tiêu đề</h2>
+                                        <input type="text" name="title" value="" required="" class="form-control"><br/>
+                                        <h2 class="card-title">Nội dung</h2>
+                                        <input type="text" name="content" value="" required="" class="form-control"><br/>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn btn-primary">Thêm đánh giá</button>
-                        </div>    
-                    </form>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn btn-primary">Thêm đánh giá</button>
+                            </div>    
+                        </form>
+
+                    </div>
 
                 </div>
-
+                <!-- ============================================================== -->
             </div>
-            <!-- ============================================================== -->
-        </div>
-    </div> 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
-<script src="jscript/myorder.js"></script>
-</body>
+        </div> 
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+        <script src="jscript/myorder.js"></script>
+        <script>
+                    $(document).ready(function () {
+
+                        //        $('#ProductProcessingDisplay').DataTable();
+                        //        $('#ProductCompleteDisplay').DataTable();
+                    });
+
+        </script>
+    </body>
 </html>

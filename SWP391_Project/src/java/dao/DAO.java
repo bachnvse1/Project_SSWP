@@ -1918,7 +1918,7 @@ public class DAO extends DBContext {
 
     public List<Report> getTopNext3Report(int uid, int amount) {
         List<Report> list = new ArrayList<>();
-        String query = "SELECT * FROM Report where create_by = ? ORDER BY id desc LIMIT 3 OFFSET ?;";
+        String query = "SELECT * FROM Report where recivedID = ? ORDER BY id desc LIMIT 3 OFFSET ?;";
         try {
             con = new DBContext().connection; //connect sql
             ps = con.prepareStatement(query);
@@ -2070,6 +2070,36 @@ public class DAO extends DBContext {
             con = new DBContext().connection;
             ps = con.prepareStatement(sql);
             ps.setInt(1, wid);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return new Withdrawal(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getDouble(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getInt(10),
+                        rs.getTimestamp(11),
+                        rs.getTimestamp(12),
+                        rs.getInt(13));
+
+            }
+
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return null;
+    }
+    
+    public Withdrawal getWithdrawalByCode(String code) {
+        String sql = "SELECT * FROM swp_demo.withdrawals where withdrawal_code = ?";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(sql);
+            ps.setString(1, code);
             rs = ps.executeQuery();
             while (rs.next()) {
                 return new Withdrawal(rs.getInt(1),

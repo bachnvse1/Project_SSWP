@@ -113,7 +113,7 @@
                 z-index: 1040; /* Ensure the backdrop is behind the modal */
             }
 
-
+            
 
 
         </style>
@@ -122,23 +122,23 @@
     <body class="g-sidenav-show   bg-gray-100">
         <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 " id="sidenav-main">
             <div class="sidenav-header">
-                <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/argon-dashboard/pages/dashboard.html " target="_blank">
+                <a class="navbar-brand m-0" target="_blank">
                     <span class="ms-1 font-weight-bold">Quản lí thanh toán</span>
                 </a>
             </div>
             <hr class="horizontal dark mt-0">
             <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
                 <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="">
+                    <li class="nav-item" id="depositeButton">
+                        <a class="nav-link active">
                             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
                             </div>
                             <span class="nav-link-text ms-1" id="formDeposite">Nạp tiền</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link " href="">
+                    <li class="nav-item" id="withdrawlButton">
+                        <a class="nav-link " >
                             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
                             </div>
@@ -146,20 +146,21 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="">
+                        <a class="nav-link " href="transaction">
                             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
                             </div>
                             <span class="nav-link-text ms-1">Lịch sử giao dịch</span>
                         </a>
                     </li>
+                </ul>
 
                     <div class="sidenav-footer mx-3 ">
                         <a class="btn btn-primary btn-sm mb-0 w-100" href="home" type="button">Trang chủ</a>
                     </div>
                     </aside>
                     <main class="main-content position-relative border-radius-lg d-flex justify-content-center align-items-center">
-                        <div class="row" style="display: none;">
+                        <div class="row" style="display: flex;" id="depositeForm">
                             <div class="col-lg-5 mb-lg-0 mb-3">
                                 <p class="mb-0"><span class="fw-bold">Phương thức</span><span class="c-green">: Cổng thanh toán VNPAY</span></p>
                                 <p class="mb-0">Thu thêm 3000đ cho những đơn hàng dưới 100.000đ. Quý khách vui lòng nhập đúng thông tin tránh sai sót không đáng có !</p>
@@ -186,7 +187,7 @@
                             </div>
                         </div>
 
-                        <section class="ftco-section">
+                        <section class="ftco-section" style="display: none;" id="withdrawlRequest">
                             <button id="showModalButton" class="mr-1 btn btn-success">
                                 <i class="fa fa-plus"></i> Tạo yêu cầu mới 
                             </button>
@@ -354,6 +355,21 @@
                             $('#closeRqForm').click(function () {
                                 // Loại bỏ lớp d-none từ phần modal khi nút được nhấn
                                 $('#withdrawalModal').hide();
+                            });
+                            $('#withdrawlButton').click(function () {
+                                // Loại bỏ lớp d-none từ phần modal khi nút được nhấn
+                                
+                                $('#depositeForm').hide();
+                                
+                                $('#withdrawlRequest').show();
+                            });
+                            
+                             $('#depositeButton').click(function () {
+                                // Loại bỏ lớp d-none từ phần modal khi nút được nhấn
+                                
+                                $('#depositeForm').show();
+                                
+                                $('#withdrawlRequest').hide();
                             });
                         });
                         $(document).ready(function () {

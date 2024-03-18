@@ -90,10 +90,30 @@ public class ManageMyOrder extends HttpServlet {
             Product product = dao.getProductByID(orders.getProductId());
             productOrderPairsComplete.add(new ProductOrderPair(product, orders));
         }
+        List<intermediateOrders> orderDel = dao.getOrderByStatus("Người bán huỷ đơn", u.getId());
+        for (intermediateOrders orders : orderDel) {
+            Product product = dao.getProductByID(orders.getProductId());
+            productOrderPairsComplete.add(new ProductOrderPair(product, orders));
+        }
         //Get Processing Order  
         List<ProductOrderPair> productOrderPairsProcess = new ArrayList<>();
         List<intermediateOrders> orderReady = dao.getOrderByStatus("Sẵn sàng giao dịch", u.getId());
         for (intermediateOrders orders : orderReady) {
+            Product product = dao.getProductByID(orders.getProductId());
+            productOrderPairsProcess.add(new ProductOrderPair(product, orders));
+        }
+        List<intermediateOrders> orderComplain = dao.getOrderByStatus("Người mua khiếu nại đơn hàng", u.getId());
+        for (intermediateOrders orders : orderComplain) {
+            Product product = dao.getProductByID(orders.getProductId());
+            productOrderPairsProcess.add(new ProductOrderPair(product, orders));
+        }
+        List<intermediateOrders> orderAdmin = dao.getOrderByStatus("Yêu cầu admin giải quyết", u.getId());
+        for (intermediateOrders orders : orderAdmin) {
+            Product product = dao.getProductByID(orders.getProductId());
+            productOrderPairsProcess.add(new ProductOrderPair(product, orders));
+        }
+        List<intermediateOrders> orderAcept = dao.getOrderByStatus("Chờ người mua xác nhận", u.getId());
+        for (intermediateOrders orders : orderAcept) {
             Product product = dao.getProductByID(orders.getProductId());
             productOrderPairsProcess.add(new ProductOrderPair(product, orders));
         }
@@ -107,6 +127,8 @@ public class ManageMyOrder extends HttpServlet {
         request.setAttribute("productOrderPairs", productOrderPairsAll);
         request.setAttribute("productOrderPairsComplete", productOrderPairsComplete);
         request.setAttribute("productOrderPairsProcess", productOrderPairsProcess);
+        session.removeAttribute("balance");
+        session.setAttribute("balance", dao.getWallet(u.getId()).getBalance());
         List<Report> listReport = dao.getTopNext3Report(u.getId(), 0);
         request.setAttribute("listR", listReport);
         request.getRequestDispatcher("MyOrder.jsp").forward(request, response);
@@ -136,7 +158,7 @@ public class ManageMyOrder extends HttpServlet {
         ProductOrderPair productOrderPair = new ProductOrderPair(product, order);
         if (dao.getUserById(productOrderPair.getOrder().getBuyer_id()) != null) {
             buyerName = dao.getUserById(productOrderPair.getOrder().getBuyer_id()).display_name;
-        } else{
+        } else {
             buyerName = "Chưa xác định";
         }
         String data = productOrderPair.getOrder().getCode() + ";"

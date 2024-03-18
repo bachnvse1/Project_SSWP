@@ -93,7 +93,7 @@ public class UpdateOrderServlet extends HttpServlet {
         if (order.getStatus().equals("Sẵn sàng giao dịch")) {
             product.setName(productName);
             product.setPrice(price);
-            if (party.equals("Người bán")) {
+            if (party.equals("seller")) {
                 product.setTransaction_fee(true);
             } else {
                 product.setTransaction_fee(false);

@@ -54,7 +54,6 @@ public class ajaxServlet extends HttpServlet {
         try {
             int amountx = Integer.parseInt(xAmount);
             if (amountx < 100000) {
-
                 xAmount = xAmount.substring(0, xAmount.length() - 2);
                 xAmount = xAmount.replace(".", "");
                 amount = Integer.parseInt(xAmount) * 10000 + 300000;
