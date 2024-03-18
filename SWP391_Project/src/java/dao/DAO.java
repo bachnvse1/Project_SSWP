@@ -7,6 +7,7 @@ package dao;
 import Context.DBContext;
 import Entity.Category;
 import Entity.Feedback;
+import Entity.HistoryTransaction;
 import Entity.OrderHistory;
 import Entity.Product;
 import Entity.Report;
@@ -1702,7 +1703,8 @@ public class DAO extends DBContext {
     //BINH
     public List<Product> getAllProduct() {
         List<Product> list = new ArrayList<>();
-        String sql = "SELECT * FROM swp_demo.product where is_delete = false";
+        String sql = "Select * from product as p inner join intermediate_orders i on p.id=i.productID\n"
+                + "where i.status='Sẵn sàng giao dịch'";
         try {
             con = new DBContext().connection;
             ps = con.prepareStatement(sql);
@@ -1756,7 +1758,8 @@ public class DAO extends DBContext {
 
     public List<Product> getAllProductbyName(String name) {
         List<Product> list = new ArrayList<>();
-        String sql = "SELECT * FROM swp_demo.product where name like ? and is_delete = false";
+        String sql = "SELECT * FROM Product p\n"
+                + "JOIN intermediate_orders io ON p.id = io.productID where name like ? and io.status = 'Sẵn sàng giao dịch'";
         try {
             con = new DBContext().connection;
 
@@ -1815,7 +1818,9 @@ public class DAO extends DBContext {
     public List<Product> getProductbyCategoryID(String id) {
         List<Product> list = new ArrayList<>();
         String sql = "Select * from product as p inner join category as c\n"
-                + "on p.categoryID=c.id where p.categoryID=? and p.is_delete = 0";
+                + "          on p.categoryID=c.id\n"
+                + "          join intermediate_orders i on p.id=i.productID\n"
+                + "          where p.categoryID= ? and i.status='Sẵn sàng giao dịch'";
         try {
             con = new DBContext().connection;
 
@@ -2088,7 +2093,82 @@ public class DAO extends DBContext {
         }
         return null;
     }
+ public HistoryTransaction InsertHistory_Transaction(double money, String Transaction_type, boolean status, String note, int create_by, int nguoinhan) {
+        String query = "INSERT INTO `swp_demo`.`history_transaction` (`Money_Transaction`, `Transaction_Type`, `Status`,`Note`, `Create_by`, `nguoinhan`) \n"
+                + "VALUES(?, ?, ?, ?, ?, ?)";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(query);
+            ps.setDouble(1, money);
+            ps.setString(2, Transaction_type);
+            ps.setBoolean(3, status);
+            ps.setString(4, note);
+            ps.setInt(5, create_by);
+            ps.setInt(6, nguoinhan);
+            ps.executeUpdate();
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return null;
+    }
 
+    public List<HistoryTransaction> GetHistory_TransactionbyID(int uid) {
+        List<HistoryTransaction> list = new ArrayList<>();
+        String sql = "SELECT *FROM swp_demo.history_transaction h \n"
+                + "WHERE   h.Create_by = ? OR h.nguoinhan = ?;";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, uid);
+            ps.setInt(2, uid);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                list.add(new HistoryTransaction(
+                        rs.getInt(1),
+                        rs.getDouble(2),
+                        rs.getString(3),
+                        rs.getBoolean(4),
+                        rs.getString(5),
+                        rs.getInt(6),
+                        rs.getTimestamp(7),
+                        rs.getInt(8),
+                        rs.getTimestamp(9)
+                ));
+            }
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return list;
+    }
+
+    public HistoryTransaction GetHistoryby_ID(int uid) {
+        String sql = "SELECT *FROM swp_demo.history_transaction h \n"
+                + "WHERE h.id=?";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, uid);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return new HistoryTransaction(
+                        rs.getInt(1),
+                        rs.getDouble(2),
+                        rs.getString(3),
+                        rs.getBoolean(4),
+                        rs.getString(5),
+                        rs.getInt(6),
+                        rs.getTimestamp(7),
+                        rs.getInt(8),
+                        rs.getTimestamp(9)
+                );
+            }
+
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return null;
+    }
     public static void main(String[] args) {
         DAO dao = new DAO();
 

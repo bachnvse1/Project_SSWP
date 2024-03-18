@@ -42,10 +42,7 @@
         <link href="css/styles.css" rel="stylesheet" type="text/css"/> 
         <link href="css/manager.css" rel="stylesheet" type="text/css"/>
 
-        <!--           <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round"> -->
-        <!--         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> -->
-        <!--       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
-        <!--     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">  -->
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
@@ -118,20 +115,29 @@
                             <div class="card-header py-3 row">
                                 <div class="col-sm-3">
                                     <h5 class="mb-0 text-left" id="">
-                                        <strong>Edit Category</strong>
+                                        <strong>Edit Category</strong>  
                                     </h5>
+                                  
+                                </div>
+
+                            </div>
+                            <div class="card-header py-3 row">
+                                <div class="col-sm-3">
+                                    <h5 class="mb-0 text-left" id="">
+                                        <strong>  <a href="InserCategory.jsp">Add New Category</a></strong>  
+                                    </h5>
+
                                 </div>
 
                             </div>
 
-
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-hover text-nowrap">
+                                    <table id="example" class="table table-striped" style="width:100%">
                                         <thead>
                                             <tr>
                                                 <th scope="col">ID</th>
-                                                <th scope="col">Username</th>                              
+                                                <th scope="col">Name</th>                              
                                                 <th scope="col">Created_at</th>
                                                 <th scope="col">Updated_at</th>
                                                 <th></th>
@@ -166,7 +172,7 @@
                         </div>
                     </div>
                 </section>
-                <a href="InserCategory.jsp">ADD</a>
+
                 <!--Section: Quan Ly tai Khoan-->
             </div>
 
@@ -179,24 +185,16 @@
 
         <script src="js/manager.js" type="text/javascript"></script>
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <!--Main layout-->
-        <!-- SCRIPTS -->
-        <!-- JQuery -->
-        <script src="https://mdbootstrap.com/previews/ecommerce-demo/js/jquery-3.4.1.min.js"></script>
-        <!-- Bootstrap tooltips -->
-        <script type="text/javascript" src="https://mdbootstrap.com/previews/ecommerce-demo/js/popper.min.js"></script>
-        <!-- Bootstrap core JavaScript -->
-        <script type="text/javascript" src="https://mdbootstrap.com/previews/ecommerce-demo/js/bootstrap.js"></script>
-        <!-- MDB core JavaScript -->
-        <script type="text/javascript" src="https://mdbootstrap.com/previews/ecommerce-demo/js/mdb.min.js"></script>
-        <!-- MDB Ecommerce JavaScript -->
-        <script type="text/javascript" src="https://mdbootstrap.com/previews/ecommerce-demo/js/mdb.ecommerce.min.js"></script>
-        <!-- MDB -->
-        <script type="text/javascript" src="js/mdb.min.js"></script>
-        <!-- Custom scripts -->
+
         <script type="text/javascript" src="js/script.js"></script>
         <script src="https://mdbootstrap.com/api/snippets/static/download/MDB5-Free_3.8.1/js/mdb.min.js"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.7.1.js"></script> 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+        <script src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>  
+        <script src="https://cdn.datatables.net/2.0.2/js/dataTables.bootstrap5.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css"></script>
+        <script src="https://cdn.datatables.net/2.0.2/css/dataTables.bootstrap5.css"></script>
 
 
         <script type="text/javascript" src="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/js/plugins/mdb-plugins-gathered.min.js"></script>
@@ -205,13 +203,17 @@
         <!-- Custom scripts -->
         <script type="text/javascript" src="js/script.js"></script>
         <script >
-                                            function doDelete(id) {
-                                                var url = "deletecate";
-                                                if (confirm("do U want delete")) {
-                                                    window.location.href = url + "?id=" + id;
-                                                }
+                                                        function doDelete(id) {
+                                                            var url = "deletecate";
+                                                            if (confirm("do U want delete")) {
+                                                                window.location.href = url + "?id=" + id;
+                                                            }
 
-                                            }
+                                                        }
+        </script>
+
+        <script>
+            new DataTable('#example');
         </script>
     </body>
 </html>
