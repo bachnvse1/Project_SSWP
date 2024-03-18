@@ -560,6 +560,11 @@ $(document).ready(function () {
         document.getElementById("myModalComplain").style.display = 'none';
 
     });
+    
+    $("#verifyOrderButton1").click(function () {
+        document.getElementById("exampleModalCreate").style.display = 'block';
+    });
+    
 
     $(".close1").click(function () {
 

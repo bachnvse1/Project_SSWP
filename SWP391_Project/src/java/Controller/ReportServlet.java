@@ -65,7 +65,6 @@ public class ReportServlet extends HttpServlet {
         
         response.setContentType("text/html;charset=UTF-8");       
         DAO dao = new DAO();
-        
         List<Report> listR = dao.getAllReport();
         List<ReportOrderProduct> reportOrderProductAll = new ArrayList<>();
         for (Report report : listR) {

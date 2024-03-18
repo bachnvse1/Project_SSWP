@@ -791,7 +791,7 @@
                             <label for="hidden_info">Thời gian tạo</label><br>
                             <input type="text" id="create" name="" value="" readonly><br><br><br>
                             <button type="submit" style="float: left; color: white; background-color: red; border: 1px solid red; padding: 10px; border-radius: 3px;" data-orderi="1">Khiếu nại đơn hàng không đúng mô tả</button>
-                            <button type="submit" style="float: right; color: white; background-color: #4CAF50; border: 1px solid #4CAF50; padding: 10px; border-radius: 3px;" data-orderi="2">Xác nhận đơn hàng đúng mô tả</button>
+                            <button id="verifyOrderButton1" type="submit" style="float: right; color: white; background-color: #4CAF50; border: 1px solid #4CAF50; padding: 10px; border-radius: 3px;" data-orderi="2">Xác nhận đơn hàng đúng mô tả</button>
 
                         </form>
                     </div>
@@ -803,7 +803,7 @@
 
 
         <div id="exampleModalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  style="height:580px;padding:0px;display: none;">
-            <div class="modal-dialog" style="max-width: 700px;display: none" role="document">
+            <div class="modal-dialog" style="max-width: 700px;" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Đánh giá</h5>

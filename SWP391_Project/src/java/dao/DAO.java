@@ -1432,7 +1432,7 @@ public class DAO extends DBContext {
                         + "WHERE "
                         + "    YEAR(io.create_at) = ? "
                         + "    AND io.create_by = ? "
-                        + "    AND io.status = 'complete' "
+                        + "    AND io.status = 'Đơn hàng đã hoàn thành' "
                         + "    AND MONTH(io.create_at) = ? "
                         + "GROUP BY "
                         + "    io.create_by, u.is_admin";
@@ -1508,7 +1508,7 @@ public class DAO extends DBContext {
                     + "    swp_demo.users u ON io.create_by = u.id\n"
                     + "WHERE \n"
                     + "    io.create_by = ?\n"
-                    + "    AND io.status = 'complete'\n"
+                    + "    AND io.status = 'Đơn hàng đã hoàn thành'\n"
                     + "    AND YEAR(io.create_at) = YEAR(CURDATE())\n"
                     + "GROUP BY \n"
                     + "    io.create_by, u.is_admin;";
