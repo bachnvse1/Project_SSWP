@@ -105,7 +105,9 @@ public class reportServ extends HttpServlet {
                         dao.updateOrderStatus(u.getId(), "Yêu cầu admin giải quyết", id);
                         dao.insertOrderHistory(id, "Chờ Admin giải quyết", "Giao dịch được khiếu nại và chờ Admin giải quyết", dao.getOrderByID(id).getCreate_by());
                         dao.updateAmount(dao.getWallet(u.getId()).getBalance() - 10000, id);
-
+                        // binh them vao day
+                        
+                        
                         response.getWriter().print("Yêu cầu admin giải quyết thành công. Chờ giải quyết nhé!");
                     } else {
                         response.getWriter().print("Không thực hiện được, vui lòng kiểm tra lại!");
@@ -177,8 +179,11 @@ public class reportServ extends HttpServlet {
                     if (!dao.getOrderByID(id).getStatus().equals("Đơn hàng đã hoàn thành")) {
                         dao.insertReport(7, id, 1, false, "2 bên không tự giải quyết được yêu cầu admin tham gia giải quyết đơn hàng mã code: " + dao.getOrderByID(id).getCode(), u.getId(), false);
                         dao.updateOrderStatus(u.getId(), "Yêu cầu admin giải quyết", id);
-                        session.removeAttribute("balance");
+                        dao.updateAmount(dao.getWallet(u.getId()).getBalance() - 10000, id);
                         dao.insertOrderHistory(id, "Chờ Admin giải quyết", "Giao dịch được khiếu nại và chờ Admin giải quyết", dao.getOrderByID(id).getBuyer_id());
+                        
+                        
+                        // bình them vao day
                         response.getWriter().print("Yêu cầu admin giải quyết thành công. Chờ giải quyết nhé!");
                     } else {
                         response.getWriter().print("Không thực hiện được, vui lòng kiểm tra lại!");

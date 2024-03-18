@@ -137,6 +137,9 @@ public class AddProdcutServlet extends HttpServlet {
         int orderID = dal.getOrderByCode(order.getCode()).getId();
         dal.updateAmount(walet.getBalance(), u.getId());
         session.setAttribute("balance", dal.getWallet(u.getId()).getBalance());
+        
+        //binh them vao day
+        
         dal.insertReport(3, orderID, u.getId(), true, "Bạn vừa đăng sản phẩm với mã code: " + order.getCode(), u.getId(), false);
         dal.insertOrderHistory(orderID, "Sẵn sàng giao dịch", "Người bán đăng bán thành công sản phẩm", order.getCreate_by());
         response.getWriter().write("success");

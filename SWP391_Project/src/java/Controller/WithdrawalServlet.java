@@ -136,6 +136,8 @@ public class WithdrawalServlet extends HttpServlet {
                     dao.InsertWithdrawal(withdrawal);
                     dao.insertReport(6, dao.getWithdrawalByCode(code).getId(), u.getId(), true, "Bạn đã yêu cầu rút tiền với mã yêu cầu là: " + withdrawal.getAmount() + ".", u.getId(), false);
                     // Add the purchase transaction to the queue
+                    
+                    //binh them vao day
                     transactionQueue.addTransaction(new Transaction(transactionId, u.getId(), withdrawal.getCode(), withdrawal.getAmount()));
                     session.removeAttribute("balance");
                     session.setAttribute("balance", walet.getBalance());
