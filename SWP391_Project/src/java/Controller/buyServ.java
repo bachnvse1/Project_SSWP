@@ -96,7 +96,8 @@ public class buyServ extends HttpServlet {
         Product p = dao.getProductByID(idx);
         intermediateOrders o = dao.getOrderByProductID(p.id);
         double price = 0;
-        if(p.Transaction_fee == true) {
+        if(u != null) {
+            if(p.Transaction_fee == true) {
             price = p.getPrice();
         } else {
             price = p.getPrice() + o.getIntermediary_fee();
@@ -127,6 +128,10 @@ public class buyServ extends HttpServlet {
         } else {
             response.getWriter().print("Không thể mua sản phẩm của chính mình!");
         }
+        } else {
+            response.getWriter().print("Đăng nhập để mua sản phẩm");
+        }
+        
     }
 
     /**

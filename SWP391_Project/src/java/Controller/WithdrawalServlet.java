@@ -138,6 +138,7 @@ public class WithdrawalServlet extends HttpServlet {
                     // Add the purchase transaction to the queue
                     
                     //binh them vao day
+                    dao.InsertHistory_Transaction(withdrawal.getAmount(), "-", true,  "Bạn đã yêu cầu rút tiền với mã yêu cầu là: " + withdrawal.getCode()+ ".", u.getId(), u.getId());
                     transactionQueue.addTransaction(new Transaction(transactionId, u.getId(), withdrawal.getCode(), withdrawal.getAmount()));
                     session.removeAttribute("balance");
                     session.setAttribute("balance", walet.getBalance());

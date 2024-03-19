@@ -97,7 +97,7 @@ public class AuthorlizationFilter implements Filter {
      * @exception ServletException if a servlet error occurs
      */
     private HttpServletRequest httpRequest;
-    private static final String[] loginRequiredURLs = {"/Cart.jsp", "/Feedback", "/manageMyOrder", "/EditProfile", "/notification", "/withdrawal","/ChangePassword"};
+    private static final String[] loginRequiredURLs = {"/Cart.jsp", "/Feedback", "/manageMyOrder", "/EditProfile", "/notification", "/withdrawal","/ChangePassword", "/transaction"};
     private static final String[] adminRequiredURLs = {"/ManageAccount", "/editcategory", "/ReportServlet", "/RevenueAdmin", "/withdrawalprocessing"};
 
     @Override
@@ -119,10 +119,9 @@ public class AuthorlizationFilter implements Filter {
         if (u != null) {
              if (!u.isIs_Admin() && isAdminRequired()) {               
                 httpRequest.getRequestDispatcher("/error-404.html").forward(request, response);
-                } else if (url.endsWith(".jsp")) {  
-             
-                httpRequest.getRequestDispatcher("/home").forward(request, response);
-           }
+                } else if (url.endsWith(".jsp") && !url.equals("/Cart.jsp")) {  
+                    httpRequest.getRequestDispatcher("/home").forward(request, response);
+                }
          } else {
             if (isLoginRequired() || isAdminRequired()) {
                 httpRequest.getRequestDispatcher("/login").forward(request, response);

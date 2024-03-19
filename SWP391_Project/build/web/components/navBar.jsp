@@ -308,6 +308,14 @@
                             <!-- ACCOUNT -->
                             <div class="col-md-7 clearfix" id="headerCtnWrapper">
                                 <div class="header-ctn" id="headerCtnContent">
+                                    <c:if test="${user != null and user.isIs_Admin() == true}">
+                                        <div class="inline-block">
+                                            <a href="ManageAccount">
+                                                <i class="fa fa-user-secret"></i>
+                                                <span>Quản lý</span>
+                                            </a>
+                                        </div>
+                                    </c:if>
                                     <!-- Wishlist -->
                                     <c:if test="${user != null}">
                                         <div class="inline-block">

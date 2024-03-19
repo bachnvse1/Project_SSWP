@@ -106,7 +106,7 @@ public class reportServ extends HttpServlet {
                         dao.insertOrderHistory(id, "Chờ Admin giải quyết", "Giao dịch được khiếu nại và chờ Admin giải quyết", dao.getOrderByID(id).getCreate_by());
                         dao.updateAmount(dao.getWallet(u.getId()).getBalance() - 10000, id);
                         // binh them vao day
-                        
+                        dao.InsertHistory_Transaction(10000, "-", true, "Yêu cầu tạo khiếu nại đơn hàng mã số:"  + dao.getOrderByID(id).getCode(), u.id, u.id);
                         
                         response.getWriter().print("Yêu cầu admin giải quyết thành công. Chờ giải quyết nhé!");
                     } else {
@@ -163,8 +163,11 @@ public class reportServ extends HttpServlet {
                 if (transactionId != -1) {
                     transactionQueue.addTransaction(new Transaction(transactionId, dao.getOrderByID(id).getCreate_by(), id, dao.getOrderByID(id).getTotal_received_amount()));
                     dao.insertOrderHistory(id, "Hoàn thành giao dịch", "Người mua xác nhận hoàn thành đơn hàng", dao.getOrderByID(id).getBuyer_id());
-                    
+                    dao.InsertHistory_Transaction(dao.getOrderByID(id).getTotal_received_amount(), "+", true, "Hoàn thành đơn hàng mã số:"  + dao.getOrderByID(id).getCode(), u.id, dao.getOrderByID(id).getCreate_by());
                     response.getWriter().print("Bạn đã xác thực đơn hàng thành công. Xin cảm ơn!");
+                   
+
+
                     //binh them vao day
                     new Thread(() -> transactionQueue.processTransactionsComlete()).start();
                     
@@ -181,8 +184,9 @@ public class reportServ extends HttpServlet {
                         dao.updateOrderStatus(u.getId(), "Yêu cầu admin giải quyết", id);
                         dao.updateAmount(dao.getWallet(u.getId()).getBalance() - 10000, id);
                         dao.insertOrderHistory(id, "Chờ Admin giải quyết", "Giao dịch được khiếu nại và chờ Admin giải quyết", dao.getOrderByID(id).getBuyer_id());
-                        
-                        
+                    
+                        dao.InsertHistory_Transaction(10000, "-", true, "Yêu cầu tạo khiếu nại đơn hàng mã số:"  + dao.getOrderByID(id).getCode(), u.id, u.id);
+
                         // bình them vao day
                         response.getWriter().print("Yêu cầu admin giải quyết thành công. Chờ giải quyết nhé!");
                     } else {
