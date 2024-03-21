@@ -3,13 +3,11 @@ package Controller;
 import Entity.User;
 import dao.DAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.util.List;
 
 @WebServlet(name = "ManageAccount", urlPatterns = {"/ManageAccount"})
@@ -23,7 +21,7 @@ public class ManageAccount extends HttpServlet {
         DAO dao = new DAO();
         List<User> list = dao.getAllUser();
         request.setAttribute("listA", list);
-        
+
         request.getRequestDispatcher("quanlytaikhoan.jsp").forward(request, response);
     }
 

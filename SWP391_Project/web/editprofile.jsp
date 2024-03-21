@@ -105,7 +105,7 @@
     </head>
     <body>
         <!-- Navigation-->
-        <%@include file="components/navbar.jsp" %>
+        <%@include file="components/navBar.jsp" %>
 
         <div class="container px-4 px-lg-5 mt-5">
             <nav style="margin-top: 5em;">
@@ -181,7 +181,6 @@
                     <input type="submit" value="Update" style="border-radius: 20px; margin-top: 1em;">
                 </div>
             </form>
-
         </div>
         <%@include file="components/footer.jsp" %>
         <!-- Bootstrap core JS-->

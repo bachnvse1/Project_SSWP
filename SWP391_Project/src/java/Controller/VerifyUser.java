@@ -99,6 +99,8 @@ public class VerifyUser extends HttpServlet {
                         session.setAttribute("email", email);
                         password = Encryption.toSHA1(password);
                         dao.signup(username, password, email);
+                        
+                        dao.insertWallet(0, dao.getUser(username).getId());
                         response.getWriter().write("success");
                         SendEmail sm = new SendEmail();
                         new Thread(() -> sm.Send(email, code)).start();

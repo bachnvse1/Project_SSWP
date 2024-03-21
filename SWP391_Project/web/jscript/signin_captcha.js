@@ -25,6 +25,29 @@ $(document).ready(function () {
 });
 
 
+$(document).ready(function() {            
+            $("#user-Signin").keypress(function(event) {
+                if (event.keyCode === 13) {
+                    event.preventDefault();
+                    SignIn(); 
+                }
+            });
+       
+            $("#password-field").keypress(function(event) {
+                if (event.keyCode === 13) {
+                    event.preventDefault();
+                    SignIn();
+                }
+            });
+
+            $("#captcha").keypress(function(event) {
+                if (event.keyCode === 13) {
+                    event.preventDefault();
+                    SignIn(); 
+                }
+            });
+        });
+
 function SignIn()
 {
     var username = $("#user-Signin").val();
@@ -67,7 +90,8 @@ function SignIn()
             }
         }
     });
-};
+}
+;
 
 function refreshCaptcha()
 {
@@ -75,9 +99,13 @@ function refreshCaptcha()
     $.get('refreshcaptcha', function () {
         // Thay đổi src của ảnh để làm mới
         $('#captchaImage').attr('src', 'captchaimage?' + new Date().getTime());
+        document.getElementById("captcha").value = "";
     });
 }
 ;
+
+
+
 
 
 

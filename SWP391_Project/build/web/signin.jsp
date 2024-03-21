@@ -30,7 +30,7 @@
                     <div class="col-md-6 col-lg-4" style="background-color: rgba(0,0,0,0.7); padding: 3%;border-radius: 20px">
                         <div class="login-wrap p-0">
                             <div style="display: flex;text-align: center;margin-bottom: 3%;">
-                                <a style="height: 40px">
+                                <a style="height: 40px" href="home">
                                     <button style="border-radius: 100%;width:40px;height: 40px" id="backHome">
                                         <i class="fas fa-home"></i>
                                     </button>
@@ -77,8 +77,8 @@
         <script src="js/popper.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/main.js"></script>
-        <script src="jscript/signup.js"></script>
         <script src="jscript/signin_captcha.js"></script>
+        <script src="jscript/signup.js"></script>
         
     </body>
 </html>
