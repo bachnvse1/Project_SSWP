@@ -1,5 +1,5 @@
 
-use swp_demo
+use swp_demo;
 CREATE TABLE users (
     id INT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(255) NOT NULL,
@@ -49,8 +49,6 @@ Create table Product (
     is_delete bit
 );
 
-drop table intermediate_Orders
-drop table Order_Detail
 
 create table intermediate_Orders(
 	id INT PRIMARY KEY AUTO_INCREMENT,
@@ -184,8 +182,6 @@ INSERT INTO Category (name, is_delete) VALUES ('Account', 0);
 INSERT INTO Category (name, is_delete) VALUES ('Quizlet', 0);
 INSERT INTO Category (name, is_delete) VALUES ('Netflix', 0);
 
-delete from swp_demo.category
-
 
 INSERT INTO users (username, password, email, display_name, is_admin, is_verify, is_active) 
 VALUES ('bach', 'UPdqztViNgyMw0QyGVTpe0ud+dw=', 'example@example.com', 'Example User', 1, 1, 1);
@@ -194,15 +190,19 @@ INSERT INTO users (username, password, email, display_name, is_admin, is_verify,
 VALUES ('bach2', 'UPdqztViNgyMw0QyGVTpe0ud+dw=', 'example@example.com', 'buyer', 0, 1, 1);
 
 INSERT INTO users (username, password, email, display_name, is_admin, is_verify, is_active) 
-VALUES ('bach3', 'UPdqztViNgyMw0QyGVTpe0ud+dw=', 'example@example.com', 'buyer', 0, 1, 1);
+VALUES ('bach3', 'UPdqztViNgyMw0QyGVTpe0ud+dw=', 'example@example.com', 'cus', 0, 1, 1);
 
+INSERT INTO users (username, password, email, display_name, is_admin, is_verify, is_active) 
+VALUES ('bach4', 'UPdqztViNgyMw0QyGVTpe0ud+dw=', 'example@example.com', 'cus2', 0, 1, 1);
+
+UPDATE Wallet SET balance = 5000000 WHERE create_by = 2
 INSERT INTO Wallet (balance, create_by, updated_by)
-VALUES (10000000.00, 1, 1),
-       (50000000.50, 2, 2);
+VALUES (500000.00, 4, 4)
+       
        
 update  Wallet 
-set balance = 123
-where create_by = 1 
+set balance = 500000
+where create_by = 3
 
 
 delete from swp_demo.product where product.id = 5;
@@ -215,7 +215,7 @@ select * from Product where is_delete = true
 select * from users
 select * from intermediate_Orders where productID = 2
 select * from swp_demo.Order_Detail
-select * from Wallet where create_by = 1
+select * from Wallet where create_by = 5
 select * from Report 
  -- //1 là khiếu nại
 --             //2 là mua hàng

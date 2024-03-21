@@ -66,7 +66,7 @@
                         <!-- /LOGO -->
 
                         <!-- SEARCH BAR -->
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <div class="header-search">
 
                                 <form action="home" method="get">
@@ -74,13 +74,13 @@
 
                                     <button class="search-btn">Search</button>
                                 </form>
-                                
+
                             </div>
                         </div>
                         <!-- /SEARCH BAR -->
 
                         <!-- ACCOUNT -->
-                        <div class="col-md-4 clearfix">
+                        <div class="col-md-5 clearfix">
                             <div class="header-ctn">
                                 <!-- Wishlist -->
                                 <c:if test="${user != null}">
@@ -101,6 +101,7 @@
                                     </div>
                                 </c:if>
 
+
                                 <!-- /Wishlist -->
 
                                 <!-- Cart -->
@@ -117,90 +118,126 @@
                                 <div class="row">
                                     <a  href="Feedback" >
                                         <i class="fa fa-comments"></i>
-                                        <span>Feedback</span>
+                                        <span>Phản Hồi</span>
 
                                     </a>
                                 </div>
                                 <!-- /Feedback -->
+                                <!-- Revenue -->
+                                <c:if test="${user != null and user.isIs_Admin()== false }">
+                                    <div class="row">                                     
+                                        <a  href="Revenue" >
+                                            <i class="fa fa-money"></i>
+                                            <span>Doanh Thu</span>
 
+                                        </a>
+                                    </c:if>
+
+                                    <c:if test="${user == null }">
+                                        <div class="row">                                     
+                                            <a  href="#" >
+                                                <i class=""></i>
+                                                <span></span>
+
+                                            </a>
+                                        </c:if>
+
+                                    </div>
+                                </div>
+                                <!-- /ACCOUNT -->
                             </div>
+                            <!-- row -->
                         </div>
-                        <!-- /ACCOUNT -->
+                        <!-- container -->
                     </div>
-                    <!-- row -->
-                </div>
-                <!-- container -->
-            </div>
-            <!-- /MAIN HEADER -->
-        </header>
+                    <!-- /MAIN HEADER -->
+                    </header>
 
+                    <marquee scrollamount="10">🚀 Khuyến mãi đặc biệt! Giảm giá 20% cho tất cả sản phẩm - Ưu đãi có hạn! 🛍️️</marquee>
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <!-- jQuery Plugins -->
-        <script src="js1/jquery.min.js"></script>
-        <script src="js1/bootstrap.min.js"></script>
-        <script src="js1/slick.min.js"></script>
-        <script src="js1/nouislider.min.js"></script>
-        <script src="js1/jquery.zoom.min.js"></script>
-        <script src="js1/main.js"></script>
-        <script src="jscript/signin_captcha.js"></script>
-        <script>
-            $(document).ready(function () {
-                $("#info-Button").click(function () {
-                    $.ajax({
-                        type: 'GET',
-                        url: "editprofile.jsp",
-                        success: function (response) {
-                            window.location.href = "editprofile.jsp";
-                        },
-                        error: function () {
-                            // Xử lý lỗi nếu có
-                            alert("Đã xảy ra lỗi khi tải trang");
+                    <style>
+                        /* Apply some basic styles to the marquee */
+                        marquee {
+                            font-family: 'Arial', sans-serif;
+                            font-size: 18px;
+                            color: red; /* Change text color to red */
+                            background-color: #f0f0f0;
+                            padding: 10px;
+                            border: 1px solid #ccc;
+                            border-radius: 5px;
+                            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                            display: inline-block;
                         }
-                    });
-                });
+                    </style>
+                    <!-- Font Awesome CSS -->
+                    <!-- Font Awesome CSS -->
 
-            });
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+                    <!-- jQuery Plugins -->
+                    <script src="js1/jquery.min.js"></script>
+                    <script src="js1/bootstrap.min.js"></script>
+                    <script src="js1/slick.min.js"></script>
+                    <script src="js1/nouislider.min.js"></script>
+                    <script src="js1/jquery.zoom.min.js"></script>
+                    <script src="js1/main.js"></script>
+                    <script src="jscript/signin_captcha.js"></script>
+                    <script>
+                        $(document).ready(function () {
+                            $("#info-Button").click(function () {
+                                $.ajax({
+                                    type: 'GET',
+                                    url: "editprofile.jsp",
+                                    success: function (response) {
+                                        window.location.href = "editprofile.jsp";
+                                    },
+                                    error: function () {
+                                        // Xử lý lỗi nếu có
+                                        alert("Đã xảy ra lỗi khi tải trang");
+                                    }
+                                });
+                            });
+
+                        });
 
 
-            $(document).ready(function () {
-                $("#oder-Button").click(function () {
-                    $.ajax({
-                        type: 'GET',
-                        url: "manageMyOrder",
-                        success: function (response) {
-                            window.location.href = "manageMyOrder";
-                        },
-                        error: function () {
-                            // Xử lý lỗi nếu có
-                            alert("Đã xảy ra lỗi khi tải trang");
-                        }
-                    });
-                });
-            });
+                        $(document).ready(function () {
+                            $("#oder-Button").click(function () {
+                                $.ajax({
+                                    type: 'GET',
+                                    url: "manageMyOrder",
+                                    success: function (response) {
+                                        window.location.href = "manageMyOrder";
+                                    },
+                                    error: function () {
+                                        // Xử lý lỗi nếu có
+                                        alert("Đã xảy ra lỗi khi tải trang");
+                                    }
+                                });
+                            });
+                        });
 
-            $(document).ready(function () {
-                $("#logout-Button").click(function () {
-                    $.ajax({
-                        type: 'POST',
-                        url: "logout",
-                        success: function (response) {
-                            $("body").html(response);
-                        },
-                        error: function () {
-                            // Xử lý lỗi nếu có
-                            alert("Đã xảy ra lỗi khi tải trang");
-                        }
-                    });
-                });
-            });
-            $(document).ready(function () {
-                // Xử lý khi nhấp vào nút "Your Cart"
-                $("#your-cart-button").click(function () {
-                    // Thực hiện chuyển hướng đến trang mong muốn (thay "your-cart-page" bằng đường dẫn thực tế)
-                    window.location.href = "Cart.jsp";
-                });
-            });
-        </script>
-    </body>
-</html>
+                        $(document).ready(function () {
+                            $("#logout-Button").click(function () {
+                                $.ajax({
+                                    type: 'POST',
+                                    url: "logout",
+                                    success: function (response) {
+                                        $("body").html(response);
+                                    },
+                                    error: function () {
+                                        // Xử lý lỗi nếu có
+                                        alert("Đã xảy ra lỗi khi tải trang");
+                                    }
+                                });
+                            });
+                        });
+                        $(document).ready(function () {
+                            // Xử lý khi nhấp vào nút "Your Cart"
+                            $("#your-cart-button").click(function () {
+                                // Thực hiện chuyển hướng đến trang mong muốn (thay "your-cart-page" bằng đường dẫn thực tế)
+                                window.location.href = "Cart.jsp";
+                            });
+                        });
+                    </script>
+                    </body>
+                    </html>

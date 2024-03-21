@@ -43,11 +43,12 @@
         <![endif]-->
         <script src="https://cdn.ckeditor.com/4.20.2/standard/ckeditor.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        
     </head>
 
     <body>
          <%@include file="components/navBar.jsp" %>
-         <div class="container-scroller" style="height: 80vh;">
+         <div class="container-scroller" style="height: 80vh;padding-bottom: 20px">
             <div class="container-fluid page-body-wrapper">
                 <!-- HEADER -->
                
@@ -59,26 +60,26 @@
                             <!-- ============================================================== -->
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                 <div class="card">
-                                    <h3 class="card-header">Feedback</h3>
+                                    <h3 class="card-header">Phản Hồi </h3>
                                     <div class="card-body">           
                                         <div class="table-responsive">
                                             <table class="table table-striped table-bordered first">
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
-                                                        <th>Title</th>
+                                                        <th>Tiêu Đề</th>
                                                        
-                                                        <th>Content</th>
-                                                        <th>Create Date</th>
-                                                         <th>Username</th>
-                                                        <th>ACTIONS</th>
+                                                        <th>Nội Dung</th>
+                                                        <th>Ngày Tạo</th>
+                                                         <th>Tên Người Dùng</th>
+                                                        <th>Tính Năng</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <c:forEach items="${listF}" var="listF" varStatus="loop">
                                                         <tr>
-                                                            <td>${loop.index + 1}</td>
                                                             
+                                                            <td>${(currentPage - 1) * itemsPerPage + loop.index + 1}</td>
                                                             <td>${listF.title}</td>
                                                                  <td>${listF.content}</td>
                                                             <td>${listF.create_at}</td>
@@ -105,8 +106,19 @@
                                                 </tbody>
                                                
                                             </table>
+                                            <!-- Add these lines after your table -->
+                                            <div class="pagination-container" style="text-align: center;">
+    <ul class="pagination">
+        <c:forEach begin="1" end="${totalPages}" var="page">
+            <li class="page-item ${currentPage == page ? 'active' : ''}">
+                <a class="page-link" href="Feedback?page=${page}">${page}</a>
+            </li>
+        </c:forEach>
+    </ul>
+</div>
                                                
                                         </div>
+                                        
                                     </div>
                                    
                                     <!-- Modal -->

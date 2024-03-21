@@ -16,6 +16,7 @@ $(document).ready(function () {
     $("#exampleModalCreate").hide();
     $("#ProductCompleteDisplay").hide();
     $("#ProductProcessingDisplay").hide();
+    
     // Xử lý sự kiện khi nhấn nút "Add Product"
     $("#addProductButton").click(function () {
         $("#addProductForm").show();
@@ -383,11 +384,14 @@ $(document).ready(function () {
     // Khi người dùng nhấn vào nút đóng (×), đóng modal
     $(".close").click(function () {
         $("#myModalComplain").hide();
-        $("#exampleModalCreate").hide();
+        
+        
     });
 
-    $(".close").click(function () {
+    $(".close1").click(function () {
         $("#myModalVerify").hide();
+        $("#exampleModalCreate").hide();
+        window.location.href = "manageMyOrder";
     });
     // Khi người dùng nhấp bất kỳ đâu ngoài modal, đóng modal
     $(window).click(function (event) {
@@ -402,7 +406,7 @@ $(document).ready(function () {
         var formData = {
             order_id: $("#order_id").val(),
             description: $("#description1").val(),
-            pro_id: $("#pro_id").val()
+            pro_id: $("#pro_id1").val()
         };
         $.ajax({
             type: 'POST',
@@ -416,7 +420,7 @@ $(document).ready(function () {
                 }
             },
             error: function (xhr, status, error) {
-                alert("ưe");
+                console.error(xhr.responseText);
             }
         });
     });
@@ -440,7 +444,7 @@ $(document).ready(function () {
                     $("#exampleModalCreate").show();
 
                     // Chuyển hướng đến trang home
-                    window.location.href = 'manageMyOrder';
+                    //window.location.href = 'manageMyOrder';
                 } else {
                     $("#exampleModalCreate").hide();
                     alert("You have already verified this order!");

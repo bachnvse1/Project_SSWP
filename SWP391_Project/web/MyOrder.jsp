@@ -767,7 +767,7 @@
                         <form id="complaintForm">
                             <h2 style="text-align: center;">Complain Order</h2>
                             <input type="text" id="order_id" name="order_id" readonly="" hidden=""><br>
-                            <input type="text" id="pro_id" name="pro_id" readonly="" hidden=""><br>
+                            <input type="text" id="pro_id1" name="pro_id" readonly="" hidden=""><br>
                             <label for="order_code">Intermediate Orders Code</label><br>
                             <input type="text" id="order_code" name="code" value="" readonly><br>
                             <label for="hidden_info">Hidden Information</label><br>
@@ -781,7 +781,7 @@
             </div>
 
             <div id="myModalVerify" class="modal4">
-                <span class="close">&times;</span></br></br>
+                <span class="close1">&times;</span></br></br>
                 <h3>Verify Order</h3>
                 <p>Order matches the description</p>
                 <form id="authForm">
@@ -798,7 +798,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Feedback</h5>
-                            <span class="close">&times;</span>
+                            <span class="close1">&times;</span>
                         </div>
                         <div class="modal-body" style="padding: 40px;">
 
