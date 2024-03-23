@@ -117,10 +117,47 @@ public class notificationServ extends HttpServlet {
                         + "                                    </td>\n"
                         + "                                </tr>");
             }
+            if (r.getType_report() == 6) {
+                out.println("<tr class=\"abc\">\n"
+                        + "                                    <td class=\"warning notification\">\n"
+                        + "                                        <h1><span class=\"icon\">&times;</span>Thông báo rút tiền tiền</h1>\n"
+                        + "                                        <p class=\"small\">" + r.getDescription() + "</p>\n"
+                       
+                        + "                                    </td>\n"
+                        + "                                </tr>");
+            }
+            
             if (r.getType_report() == 7) {
                 out.println("<tr class=\"abc\">\n"
                         + "                                    <td class=\"information notification\">\n"
                         + "                                        <h1><span class=\"icon\">&times;</span>Yêu cầu admin giải quyết</h1>\n"
+                        + "                                        <p class=\"small\">" + r.getDescription() + "</p>\n"
+                       
+                        + "                                    </td>\n"
+                        + "                                </tr>");
+            }
+            if (r.getType_report() == 8) {
+                out.println("<tr class=\"abc\">\n"
+                        + "                                    <td class=\"warning notification\">\n"
+                        + "                                        <h1><span class=\"icon\">&times;</span>Người bán huỷ đơn</h1>\n"
+                        + "                                        <p class=\"small\">" + r.getDescription() + "</p>\n"
+                       
+                        + "                                    </td>\n"
+                        + "                                </tr>");
+            }
+            if (r.getType_report() == 9) {
+                out.println("<tr class=\"abc\">\n"
+                        + "                                    <td class=\"warning notification\">\n"
+                        + "                                        <h1><span class=\"icon\">&times;</span>Chờ người mua xác nhận</h1>\n"
+                        + "                                        <p class=\"small\">" + r.getDescription() + "</p>\n"
+                       
+                        + "                                    </td>\n"
+                        + "                                </tr>");
+            }
+            if (r.getType_report() == 10) {
+                out.println("<tr class=\"abc\">\n"
+                        + "                                    <td class=\"healthy notification\">\n"
+                        + "                                        <h1><span class=\"icon\">&times;</span>Hoàn tiền từ admin</h1>\n"
                         + "                                        <p class=\"small\">" + r.getDescription() + "</p>\n"
                        
                         + "                                    </td>\n"

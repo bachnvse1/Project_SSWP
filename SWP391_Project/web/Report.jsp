@@ -195,18 +195,18 @@
                                                     <td>${c.getReport().getDescription()}</td>
                                                     <td>${c.getReport().getCreate_by()}</td>
                                                     <td>${c.getReport().getCreate_At()}</td>
-                                                    
+
                                                     <td>
 
                                                         <c:choose>
                                                             <c:when test="${c.getReport().isStatus() == true}">
                                                                 <a class="btn btn-success edit-btn" data-toggle="modal" data-target="#confirmationModal_${loop.index}">
-                                                                    Done
+                                                                    Đã xử lý
                                                                 </a>
                                                             </c:when>
                                                             <c:when test="${c.getReport().isStatus() != true}">
                                                                 <a class= "btn btn-danger edit-btn" data-toggle="modal" data-target="#confirmationModal_${loop.index}">
-                                                                    Pending
+                                                                    Đang chờ
                                                                 </a>
                                                             </c:when>
                                                         </c:choose>
@@ -216,6 +216,7 @@
                                                         <span class="info-icon" data-toggle="modal" data-target="#detailModal_${loop.index}">&#8505;</span>
                                                     </td>
                                                 </tr>
+
                                             <div class="modal fade" id="confirmationModal_${loop.index}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
@@ -225,15 +226,31 @@
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
+
                                                         <div class="modal-body">
-                                                            <p>Have you processed this report yet?</p>
+                                                            <p>Trong đơn hàng khiếu nại, bên đúng là:</p>                                                            
                                                         </div>
+
+                                                        <div class="form-check">
+                                                            <input type="radio" class="form-check-input" id="sellerRadio_${loop.index}" name="selectAction" value="${c.getReport().getId()},${c.getOrder().getCreate_by()},${c.getOrder().getTotal_received_amount()},1">
+                                                            <label class="form-check-label" for="sellerRadio_${loop.index}">Người bán</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input type="radio" class="form-check-input" id="buyerRadio_${loop.index}" name="selectAction" value="${c.getReport().getId()},${c.getOrder().getBuyer_id()},${c.getOrder().getTotal_paid_amount()},2">
+                                                            <label class="form-check-label" for="buyerRadio_${loop.index}">Người mua</label>
+                                                        </div>
+                                                            
+                                                        
+
                                                         <div class="modal-footer">
+                                                            <div class="modal-body">
+                                                                <p>Xác nhận xử lý đơn khiếu nại:</p>
+                                                            </div>
                                                             <div class="modal-footer">
-                                                                <a href="#" class="btn btn-secondary" onclick="updateReportStatus(${c.getReport().getId()}, false);" data-dismiss="modal">No</a>
-                                                                <a href="#" class="btn btn-primary" onclick="updateReportStatus(${c.getReport().getId()}, true);" data-dismiss="modal">Yes</a>
+                                                                <a href="#" class="btn btn-secondary" data-dismiss="modal">Xác nhận</a>
                                                             </div>
                                                         </div>
+
 
                                                     </div>
                                                 </div>
@@ -244,7 +261,7 @@
                                                 <div class="modal-dialog modal-lg" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Detail Information</h5>
+                                                            <h5 class="modal-title" id="exampleModalLabel">Thông tin chi tiết</h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
@@ -346,10 +363,35 @@
         <!-- Custom scripts -->
         <script type="text/javascript" src="js/script.js"></script>  
         <script>
-                                                                    function updateReportStatus(id, status) {
-                                                                        // Gọi servlet với các tham số id và status
-                                                                        window.location.href = 'EditReportStatus?id=' + id + '&status=' + status;
-                                                                    }                                                                    
+            $(document).ready(function () {
+                // Lắng nghe sự kiện click của nút "Xác nhận"
+                $('.btn-secondary').click(function (e) {
+                    // Ngăn chặn hành vi mặc định của form (tránh load lại trang)
+                    e.preventDefault();
+                    // Kiểm tra xem có radio button nào được chọn không
+                    var selectedValue = $('input[name=selectAction]:checked').val();
+                    if (!selectedValue) {
+                        // Hiển thị thông báo nếu không có radio button nào được chọn
+                        alert("Yêu cầu chọn bên đúng trong khiếu nại");
+                        return;
+                    }
+
+                    // Sử dụng AJAX để gửi giá trị của radio button đến servlet
+                    $.ajax({
+                        url: 'EditReportStatus',
+                        type: 'GET',
+                        data: {selectedValue: selectedValue},
+                        success: function (response) {
+                            window.location.href = response;
+                        },
+                        error: function (xhr, status, error) {
+                            // Xử lý lỗi nếu có
+                            console.error(responseText);
+                        }
+                    });
+                });
+            });
+
         </script>
     </body>
 </html>

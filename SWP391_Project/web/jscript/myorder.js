@@ -649,6 +649,12 @@ $("#complaintForm").submit(function (e) {
             data: formData, // Gửi dữ liệu form tới servlet
             success: function (response) {
                 alert(response); // Hiển thị thông báo từ server
+                if(response === "Bạn đã xác thực đơn hàng thành công. Xin cảm ơn!") {
+                    document.getElementById("myModalComplain").style.display = 'none';
+                    document.getElementById("exampleModalCreate").style.display = 'block';
+                    return;
+                }
+                
                 window.location.href = 'manageMyOrder'; // Chuyển hướng đến trang manageMyOrder sau khi gửi thành công
             },
             error: function (xhr, status, error) {

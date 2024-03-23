@@ -117,7 +117,7 @@ public class buyServ extends HttpServlet {
                     transactionQueue.addTransaction(new Transaction(transactionId, u.getId(), idx, price));
                     dao.updateOrder(u.id, "Người mua đang kiểm tra đơn hàng", idx);
                     dao.InsertHistory_Transaction(price, "-", true, "Thanh toán đơn hàng mã số :"+dao.getOrderByProductID(idx).getCode()+".", u.id,u.id);
-                    dao.insertReport(2, dao.getOrderByProductID(idx).getId(), u.getId(), true, "Bạn đã thanh toán đơn hàng có mã sản phẩm là: " + dao.getOrderByProductID(idx).getCode() + ". Hãy kiểm tra thông tin đơn hàng!", u.getId(), false);
+                    dao.insertReport(2, dao.getOrderByProductID(idx).getId(), dao.getOrderByProductID(idx).getCreate_by(), true, "Bên mua đã thanh toán đơn hàng có mã sản phẩm là: " + dao.getOrderByProductID(idx).getCode() + ". Hãy kiểm tra thông tin đơn hàng!", u.getId(), false);
                     dao.insertOrderHistory(dao.getOrderByProductID(idx).getId(), "Bên mua đang kiểm tra hàng", "Người mua đã thanh toán và đang kiểm tra hàng", u.getId());
                     response.getWriter().print("Bạn vừa mua sản phẩm, hãy kiểm tra đơn hàng!");
                     new Thread(() -> transactionQueue.processTransactions()).start();

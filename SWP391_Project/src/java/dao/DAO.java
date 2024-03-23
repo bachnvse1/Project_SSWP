@@ -121,6 +121,32 @@ public class DAO extends DBContext {
         }
         return null;
     }
+    
+    public Report getReportByID(int rid) {
+        String query = "select * from swp_demo.Report where id = ?";
+        try {
+            con = new DBContext().connection; //connect sql
+            ps = con.prepareStatement(query);
+            ps.setInt(1, rid);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return new Report(rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getBoolean(5),
+                        rs.getString(6),
+                        rs.getInt(7),
+                        rs.getTimestamp(8),
+                        rs.getInt(9),
+                        rs.getTimestamp(10),
+                        rs.getBoolean(11));
+            }
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
 
     public Report getReportByType(int type, int oid) {
         String query = "select * from swp_demo.Report where type_report = ? and orderID = ?";
@@ -1918,12 +1944,13 @@ public class DAO extends DBContext {
 
     public List<Report> getTopNext3Report(int uid, int amount) {
         List<Report> list = new ArrayList<>();
-        String query = "SELECT * FROM Report where recivedID = ? ORDER BY id desc LIMIT 3 OFFSET ?;";
+        String query = "SELECT * FROM Report where recivedID = ? || create_by = ? ORDER BY id desc LIMIT 3 OFFSET ?;";
         try {
             con = new DBContext().connection; //connect sql
             ps = con.prepareStatement(query);
             ps.setInt(1, uid);
-            ps.setInt(2, amount);
+            ps.setInt(2, uid);
+            ps.setInt(3, amount);
             rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(new Report(rs.getInt(1),
@@ -2145,12 +2172,11 @@ public class DAO extends DBContext {
     public List<HistoryTransaction> GetHistory_TransactionbyID(int uid) {
         List<HistoryTransaction> list = new ArrayList<>();
         String sql = "SELECT *FROM swp_demo.history_transaction h \n"
-                + "WHERE   h.Create_by = ? OR h.nguoinhan = ?;";
+                + "WHERE h.nguoinhan = ?;";
         try {
             con = new DBContext().connection;
             ps = con.prepareStatement(sql);
             ps.setInt(1, uid);
-            ps.setInt(2, uid);
             rs = ps.executeQuery();
 
             while (rs.next()) {

@@ -489,6 +489,16 @@
                                 </tr>
                             </c:if>
                                 
+                                <c:if test="${r.getType_report() == 10}">
+                                <tr class="abc">
+                                    <td class="healthy notification">
+                                        <h1><span class="icon">&check;</span>Hoàn tiền từ admin</h1>
+                                        <p class="small">${r.getDescription()}</p>
+
+                                    </td>
+                                </tr>
+                            </c:if>
+                                
                             <tr><!-- Thêm dòng trống trước button Load More -->
                                 <td style="height: 20px;"></td>
                             </tr>
