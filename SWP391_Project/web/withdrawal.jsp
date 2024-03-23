@@ -12,21 +12,22 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Yêu cầu rút tiền</title>
         <link rel="stylesheet" href="css/font-awesome.min.css">
-        
+
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
         <!-- Bootstrap -->
         <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
         <!-- Slick -->
-        
+
         <!-- nouislider -->
         <link type="text/css" rel="stylesheet" href="css/nouislider.min.css"/>
         <!-- Font Awesome Icon -->
         <link rel="stylesheet" href="css/font-awesome.min.css"/>
-        <!-- Custom stlylesheet -->
 
+   
         <!--Table-->
     </head>
     <body>
@@ -57,38 +58,38 @@
                                         <tr>
                                             <th scope="row">${w.getCode()}</th>
                                             <th>
-                                      <c:choose>
-                                        <c:when test="${w.getStatus() eq 'Hoàn thành'}">
-                                            <a href="#" class="btn btn-success">${w.getStatus()}</a>
-                                        </c:when>
-                                        <c:when test="${w.getStatus() eq 'Mới tạo'}">
-                                            <a href="#" class="btn btn-info">${w.getStatus()}</a>
-                                        </c:when>
-                                            <c:when test="${w.getStatus() eq 'Bị từ chối'}">
-                                            <a href="#" class="btn btn-danger">${w.getStatus()}</a>
-                                        </c:when>                                                                                                                          
-                                            <c:when test="${w.getStatus() eq 'Bị lỗi'}">
-                                            <a href="#" class="btn btn-warning">${w.getStatus()}</a>
-                                        </c:when>
-                                            <c:when test="${w.getStatus() eq 'Chờ chuyển khoản'}">
-                                            <a href="#" class="btn btn-color">${w.getStatus()}</a>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <a href="#" class="btn btn-secondary">${w.getStatus()}</a>
-                                        </c:otherwise>
-                                    </c:choose>
+                                                <c:choose>
+                                                    <c:when test="${w.getStatus() eq 'Hoàn thành'}">
+                                                        <a href="#" class="btn btn-success">${w.getStatus()}</a>
+                                                    </c:when>
+                                                    <c:when test="${w.getStatus() eq 'Mới tạo'}">
+                                                        <a href="#" class="btn btn-info">${w.getStatus()}</a>
+                                                    </c:when>
+                                                    <c:when test="${w.getStatus() eq 'Bị từ chối'}">
+                                                        <a href="#" class="btn btn-danger">${w.getStatus()}</a>
+                                                    </c:when>                                                                                                                          
+                                                    <c:when test="${w.getStatus() eq 'Bị lỗi'}">
+                                                        <a href="#" class="btn btn-warning">${w.getStatus()}</a>
+                                                    </c:when>
+                                                    <c:when test="${w.getStatus() eq 'Chờ chuyển khoản'}">
+                                                        <a href="#" class="btn btn-color">${w.getStatus()}</a>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <a href="#" class="btn btn-secondary">${w.getStatus()}</a>
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </th>
-                                    <th><c:out value="${String.format('%,.0f', w.getAmount())}" /></th>
-                                    <th>${w.getAccount_number()}</th>
-                                    <th>${w.getAccount_holder()}</th>
-                                    <th>${w.getBankname()}</th>
-                                    <th>${w.getBankbranch()}</th>
-                                    <th>${w.getResponse()}</th>
-                                    <th>${w.getCreated_at()}</th>
-                                    <th>${w.getUpdated_at()}</th>
+                                            <th><c:out value="${String.format('%,.0f', w.getAmount())}" /></th>
+                                            <th>${w.getAccount_number()}</th>
+                                            <th>${w.getAccount_holder()}</th>
+                                            <th>${w.getBankname()}</th>
+                                            <th>${w.getBankbranch()}</th>
+                                            <th>${w.getResponse()}</th>
+                                            <th>${w.getCreated_at()}</th>
+                                            <th>${w.getUpdated_at()}</th>
 
-                                    </tr>
-                                </c:forEach>                            
+                                        </tr>
+                                    </c:forEach>                            
                                 </tbody>
                             </table>
                         </div>
@@ -117,7 +118,7 @@
                                                         <label class=""><b>Số tiền rút (*)</b></label>
                                                     </div>
                                                     <div class="col-md-9">
-                                                        <input placeholder="Nhập vào số tiền cần rút" name="amount" id="amountInput" type="text" class="form-control" value="" inputmode="numeric">
+                                                        <input placeholder="Nhập vào số tiền cần rút" name="amount" id="amountInput" type="text" class="form-control">
                                                         <div id="textOutput" class="text"></div>
                                                     </div>
                                                 </div>
@@ -172,7 +173,11 @@
                 </div>
             </div>
         </div>
+           <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
         <script>
+          $(document).ready(function () {
+    $('#amountInput').mask('000,000,000,000', {reverse: true});
+});
             $(document).ready(function () {
                 // Thêm sự kiện click cho nút "Gửi yêu cầu"
                 $('#showModalButton').click(function () {
@@ -222,7 +227,9 @@
                     }
                 });
             });
+
         </script>
+
     </body>
 
 

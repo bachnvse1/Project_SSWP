@@ -60,19 +60,19 @@
                     <div class="col-md-5 col-md-push-2">
                         <div id="product-main-img">
                             <div class="product-preview">
-                                <img src="${ProductDetails.image1}}" alt="">
+                                <img src="imagesUpload/${ProductDetails.image1}" alt="">
                             </div>
 
                             <div class="product-preview">
-                                <img src="${ProductDetails.image2}" alt="">
+                                <img src="imagesUpload/${ProductDetails.image2}" alt="">
                             </div>
 
                             <div class="product-preview">
-                                <img src="${ProductDetails.image3}" alt="">
+                                <img src="imagesUpload/${ProductDetails.image3}" alt="">
                             </div>
 
                             <div class="product-preview">
-                                <img src="${ProductDetails.image4}" alt="">
+                                <img src="imagesUpload/${ProductDetails.image4}" alt="">
                             </div>
                         </div>
                     </div>
@@ -82,19 +82,19 @@
                     <div class="col-md-2  col-md-pull-5">
                         <div id="product-imgs">
                             <div class="product-preview">
-                                <img src="${ProductDetails.image1}" alt="">
+                                 <img src="imagesUpload/${ProductDetails.image1}" alt="">
                             </div>
 
                             <div class="product-preview">
-                                <img src="${ProductDetails.image2}" alt="">
+                                 <img src="imagesUpload/${ProductDetails.image2}" alt="">
                             </div>
 
                             <div class="product-preview">
-                                <img src="${ProductDetails.image3}" alt="">
+                                   <img src="imagesUpload/${ProductDetails.image3}" alt="">
                             </div>
 
                             <div class="product-preview">
-                                <img src="${ProductDetails.image4}"alt="">
+                                  <img src="imagesUpload/${ProductDetails.image4}" alt="">
                             </div>
                         </div>
                     </div>

@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/JavaScript.js to edit this template
  */
 
-/* global l1 */
+/* global l1, files, Swal */
 
 $(document).ready(function () {
     // Ẩn form khi trang được tải
@@ -128,23 +128,46 @@ $(document).ready(function () {
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, add it!",
-            width: 600, // Độ rộng của hộp thoại
-            height: 600, // Chiều cao của hộp thoại
+            width: 600 // Độ rộng của hộp thoại
+
 
         }).then((result) => {
             // Nếu người dùng xác nhận
             if (result.isConfirmed) {
-                var formData = $('#addForm').serialize(); // Thu thập dữ liệu từ form
+                var formData = new FormData(); // Khởi tạo đối tượng FormData
+
+                // Lặp qua từng tệp trong trường input có id là "images"
+                $.each($('#images')[0].files, function (i, file) {
+                    formData.append('images[]', file); // Thêm từng tệp vào FormData
+                });
+
+                // Lặp qua các trường input khác trong biểu mẫu và thêm chúng vào FormData
+                $('#addForm').find('input, select, textarea').each(function () {
+                    var input = $(this);
+                    var name = input.attr('name');
+                    var value;
+                    if (input.is(':radio')) {
+                        value = $('input[name="' + name + '"]:checked').val(); // Lấy giá trị của radio button đã được chọn
+                    } else if (input.is('select')) {
+                        value = input.children("option:selected").val(); // Lấy giá trị của option được chọn trong thẻ select
+                    } else {
+                        value = input.val(); // Lấy giá trị của các phần tử input và textarea
+                    }
+                    formData.append(name, value);
+                });
+
                 $.ajax({
                     url: 'addProduct', // Đường dẫn tới file xử lý form
                     type: 'POST', // Phương thức POST
-                    data: formData, // Dữ liệu được thu thập từ form
+                    data: formData, // Dữ liệu được thu thập từ form  
+                    contentType: false,
+                    processData: false,
                     success: function (response) {
                         // Xử lý phản hồi từ máy chủ nếu cần
                         if (response === "success") {
                             Swal.fire({
                                 title: "Success!",
-                                text: "Product has been added.",
+                                text: "Sản phẩm đã thêm thành công !",
                                 icon: "success"
                             }).then(() => {
                                 window.location.href = 'manageMyOrder';
@@ -152,7 +175,7 @@ $(document).ready(function () {
                         } else if (response === "Insufficient_balance") {
                             Swal.fire({
                                 title: "Error!",
-                                text: "Insufficient balance.",
+                                text: "Số dư không đủ !",
                                 icon: "error"
                             }).then(() => {
                                 window.location.href = 'manageMyOrder';
@@ -161,10 +184,14 @@ $(document).ready(function () {
                         } else if (response === "price") {
                             Swal.fire({
                                 title: "Error!",
-                                text: "Please re-enter the price",
+                                text: "Vui lòng nhập lại giá tiền !",
                                 icon: "error"
                             });
 
+                        } else if (response === "null") {
+                            alert("Không được để trống");
+                        } else {
+                            alert("da vao dc serr");
                         }
                     },
                     error: function (xhr, status, error) {
@@ -176,6 +203,7 @@ $(document).ready(function () {
         });
     });
 });
+
 
 $(document).ready(function () {
     $('.productInfo').click(function (event) {
@@ -560,11 +588,11 @@ $(document).ready(function () {
         document.getElementById("myModalComplain").style.display = 'none';
 
     });
-    
+
     $("#verifyOrderButton1").click(function () {
         document.getElementById("exampleModalCreate").style.display = 'block';
     });
-    
+
 
     $(".close1").click(function () {
 
@@ -649,12 +677,12 @@ $("#complaintForm").submit(function (e) {
             data: formData, // Gửi dữ liệu form tới servlet
             success: function (response) {
                 alert(response); // Hiển thị thông báo từ server
-                if(response === "Bạn đã xác thực đơn hàng thành công. Xin cảm ơn!") {
+                if (response === "Bạn đã xác thực đơn hàng thành công. Xin cảm ơn!") {
                     document.getElementById("myModalComplain").style.display = 'none';
                     document.getElementById("exampleModalCreate").style.display = 'block';
                     return;
                 }
-                
+
                 window.location.href = 'manageMyOrder'; // Chuyển hướng đến trang manageMyOrder sau khi gửi thành công
             },
             error: function (xhr, status, error) {
