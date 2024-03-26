@@ -129,7 +129,7 @@ public class EditProfile extends HttpServlet {
             d.updateProfile(u.getEmail(), displayName, u.getId());
             session.setAttribute("otp", code);
             session.setAttribute("email", email);
-            response.sendRedirect("verifyEmailUpdate.jsp");
+            response.sendRedirect("VerifyCodeUpdate");
             SendEmail sm = new SendEmail();
             new Thread(() -> sm.Send(email, code)).start();
         } else {

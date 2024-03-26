@@ -124,7 +124,7 @@
                             <div class="card-header py-3 row">
                                 <div class="col-sm-3">
                                     <h5 class="mb-0 text-left" id="">
-                                        <strong>  <a href="InserCategory.jsp">Add New Category</a></strong>  
+                                        <strong>  <a href="addProduct">Add New Category</a></strong>  
                                     </h5>
 
                                 </div>

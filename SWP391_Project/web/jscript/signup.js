@@ -8,9 +8,9 @@ $(document).ready(function () {
     $("#signup-Button").click(function () {
         $.ajax({
             type: 'GET',
-            url: "signup.jsp",
+            url: "VerifyUser",
             success: function (response) {
-                $("body").html(response);
+                window.location.href = ""
             },
             error: function () {
                 // Xử lý lỗi nếu có
@@ -39,7 +39,7 @@ $(document).ready(function () {
 
             success: function (response) {
                 if (response === "success") {
-                    window.location.href = "verify.jsp";
+                    window.location.href = "buy";
                     $("signup-button2").prop("disable", false);
                     refreshCaptcha();
                 } else {

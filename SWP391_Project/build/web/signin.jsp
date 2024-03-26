@@ -64,7 +64,7 @@
                             <p class="w-100 text-center">&mdash; Do not have an account ? &mdash;</p>
 
                             <div class="social d-flex text-center" style="justify-content:center;">
-                                <button class="w-100 px-2 py-2 mr-md-1" style="border-radius: 40px;" id="signup-Button">SIGN UP</button>
+                                <button class="w-100 px-2 py-2 mr-md-1" style="border-radius: 40px;"><a href="VerifyUser" style="text-decoration: none;">SIGN UP</a></button>
                             </div>
                         </div>
                     </div>
