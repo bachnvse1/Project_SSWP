@@ -19,11 +19,11 @@ public class HistoryTransaction {
     public int created_by;
     public Timestamp create_at;   
     public Timestamp Update_at;
-    public int nguoinhan;
+    public int receiver;
     public HistoryTransaction() {
     }
 
-    public HistoryTransaction(int ID, double Money_Transaction, String Transaction_Type, boolean Status, String Note,int created_by, Timestamp create_at, int nguoinhan,  Timestamp Update_at) {
+    public HistoryTransaction(int ID, double Money_Transaction, String Transaction_Type, boolean Status, String Note,int created_by, Timestamp create_at, int receiver ,  Timestamp Update_at) {
         this.ID = ID;
         this.Money_Transaction = Money_Transaction;
         this.Transaction_Type = Transaction_Type;
@@ -32,15 +32,15 @@ public class HistoryTransaction {
         this.create_at = create_at;
         this.created_by = created_by;
         this.Update_at = Update_at;
-        this.nguoinhan = nguoinhan;
+        this.receiver = receiver;
     }
 
-    public int getNguoinhan() {
-        return nguoinhan;
+    public int getreceiver() {
+        return receiver;
     }
 
-    public void setNguoinhan(int nguoinhan) {
-        this.nguoinhan = nguoinhan;
+    public void setreceiver(int receiver) {
+        this.receiver = receiver;
     }
 
     public int getID() {

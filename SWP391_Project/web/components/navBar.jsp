@@ -292,17 +292,14 @@
                             <!-- /LOGO -->
 
                             <!-- SEARCH BAR -->
-                            <div class="col-md-6">
-                                <div class="header-search">
-
-                                    <form action="home" method="get">
+                           <div class="col-md-6">
+                            <div class="header-search">                
+                                <form id="ajaxSearchForm" action="home" method="get">
                                         <input type="" class="input" placeholder="Search here" name="searchproductname">
-
-                                        <button class="search-btn">Tìm kiếm</button>
-                                    </form>
-
-                                </div>
+                                        <button type="submit" class="search-btn">Tìm kiếm</button>
+                                </form>
                             </div>
+                        </div>
                             <!-- /SEARCH BAR -->
 
                             <!-- ACCOUNT -->
