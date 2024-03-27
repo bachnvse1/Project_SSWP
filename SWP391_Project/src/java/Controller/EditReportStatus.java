@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import Entity.Cart;
 import Entity.User;
 import dao.DAO;
 import java.io.IOException;
@@ -14,6 +15,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  *
@@ -49,10 +51,10 @@ public class EditReportStatus extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String valuer = request.getParameter("selectedValue");
-        
+
         // Phân tích giá trị để truy xuất các dữ liệu "code1", "c2", "c3"
         String[] value = valuer.split(",");
-        String reportID = value[0]; 
+        String reportID = value[0];
         String userIDr = value[1]; // Dữ liệu "code1"
         String tmoneyr = value[2]; // Dữ liệu "c2"
         String checkuserX = value[3]; // Dữ liệu "c3"
@@ -67,16 +69,16 @@ public class EditReportStatus extends HttpServlet {
         int oid = dao.getReportByID(id).getOrderID();
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("user");
-        
-        if (checkuser == 1) {
-            dao.updateAmount(tmoney + dao.getWallet(userID).getBalance(), userID);
+
+        if (checkuser == userID) {
+            dao.updateAmount(tmoney + 10000 + dao.getWallet(userID).getBalance(), userID);
             dao.insertReport(10, oid, userID, true, "Hoàn tiền từ admin số tiền là:" + tmoney, u.getId(), true);
         } else {
             dao.updateAmount(tmoney + dao.getWallet(userID).getBalance(), userID);
             dao.insertReport(10, oid, userID, true, "Hoàn tiền từ admin số tiền là:" + tmoney, u.getId(), true);
         }
         dao.editReportStatus(id, true);
-        response.getWriter().write("Report.jsp");
+        response.getWriter().write("Giải quyết thành công!");
     }
 
     /**
@@ -90,7 +92,42 @@ public class EditReportStatus extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession();
+        String deleteProductId = request.getParameter("deleteProductId");
+        int deleteId = Integer.parseInt(deleteProductId);
+        DAO dao = new DAO();
+        User user = (User) session.getAttribute("user");
+        dao.deleteProductFromCart(user.getId(), deleteId);
+        try (PrintWriter out = response.getWriter()) {
+            List<Cart> listC = dao.getCartByUserID(user.getId());
+            if (listC != null) {
+                int index = 0; // Khai báo một biến đếm hoặc index
+                for (Cart x : listC) {
+                    
+                        out.print("<tr>\n"
+                                + "                                <td>" + dao.getProductByID(x.productID).getName() + "</td>\n"
+                                + "                                <td><img src=\"" + dao.getProductByID(x.productID).getImage1() + "\" alt=\"\" style=\"height: 50px;\"/></td>\n"
+                                + "                                <td>" + dao.getProductByID(x.productID).getPrice() + "</td>\n"
+                                + "                                <td><span class=\"delete-icon\" onclick=\"deleteProduct(" + dao.getProductByID(x.productID).getId() + ")\"><i class=\"fa fa-trash\"></i></span></td>\n"
+                                + "                                <td><button class=\"add-to-cart-btn\"  id=\"buyButton_" + index + "\" data-target=\"cookiesPopup_" + index + "\">\n"
+                                + "                                        <i class=\"fa fa-shopping-cart\"></i>MUA\n"
+                                + "                                    </button></td>\n"
+                                + "                            </tr>\n"
+                                + "                        <div class=\"container-2\">\n"
+                                + "                            <div class=\"cookiesContent\" id=\"cookiesPopup_" + index + "\">\n"
+                                + "                                <button class=\"close\">✖</button>\n"
+                                + "                                <img src=\"https://dichthuatmientrung.com.vn/wp-content/uploads/2022/06/important-sticky-note.jpg\" alt=\"cookies-img\" style=\"width: 50%;\"/>\n"
+                                + "                                <p style=\"color:red; margin-top: 5%;\">Chúng tôi sẽ giữ tiền trung gian của bạn và đợi cho đến khi bạn xác nhận giao dịch hoàn toàn thành công</p>\n"
+                                + "                                <button class=\"button-buy\" data-id=\"" + dao.getProductByID(x.productID).getId() + "\">MUA</button>\n"
+                                + "                            </div>\n"
+                                + "                        </div>   ");
+                        index++;
+                    
+
+                }
+            }
+        }
     }
 
     /**
@@ -104,4 +141,3 @@ public class EditReportStatus extends HttpServlet {
     }// </editor-fold>
 
 }
-

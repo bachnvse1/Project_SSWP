@@ -26,7 +26,7 @@
                             <h4 class="modal-title">Chỉnh sửa tài khoản</h4>
                         </div>
                         <div class="card-body">
-                            <form id="editAccountByAdmin" action="EditAccountByAdmin" method="post">
+                            <form id="editAccountByAdmin" action="EditAccountByAdmin" method="get">
 
                                 <div class="form-group">
                                     <label for="id">ID</label>

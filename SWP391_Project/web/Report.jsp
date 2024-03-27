@@ -232,11 +232,11 @@
                                                         </div>
 
                                                         <div class="form-check">
-                                                            <input type="radio" class="form-check-input" id="sellerRadio_${loop.index}" name="selectAction" value="${c.getReport().getId()},${c.getOrder().getCreate_by()},${c.getOrder().getTotal_received_amount()},1">
+                                                            <input type="radio" class="form-check-input" id="sellerRadio_${loop.index}" name="selectAction" value="${c.getReport().getId()},${c.getOrder().getCreate_by()},${c.getOrder().getTotal_received_amount()},${c.getReport().getCreate_by()}">
                                                             <label class="form-check-label" for="sellerRadio_${loop.index}">Người bán</label>
                                                         </div>
                                                         <div class="form-check">
-                                                            <input type="radio" class="form-check-input" id="buyerRadio_${loop.index}" name="selectAction" value="${c.getReport().getId()},${c.getOrder().getBuyer_id()},${c.getOrder().getTotal_paid_amount()},2">
+                                                            <input type="radio" class="form-check-input" id="buyerRadio_${loop.index}" name="selectAction" value="${c.getReport().getId()},${c.getOrder().getBuyer_id()},${c.getOrder().getTotal_paid_amount()},${c.getReport().getCreate_by()}">
                                                             <label class="form-check-label" for="buyerRadio_${loop.index}">Người mua</label>
                                                         </div>
                                                             
@@ -382,7 +382,8 @@
                         type: 'GET',
                         data: {selectedValue: selectedValue},
                         success: function (response) {
-                            window.location.href = response;
+                            alert(response);
+                            window.location.href = "ReportServlet";
                         },
                         error: function (xhr, status, error) {
                             // Xử lý lỗi nếu có

@@ -103,7 +103,13 @@ public class homeServ extends HttpServlet {
             request.setAttribute("listR", listReport);
             session.setAttribute("balance", dao.getWallet(u.getId()).getBalance());
         }
-
+        int quantity = 0;
+        if (u != null) {
+            quantity = dao.getQuantityProductInCart(u.getId());
+        } else {
+            //
+        }
+        request.setAttribute("quantity", quantity);
         listProductPage = listProduct.subList(start, end);
         request.setAttribute("Count", Count);
         request.setAttribute("page", page);

@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import Entity.User;
 import dao.DAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
@@ -30,16 +32,7 @@ public class EditAccountByAdmin extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-         String ids = request.getParameter("ids");
-        int id = Integer.parseInt(ids);
-        String isActiveValue = request.getParameter("isActiveValue");
-        boolean is_Active = Boolean.parseBoolean(isActiveValue);
-
-        DAO dao = new DAO();
-        dao.editUserByAdmin(id, is_Active);
-        response.sendRedirect("ManageAccount");
+            throws ServletException, IOException {       
 
     }
 
@@ -55,7 +48,15 @@ public class EditAccountByAdmin extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+         String ids = request.getParameter("ids");
+        int id = Integer.parseInt(ids);
+        String isActiveValue = request.getParameter("isActiveValue");
+        boolean is_Active = Boolean.parseBoolean(isActiveValue);
+
+        DAO dao = new DAO();
+        dao.editUserByAdmin(id, is_Active);
+        response.sendRedirect("ManageAccount");
     }
 
     /**
@@ -69,7 +70,7 @@ public class EditAccountByAdmin extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       processRequest(request, response);
+        processRequest(request, response);
     }
 
     /**

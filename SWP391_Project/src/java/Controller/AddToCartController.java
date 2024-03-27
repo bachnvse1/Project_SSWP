@@ -65,51 +65,18 @@ public class AddToCartController extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException {       
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
-        String deleteProductId = request.getParameter("deleteProductId");
-        if (deleteProductId != null && !deleteProductId.isEmpty()) {
-            int deleteId = Integer.parseInt(deleteProductId);
-            Cart cart = (Cart) session.getAttribute("cart");
-            if (cart != null) {
-                List<Product> listProduct = cart.getProduct();
-                // Xóa sản phẩm có id tương ứng
-                listProduct.removeIf(product -> product.getId() == deleteId);
-                cart.setProduct(listProduct);
-                session.setAttribute("cart", cart);
-            }  
-        }
-        // In trực tiếp HTML chứa danh sách sản phẩm mới
-        try (PrintWriter out = response.getWriter()) {
-            Cart cart = (Cart) session.getAttribute("cart");
-            if (cart != null) {
-                int index = 0; // Khai báo một biến đếm hoặc index
-                for (Product product : cart.getProduct()) {
-                    if (!product.is_delete) {
-                        out.print("<tr>\n"
-                                + "                                <td>" + product.getId() + "</td>\n"
-                                + "                                <td><img src=\"" + product.getImage1() + "\" alt=\"\" style=\"height: 50px;\"/></td>\n"
-                                + "                                <td>" + product.getName() + "</td>\n"
-                                + "                                <td>" + product.getPrice() + "</td>\n"
-                                + "                                <td><span class=\"delete-icon\" onclick=\"deleteProduct(" + product.getId() + ")\">&#128465;</span></td>\n"
-                                + "                                <td><button class=\"add-to-cart-btn\"  data-target=\"cookiesPopup_" + index + "\">\n"
-                                + "                                        <i class=\"fa fa-shopping-cart\"></i>BUY\n"
-                                + "                                    </button></td>\n"
-                                + "                            </tr>\n"
-                                + "                        <div class=\"container-2\">\n"
-                                + "                            <div class=\"cookiesContent\" id=\"cookiesPopup_" + index + "\">\n"
-                                + "                                <button class=\"close\">✖</button>\n"
-                                + "                                <img src=\"https://dichthuatmientrung.com.vn/wp-content/uploads/2022/06/important-sticky-note.jpg\" alt=\"cookies-img\" style=\"width: 50%;\"/>\n"
-                                + "                                <p style=\"color:red; margin-top: 5%;\">We will hold your intermediary funds and wait until you confirm the transaction is completely successful</p>\n"
-                                + "                                <button class=\"button-buy\" data-id=\"" + product.getId() + "\">BUY</button>\n"
-                                + "                            </div>\n"
-                                + "                        </div>   ");
-                        index++;
-                    }
-
-                }
-            }
+        DAO dao = new DAO();
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            List<Cart> listC = dao.getCartByUserID(user.getId());
+            request.setAttribute("comboX", listC);
+            request.setAttribute("dao", dao);
+            request.getRequestDispatcher("Cart.jsp").forward(request, response);
+        } else {
+            //
         }
     }
 
@@ -132,42 +99,19 @@ public class AddToCartController extends HttpServlet {
         //Product product = dao.getProductById(id);
         User user = (User) session.getAttribute("user");
         if (user != null) {
-            if (session.getAttribute("cart") == null) {
-                Cart cart = new Cart();
-                List<Product> listProduct = new ArrayList<>();
-                Product product = dao.getProductById(id);
-                listProduct.add(product);
-                cart.setProduct(listProduct);
-                session.setAttribute("cart", cart);
+            if (user.getId() == dao.getProductByID(id).create_by) {
+                response.getWriter().print("Không thể thêm sản phẩm của chính mình!");
             } else {
-                // Giỏ hàng đã tồn tại
-                Cart cart = (Cart) session.getAttribute("cart");
-                List<Product> listProduct = cart.getProduct();
-
-                // Kiểm tra xem sản phẩm có "id" đã tồn tại trong giỏ hàng hay không
-                boolean productExists = false;
-                for (Product p : listProduct) {
-                    if (p.getId() == id) {
-                        productExists = true;
-                        break;
-                    }
-                }
-
-                // Nếu sản phẩm chưa tồn tại, thêm vào list
-                if (!productExists) {
-                    Product product = dao.getProductById(id);
-                    listProduct.add(product);
-                    cart.setProduct(listProduct);
-                    session.setAttribute("cart", cart);
-                }
+                if (dao.isProductInCart(user.getId(), id) == false) {
+                    // Nếu sản phẩm chưa có trong giỏ hàng, thêm vào giỏ hàng
+                    dao.insertCart(user.getId(), id);
+                    response.getWriter().print("Đã thêm sản phẩm vào giỏ hàng");
+                }                
             }
-            request.getRequestDispatcher("Cart.jsp").forward(request, response);
         } else {
             //
         }
     }
-
-    
 
     /**
      * Returns a short description of the servlet.

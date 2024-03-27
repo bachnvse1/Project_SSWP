@@ -5,6 +5,7 @@
 package dao;
 
 import Context.DBContext;
+import Entity.Cart;
 import Entity.Category;
 import Entity.Feedback;
 import Entity.HistoryTransaction;
@@ -121,7 +122,7 @@ public class DAO extends DBContext {
         }
         return null;
     }
-    
+
     public Report getReportByID(int rid) {
         String query = "select * from swp_demo.Report where id = ?";
         try {
@@ -227,7 +228,7 @@ public class DAO extends DBContext {
         }
         return list;
     }
-    
+
     public void editReportStatus(int id, boolean status) {
         String sql = "Update report set status=? where id =? ";
         try {
@@ -235,6 +236,35 @@ public class DAO extends DBContext {
             ps = con.prepareStatement(sql);
             ps.setBoolean(1, status);
             ps.setInt(2, id);
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+
+        }
+
+    }
+
+    public void deleteProductCartAfterBuy(int productID) {
+        String sql = "DELETE FROM cart WHERE productID = ?";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, productID);
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+
+        }
+
+    }
+
+    public void deleteProductFromCart(int userID, int productID) {
+        String sql = "DELETE FROM cart WHERE userID = ? AND productID = ?";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, userID);
+            ps.setInt(2, productID);
             ps.executeUpdate();
 
         } catch (Exception e) {
@@ -294,13 +324,13 @@ public class DAO extends DBContext {
         }
         return null;
     }
-    
+
     public List<OrderHistory> getOrderHistory(int orderID) {
         List<OrderHistory> list = new ArrayList<>();
         String query = """
                        select * from swp_demo.Order_History
                        where orderID =?""";
-        
+
         try {
             con = new DBContext().connection; //connect sql
             ps = con.prepareStatement(query);
@@ -319,8 +349,8 @@ public class DAO extends DBContext {
         }
         return list;
     }
-    
-        public void insertOrderHistory(int orderID, String order_status, String description, int create_by) {
+
+    public void insertOrderHistory(int orderID, String order_status, String description, int create_by) {
         String query = "INSERT INTO order_history (orderID, order_status, description, create_by)\n"
                 + "VALUES (?, ?, ?, ?)";
         try {
@@ -468,6 +498,21 @@ public class DAO extends DBContext {
             ps.setInt(6, userID);
             ps.setInt(7, userID);
             ps.setBoolean(8, is_delete);
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+
+        }
+    }
+
+    public void insertCart(int userID, int productID) {
+        String query = "INSERT INTO cart (userID, productID)\n"
+                + "VALUES (?, ?)";
+        try {
+            con = new DBContext().connection; //connect sql
+            ps = con.prepareStatement(query);
+            ps.setInt(1, userID);
+            ps.setInt(2, productID);
             ps.executeUpdate();
 
         } catch (Exception e) {
@@ -2120,7 +2165,7 @@ public class DAO extends DBContext {
         }
         return null;
     }
-    
+
     public Withdrawal getWithdrawalByCode(String code) {
         String sql = "SELECT * FROM swp_demo.withdrawals where withdrawal_code = ?";
         try {
@@ -2150,7 +2195,8 @@ public class DAO extends DBContext {
         }
         return null;
     }
- public HistoryTransaction InsertHistory_Transaction(double money, String Transaction_type, boolean status, String note, int create_by, int nguoinhan) {
+
+    public HistoryTransaction InsertHistory_Transaction(double money, String Transaction_type, boolean status, String note, int create_by, int nguoinhan) {
         String query = "INSERT INTO `swp_demo`.`history_transaction` (`Money_Transaction`, `Transaction_Type`, `Status`,`Note`, `Create_by`, `nguoinhan`) \n"
                 + "VALUES(?, ?, ?, ?, ?, ?)";
         try {
@@ -2198,6 +2244,29 @@ public class DAO extends DBContext {
         return list;
     }
 
+    public List<Cart> getCartByUserID(int userID) {
+        List<Cart> list = new ArrayList<>();
+        String sql = "SELECT *FROM swp_demo.cart\n"
+                + "WHERE userID = ?;";
+        try {
+            con = new DBContext().connection;
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, userID);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                list.add(new Cart(
+                        rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getInt(3)
+                ));
+            }
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return list;
+    }
+
     public HistoryTransaction GetHistoryby_ID(int uid) {
         String sql = "SELECT *FROM swp_demo.history_transaction h \n"
                 + "WHERE h.id=?";
@@ -2225,8 +2294,84 @@ public class DAO extends DBContext {
         }
         return null;
     }
+
+    public boolean isProductInCart(int userID, int productID) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        boolean result = false;
+
+        try {
+            con = new DBContext().connection; // Phương thức này cần được triển khai để lấy kết nối đến cơ sở dữ liệu
+            String sql = "SELECT COUNT(*) AS count FROM cart WHERE userID = ? AND productID = ?";
+            stmt = con.prepareStatement(sql);
+            stmt.setInt(1, userID);
+            stmt.setInt(2, productID);
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                int count = rs.getInt("count");
+                if (count > 0) {
+                    // Sản phẩm đã có trong giỏ hàng của người dùng
+                    result = true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Xử lý ngoại lệ SQL ở đây
+        } finally {
+            // Đóng ResultSet, PreparedStatement và Connection
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                // Xử lý ngoại lệ khi đóng kết nối ở đây
+            }
+        }
+
+        return result;
+    }
+    
+    public int getQuantityProductInCart(int userID) {
+        int count = 0;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            String query = "SELECT COUNT(*) AS count FROM cart WHERE userID = ?";
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, userID);
+            resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                count = resultSet.getInt("count");
+            }
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+
+        return count;
+    
+    }
+
     public static void main(String[] args) {
         DAO dao = new DAO();
+        /*
+        List<Cart> cart = dao.getCartByUserID(3);
+        for (Cart cartx : cart) {
+            System.out.println(cartx.productID);
+        }
+*/
+        int x = dao.getQuantityProductInCart(1);
+        System.out.println(x);
 
     }
 }
