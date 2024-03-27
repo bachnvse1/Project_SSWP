@@ -761,7 +761,7 @@
                     <span class="close">&times;</span>
                     <div class="container-complain">
                         <form id="complaintForm">
-                            <h2 style="text-align: center;">Chi tiết đơn hàng</h2>
+<!--                            <h2 style="text-align: center;">Chi tiết đơn hàng</h2>
                             <button id="requestAdmin" type="submit" style="float: right; color: white; background-color: #007bff; border: 1px solid; padding: 10px; border-radius: 3px; " data-orderi="3">Yêu cầu admin tham gia giải quyết</button>
                             <input type="text" id="order_id" name="order_id" readonly="" hidden=""><br>
                             <label for="order_code">Mã đơn hàng trung gian</label><br>
@@ -791,7 +791,7 @@
                             <label for="hidden_info">Thời gian tạo</label><br>
                             <input type="text" id="create" name="" value="" readonly><br><br><br>
                             <button type="submit" style="float: left; color: white; background-color: red; border: 1px solid red; padding: 10px; border-radius: 3px;" data-orderi="1">Khiếu nại đơn hàng không đúng mô tả</button>
-                            <button id="verifyOrderButton1" type="submit" style="float: right; color: white; background-color: #4CAF50; border: 1px solid #4CAF50; padding: 10px; border-radius: 3px;" data-orderi="2">Xác nhận đơn hàng đúng mô tả</button>
+                            <button id="verifyOrderButton1" type="submit" style="float: right; color: white; background-color: #4CAF50; border: 1px solid #4CAF50; padding: 10px; border-radius: 3px;" data-orderi="2">Xác nhận đơn hàng đúng mô tả</button>-->
 
                         </form>
                     </div>
@@ -842,13 +842,6 @@
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
         <script src="jscript/myorder.js"></script>
-        <script>
-                    $(document).ready(function () {
 
-                        //        $('#ProductProcessingDisplay').DataTable();
-                        //        $('#ProductCompleteDisplay').DataTable();
-                    });
-
-        </script>
     </body>
 </html>
