@@ -134,13 +134,8 @@
 
                                 <!-- tab -->
                                 <div id="Listproduct" class="tab-pane fade in active">
-<<<<<<< HEAD
                                     <c:forEach items="${listProductPage}" var="p" >
-                                        
-=======
-                                    <c:forEach items="${listProductPage}" var="p" varStatus="loop">
 
->>>>>>> origin/branch-b20
                                         <div class="col-md-3">
                                             <!-- product -->
 
@@ -164,22 +159,18 @@
                                                                 class="tooltipp">quick view</span></button>
                                                     </div>
                                                 </div>
-                                                 <div class="add-to-cart">
+                                                <div class="add-to-cart">
                                                     <button class="add-to-cart-btn buy-button1" data-target="cookiesPopup">
                                                         <i class="fa fa-shopping-cart"></i>Mua
                                                     </button>
                                                     <button class="add-to-cart-btn buy-button" onclick="addToCart(${p.id})">
                                                         <i class="fa fa-shopping-cart"></i>Thêm
-<<<<<<< HEAD
                                                     </button>
-=======
 
-
->>>>>>> origin/branch-b20
                                                 </div>
                                             </div>
                                             <div class="container-2">
-                                                 <div class="cookiesContent cookiesPopup">
+                                                <div class="cookiesContent cookiesPopup">
                                                     <button class="close">✖</button>
                                                     <img src="https://dichthuatmientrung.com.vn/wp-content/uploads/2022/06/important-sticky-note.jpg" alt="cookies-img" style="width: 50%;"/>
                                                     <p style="color:red; margin-top: 5%;">Bạn sẽ phải trả tổng số tiền là: ${dao.getOrderByProductID(p.id).getTotal_paid_amount()} cho sản phẩm này!</p>
@@ -201,7 +192,7 @@
                 </div>
             </div>
         </div>
-       <div style="display: flex; justify-content: center; align-items: center;">
+        <div style="display: flex; justify-content: center; align-items: center;">
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center">
                     <li class="page-item">
@@ -318,13 +309,8 @@
         <script src="js1/main.js"></script>
         <script src="jscript/myorder.js"></script>
         <script>
-<<<<<<< HEAD
-   $(document).ready(function () {
-                $(document).on('click', '.button-buy', function () {
-=======
             $(document).ready(function () {
-                $(".button-buy").click(function () {
->>>>>>> origin/branch-b20
+                $(document).on('click', '.button-buy', function () {
                     var productId = $(this).data("id");
                     $.ajax({
                         type: 'post',
@@ -334,25 +320,19 @@
                             alert(response);
                             window.location.href = "home";
                         },
-<<<<<<< HEAD
                         error: function (xhr) {
                             // Xử lý lỗi nếu có
                             console.error(xhr.responseText);
-                           
-=======
-                        error: function () {
-                            // Xử lý lỗi nếu có
-                            alert("Đã xảy ra lỗi khi tải trang");
->>>>>>> origin/branch-b20
+
+
                         }
                     });
                 });
             });
-<<<<<<< HEAD
 
-    function redirectToController(categoryId) {
-        // Construct the URL based on whether a categoryId is provided
-        $.ajax({
+            function redirectToController(categoryId) {
+                // Construct the URL based on whether a categoryId is provided
+                $.ajax({
                     url: "home", // Update this URL to your server endpoint that handles the category request
                     type: "GET",
                     data: {
@@ -367,9 +347,9 @@
                         console.error("An error occurred while fetching the category data:", error);
                     }
                 });
-    }
-    
-     function updateProductList(data) {
+            }
+
+            function updateProductList(data) {
                 // Assuming 'data' is the HTML content to be placed inside the product list container
                 // Find the container in your DOM and update its content
                 $('#Listproduct').html(data);
@@ -416,16 +396,8 @@
                     });
                 });
             });
-=======
-            function redirectToController(categoryId) {
-                // Construct the URL based on whether a categoryId is provided
-                var url = "home"; // Assuming 'home' is the endpoint handled by your servlet
-                if (categoryId !== 'all') {
-                    url += "?categoryId=" + categoryId;
-                }
-                window.location.href = url;
-            }
->>>>>>> origin/branch-b20
+
+            
         </script>
     </body>
 </html>

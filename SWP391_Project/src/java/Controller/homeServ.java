@@ -66,6 +66,7 @@ public class homeServ extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
         DAO dao = new DAO();
         List<Product> listProduct = null;
         List<Product> listProductPage = null;
@@ -103,7 +104,7 @@ public class homeServ extends HttpServlet {
             request.setAttribute("listR", listReport);
             session.setAttribute("balance", dao.getWallet(u.getId()).getBalance());
         }
-        response.setContentType("text/html;charset=UTF-8");
+        
         listProductPage = listProduct.subList(start, end);
         boolean isAjax = "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));
         if (isAjax) {
@@ -159,11 +160,12 @@ public class homeServ extends HttpServlet {
             out.println("</div>"); // Closing container for AJAX response
 
         } else {
-
+            
             request.setAttribute("Count", Count);
             request.setAttribute("page", page);
             request.setAttribute("dao", dao);
             request.setAttribute("listProductPage", listProductPage);
+            
             request.setAttribute("listCategory", listCategory);
             request.getRequestDispatcher("home.jsp").forward(request, response);
         }

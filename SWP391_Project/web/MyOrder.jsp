@@ -822,37 +822,37 @@
                     <span class="close">&times;</span>
                     <div class="container-complain">
                         <form id="complaintForm">
-<!--                            <h2 style="text-align: center;">Chi tiết đơn hàng</h2>
-                            <button id="requestAdmin" type="submit" style="float: right; color: white; background-color: #007bff; border: 1px solid; padding: 10px; border-radius: 3px; " data-orderi="3">Yêu cầu admin tham gia giải quyết</button>
-                            <input type="text" id="order_id" name="order_id" readonly="" hidden=""><br>
-                            <label for="order_code">Mã đơn hàng trung gian</label><br>
-                            <input type="text" id="order_code" name="code" value="" readonly><br>
-                            <label for="order_code">Tên sản phẩm</label><br>
-                            <input type="text" id="productName1"  value="" readonly><br>
-                            <label for="order_code">Giá sản phẩm</label><br>
-                            <input type="text" id="Price"  value="" readonly><br>
-                            <label for="order_code">Phí trung gian</label><br>
-                            <input type="text" id="inter"  value="" readonly><br>
-                            <label for="order_code">Bên chịu phí</label><br>
-                            <input type="text" id="party1"  value="" readonly><br>
-                            <label for="order_code">Tổng tiền trả</label><br>
-                            <input type="text" id="totalPaid1"  value="" readonly><br>
-                            <label for="order_code">Ảnh mô tả</label><br>
-                            <img style="max-width: 150px; max-height: 150px" id="img1" src="" >
-                            <label for="order_code">Mô tả sản phẩm</label><br>
-                            <input type="text" id="des"  value="" readonly><br>
-                            <label for="order_code">Thông tin ẩn</label><br>
-                            <input type="text" id="hidden_info"  value="" readonly><br>
-                            <label for="order_code">Liên hệ</label><br>
-                            <input type="text" id="contact"  value="" readonly><br>
-                            <label for="order_code">Trạng thái</label><br>
-                            <input type="text" id="status1"  value="" readonly><br>
-                            <label for="order_code">Người bán</label><br>
-                            <input type="text" id="buyer1"  value="" readonly><br>
-                            <label for="hidden_info">Thời gian tạo</label><br>
-                            <input type="text" id="create" name="" value="" readonly><br><br><br>
-                            <button type="submit" style="float: left; color: white; background-color: red; border: 1px solid red; padding: 10px; border-radius: 3px;" data-orderi="1">Khiếu nại đơn hàng không đúng mô tả</button>
-                            <button id="verifyOrderButton1" type="submit" style="float: right; color: white; background-color: #4CAF50; border: 1px solid #4CAF50; padding: 10px; border-radius: 3px;" data-orderi="2">Xác nhận đơn hàng đúng mô tả</button>-->
+                            <!--                            <h2 style="text-align: center;">Chi tiết đơn hàng</h2>
+                                                        <button id="requestAdmin" type="submit" style="float: right; color: white; background-color: #007bff; border: 1px solid; padding: 10px; border-radius: 3px; " data-orderi="3">Yêu cầu admin tham gia giải quyết</button>
+                                                        <input type="text" id="order_id" name="order_id" readonly="" hidden=""><br>
+                                                        <label for="order_code">Mã đơn hàng trung gian</label><br>
+                                                        <input type="text" id="order_code" name="code" value="" readonly><br>
+                                                        <label for="order_code">Tên sản phẩm</label><br>
+                                                        <input type="text" id="productName1"  value="" readonly><br>
+                                                        <label for="order_code">Giá sản phẩm</label><br>
+                                                        <input type="text" id="Price"  value="" readonly><br>
+                                                        <label for="order_code">Phí trung gian</label><br>
+                                                        <input type="text" id="inter"  value="" readonly><br>
+                                                        <label for="order_code">Bên chịu phí</label><br>
+                                                        <input type="text" id="party1"  value="" readonly><br>
+                                                        <label for="order_code">Tổng tiền trả</label><br>
+                                                        <input type="text" id="totalPaid1"  value="" readonly><br>
+                                                        <label for="order_code">Ảnh mô tả</label><br>
+                                                        <img style="max-width: 150px; max-height: 150px" id="img1" src="" >
+                                                        <label for="order_code">Mô tả sản phẩm</label><br>
+                                                        <input type="text" id="des"  value="" readonly><br>
+                                                        <label for="order_code">Thông tin ẩn</label><br>
+                                                        <input type="text" id="hidden_info"  value="" readonly><br>
+                                                        <label for="order_code">Liên hệ</label><br>
+                                                        <input type="text" id="contact"  value="" readonly><br>
+                                                        <label for="order_code">Trạng thái</label><br>
+                                                        <input type="text" id="status1"  value="" readonly><br>
+                                                        <label for="order_code">Người bán</label><br>
+                                                        <input type="text" id="buyer1"  value="" readonly><br>
+                                                        <label for="hidden_info">Thời gian tạo</label><br>
+                                                        <input type="text" id="create" name="" value="" readonly><br><br><br>
+                                                        <button type="submit" style="float: left; color: white; background-color: red; border: 1px solid red; padding: 10px; border-radius: 3px;" data-orderi="1">Khiếu nại đơn hàng không đúng mô tả</button>
+                                                        <button id="verifyOrderButton1" type="submit" style="float: right; color: white; background-color: #4CAF50; border: 1px solid #4CAF50; padding: 10px; border-radius: 3px;" data-orderi="2">Xác nhận đơn hàng đúng mô tả</button>-->
 
                         </form>
                     </div>
@@ -925,10 +925,10 @@
                                     modal.style.display = "none";
                                 }
                             }
-                            $(document).ready(function() {
-    // Áp dụng mask cho ô input giá
-    $('#priceProduct,#price_ud').mask('000,000,000,000', {reverse: true});
-});
+                            $(document).ready(function () {
+                                // Áp dụng mask cho ô input giá
+                                $('#priceProduct,#price_ud').mask('000,000,000,000', {reverse: true});
+                            });
         </script>
     </body>
 </html>

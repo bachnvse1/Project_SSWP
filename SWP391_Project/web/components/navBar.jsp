@@ -573,7 +573,7 @@
                                             type: 'POST',
                                             url: "logout",
                                             success: function (response) {
-                                                $("body").html(response);
+                                                window.location.href = response;
                                             },
                                             error: function () {
                                                 // Xử lý lỗi nếu có

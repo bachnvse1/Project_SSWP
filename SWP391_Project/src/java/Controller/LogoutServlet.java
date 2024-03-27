@@ -82,7 +82,7 @@ public class LogoutServlet extends HttpServlet {
         response.setHeader("Expires", "0");
 
         // Chuyển hướng người dùng đến trang signin.jsp
-        request.getRequestDispatcher("home").forward(request, response);
+        response.getWriter().write("login");
     }
 
     /**
