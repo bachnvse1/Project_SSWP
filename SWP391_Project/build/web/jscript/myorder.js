@@ -223,6 +223,23 @@ $(document).ready(function () {
             data: {pid: productId, action: action},
             success: function (response) {
                 var responseData = response.split(";");
+                if(responseData[14] === "Sẵn sàng giao dịch") {
+                    document.getElementById("requestAdmin").style.display = 'none';
+                    document.getElementById("verifyOrder5").style.display = 'none';
+                    document.getElementById("verifyOrder6").style.display = 'none';
+                } else if(responseData[14] === "Người mua khiếu nại đơn hàng"){
+                    document.getElementById("requestAdmin").style.display = 'none';
+                    document.getElementById("verifyOrder5").style.display = 'block';
+                    document.getElementById("verifyOrder6").style.display = 'block';
+                } else if(responseData[14] === "Chờ người mua xác nhận"){
+                    document.getElementById("requestAdmin").style.display = 'block';
+                    document.getElementById("verifyOrder5").style.display = 'none';
+                    document.getElementById("verifyOrder6").style.display = 'none';
+                } else {
+                    document.getElementById("requestAdmin").style.display = 'none';
+                    document.getElementById("verifyOrder5").style.display = 'none';
+                    document.getElementById("verifyOrder6").style.display = 'none';
+                }
                 document.getElementById("orderCode").value = responseData[0];
                 document.getElementById("productName").value = responseData[1];
                 document.getElementById("price").value = responseData[2];
@@ -241,6 +258,7 @@ $(document).ready(function () {
                 document.getElementById("buyer_info").value = responseData[15];
                 document.getElementById("create_at").value = responseData[16];
                 document.getElementById("update_at").value = responseData[17];
+                
             },
             error: function (xhr, status, error) {
                 console.error(xhr.responseText);
@@ -367,6 +385,12 @@ $('.deleteProductButton').click(function () {
                             icon: "success"
                         }).then(() => {
                             window.location.href = 'manageMyOrder';
+                        });
+                    } else {
+                        swalWithBootstrapButtons.fire({
+                            title: "Fail!",
+                            text: "Can't delete product!!!",
+                            icon: "error"
                         });
                     }
                 },

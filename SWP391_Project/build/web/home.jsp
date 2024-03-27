@@ -33,7 +33,7 @@
         <link rel="stylesheet" href="css/font-awesome.min.css">
         <!-- Custom stlylesheet -->
         <link type="text/css" rel="stylesheet" href="css/style.css"/>
-        
+
 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -92,9 +92,9 @@
             .button-buy:active {
                 transform: scale(0.9);
             }
-            
-            
-            
+
+
+
         </style>
 
     </head>
@@ -135,7 +135,7 @@
                                 <!-- tab -->
                                 <div id="Listproduct" class="tab-pane fade in active">
                                     <c:forEach items="${listProductPage}" var="p" varStatus="loop">
-                                        
+
                                         <div class="col-md-3">
                                             <!-- product -->
 
@@ -167,8 +167,8 @@
                                                     <!-- Thêm nút "Buy" -->
                                                     <button class="add-to-cart-btn" onclick="addToCart(${p.id})">
                                                         <i class="fa fa-shopping-cart"></i>Thêm
-                                                   
-                                                        
+
+
                                                 </div>
                                             </div>
                                             <div class="container-2">
@@ -231,8 +231,8 @@
             <!-- /container -->
         </div>
         <!-- /NEWSLETTER -->
-        
-      
+
+
 
         <script>
             <c:forEach items="${listProductPage}" var="p" varStatus="loop">
@@ -267,26 +267,26 @@
                     }
                 });
             }
-            
-            // Lấy tham chiếu đến button và popup container
-        const showPopupButton = document.getElementById('notification-Button');
-        const popupContainer = document.getElementById('popupContainer');
-        const tablePopup = document.getElementById('notificationTable');
-// Thêm sự kiện click cho nút
-        showPopupButton.addEventListener('click', function() {
-    // Hiện popup container
-            popupContainer.style.display = 'block';
-            tablePopup.style.display = 'block';
 
-    // Khóa cuộn trang
-            document.body.style.overflow = 'hidden';
-});
+            // Lấy tham chiếu đến button và popup container
+            const showPopupButton = document.getElementById('notification-Button');
+            const popupContainer = document.getElementById('popupContainer');
+            const tablePopup = document.getElementById('notificationTable');
+// Thêm sự kiện click cho nút
+            showPopupButton.addEventListener('click', function () {
+                // Hiện popup container
+                popupContainer.style.display = 'block';
+                tablePopup.style.display = 'block';
+
+                // Khóa cuộn trang
+                document.body.style.overflow = 'hidden';
+            });
         </script>
         <!-- FOOTER -->
         <%@include file="components/footer.jsp" %>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="jscript/signin_captcha.js"></script>
-       
+
         <script src="js1/jquery.min.js"></script>
         <script src="js1/bootstrap.min.js"></script>
         <script src="js1/slick.min.js"></script>
@@ -295,32 +295,32 @@
         <script src="js1/main.js"></script>
         <script src="jscript/myorder.js"></script>
         <script>
-    $(document).ready(function () {
-        $(".button-buy").click(function () {
-            var productId = $(this).data("id");
-            $.ajax({
-                type: 'post',
-                url: "buy",
-                data: {id: productId},
-                success: function (response) {
-                    alert(response);
-                    window.location.href = "home";
-                },
-                error: function () {
-                    // Xử lý lỗi nếu có
-                    alert("Đã xảy ra lỗi khi tải trang");
-                }
+            $(document).ready(function () {
+                $(".button-buy").click(function () {
+                    var productId = $(this).data("id");
+                    $.ajax({
+                        type: 'post',
+                        url: "buy",
+                        data: {id: productId},
+                        success: function (response) {
+                            alert(response);
+                            window.location.href = "home";
+                        },
+                        error: function () {
+                            // Xử lý lỗi nếu có
+                            alert("Đã xảy ra lỗi khi tải trang");
+                        }
+                    });
+                });
             });
-        });
-    });
-    function redirectToController(categoryId) {
-        // Construct the URL based on whether a categoryId is provided
-        var url = "home"; // Assuming 'home' is the endpoint handled by your servlet
-        if (categoryId !== 'all') {
-            url += "?categoryId=" + categoryId;
-        }
-        window.location.href = url;
-    }
+            function redirectToController(categoryId) {
+                // Construct the URL based on whether a categoryId is provided
+                var url = "home"; // Assuming 'home' is the endpoint handled by your servlet
+                if (categoryId !== 'all') {
+                    url += "?categoryId=" + categoryId;
+                }
+                window.location.href = url;
+            }
         </script>
     </body>
 </html>

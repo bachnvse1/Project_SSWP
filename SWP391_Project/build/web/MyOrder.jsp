@@ -636,7 +636,7 @@
                                 <textarea  name="hidden_content" required></textarea><br>
 
                                 <input type="submit" value="Thêm mới">
-                            </form>                         
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -703,10 +703,9 @@
                             <input type="text" id="create_at" value="" readonly><br>
                             <label for="buyer">Chỉnh sửa cuối:</label>
                             <input type="text" id="update_at" value="" readonly><br>
-                            <button type="submit" style="float: left; color: white; background-color: red; border: 1px solid red; padding: 10px; border-radius: 3px;" data-orderid="" data-orderi="1">Xác nhận đơn hàng sai và huỷ đơn</button>
-                            <button type="submit" style="float: right; color: white; background-color: #4CAF50; border: 1px solid #4CAF50; padding: 10px; border-radius: 3px;" data-orderid="" data-orderi="2">Yêu cầu người mua xác nhận lại</button>
+                            <button id="verifyOrder5" type="submit" style="float: left; color: white; background-color: red; border: 1px solid red; padding: 10px; border-radius: 3px;" data-orderid="" data-orderi="1">Xác nhận đơn hàng sai và huỷ đơn</button>
+                            <button id="verifyOrder6" type="submit" style="float: right; color: white; background-color: #4CAF50; border: 1px solid #4CAF50; padding: 10px; border-radius: 3px;" data-orderid="" data-orderi="2">Yêu cầu người mua xác nhận lại</button>
                         </form>
-
                     </div>
 
                 </div>      

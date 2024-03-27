@@ -18,18 +18,18 @@
         <div class="otp-box">
             <form id="VerifyForm">
                 <div class="img">
-                    <img src="https://apps.uk/wp-content/uploads/2022/11/verification-codes.png" alt="" width="300px">
+                    <img src="https://apps.uk/wp-content/uploads/2022/11/verification-codes.png" alt="" width="300px"/>
                 </div>
 
                 <div class="inputs">
                     <input type="text" maxlength="5" id="Otp_code" required="">
                     <div class="verify-button">
                         <button type="submit">Verify</button></br></br>
-                        <button type="button">Login</button>
+                        <button type="button" id="loginButton">Login</button>
                     </div></br>
                     <div
                         
-                    <button onclick="resendMail()" style="">Resend Email</button>
+                    <button onclick="resendMail()" style=""> Resend Email </button>
                     
                 </div>
             </form>
@@ -61,7 +61,7 @@
                                                 timer: 1000
                                             });
                                             setTimeout(function () {
-                                                window.location.href = "signin.jsp";
+                                                window.location.href = "login";
                                             }, 1000);
 
                                         } else {
@@ -73,6 +73,10 @@
                                     }
                                 });
                             });
+                        });
+                        
+                        $("#loginButton").click(function (){
+                           window.location.href = "login"; 
                         });
 
                         function resendMail() {
@@ -94,7 +98,7 @@
                                             timer: 1000
                                         });
                                         setTimeout(function () {
-                                            window.location.href = "signin.jsp";
+                                            window.location.href = "login";
                                         }, 1000);
 
                                     } else {
@@ -107,6 +111,8 @@
 
                             });
                         }
+                        
+                        
     </script>
 
 </body>

@@ -173,6 +173,19 @@ create table order_history(
 	create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+create table History_Transaction(
+  id INT PRIMARY KEY auto_increment,
+Money_Transaction double,
+Transaction_Type char(1) check(Transaction_Type IN('+','-')) Not Null,
+Status boolean,
+Note varchar(200),
+Create_by int,
+Creat_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+nguoinhan int,
+Update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);  
+alter table History_Transaction
+add foreign key (Create_by) references users(id);
 
 INSERT INTO swp_demo.feedback (id, title, content, create_at, user_id, intermediary_order_id)
 VALUES (1, 'Feedback Title', 'Feedback Content', '2024-02-08 12:00:00', 1, 1);
@@ -240,9 +253,9 @@ INSERT INTO Wallet (balance, create_by, updated_by)
 VALUES (500000.00, 4, 4)
        
        
-update  Wallet 
-set balance = 500000
-where create_by = 3
+update  users 
+set email = 'bachnvse@gmail.com'
+where id = 1
 
 
 delete from swp_demo.product where product.id = 5;
@@ -277,4 +290,4 @@ WHERE io.status = 'Người mua đang kiểm tra đơn hàng';
 select * from report where create_by = 3
 SELECT * FROM Report where create_by = 3 ORDER BY id LIMIT 3 OFFSET 1 ;
 
-
+SELECT * FROM Report where recivedID = 1 || create_by = 1 ORDER BY id desc LIMIT 3 OFFSET 0;

@@ -81,7 +81,7 @@
                         </table>
                         <div class="d-flex justify-content-center mt-3">
                             <button type="button" class="btn btn-primary mx-2" style="background-color: #008000; "><a href="home" style="text-decoration: none; color: white;">Trở về trang chủ</a></button>
-                            <button type="button" class="btn btn-primary mx-2" style="background-color: blue;"><a href="Deposite.jsp" style="text-decoration: none;  color: white;">Tiếp tục nạp tiền</a></button>
+                            <button type="button" class="btn btn-primary mx-2" style="background-color: blue;"><a href="withdrawal" style="text-decoration: none;  color: white;">Tiếp tục nạp tiền</a></button>
                         </div>
                     </div>
 
