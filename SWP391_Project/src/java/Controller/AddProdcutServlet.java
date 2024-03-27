@@ -100,35 +100,34 @@ public class AddProdcutServlet extends HttpServlet {
             }
             product.setCategoryID(Integer.parseInt(request.getParameter("categoryID")));
             product.setDescription(request.getParameter("Description"));
-            
-           
-                Collection<Part> fileParts = request.getParts().stream().filter(part -> part.getName().startsWith("images")).collect(Collectors.toList());
-                
-                int i=1;
-                for (Part filePart : fileParts) {
-                    if (filePart != null) { // Kiểm tra nếu có dữ liệu gửi lên
-                       String imageFileName = filePart.getSubmittedFileName(); // Lấy tên của file
-                        String uploadPath = "D:/Semester_5/Project_SSWP/SWP391_Project/web/imagesUpload/" + imageFileName; // Đường dẫn lưu trữ file
-                        try (FileOutputStream fos = new FileOutputStream(uploadPath)) {
-                            InputStream is = filePart.getInputStream();
-                            byte[] data = new byte[is.available()];
-                            is.read(data); // Đọc dữ liệu từ InputStream vào mảng byte data
-                            fos.write(data); // Ghi dữ liệu từ mảng byte data vào FileOutputStream
-                        } catch (Exception e) {
-                             response.getWriter().write("loianh");
-                        }
-                        if (i == 1) {
-                            product.setImage1(imageFileName);
-                        } else if (i == 2) {
-                            product.setImage2(imageFileName);
-                        } else if (i == 3) {
-                            product.setImage3(imageFileName);
-                        } else if (i == 4) {
-                            product.setImage4(imageFileName);
-                        }
-                        i++;
+
+            Collection<Part> fileParts = request.getParts().stream().filter(part -> part.getName().startsWith("images")).collect(Collectors.toList());
+
+            int i = 1;
+            for (Part filePart : fileParts) {
+                if (filePart != null) { // Kiểm tra nếu có dữ liệu gửi lên
+                    String imageFileName = filePart.getSubmittedFileName(); // Lấy tên của file
+                    String uploadPath = "D:/Project_SSWP/SWP391_Project/web/imagesUpload/" + imageFileName; // Đường dẫn lưu trữ file
+                    try (FileOutputStream fos = new FileOutputStream(uploadPath)) {
+                        InputStream is = filePart.getInputStream();
+                        byte[] data = new byte[is.available()];
+                        is.read(data); // Đọc dữ liệu từ InputStream vào mảng byte data
+                        fos.write(data); // Ghi dữ liệu từ mảng byte data vào FileOutputStream
+                    } catch (Exception e) {
+                        response.getWriter().write("loianh");
                     }
-                }                    
+                    if (i == 1) {
+                        product.setImage1(imageFileName);
+                    } else if (i == 2) {
+                        product.setImage2(imageFileName);
+                    } else if (i == 3) {
+                        product.setImage3(imageFileName);
+                    } else if (i == 4) {
+                        product.setImage4(imageFileName);
+                    }
+                    i++;
+                }
+            }
             if (request.getParameter("Transaction_fee").equals("seller")) {
                 product.setTransaction_fee(true);
             } else {
@@ -137,7 +136,7 @@ public class AddProdcutServlet extends HttpServlet {
             product.setContact_Method(request.getParameter("Contact_Method"));
             product.setHidden_content(request.getParameter("hidden_content"));
             if (product.getName().equals("") || product.getDescription().equals("") || product.getContact_Method().equals("") || product.getHidden_content().equals("")) {
-               throw new Exception();
+                throw new Exception();
             }
             HttpSession session = request.getSession();
             User u = (User) session.getAttribute("user");
@@ -178,8 +177,7 @@ public class AddProdcutServlet extends HttpServlet {
             }
         } catch (NumberFormatException e) {
             response.getWriter().write("price");
-       } 
-        catch (Exception e2) {
+        } catch (Exception e2) {
             response.getWriter().write("null");
         }
 

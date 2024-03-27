@@ -904,9 +904,6 @@
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
         <script src="jscript/myorder.js"></script>
-<<<<<<< HEAD
-
-=======
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
         <script>
                             function showModalImg(src) {
@@ -934,7 +931,5 @@
     $('#priceProduct,#price_ud').mask('000,000,000,000', {reverse: true});
 });
         </script>
-
->>>>>>> origin/branch-21
     </body>
 </html>
