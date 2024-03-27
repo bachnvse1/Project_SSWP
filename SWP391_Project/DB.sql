@@ -139,6 +139,7 @@ CREATE TABLE feedback (
 CREATE TABLE transactions (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
+    paymentCode varchar(100),
     product_id INT,
     status VARCHAR(50)
 );
