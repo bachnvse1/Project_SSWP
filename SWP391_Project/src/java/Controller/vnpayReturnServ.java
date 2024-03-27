@@ -140,7 +140,7 @@ public class vnpayReturnServ extends HttpServlet {
                         transactionQueue.processTransactionsvnpay();
                         
                         //binh them vao day
-                        dao.InsertHistory_Transaction(amount, "+", true, "Nạp tiền thành công", u.id, u.id);
+                        dao.InsertHistory_Transaction(amount, "+", true, "Nạp tiền thành công", 1, u.id);
                         dao.insertReport(5, vnpayDao.getStatus(request.getParameter("vnp_TxnRef")).getID(), u.getId(), true, "Bạn đã nạp tiền thành công vào lúc: " + dateTime + " với số tiền là: " + amount + ". Hãy kiểm tra số dư tài khoản!", u.getId(), false);
                         session.setAttribute("balance", w.getBalance());
                         request.setAttribute("transactionCode", vnpay.getPayment_Code());

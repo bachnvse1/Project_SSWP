@@ -261,7 +261,7 @@
                                         <c:if test="${user == null}">
                                 <li ><button style="color:red;
                                              border: 0;
-                                             background-color: #1E1F29;" id="signin-Button">Đăng nhập</button></li>
+                                             background-color: #1E1F29;"><a href="login" style="text-decoration: none;">Đăng nhập</a></button></li>
                                 </c:if>
                                 <c:if test="${user != null}">
                                 <li><button style="color:red;
@@ -292,17 +292,14 @@
                             <!-- /LOGO -->
 
                             <!-- SEARCH BAR -->
-                            <div class="col-md-6">
-                                <div class="header-search">
-
-                                    <form action="home" method="get">
+                           <div class="col-md-6">
+                            <div class="header-search">                
+                                <form id="ajaxSearchForm" action="home" method="get">
                                         <input type="" class="input" placeholder="Search here" name="searchproductname">
-
-                                        <button class="search-btn">Tìm kiếm</button>
-                                    </form>
-
-                                </div>
+                                        <button type="submit" class="search-btn">Tìm kiếm</button>
+                                </form>
                             </div>
+                        </div>
                             <!-- /SEARCH BAR -->
 
                             <!-- ACCOUNT -->
@@ -577,7 +574,7 @@
                                             type: 'POST',
                                             url: "logout",
                                             success: function (response) {
-                                                $("body").html(response);
+                                                window.location.href = response;
                                             },
                                             error: function () {
                                                 // Xử lý lỗi nếu có

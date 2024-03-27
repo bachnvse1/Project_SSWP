@@ -254,12 +254,74 @@
                 right: 0;
                 display: inline-block;
             }
+            #imageModal {
+                display: none; /* Hidden by default */
+                position: fixed; /* Stay in place */
+                z-index: 9999;
+                padding-top: 5%;
+                width: 100%; /* Full width */
+                height: 100%; /* Full height */
+                overflow: auto; /* Enable scroll if needed */
+                background-color: rgb(0,0,0); /* Fallback color */
+                background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
+            }
+
+            #imageModal .modal-content {
+                margin: auto;
+                display: block;
+                width: 80%;
+                max-width: 700px;
+            }
+
+            #imageModal .close {
+                position: absolute;
+                top: 15px;
+                right: 35px;
+                color: #f1f1f1;
+                font-size: 40px;
+                font-weight: bold;
+                transition: 0.3s;
+            }
+
+            #imageModal .close:hover,
+            #imageModal .close:focus {
+                color: #bbb;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+            /* Add animation */
+            #imageModal .modal-content, #imageModal .close {
+                -webkit-animation-name: zoom;
+                -webkit-animation-duration: 0.6s;
+                animation-name: zoom;
+                animation-duration: 0.6s;
+            }
+
+            @-webkit-keyframes zoom {
+                from {
+                    -webkit-transform:scale(0)
+                }
+                to {
+                    -webkit-transform:scale(1)
+                }
+            }
+
+            @keyframes zoom {
+                from {
+                    transform:scale(0)
+                }
+                to {
+                    transform:scale(1)
+                }
+            }
 
         </style>
 
     </head>
     <body>
         <%@include file="components/navBar.jsp" %>
+
         <div style="display: flex">
             <div>
                 <div class="management" id="myproduct">
@@ -539,11 +601,12 @@
                     <div class="modal-content3">                      
                         <div class="container-complain">
                             <form id="addForm" enctype="multipart/form-data">
+                                <!--                                <form id="addForm" action ="addProduct" method="POST" enctype="multipart/form-data">-->
                                 <h2 style="text-align: center;">Thêm sản phẩm</h2>
                                 <label for="name">Tên sản phẩm:</label>
-                                <input type="text" name="nameProduct" required><br>
+                                <input type="text" name="nameProduct" accept="image/*" required><br>
                                 <label for="price">Giá:</label><br>
-                                <input type="text" name="priceProduct" required ><br>
+                                <input type="text" id="priceProduct" name="priceProduct" required ><br>
 
                                 <label for="category">Danh mục:</label>
                                 <select name="categoryID">
@@ -555,17 +618,8 @@
                                 <label for="description">Mô tả(Càng chi tiết về sản phẩm càng tốt vì đây sẽ là cơ sở pháp lý giải quyết khiếu nại nếu có sau này):</label>
                                 <textarea name="Description"></textarea><br>
 
-                                <label for="image1">Ảnh 1:</label>
-                                <input type="file" id="image" name="image1" accept="image/*"><br>
-
-                                <label for="image2">Ảnh 2:</label>
-                                <input type="text" id="image" name="image2"><br>
-
-                                <label for="image3">Ảnh 3:</label>
-                                <input type="text" id="image" name="image3" ><br>
-
-                                <label for="image4">Ảnh 4:</label>
-                                <input type="text" id="image" name="image4"><br>
+                                <label for="image1">Ảnh:</label>
+                                <input type="file" id="images" name="images" multiple=""><br>
 
                                 <label for="transactionFee">Bên chịu phí:</label>
 
@@ -579,16 +633,21 @@
                                 <label for="contactMethod">Phương thức liên hệ:</label>
                                 <input type="text" name="Contact_Method" placeholder="Số điện thoại / Zalo / Link Facebook / Telegram / discord ..." required><br>
                                 <label for="hiddenContent">Nội dung ẩn:</label>
-                                <input type="text"  name="hidden_content" required><br>
+                                <textarea  name="hidden_content" required></textarea><br>
 
                                 <input type="submit" value="Thêm mới">
-                            </form>                         
+                            </form>
                         </div>
                     </div>
                 </div>
 
             </div>
+
             <div class="overlay" id="overlay"></div>
+            <div id="imageModal" class="modal">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <img class="modal-content" id="modalImg">
+            </div>
             <div style="height: 700px;overflow: auto;max-height: 800px; width: 1300px; display: none;" class="modal" id="modal">
                 <div class="modal-content3">                      
                     <div class="container-complain">
@@ -621,10 +680,10 @@
                             <input type="text" id="paidAmount" value="" readonly><br>
 
                             <label for="productImage">Hình ảnh sản phẩm:</label><br>
-                            <img style="max-width: 150px; max-height: 150px" id="img1" src="" >
-                            <img style="max-width: 150px; max-height: 150px" id="img2" src="" >
-                            <img style="max-width: 150px; max-height: 150px" id="img3" src="" >
-                            <img style="max-width: 150px; max-height: 150px" id="img4" src="" ><br>
+                            <img style="max-width: 150px; max-height: 150px" onclick="showModalImg(this.src)" src="" id="img1">
+                            <img style="max-width: 150px; max-height: 150px" onclick="showModalImg(this.src)" src="" id="img2">
+                            <img style="max-width: 150px; max-height: 150px" onclick="showModalImg(this.src)" src="" id="img3">
+                            <img style="max-width: 150px; max-height: 150px" onclick="showModalImg(this.src)" src="" id="img4"><br>
 
                             <label for="description">Mô tả:</label>
                             <textarea id="description" rows="4" value="" readonly></textarea><br>
@@ -644,17 +703,18 @@
                             <input type="text" id="create_at" value="" readonly><br>
                             <label for="buyer">Chỉnh sửa cuối:</label>
                             <input type="text" id="update_at" value="" readonly><br>
-                            <button type="submit" style="float: left; color: white; background-color: red; border: 1px solid red; padding: 10px; border-radius: 3px;" data-orderid="" data-orderi="1">Xác nhận đơn hàng sai và huỷ đơn</button>
-                            <button type="submit" style="float: right; color: white; background-color: #4CAF50; border: 1px solid #4CAF50; padding: 10px; border-radius: 3px;" data-orderid="" data-orderi="2">Yêu cầu người mua xác nhận lại</button>
+                            <button id="verifyOrder5" type="submit" style="float: left; color: white; background-color: red; border: 1px solid red; padding: 10px; border-radius: 3px;" data-orderid="" data-orderi="1">Xác nhận đơn hàng sai và huỷ đơn</button>
+                            <button id="verifyOrder6" type="submit" style="float: right; color: white; background-color: #4CAF50; border: 1px solid #4CAF50; padding: 10px; border-radius: 3px;" data-orderid="" data-orderi="2">Yêu cầu người mua xác nhận lại</button>
                         </form>
-
                     </div>
 
-                </div>              
+                </div>      
+
             </div>
 
+
             <div style="height: 700px;overflow: auto;max-height: 800px; display: none;" class="modal" id="modal2" >               
-                
+
                 <div class="modal-content3">                      
                     <div class="container-complain">
                         <button class="close-button"  onclick="hideProductModal()" style="text-align: right;"><i class="fa fa-close"></i></button>
@@ -756,42 +816,43 @@
 
             </div>
 
+
             <div id="myModalComplain" class="modal3" style="display: none;">
                 <div class="modal-content3">
                     <span class="close">&times;</span>
                     <div class="container-complain">
                         <form id="complaintForm">
-                            <h2 style="text-align: center;">Chi tiết đơn hàng</h2>
-                            <button id="requestAdmin" type="submit" style="float: right; color: white; background-color: #007bff; border: 1px solid; padding: 10px; border-radius: 3px; " data-orderi="3">Yêu cầu admin tham gia giải quyết</button>
-                            <input type="text" id="order_id" name="order_id" readonly="" hidden=""><br>
-                            <label for="order_code">Mã đơn hàng trung gian</label><br>
-                            <input type="text" id="order_code" name="code" value="" readonly><br>
-                            <label for="order_code">Tên sản phẩm</label><br>
-                            <input type="text" id="productName1"  value="" readonly><br>
-                            <label for="order_code">Giá sản phẩm</label><br>
-                            <input type="text" id="Price"  value="" readonly><br>
-                            <label for="order_code">Phí trung gian</label><br>
-                            <input type="text" id="inter"  value="" readonly><br>
-                            <label for="order_code">Bên chịu phí</label><br>
-                            <input type="text" id="party1"  value="" readonly><br>
-                            <label for="order_code">Tổng tiền trả</label><br>
-                            <input type="text" id="totalPaid1"  value="" readonly><br>
-                            <label for="order_code">Ảnh mô tả</label><br>
-                            <img style="max-width: 150px; max-height: 150px" id="img1" src="" >
-                            <label for="order_code">Mô tả sản phẩm</label><br>
-                            <input type="text" id="des"  value="" readonly><br>
-                            <label for="order_code">Thông tin ẩn</label><br>
-                            <input type="text" id="hidden_info"  value="" readonly><br>
-                            <label for="order_code">Liên hệ</label><br>
-                            <input type="text" id="contact"  value="" readonly><br>
-                            <label for="order_code">Trạng thái</label><br>
-                            <input type="text" id="status1"  value="" readonly><br>
-                            <label for="order_code">Người bán</label><br>
-                            <input type="text" id="buyer1"  value="" readonly><br>
-                            <label for="hidden_info">Thời gian tạo</label><br>
-                            <input type="text" id="create" name="" value="" readonly><br><br><br>
-                            <button type="submit" style="float: left; color: white; background-color: red; border: 1px solid red; padding: 10px; border-radius: 3px;" data-orderi="1">Khiếu nại đơn hàng không đúng mô tả</button>
-                            <button id="verifyOrderButton1" type="submit" style="float: right; color: white; background-color: #4CAF50; border: 1px solid #4CAF50; padding: 10px; border-radius: 3px;" data-orderi="2">Xác nhận đơn hàng đúng mô tả</button>
+                            <!--                            <h2 style="text-align: center;">Chi tiết đơn hàng</h2>
+                                                        <button id="requestAdmin" type="submit" style="float: right; color: white; background-color: #007bff; border: 1px solid; padding: 10px; border-radius: 3px; " data-orderi="3">Yêu cầu admin tham gia giải quyết</button>
+                                                        <input type="text" id="order_id" name="order_id" readonly="" hidden=""><br>
+                                                        <label for="order_code">Mã đơn hàng trung gian</label><br>
+                                                        <input type="text" id="order_code" name="code" value="" readonly><br>
+                                                        <label for="order_code">Tên sản phẩm</label><br>
+                                                        <input type="text" id="productName1"  value="" readonly><br>
+                                                        <label for="order_code">Giá sản phẩm</label><br>
+                                                        <input type="text" id="Price"  value="" readonly><br>
+                                                        <label for="order_code">Phí trung gian</label><br>
+                                                        <input type="text" id="inter"  value="" readonly><br>
+                                                        <label for="order_code">Bên chịu phí</label><br>
+                                                        <input type="text" id="party1"  value="" readonly><br>
+                                                        <label for="order_code">Tổng tiền trả</label><br>
+                                                        <input type="text" id="totalPaid1"  value="" readonly><br>
+                                                        <label for="order_code">Ảnh mô tả</label><br>
+                                                        <img style="max-width: 150px; max-height: 150px" id="img1" src="" >
+                                                        <label for="order_code">Mô tả sản phẩm</label><br>
+                                                        <input type="text" id="des"  value="" readonly><br>
+                                                        <label for="order_code">Thông tin ẩn</label><br>
+                                                        <input type="text" id="hidden_info"  value="" readonly><br>
+                                                        <label for="order_code">Liên hệ</label><br>
+                                                        <input type="text" id="contact"  value="" readonly><br>
+                                                        <label for="order_code">Trạng thái</label><br>
+                                                        <input type="text" id="status1"  value="" readonly><br>
+                                                        <label for="order_code">Người bán</label><br>
+                                                        <input type="text" id="buyer1"  value="" readonly><br>
+                                                        <label for="hidden_info">Thời gian tạo</label><br>
+                                                        <input type="text" id="create" name="" value="" readonly><br><br><br>
+                                                        <button type="submit" style="float: left; color: white; background-color: red; border: 1px solid red; padding: 10px; border-radius: 3px;" data-orderi="1">Khiếu nại đơn hàng không đúng mô tả</button>
+                                                        <button id="verifyOrderButton1" type="submit" style="float: right; color: white; background-color: #4CAF50; border: 1px solid #4CAF50; padding: 10px; border-radius: 3px;" data-orderi="2">Xác nhận đơn hàng đúng mô tả</button>-->
 
                         </form>
                     </div>
@@ -842,13 +903,32 @@
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
         <script src="jscript/myorder.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
         <script>
-                    $(document).ready(function () {
+                            function showModalImg(src) {
+                                var modalImg = document.getElementById("modalImg");
+                                modalImg.src = src;
+                                var modal = document.getElementById("imageModal");
+                                modal.style.display = "block";
+                            }
 
-                        //        $('#ProductProcessingDisplay').DataTable();
-                        //        $('#ProductCompleteDisplay').DataTable();
-                    });
+                            // When the user clicks on <span> (x), close the modal
+                            function closeModal() {
+                                var modal = document.getElementById("imageModal");
+                                modal.style.display = "none";
+                            }
 
+                            // When the user clicks anywhere outside of the modal, close it
+                            window.onclick = function (event) {
+                                var modal = document.getElementById("imageModal");
+                                if (event.target == modal) {
+                                    modal.style.display = "none";
+                                }
+                            }
+                            $(document).ready(function () {
+                                // Áp dụng mask cho ô input giá
+                                $('#priceProduct,#price_ud').mask('000,000,000,000', {reverse: true});
+                            });
         </script>
     </body>
 </html>

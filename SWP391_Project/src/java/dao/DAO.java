@@ -1775,7 +1775,7 @@ public class DAO extends DBContext {
     public List<Product> getAllProduct() {
         List<Product> list = new ArrayList<>();
         String sql = "Select * from product as p inner join intermediate_orders i on p.id=i.productID\n"
-                + "where i.status='Sẵn sàng giao dịch'";
+                + "where i.status='Sẵn sàng giao dịch' and p.is_delete=false";
         try {
             con = new DBContext().connection;
             ps = con.prepareStatement(sql);
@@ -1830,7 +1830,7 @@ public class DAO extends DBContext {
     public List<Product> getAllProductbyName(String name) {
         List<Product> list = new ArrayList<>();
         String sql = "SELECT * FROM Product p\n"
-                + "JOIN intermediate_orders io ON p.id = io.productID where name like ? and io.status = 'Sẵn sàng giao dịch'";
+                + "JOIN intermediate_orders io ON p.id = io.productID where name like ? and io.status = 'Sẵn sàng giao dịch' and p.is_delete=false";
         try {
             con = new DBContext().connection;
 
@@ -1891,7 +1891,7 @@ public class DAO extends DBContext {
         String sql = "Select * from product as p inner join category as c\n"
                 + "          on p.categoryID=c.id\n"
                 + "          join intermediate_orders i on p.id=i.productID\n"
-                + "          where p.categoryID= ? and i.status='Sẵn sàng giao dịch'";
+                + "          where p.categoryID= ? and i.status='Sẵn sàng giao dịch' and p.is_delete=false";
         try {
             con = new DBContext().connection;
 
@@ -2196,8 +2196,10 @@ public class DAO extends DBContext {
         return null;
     }
 
-    public HistoryTransaction InsertHistory_Transaction(double money, String Transaction_type, boolean status, String note, int create_by, int nguoinhan) {
-        String query = "INSERT INTO `swp_demo`.`history_transaction` (`Money_Transaction`, `Transaction_Type`, `Status`,`Note`, `Create_by`, `nguoinhan`) \n"
+ public HistoryTransaction InsertHistory_Transaction(double money, String Transaction_type, boolean status, String note, int create_by, int receiver) {
+        String query = "INSERT INTO `swp_demo`.`history_transaction` (`Money_Transaction`, `Transaction_Type`, `Status`,`Note`, `Create_by`, `receiver`) \n"
+
+
                 + "VALUES(?, ?, ?, ?, ?, ?)";
         try {
             con = new DBContext().connection;
@@ -2207,7 +2209,7 @@ public class DAO extends DBContext {
             ps.setBoolean(3, status);
             ps.setString(4, note);
             ps.setInt(5, create_by);
-            ps.setInt(6, nguoinhan);
+            ps.setInt(6, receiver);
             ps.executeUpdate();
         } catch (Exception ex) {
             System.out.println(ex);
@@ -2218,7 +2220,7 @@ public class DAO extends DBContext {
     public List<HistoryTransaction> GetHistory_TransactionbyID(int uid) {
         List<HistoryTransaction> list = new ArrayList<>();
         String sql = "SELECT *FROM swp_demo.history_transaction h \n"
-                + "WHERE h.nguoinhan = ?;";
+                + "WHERE h.receiver = ?;";
         try {
             con = new DBContext().connection;
             ps = con.prepareStatement(sql);

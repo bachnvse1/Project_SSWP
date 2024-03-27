@@ -112,8 +112,7 @@
                                         <c:when test="${lw.getStatus() eq 'Hoàn thành'}">
                                             <button  href="#" class="btn btn-success">Hoàn thành</button>
                                         </c:when>
-                                        <c:when test="${lw.getStatus() eq 'Mới tạo'}">
-                                            <button name="action2" value="delete" data-id="${lw.getId()}" href="#" class="action btn btn-danger">Hủy bỏ</button>
+                                        <c:when test="${lw.getStatus() eq 'Mới tạo'}">                                        
                                             <button name="action2" value="accept" data-id="${lw.getId()}" href="#" class="action btn btn-info">Xác nhận</button>                                   
                                         </c:when>
                                         <c:when test="${lw.getStatus() eq 'Bị từ chối'}">

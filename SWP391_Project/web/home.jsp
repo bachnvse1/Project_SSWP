@@ -33,7 +33,7 @@
         <link rel="stylesheet" href="css/font-awesome.min.css">
         <!-- Custom stlylesheet -->
         <link type="text/css" rel="stylesheet" href="css/style.css"/>
-        
+
 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -92,9 +92,9 @@
             .button-buy:active {
                 transform: scale(0.9);
             }
-            
-            
-            
+
+
+
         </style>
 
     </head>
@@ -134,14 +134,14 @@
 
                                 <!-- tab -->
                                 <div id="Listproduct" class="tab-pane fade in active">
-                                    <c:forEach items="${listProductPage}" var="p" varStatus="loop">
-                                        
+                                    <c:forEach items="${listProductPage}" var="p" >
+
                                         <div class="col-md-3">
                                             <!-- product -->
 
                                             <div class="product">
                                                 <div class="product-img">
-                                                    <img src="${p.image1}" alt="" style="height: 150px;">
+                                                    <img src="imagesUpload/${p.image1}" alt="" style="height: 150px;">
 
                                                 </div>
                                                 <div class="product-body">
@@ -160,22 +160,20 @@
                                                     </div>
                                                 </div>
                                                 <div class="add-to-cart">
-                                                    <!-- Thêm một ID động cho nút "Thêm vào giỏ hàng" -->
-                                                    <button class="add-to-cart-btn" id="buyButton_${loop.index}" data-target="cookiesPopup_${loop.index}">
+                                                    <button class="add-to-cart-btn buy-button1" data-target="cookiesPopup">
                                                         <i class="fa fa-shopping-cart"></i>Mua
                                                     </button>
-                                                    <!-- Thêm nút "Buy" -->
-                                                    <button class="add-to-cart-btn" onclick="addToCart(${p.id})">
+                                                    <button class="add-to-cart-btn buy-button" onclick="addToCart(${p.id})">
                                                         <i class="fa fa-shopping-cart"></i>Thêm
-                                                   
-                                                        
+                                                    </button>
+
                                                 </div>
                                             </div>
                                             <div class="container-2">
-                                                <div class="cookiesContent" id="cookiesPopup_${loop.index}">
+                                                <div class="cookiesContent cookiesPopup">
                                                     <button class="close">✖</button>
                                                     <img src="https://dichthuatmientrung.com.vn/wp-content/uploads/2022/06/important-sticky-note.jpg" alt="cookies-img" style="width: 50%;"/>
-                                                    <p style="color:red; margin-top: 5%;">Bạn sẽ phải trả tổng số tiền là: ${dao.getOrderByProductID(p.id).getTotal_paid_amount()} cho sản phẩm này!</p>
+                                                    <p style="color:red; margin-top: 5%;">Bạn sẽ phải trả tổng số tiền là: <c:out value="${String.format('%,.0f',dao.getOrderByProductID(p.id).getTotal_paid_amount())}" /> cho sản phẩm này!</p>
                                                     <p style="color:red;">Bấm mua nếu bạn chấp nhận hệ thống giữ tiền trung gian !!!</p>
                                                     <button class="button-buy" data-id="${p.id}">BUY</button>
                                                 </div>
@@ -199,7 +197,7 @@
                 <ul class="pagination justify-content-center">
                     <li class="page-item">
                         <c:forEach var="i" begin="1" end="${requestScope.Count}">
-                            <a  class="page-link" style="${requestScope.page == i ? "  color: black; border:1px solid #000;padding-right : 10px; padding-left : 10px" : ""}" adding-right : 25px href="home?page=${i}">
+                            <a onclick="loadPage('${i}')" class="page-link" style="${requestScope.page == i ? "  color: black; border:1px solid #000;padding-right : 10px; padding-left : 10px" : ""}" adding-right : 25px href="javascript:void(0);" >
                                 ${i}
                             </a>
                         </c:forEach>
@@ -231,25 +229,41 @@
             <!-- /container -->
         </div>
         <!-- /NEWSLETTER -->
-        
-      
+
+
 
         <script>
-            <c:forEach items="${listProductPage}" var="p" varStatus="loop">
-            document.querySelector('#buyButton_${loop.index}').addEventListener('click', function () {
-                document.getElementById('cookiesPopup_${loop.index}').style.display = 'block';
-            });
+            document.addEventListener("DOMContentLoaded", function () {
+                var buyButtons = document.querySelectorAll('.buy-button');
+                buyButtons.forEach(function (buyButton) {
+                    buyButton.onclick = function () {
+                        var cookiesPopup = this.closest('.col-md-3').querySelector('.cookiesPopup');
+                        cookiesPopup.style.display = 'block';
+                    };
+                });
 
-            // Lấy tất cả các nút đóng của popup tương ứng và thêm trình nghe sự kiện
-            var closeButtons_${loop.index} = document.querySelectorAll('#cookiesPopup_${loop.index} .close');
-            closeButtons_${loop.index}.forEach(function (button) {
-                button.addEventListener('click', function () {
-                    // Tìm popup chứa nút đóng và ẩn nó
-                    var popup = this.closest('.cookiesContent');
-                    popup.style.display = 'none';
+                var closeButtons = document.querySelectorAll('.close');
+                closeButtons.forEach(function (closeButton) {
+                    closeButton.onclick = function () {
+                        var popup = this.closest('.cookiesContent');
+                        popup.style.display = 'none';
+                    };
                 });
             });
-            </c:forEach>
+
+            document.addEventListener("click", function (event) {
+                if (event.target.matches('.buy-button1')) {
+                    var cookiesPopup = event.target.closest('.col-md-3').querySelector('.cookiesPopup');
+                    cookiesPopup.style.display = 'block';
+                }
+
+                if (event.target.matches('.close')) {
+                    var popup = event.target.closest('.cookiesContent');
+                    popup.style.display = 'none';
+                }
+            });
+
+
         </script>
         <script>
             function addToCart(productId) {
@@ -268,26 +282,26 @@
                     }
                 });
             }
-            
-            // Lấy tham chiếu đến button và popup container
-        const showPopupButton = document.getElementById('notification-Button');
-        const popupContainer = document.getElementById('popupContainer');
-        const tablePopup = document.getElementById('notificationTable');
-// Thêm sự kiện click cho nút
-        showPopupButton.addEventListener('click', function() {
-    // Hiện popup container
-            popupContainer.style.display = 'block';
-            tablePopup.style.display = 'block';
 
-    // Khóa cuộn trang
-            document.body.style.overflow = 'hidden';
-});
+            // Lấy tham chiếu đến button và popup container
+            const showPopupButton = document.getElementById('notification-Button');
+            const popupContainer = document.getElementById('popupContainer');
+            const tablePopup = document.getElementById('notificationTable');
+// Thêm sự kiện click cho nút
+            showPopupButton.addEventListener('click', function () {
+                // Hiện popup container
+                popupContainer.style.display = 'block';
+                tablePopup.style.display = 'block';
+
+                // Khóa cuộn trang
+                document.body.style.overflow = 'hidden';
+            });
         </script>
         <!-- FOOTER -->
         <%@include file="components/footer.jsp" %>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="jscript/signin_captcha.js"></script>
-       
+
         <script src="js1/jquery.min.js"></script>
         <script src="js1/bootstrap.min.js"></script>
         <script src="js1/slick.min.js"></script>
@@ -296,32 +310,95 @@
         <script src="js1/main.js"></script>
         <script src="jscript/myorder.js"></script>
         <script>
-    $(document).ready(function () {
-        $(".button-buy").click(function () {
-            var productId = $(this).data("id");
-            $.ajax({
-                type: 'post',
-                url: "buy",
-                data: {id: productId},
-                success: function (response) {
-                    alert(response);
-                    window.location.href = "home";
-                },
-                error: function () {
-                    // Xử lý lỗi nếu có
-                    alert("Đã xảy ra lỗi khi tải trang");
-                }
+            $(document).ready(function () {
+                $(document).on('click', '.button-buy', function () {
+                    var productId = $(this).data("id");
+                    $.ajax({
+                        type: 'post',
+                        url: "buy",
+                        data: {id: productId},
+                        success: function (response) {
+                            alert(response);
+                            window.location.href = "home";
+                        },
+                        error: function (xhr) {
+                            // Xử lý lỗi nếu có
+                            console.error(xhr.responseText);
+
+
+                        }
+                    });
+                });
             });
-        });
-    });
-    function redirectToController(categoryId) {
-        // Construct the URL based on whether a categoryId is provided
-        var url = "home"; // Assuming 'home' is the endpoint handled by your servlet
-        if (categoryId !== 'all') {
-            url += "?categoryId=" + categoryId;
-        }
-        window.location.href = url;
-    }
+
+            function redirectToController(categoryId) {
+                // Construct the URL based on whether a categoryId is provided
+                $.ajax({
+                    url: "home", // Update this URL to your server endpoint that handles the category request
+                    type: "GET",
+                    data: {
+                        categoryId: categoryId
+                    },
+                    success: function (response) {
+                        // Assuming 'response' contains the HTML or data to update the product list
+                        updateProductList(response);
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle any errors here
+                        console.error("An error occurred while fetching the category data:", error);
+                    }
+                });
+            }
+
+            function updateProductList(data) {
+                // Assuming 'data' is the HTML content to be placed inside the product list container
+                // Find the container in your DOM and update its content
+                $('#Listproduct').html(data);
+            }
+            $(document).ready(function () {
+                loadPage(1); // Load trang đầu tiên khi trang được tải lên
+            });
+
+            function loadPage(page) {
+                $.ajax({
+                    url: 'home',
+                    type: 'GET',
+                    data: {page: page}, // Truyền số trang qua cho Servlet
+
+                    success: function (response) {
+                        updateProductList(response);
+                    },
+                    error: function (xhr, status, error) {
+                        alert('Error while loading data');
+                    }
+                });
+            }
+            $(document).ready(function () {
+                // Event listener for form submission
+                $('#ajaxSearchForm').on('submit', function (e) {
+                    e.preventDefault(); // Prevent default form submission
+
+                    var formData = $(this).serialize(); // Serialize form data
+
+                    $.ajax({
+                        type: "GET", // or "POST", depending on your requirement
+                        url: "home", // the URL to submit the form data
+                        data: formData,
+                        success: function (response) {
+                            // Success action
+                            updateProductList(response);
+                            // Example: update your page with the response
+                            // $('#responseContainer').html(response);
+                        },
+                        error: function (xhr, status, error) {
+                            // Error action
+                            console.log("Error submitting form: " + error);
+                        }
+                    });
+                });
+            });
+
+            
         </script>
     </body>
 </html>

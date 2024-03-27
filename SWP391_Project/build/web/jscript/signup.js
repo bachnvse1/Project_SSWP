@@ -21,6 +21,14 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
+    $("#signupButton1").click(function () {
+        document.getElementById("signin1").style.display = 'none';
+        document.getElementById("signup1").style.display = 'block';
+        refreshCaptcha2();
+    });
+});
+
+$(document).ready(function () {
     $('#signupForm').submit(function (e) {
         e.preventDefault(); // 
         $("signup-button2").prop("disable", true);
@@ -29,7 +37,7 @@ $(document).ready(function () {
             pass: $('#password-signup').val(),
             confirmPass: $("#confirm-Pass").val(),
             email: $('#email').val(),
-            capchaRespone: $("#captcha").val()
+            capchaRespone: $("#captcha2").val()
         };
 
         $.ajax({
@@ -41,20 +49,31 @@ $(document).ready(function () {
                 if (response === "success") {
                     window.location.href = "buy";
                     $("signup-button2").prop("disable", false);
-                    refreshCaptcha();
+                    refreshCaptcha2();
                 } else {
-                    refreshCaptcha();
+                    refreshCaptcha2();
                     $("signup-button2").prop("disable", false);
                     alert(response);
                 }
             },
             error: function (error) {
-                refreshCaptcha();
+                refreshCaptcha2();
                 console.log(error);
             }
         });
     });
 });
+
+function refreshCaptcha2()
+{
+    // Sử dụng AJAX để làm mới ảnh CAPTCHA
+    $.get('refreshcaptcha', function () {
+        // Thay đổi src của ảnh để làm mới
+        $('#captchaImage2').attr('src', 'captchaimage?' + new Date().getTime());
+        document.getElementById("captcha2").value = "";
+    });
+}
+;
 
 
 

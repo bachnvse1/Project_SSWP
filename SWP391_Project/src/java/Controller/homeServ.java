@@ -66,6 +66,7 @@ public class homeServ extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
         DAO dao = new DAO();
         List<Product> listProduct = null;
         List<Product> listProductPage = null;
@@ -103,6 +104,7 @@ public class homeServ extends HttpServlet {
             request.setAttribute("listR", listReport);
             session.setAttribute("balance", dao.getWallet(u.getId()).getBalance());
         }
+
         int quantity = 0;
         if (u != null) {
             quantity = dao.getQuantityProductInCart(u.getId());
@@ -111,12 +113,71 @@ public class homeServ extends HttpServlet {
         }
         request.setAttribute("quantity", quantity);
         listProductPage = listProduct.subList(start, end);
-        request.setAttribute("Count", Count);
-        request.setAttribute("page", page);
-        request.setAttribute("dao", dao);
-        request.setAttribute("listProductPage", listProductPage);
-        request.setAttribute("listCategory", listCategory);
-        request.getRequestDispatcher("home.jsp").forward(request, response);
+        boolean isAjax = "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));
+        if (isAjax) {
+            response.setContentType("text/html");
+            PrintWriter out = response.getWriter();
+
+            out.println("<div id=\"Listproduct\">"); // Opening container for AJAX response
+
+            // Dynamically generate the product listing for AJAX response
+            for (Product p : listProductPage) {
+                out.println("<div class=\"col-md-3\">");
+                out.println("    <!-- product -->");
+                out.println("    <div class=\"product\">");
+                out.println("        <div class=\"product-img\">");
+                out.println("            <img src=\"" + p.image1 + "\" alt=\"\" style=\"height: 150px;\">");
+                out.println("        </div>");
+                out.println("        <div class=\"product-body\">");
+                out.println("           <p class=\"product-category\">Danh mục</p>");
+                out.println("            <h3 class=\"product-name\"><a href=\"ProductDetail?id=" + p.id + "\">" + p.name + "</a></h3>");
+
+                // Formatting the price
+                String formattedPrice = String.format("%,.0f", p.price);
+                out.println("            <h4 class=\"product-price\">" + formattedPrice + "</h4>");
+
+                out.println("            <div class=\"product-btns\">");
+                out.println("                <button class=\"add-to-wishlist\"><i class=\"fa fa-heart-o\"></i><span class=\"tooltipp\">add to wishlist</span></button>");
+                out.println("                <button class=\"add-to-compare\"><i class=\"fa fa-exchange\"></i><span class=\"tooltipp\">add to compare</span></button>");
+                out.println("                <button class=\"quick-view\"><i class=\"fa fa-eye\"></i><span class=\"tooltipp\">quick view</span></button>");
+                out.println("            </div>");
+                out.println("        </div>");
+                out.println("        <div class=\"add-to-cart\">");
+                out.println("            <button class=\"add-to-cart-btn buy-button1\" data-target=\"cookiesPopup\">");
+                out.println("                <i class=\"fa fa-shopping-cart\"></i>Mua");
+                out.println("            </button>");
+                out.println("            <button class=\"add-to-cart-btn buy-button\" onclick=\"addToCart(" + p.id + ")\">");
+                out.println("                <i class=\"fa fa-shopping-cart\"></i>Thêm");
+                out.println("            </button>");
+                out.println("        </div>");
+                out.println("    </div>");
+                out.println("    <div class=\"container-2\">");
+                out.println("        <div class=\"cookiesContent cookiesPopup\">");
+                out.println("            <button class=\"close\">✖</button>");
+                out.println("            <img src=\"https://dichthuatmientrung.com.vn/wp-content/uploads/2022/06/important-sticky-note.jpg\" alt=\"cookies-img\" style=\"width: 50%;\">");
+                out.println("              <p style=\"color:red; margin-top: 5%;\">Bạn sẽ phải trả tổng số tiền là: " + dao.getOrderByProductID(p.id).getTotal_paid_amount() + " cho sản phẩm này!</p>\n");
+                out.println("<p style=\"color:red;\">Bấm mua nếu bạn chấp nhận hệ thống giữ tiền trung gian !!!</p>");
+                out.println("            <button class=\"button-buy\" data-id=\"" + p.id + "\">BUY</button>");
+                out.println("        </div>");
+                out.println("    </div>");
+                out.println("    <!-- /product -->");
+                out.println("</div>");
+            }
+
+            out.println("</div>"); // Closing container for AJAX response
+
+        } else {
+            
+            request.setAttribute("Count", Count);
+            request.setAttribute("page", page);
+            request.setAttribute("dao", dao);
+            request.setAttribute("listProductPage", listProductPage);
+            
+            request.setAttribute("listCategory", listCategory);
+            request.setAttribute("dao", dao);
+            request.getRequestDispatcher("home.jsp").forward(request, response);
+            
+        }
     }
 
     @Override

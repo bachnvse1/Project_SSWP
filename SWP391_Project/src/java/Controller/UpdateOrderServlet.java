@@ -77,7 +77,9 @@ public class UpdateOrderServlet extends HttpServlet {
         // processRequest(request, response);
         String code = request.getParameter("code").trim();
         String productName = request.getParameter("productName").trim();
-        Double price = Double.valueOf(request.getParameter("price").trim());
+        String pricepro = request.getParameter("price").trim();
+         String priceWithoutCommas = pricepro.replace(",", "");
+        Double price = Double.valueOf(priceWithoutCommas);
         String party = request.getParameter("party").trim();
         String img1 = request.getParameter("img1").trim();
         String img2 = request.getParameter("img2").trim();
@@ -119,7 +121,6 @@ public class UpdateOrderServlet extends HttpServlet {
 //       request.getRequestDispatcher("manageMyOrder").forward(request, response);
             response.getWriter().write("success");
         } else {
-
             response.getWriter().print("Không thể cập nhật đơn hàng!");
         }
 

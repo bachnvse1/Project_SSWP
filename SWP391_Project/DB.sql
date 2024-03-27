@@ -139,6 +139,7 @@ CREATE TABLE feedback (
 CREATE TABLE transactions (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
+    paymentCode varchar(100),
     product_id INT,
     status VARCHAR(50)
 );
@@ -173,6 +174,42 @@ create table order_history(
 	create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+create table History_Transaction(
+  id INT PRIMARY KEY auto_increment,
+Money_Transaction double,
+Transaction_Type char(1) check(Transaction_Type IN('+','-')) Not Null,
+Status boolean,
+Note varchar(200),
+Create_by int,
+Creat_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+nguoinhan int,
+Update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);  
+
+CREATE TABLE withdrawals (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    withdrawal_code VARCHAR(255) NOT NULL,
+    status VARCHAR(50) NOT NULL,
+    amount DECIMAL(18, 2) NOT NULL,
+    account_number VARCHAR(50) NOT NULL,
+    account_holder VARCHAR(255) NOT NULL,
+    bank_name VARCHAR(255) NOT NULL,
+    bank_branch VARCHAR(255) NOT NULL,
+    response VARCHAR(255),
+    created_by INT NOT NULL,
+    updated_by INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+create table cart(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	userID int,
+	productID int
+);
+
+alter table History_Transaction
+add foreign key (Create_by) references users(id);
 
 INSERT INTO swp_demo.feedback (id, title, content, create_at, user_id, intermediary_order_id)
 VALUES (1, 'Feedback Title', 'Feedback Content', '2024-02-08 12:00:00', 1, 1);
@@ -240,19 +277,19 @@ INSERT INTO Wallet (balance, create_by, updated_by)
 VALUES (500000.00, 4, 4)
        
        
-update  Wallet 
-set balance = 500000
-where create_by = 3
+update  users 
+set email = 'bachnvse@gmail.com'
+where id = 1
 
 
 delete from swp_demo.product where product.id = 5;
 delete from swp_demo.intermediate_Orders where product.id = 5;
 delete  from swp_demo.Order_Detail
-delete from Report
+delete from Wallet
 delete from transactions
-delete from withdrawals
-
-
+delete from withdrawals where
+delete from users where id = 5
+delete from Wallet where create_by = 5
 select * from Category
 select * from Product where is_delete = true
 select * from users
@@ -277,4 +314,4 @@ WHERE io.status = 'Người mua đang kiểm tra đơn hàng';
 select * from report where create_by = 3
 SELECT * FROM Report where create_by = 3 ORDER BY id LIMIT 3 OFFSET 1 ;
 
-
+SELECT * FROM Report where recivedID = 1 || create_by = 1 ORDER BY id desc LIMIT 3 OFFSET 0;
