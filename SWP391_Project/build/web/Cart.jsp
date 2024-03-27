@@ -185,13 +185,13 @@
                         </tr>
                     </thead>
                     <tbody id="tableCart">
-                        <c:forEach items="${cart.product}" var="x"  varStatus="loop">
-                            <c:if test="${x.is_delete != true}">
+                        <c:forEach items="${comboX}" var="x"  varStatus="loop">
+                            <c:if test="${dao.getProductByID(x.productID).isIs_delete() != true}">
                                 <tr>
-                                    <td>${x.name}</td>
-                                    <td><img src="${x.image1}" alt="" style="height: 50px;"/></td>
-                                    <td>${x.price}</td>
-                                    <td><span class="delete-icon" onclick="deleteProduct(${x.id})"><i class="fa fa-trash"></i></span></td>
+                                    <td>${dao.getProductByID(x.productID).getName()}</td>
+                                    <td><img src="${dao.getProductByID(x.productID).getImage1()}" alt="" style="height: 50px;"/></td>
+                                    <td>${dao.getProductByID(x.productID).getPrice()}</td>
+                                    <td><span class="delete-icon" onclick="deleteProduct(${dao.getProductByID(x.productID).getId()})"><i class="fa fa-trash"></i></span></td>
                                     <td><button class="add-to-cart-btn" id="buyButton_${loop.index}" data-target="cookiesPopup_${loop.index}">
                                             <i class="fa fa-shopping-cart"></i> MUA
                                         </button></td>
@@ -201,7 +201,7 @@
                                     <button class="close">✖</button>
                                     <img src="https://dichthuatmientrung.com.vn/wp-content/uploads/2022/06/important-sticky-note.jpg" alt="cookies-img" style="width: 50%;"/>
                                     <p style="color:red; margin-top: 5%;">Chúng tôi sẽ giữ tiền trung gian của bạn và đợi cho đến khi bạn xác nhận giao dịch hoàn toàn thành công</p>
-                                    <button class="button-buy" data-id="${x.id}"> Mua</button>
+                                    <button class="button-buyx" data-id="${dao.getProductByID(x.productID).getId()}"> Mua</button>
                                 </div>
                             </div>   
                         </c:if>
@@ -239,7 +239,7 @@
                                             }
 
                                             // Kiểm tra xem nút BUY trong popup được nhấp hay không
-                                            if (target.classList.contains('button-buy')) {
+                                            if (target.classList.contains('button-buyx')) {
                                                 var productId = target.getAttribute('data-id');
                                                 $.ajax({
                                                     type: 'post',
@@ -247,7 +247,7 @@
                                                     data: {id: productId},
                                                     success: function (response) {
                                                         alert(response);
-                                                        window.location.href = 'Cart.jsp';
+                                                        window.location.href = 'AddToCartController';
                                                     },
                                                     error: function () {
                                                         alert('Đã xảy ra lỗi khi tải trang');
@@ -257,22 +257,7 @@
                                         });
 
 
-                                        $(".button-buy").click(function () {
-                                            var productId = $(this).data("id");
-                                            $.ajax({
-                                                type: 'post',
-                                                url: "buy",
-                                                data: {id: productId},
-                                                success: function (response) {
-                                                    alert(response);
-                                                    window.location.href = "Cart.jsp";
-                                                },
-                                                error: function () {
-                                                    // Xử lý lỗi nếu có
-                                                    alert("Đã xảy ra lỗi khi tải trang");
-                                                }
-                                            });
-                                        });
+                                        
 
                                         document.addEventListener('click', function (event) {
                                             var target = event.target;
@@ -288,8 +273,8 @@
                                         function deleteProduct(deleteProductId) {
 
                                             $.ajax({
-                                                type: "GET", // Hoặc "GET" tùy thuộc vào yêu cầu của bạn
-                                                url: "AddToCartController", // Thay thế bằng URL của servlet của bạn
+                                                type: "POST", // Hoặc "GET" tùy thuộc vào yêu cầu của bạn
+                                                url: "EditReportStatus", // Thay thế bằng URL của servlet của bạn
                                                 data: {deleteProductId: deleteProductId},
                                                 success: function (response) {
                                                     // Xử lý kết quả từ servlet nếu cần

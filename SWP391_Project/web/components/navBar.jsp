@@ -337,6 +337,7 @@
                                         <a id="your-cart-button" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                             <i class="fa fa-shopping-cart"></i>
                                             <span>Giỏ hàng</span>
+                                            <div class="qty">${quantity}</div>
                                         </a>
                                     </div>
                                     <!-- /Cart -->
@@ -586,7 +587,7 @@
                                     // Xử lý khi nhấp vào nút "Your Cart"
                                     $("#your-cart-button").click(function () {
                                         // Thực hiện chuyển hướng đến trang mong muốn (thay "your-cart-page" bằng đường dẫn thực tế)
-                                        window.location.href = "Cart.jsp";
+                                        window.location.href = "AddToCartController";
                                     });
                                 });
 

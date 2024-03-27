@@ -12,16 +12,16 @@ import java.util.List;
  */
 public class Cart {
     public int id;
-    public User user;
-    public List<Product> product;
+    public int userID;
+    public int productID;
 
     public Cart() {
     }
 
-    public Cart(int id, User user, List<Product> product) {
+    public Cart(int id, int userID, int productID) {
         this.id = id;
-        this.user = user;
-        this.product = product;
+        this.userID = userID;
+        this.productID = productID;
     }
 
     public int getId() {
@@ -32,25 +32,27 @@ public class Cart {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public int getUserID() {
+        return userID;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 
-    public List<Product> getProduct() {
-        return product;
+    public int getProductID() {
+        return productID;
     }
 
-    public void setProduct(List<Product> product) {
-        this.product = product;
+    public void setProductID(int productID) {
+        this.productID = productID;
     }
 
     @Override
     public String toString() {
-        return "Cart{" + "id=" + id + ", user=" + user + ", product=" + product + '}';
+        return "Cart{" + "id=" + id + ", userID=" + userID + ", productID=" + productID + '}';
     }
+
+
     
 }
