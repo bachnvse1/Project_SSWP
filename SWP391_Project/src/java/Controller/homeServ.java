@@ -104,9 +104,7 @@ public class homeServ extends HttpServlet {
             request.setAttribute("listR", listReport);
             session.setAttribute("balance", dao.getWallet(u.getId()).getBalance());
         }
-<<<<<<< HEAD
-        
-=======
+
         int quantity = 0;
         if (u != null) {
             quantity = dao.getQuantityProductInCart(u.getId());
@@ -114,7 +112,6 @@ public class homeServ extends HttpServlet {
             //
         }
         request.setAttribute("quantity", quantity);
->>>>>>> origin/khoareview
         listProductPage = listProduct.subList(start, end);
         boolean isAjax = "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));
         if (isAjax) {
@@ -177,7 +174,9 @@ public class homeServ extends HttpServlet {
             request.setAttribute("listProductPage", listProductPage);
             
             request.setAttribute("listCategory", listCategory);
+            request.setAttribute("dao", dao);
             request.getRequestDispatcher("home.jsp").forward(request, response);
+            
         }
     }
 

@@ -2195,14 +2195,11 @@ public class DAO extends DBContext {
         }
         return null;
     }
-<<<<<<< HEAD
+
  public HistoryTransaction InsertHistory_Transaction(double money, String Transaction_type, boolean status, String note, int create_by, int receiver) {
         String query = "INSERT INTO `swp_demo`.`history_transaction` (`Money_Transaction`, `Transaction_Type`, `Status`,`Note`, `Create_by`, `receiver`) \n"
-=======
 
-    public HistoryTransaction InsertHistory_Transaction(double money, String Transaction_type, boolean status, String note, int create_by, int nguoinhan) {
-        String query = "INSERT INTO `swp_demo`.`history_transaction` (`Money_Transaction`, `Transaction_Type`, `Status`,`Note`, `Create_by`, `nguoinhan`) \n"
->>>>>>> origin/khoareview
+
                 + "VALUES(?, ?, ?, ?, ?, ?)";
         try {
             con = new DBContext().connection;

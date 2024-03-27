@@ -449,7 +449,8 @@
                     data: {productId: productId},
                     success: function (response) {
                         // Xử lý kết quả từ servlet nếu cần
-                        console.log(response);
+                        alert(response);
+                        window.location.href = "home";
                     },
                     error: function (error) {
                         console.log("Error:", error);
