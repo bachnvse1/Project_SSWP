@@ -141,7 +141,7 @@
 
                                             <div class="product">
                                                 <div class="product-img">
-                                                    <img src="${p.image1}" alt="" style="height: 150px;">
+                                                    <img src="imagesUpload/${p.image1}" alt="" style="height: 150px;">
 
                                                 </div>
                                                 <div class="product-body">

@@ -101,6 +101,7 @@ public class WithdrawalServlet extends HttpServlet {
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("user");
         String amount = request.getParameter("amount");
+   //      String priceWithoutCommas = amount.replace(",", "");
         String accountNumber = request.getParameter("accountNumber");
         String accountHolder = request.getParameter("accountHolder");
         String bankName = request.getParameter("bankName");
