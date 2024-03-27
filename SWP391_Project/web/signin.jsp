@@ -27,7 +27,7 @@
                     </div>
                 </div>
                 <div class="row justify-content-center">
-                    <div class="col-md-6 col-lg-4" style="background-color: rgba(0,0,0,0.7); padding: 3%;border-radius: 20px">
+                    <div class="col-md-6 col-lg-4" style="background-color: rgba(0,0,0,0.7); padding: 3%;border-radius: 20px" id="signin1">
                         <div class="login-wrap p-0">
                             <div style="display: flex;text-align: center;margin-bottom: 3%;">
                                 <a style="height: 40px" href="home">
@@ -64,7 +64,58 @@
                             <p class="w-100 text-center">&mdash; Do not have an account ? &mdash;</p>
 
                             <div class="social d-flex text-center" style="justify-content:center;">
-                                <button class="w-100 px-2 py-2 mr-md-1" style="border-radius: 40px;"><a href="VerifyUser" style="text-decoration: none;">SIGN UP</a></button>
+                                <button id="signupButton1" class="w-100 px-2 py-2 mr-md-1" style="border-radius: 40px;">SIGN UP</a></button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                    
+                    <div class="col-md-6 col-lg-4" style="background-color: rgba(0,0,0,0.7); padding: 3%;border-radius: 20px; display: none;" id="signup1">
+                        <div class="login-wrap p-0">
+                            <div style="display: flex;text-align: center;margin-bottom: 3%;">
+                                <a style="height: 40px" href="home">
+                                    <button style="border-radius: 100%;width:40px;height: 40px" id="backHome">
+                                        <i class="fas fa-home"></i>
+                                    </button>
+                                </a>
+                                <h3 style="font-weight: bold; margin-left: 25%">Sign Up</h3>
+                            </div>
+                            <form id="signupForm">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="username" placeholder="Username" required>
+                                </div>
+                                <div class="form-group">
+                                    <input id="password-signup" type="password" class="form-control" placeholder="Password"
+                                           required>
+                                    <span toggle="#password-signup" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+
+                                </div>
+                                <div class="form-group">
+                                    <input id="confirm-Pass" type="password" class="form-control"
+                                           placeholder="Confirm password" required>
+                                    <span toggle="#confirm-Pass" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <input id="email" type="text" class="form-control"
+                                           placeholder="Email" required>
+
+                                </div>
+                                <div class="form-group" style="display: flex">
+                                    <img style="border-radius: 40px" id="captchaImage2" src="captchaimage" alt="CAPTCHA image">
+                                    <input type="text" class="form-control" placeholder="Captcha" name="capchaRespone" id="captcha2">
+                                    <button type="button" onclick="refreshCaptcha2()" style="width: 100px; background-color: white; border-radius:100%">
+                                        <i class="fa fa-refresh" style="color: black;"></i>
+                                    </button>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="form-control btn btn-primary submit px-3" id="signup-button2">Sign Up</button>
+                                </div>
+                            </form>
+                            <p class="w-100 text-center">&mdash; You have an account ? &mdash;</p>
+                            <div class="social d-flex text-center" style="justify-content:center">
+                                <a class="px-2 py-2 mr-md-1" style="border-radius: 40px" id="signin-Button">SIGN IN</a>
                             </div>
                         </div>
                     </div>

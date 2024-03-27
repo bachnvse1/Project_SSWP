@@ -81,17 +81,17 @@ public class WithdrawalProcessingServlet extends HttpServlet {
              Withdrawal w = dao.getWithdrawalByID(wid);
           switch (action) {
               case "complete" -> {
-                  dao.UpdateWithdrawal("Hoàn thành", w.getResponse(), wid);
+                  dao.UpdateWithdrawal("Hoàn thành","Đã chuyển khoản!", wid);
                   response.getWriter().write("success");
               }
               case "error" ->  {
-                      dao.UpdateWithdrawal("Bị lỗi", w.getResponse(), wid);
+                      dao.UpdateWithdrawal("Bị lỗi", "Vui lòng xem lại thông tin !", wid);
                       Wallet wa = dao.getWallet(w.getCreated_by());
                       dao.updateAmount(wa.getBalance()+(w.getAmount()*9/10), w.getCreated_by());
                       response.getWriter().write("success");
                   }
               case "accept" -> {
-                  dao.UpdateWithdrawal("Chờ chuyển khoản", w.getResponse(), wid);
+                  dao.UpdateWithdrawal("Chờ chuyển khoản", "Đã xác nhận, chờ chuyển khoản!", wid);
                   response.getWriter().write("success");
               }
               default ->                   {

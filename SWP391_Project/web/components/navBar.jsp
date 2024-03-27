@@ -261,7 +261,7 @@
                                         <c:if test="${user == null}">
                                 <li ><button style="color:red;
                                              border: 0;
-                                             background-color: #1E1F29;" id="signin-Button">Đăng nhập</button></li>
+                                             background-color: #1E1F29;"><a href="login" style="text-decoration: none;">Đăng nhập</a></button></li>
                                 </c:if>
                                 <c:if test="${user != null}">
                                 <li><button style="color:red;

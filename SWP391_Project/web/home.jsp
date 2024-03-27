@@ -33,7 +33,7 @@
         <link rel="stylesheet" href="css/font-awesome.min.css">
         <!-- Custom stlylesheet -->
         <link type="text/css" rel="stylesheet" href="css/style.css"/>
-        
+
 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -92,9 +92,9 @@
             .button-buy:active {
                 transform: scale(0.9);
             }
-            
-            
-            
+
+
+
         </style>
 
     </head>
@@ -134,14 +134,19 @@
 
                                 <!-- tab -->
                                 <div id="Listproduct" class="tab-pane fade in active">
+<<<<<<< HEAD
                                     <c:forEach items="${listProductPage}" var="p" >
                                         
+=======
+                                    <c:forEach items="${listProductPage}" var="p" varStatus="loop">
+
+>>>>>>> origin/branch-b20
                                         <div class="col-md-3">
                                             <!-- product -->
 
                                             <div class="product">
                                                 <div class="product-img">
-                                                    <img src="${p.image1}" alt="" style="height: 150px;">
+                                                    <img src="imagesUpload/${p.image1}" alt="" style="height: 150px;">
 
                                                 </div>
                                                 <div class="product-body">
@@ -165,7 +170,12 @@
                                                     </button>
                                                     <button class="add-to-cart-btn buy-button" onclick="addToCart(${p.id})">
                                                         <i class="fa fa-shopping-cart"></i>Thêm
+<<<<<<< HEAD
                                                     </button>
+=======
+
+
+>>>>>>> origin/branch-b20
                                                 </div>
                                             </div>
                                             <div class="container-2">
@@ -228,8 +238,8 @@
             <!-- /container -->
         </div>
         <!-- /NEWSLETTER -->
-        
-      
+
+
 
         <script>
             document.addEventListener("DOMContentLoaded", function () {
@@ -280,26 +290,26 @@
                     }
                 });
             }
-            
-            // Lấy tham chiếu đến button và popup container
-        const showPopupButton = document.getElementById('notification-Button');
-        const popupContainer = document.getElementById('popupContainer');
-        const tablePopup = document.getElementById('notificationTable');
-// Thêm sự kiện click cho nút
-        showPopupButton.addEventListener('click', function() {
-    // Hiện popup container
-            popupContainer.style.display = 'block';
-            tablePopup.style.display = 'block';
 
-    // Khóa cuộn trang
-            document.body.style.overflow = 'hidden';
-});
+            // Lấy tham chiếu đến button và popup container
+            const showPopupButton = document.getElementById('notification-Button');
+            const popupContainer = document.getElementById('popupContainer');
+            const tablePopup = document.getElementById('notificationTable');
+// Thêm sự kiện click cho nút
+            showPopupButton.addEventListener('click', function () {
+                // Hiện popup container
+                popupContainer.style.display = 'block';
+                tablePopup.style.display = 'block';
+
+                // Khóa cuộn trang
+                document.body.style.overflow = 'hidden';
+            });
         </script>
         <!-- FOOTER -->
         <%@include file="components/footer.jsp" %>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="jscript/signin_captcha.js"></script>
-       
+
         <script src="js1/jquery.min.js"></script>
         <script src="js1/bootstrap.min.js"></script>
         <script src="js1/slick.min.js"></script>
@@ -308,8 +318,13 @@
         <script src="js1/main.js"></script>
         <script src="jscript/myorder.js"></script>
         <script>
+<<<<<<< HEAD
    $(document).ready(function () {
                 $(document).on('click', '.button-buy', function () {
+=======
+            $(document).ready(function () {
+                $(".button-buy").click(function () {
+>>>>>>> origin/branch-b20
                     var productId = $(this).data("id");
                     $.ajax({
                         type: 'post',
@@ -319,14 +334,21 @@
                             alert(response);
                             window.location.href = "home";
                         },
+<<<<<<< HEAD
                         error: function (xhr) {
                             // Xử lý lỗi nếu có
                             console.error(xhr.responseText);
                            
+=======
+                        error: function () {
+                            // Xử lý lỗi nếu có
+                            alert("Đã xảy ra lỗi khi tải trang");
+>>>>>>> origin/branch-b20
                         }
                     });
                 });
             });
+<<<<<<< HEAD
 
     function redirectToController(categoryId) {
         // Construct the URL based on whether a categoryId is provided
@@ -394,6 +416,16 @@
                     });
                 });
             });
+=======
+            function redirectToController(categoryId) {
+                // Construct the URL based on whether a categoryId is provided
+                var url = "home"; // Assuming 'home' is the endpoint handled by your servlet
+                if (categoryId !== 'all') {
+                    url += "?categoryId=" + categoryId;
+                }
+                window.location.href = url;
+            }
+>>>>>>> origin/branch-b20
         </script>
     </body>
 </html>
