@@ -90,6 +90,7 @@
                                 data: formData,
                                 success: function (response) {
                                     if (response === "success") {
+                                        alert("Resend email success");
                                         Swal.fire({
                                             position: "bot-end",
                                             icon: "success",

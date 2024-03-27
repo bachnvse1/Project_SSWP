@@ -184,6 +184,29 @@ Creat_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 nguoinhan int,
 Update_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );  
+
+CREATE TABLE withdrawals (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    withdrawal_code VARCHAR(255) NOT NULL,
+    status VARCHAR(50) NOT NULL,
+    amount DECIMAL(18, 2) NOT NULL,
+    account_number VARCHAR(50) NOT NULL,
+    account_holder VARCHAR(255) NOT NULL,
+    bank_name VARCHAR(255) NOT NULL,
+    bank_branch VARCHAR(255) NOT NULL,
+    response VARCHAR(255),
+    created_by INT NOT NULL,
+    updated_by INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+create table cart(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	userID int,
+	productID int
+);
+
 alter table History_Transaction
 add foreign key (Create_by) references users(id);
 
@@ -261,11 +284,11 @@ where id = 1
 delete from swp_demo.product where product.id = 5;
 delete from swp_demo.intermediate_Orders where product.id = 5;
 delete  from swp_demo.Order_Detail
-delete from Report
+delete from Wallet
 delete from transactions
-delete from withdrawals
-
-
+delete from withdrawals where
+delete from users where id = 5
+delete from Wallet where create_by = 5
 select * from Category
 select * from Product where is_delete = true
 select * from users
