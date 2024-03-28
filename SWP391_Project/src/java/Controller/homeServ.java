@@ -73,7 +73,7 @@ public class homeServ extends HttpServlet {
 
         List<Category> listCategory = dao.getAllCategory();
         String page = request.getParameter("page");
-        int pageSize = 8;
+        int pageSize = 1;
         int Count = 0;
 
         if (page == null) {
@@ -102,9 +102,11 @@ public class homeServ extends HttpServlet {
         if (u != null) {
             List<Report> listReport = dao.getTopNext3Report(u.getId(), 0);
             request.setAttribute("listR", listReport);
+            
             session.setAttribute("balance", dao.getWallet(u.getId()).getBalance());
         }
 
+        request.setAttribute("dao", dao);
         int quantity = 0;
         if (u != null) {
             quantity = dao.getQuantityProductInCart(u.getId());
@@ -134,6 +136,7 @@ public class homeServ extends HttpServlet {
 
                 // Formatting the price
                 String formattedPrice = String.format("%,.0f", p.price);
+                String fmTotalPaid = String.format("%,.0f", dao.getOrderByProductID(p.id).getTotal_paid_amount());
                 out.println("            <h4 class=\"product-price\">" + formattedPrice + "</h4>");
 
                 out.println("            <div class=\"product-btns\">");
@@ -155,8 +158,9 @@ public class homeServ extends HttpServlet {
                 out.println("        <div class=\"cookiesContent cookiesPopup\">");
                 out.println("            <button class=\"close\">✖</button>");
                 out.println("            <img src=\"https://dichthuatmientrung.com.vn/wp-content/uploads/2022/06/important-sticky-note.jpg\" alt=\"cookies-img\" style=\"width: 50%;\">");
-                out.println("              <p style=\"color:red; margin-top: 5%;\">Bạn sẽ phải trả tổng số tiền là: " + dao.getOrderByProductID(p.id).getTotal_paid_amount() + " cho sản phẩm này!</p>\n");
+                out.println("              <p style=\"color:red; margin-top: 5%;\">Bạn sẽ phải trả tổng số tiền là: " + fmTotalPaid + " cho sản phẩm này!</p>\n");
                 out.println("<p style=\"color:red;\">Bấm mua nếu bạn chấp nhận hệ thống giữ tiền trung gian !!!</p>");
+                out.println("<p style=\"color:red; font-weight: bold;\">Hãy quay video từ lúc bấm mua sản phẩm để làm bằng chứng sau này !!!</p>");
                 out.println("            <button class=\"button-buy\" data-id=\"" + p.id + "\">BUY</button>");
                 out.println("        </div>");
                 out.println("    </div>");
@@ -174,7 +178,7 @@ public class homeServ extends HttpServlet {
             request.setAttribute("listProductPage", listProductPage);
             
             request.setAttribute("listCategory", listCategory);
-            request.setAttribute("dao", dao);
+            
             request.getRequestDispatcher("home.jsp").forward(request, response);
             
         }

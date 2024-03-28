@@ -175,6 +175,7 @@
                                                     <img src="https://dichthuatmientrung.com.vn/wp-content/uploads/2022/06/important-sticky-note.jpg" alt="cookies-img" style="width: 50%;"/>
                                                     <p style="color:red; margin-top: 5%;">Bạn sẽ phải trả tổng số tiền là: <c:out value="${String.format('%,.0f',dao.getOrderByProductID(p.id).getTotal_paid_amount())}" /> cho sản phẩm này!</p>
                                                     <p style="color:red;">Bấm mua nếu bạn chấp nhận hệ thống giữ tiền trung gian !!!</p>
+     
                                                     <button class="button-buy" data-id="${p.id}">BUY</button>
                                                 </div>
                                             </div>               
