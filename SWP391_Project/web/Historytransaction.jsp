@@ -251,7 +251,8 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script>
                         $(document).ready(function () {
-                            $('.historytransactioninfo').click(function (event) {
+                            // Sử dụng event delegation để gắn sự kiện cho các phần tử con của bảng
+                            $('#example').on('click', '.historytransactioninfo', function (event) {
                                 event.preventDefault();
                                 var historyid = $(this).data('product-id');
                                 var action = $(this).data('action');

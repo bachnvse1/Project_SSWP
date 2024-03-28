@@ -645,8 +645,8 @@
                                 <label for="description">Mô tả(Càng chi tiết về sản phẩm càng tốt vì đây sẽ là cơ sở pháp lý giải quyết khiếu nại nếu có sau này):</label>
                                 <textarea name="Description"></textarea><br>
 
-                                <label for="image1">Ảnh:</label>
-                                <input  type="file" id="images" name="images" multiple=""><br>
+                                <label for="image1">Ảnh(Tối đa 4 hình ảnh) :</label>
+                                <input  type="file" id="images" name="images" multiple="" accept="image/*"><br>
 
                                 <label for="transactionFee">Bên chịu phí:</label>
 

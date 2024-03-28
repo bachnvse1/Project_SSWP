@@ -78,7 +78,7 @@ public class UpdateOrderServlet extends HttpServlet {
         String code = request.getParameter("code").trim();
         String productName = request.getParameter("productName").trim();
         String pricepro = request.getParameter("price").trim();
-         String priceWithoutCommas = pricepro.replace(",", "");
+        String priceWithoutCommas = pricepro.replace(",", "");
         Double price = Double.valueOf(priceWithoutCommas);
         String party = request.getParameter("party").trim();
         String description = request.getParameter("description");

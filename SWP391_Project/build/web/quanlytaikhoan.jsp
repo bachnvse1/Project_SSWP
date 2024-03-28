@@ -130,7 +130,7 @@
                                             <tr>
                                                 <th scope="col">ID</th>
                                                 <th scope="col">Username</th>
-                                                <th scope="col">Password</th>
+                                                
                                                 <th scope="col">Email</th>
                                                 <th scope="col">Display_Name</th>
                                                 <th scope="col">Is_Admin</th>
@@ -145,7 +145,7 @@
 
                                                 <td>${o.id}</td>
                                                 <td>${o.username}</td>
-                                                <td>${o.password}</td>
+                                                
                                                 <td>${o.email}</td>
                                                 <td>${o.display_name}</td>                                            
                                                 <td style="color: ${o.is_Admin ? 'blue' : 'red'}">
