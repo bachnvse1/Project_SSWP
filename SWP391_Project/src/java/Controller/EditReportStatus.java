@@ -73,6 +73,7 @@ public class EditReportStatus extends HttpServlet {
         if (checkuser == userID) {
             dao.updateAmount(tmoney + 10000 + dao.getWallet(userID).getBalance(), userID);
             dao.insertReport(10, oid, userID, true, "Hoàn tiền từ admin số tiền là:" + tmoney, u.getId(), true);
+            
         } else {
             dao.updateAmount(tmoney + dao.getWallet(userID).getBalance(), userID);
             dao.insertReport(10, oid, userID, true, "Hoàn tiền từ admin số tiền là:" + tmoney, u.getId(), true);

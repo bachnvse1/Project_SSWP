@@ -76,7 +76,7 @@
                         <c:forEach items="${listWithdrawal}" var="lw">
                             <tr>
                                 <th scope="row">${lw.getCode()}</th>
-                                <th>${lw.getCreated_by()}</th>
+                                <th>${dao.getUserById(lw.getCreated_by()).getDisplay_name()}</th>
                                 <th>
                                     <c:choose>
                                         <c:when test="${lw.getStatus() eq 'Hoàn thành'}">

@@ -200,7 +200,7 @@
 
                                                         <c:choose>
                                                             <c:when test="${c.getReport().isStatus() == true}">
-                                                                <a class="btn btn-success edit-btn" data-toggle="modal" data-target="#confirmationModal_${loop.index}">
+                                                                <a class="btn btn-success edit-btn" data-toggle="modal">
                                                                     Đã xử lý
                                                                 </a>
                                                             </c:when>

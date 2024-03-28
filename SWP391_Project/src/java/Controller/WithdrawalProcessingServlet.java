@@ -56,6 +56,8 @@ public class WithdrawalProcessingServlet extends HttpServlet {
          DAO dao = new DAO();
         List<Withdrawal> listWithdrawal = dao.getAllWithdrawal();     
         request.setAttribute("listWithdrawal", listWithdrawal);
+        request.setAttribute("dao", dao);
+ 
         request.getRequestDispatcher("withdrawalProcessing.jsp").forward(request, response);
     
     } 

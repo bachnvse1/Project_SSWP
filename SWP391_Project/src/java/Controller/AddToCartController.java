@@ -65,7 +65,7 @@ public class AddToCartController extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {       
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
         DAO dao = new DAO();
@@ -106,10 +106,10 @@ public class AddToCartController extends HttpServlet {
                     // Nếu sản phẩm chưa có trong giỏ hàng, thêm vào giỏ hàng
                     dao.insertCart(user.getId(), id);
                     response.getWriter().print("Đã thêm sản phẩm vào giỏ hàng");
-                }                
+                } else {
+                    response.getWriter().print("Sản phẩm đã có trong giỏ hàng");
+                }
             }
-        } else {
-            //
         }
     }
 

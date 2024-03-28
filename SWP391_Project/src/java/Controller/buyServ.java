@@ -109,7 +109,7 @@ public class buyServ extends HttpServlet {
         }
 
         if (p.getCreate_by() != u.getId()) {
-            if (p.isIs_delete() == true) {
+            if (!o.getStatus().equals("Sẵn sàng giao dịch")) {
                 response.getWriter().print("Sản phẩm đã được bán");
             } else {
                 int transactionId = dao.insertTransactionBuy(u.getId(), idx, "Pending"); // Insert transaction with pending status

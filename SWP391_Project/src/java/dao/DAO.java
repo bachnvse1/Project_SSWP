@@ -2134,7 +2134,7 @@ public class DAO extends DBContext {
     }
 
     public int getIdWithdrawal() {
-            String query = "SELECT MAX(withdrawal_id) AS max_id FROM swp_demo.withdrawals";
+        String query = "SELECT MAX(withdrawal_id) AS max_id FROM swp_demo.withdrawals";
         try {
             con = new DBContext().connection; //connect sql
             ps = con.prepareStatement(query);
@@ -2391,12 +2391,10 @@ public class DAO extends DBContext {
 
     public static void main(String[] args) {
         DAO dao = new DAO();
-       
-        intermediateOrders o = dao.getOrderByCode("SP00100");
-        List<OrderHistory> list = dao.getOrderHistory(o.getId());
-        for (OrderHistory orderHistory : list) {
-            System.out.println(orderHistory.getOrder_status());
+
+        List<Withdrawal> listWithdrawal = dao.getAllWithdrawal();
+        for (Withdrawal withdrawal : listWithdrawal) {
+            System.out.println(dao.getUserById(withdrawal.getCreated_by()).getDisplay_name());
         }
     }
-    }
-
+}

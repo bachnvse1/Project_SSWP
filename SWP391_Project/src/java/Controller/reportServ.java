@@ -83,6 +83,8 @@ public class reportServ extends HttpServlet {
                 dao.insertReport(8, id, dao.getOrderByID(id).getBuyer_id(), true, "Có xác nhận từ người mua rằng đơn hàng " + dao.getOrderByID(id).getCode() + "sai thông tin và huỷ đơn ", u.getId(), false);
                 dao.updateOrderStatus(u.getId(), "Người bán huỷ đơn", id);
                 dao.insertOrderHistory(id, "Người bán huỷ đơn", "Người bán huỷ đơn do đơn hàng sai thông tin", dao.getOrderByID(id).getCreate_by());
+                dao.InsertHistory_Transaction(dao.getOrderByID(id).getTotal_paid_amount(), "+", true, "Hoàn tiền đơn hàng mã số:"  + dao.getOrderByID(id).getCode(), 1, dao.getOrderByID(id).getBuyer_id());
+                dao.updateAmount(dao.getOrderByID(id).getTotal_paid_amount() + dao.getWallet(dao.getOrderByID(id).getBuyer_id()).getBalance(), dao.getUserById(dao.getOrderByID(id).getBuyer_id()).getId());
                 response.getWriter().print("Bạn vừa huỷ đơn hàng do sai thông tin! Hãy chú ý hơn cho lần giao dịch sau");
             } else {
                 response.getWriter().print("Không thực hiện được, vui lòng kiểm tra lại!");
