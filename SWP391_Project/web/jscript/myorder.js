@@ -190,8 +190,6 @@ $(document).ready(function () {
 
                         } else if (response === "null") {
                             alert("Không được để trống");
-                        } else {
-                            alert("da vao dc serr");
                         }
                     },
                     error: function (xhr, status, error) {
@@ -295,10 +293,10 @@ $(document).ready(function () {
                 }
                 document.getElementById("receivedAmount_ud").value = responseData[5];
                 document.getElementById("paidAmount_ud").value = responseData[6];
-                document.getElementById("img1_ud").value = responseData[7];
-                document.getElementById("img2_ud").value = responseData[8];
-                document.getElementById("img3_ud").value = responseData[9];
-                document.getElementById("img4_ud").value = responseData[10];
+                document.getElementById("img1_ud").src = responseData[7];
+                document.getElementById("img2_ud").src = responseData[8];
+                document.getElementById("img3_ud").src = responseData[9];
+                document.getElementById("img4_ud").src = responseData[10];
                 document.getElementById("description_ud").value = responseData[11];
                 document.getElementById("hiddenContent_ud").value = responseData[12];
                 document.getElementById("contactMethod_ud").value = responseData[13];
@@ -318,11 +316,7 @@ $(document).ready(function () {
             code: $('#orderCode_ud').val(),
             productName: $('#productName_ud').val(),
             price: $('#price_ud').val(),
-            party: $('input[name=party]:checked').val(),
-            img1: $('#img1_ud').val(),
-            img2: $('#img2_ud').val(),
-            img3: $('#img3_ud').val(),
-            img4: $('#img4_ud').val(),
+            party: $('input[name=party_ud]:checked').val(),
             description: $('#description_ud').val(),
             hiddenContent: $('#hiddenContent_ud').val(),
             contactMethod: $('#contactMethod_ud').val()

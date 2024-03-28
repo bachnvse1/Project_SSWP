@@ -1406,7 +1406,7 @@ public class DAO extends DBContext {
                 + "    updated_by = ?,\n"
                 + "    updated_at = CURRENT_TIMESTAMP \n"
                 + "WHERE\n"
-                + "    code = ?;";
+                + "    id = ?;";
         try {
             ps = con.prepareStatement(sql);
             ps.setDouble(1, Order.getTotal_received_amount());
@@ -2134,7 +2134,7 @@ public class DAO extends DBContext {
     }
 
     public int getIdWithdrawal() {
-        String query = "SELECT MAX(withdrawal_id) AS max_id FROM swp_demo.withdrawals";
+            String query = "SELECT MAX(withdrawal_id) AS max_id FROM swp_demo.withdrawals";
         try {
             con = new DBContext().connection; //connect sql
             ps = con.prepareStatement(query);
@@ -2391,6 +2391,7 @@ public class DAO extends DBContext {
 
     public static void main(String[] args) {
         DAO dao = new DAO();
+<<<<<<< HEAD
 
         List<Report> listR = dao.getAllReportAdmin();
         //List<ReportOrderProduct> reportOrderProductAll = new ArrayList<>();
@@ -2410,5 +2411,12 @@ public class DAO extends DBContext {
 //            System.out.println(arg.getProduct().getId());
 //        }
 
+=======
+     intermediateOrders order = dao.getOrderByCode("SP002");
+           order.setTotal_paid_amount(100000);
+           dao.UpdateOrdersByID(order.getId(), order);
+        //   System.out.println(order.toString());
+        }
+>>>>>>> origin/branch-23
     }
-}
+

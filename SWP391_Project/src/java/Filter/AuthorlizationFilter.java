@@ -97,8 +97,13 @@ public class AuthorlizationFilter implements Filter {
      * @exception ServletException if a servlet error occurs
      */
     private HttpServletRequest httpRequest;
+<<<<<<< HEAD
     private static final String[] loginRequiredURLs = {"/Cart.jsp", "/Feedback", "/manageMyOrder", "/EditProfile", "/notification", "/withdrawal", "/ChangePassword", "/transaction"};
     private static final String[] adminRequiredURLs = {"/ManageAccount", "/editcategory", "/ReportServlet", "/RevenueAdmin", "/withdrawalprocessing"};
+=======
+    private static final String[] loginRequiredURLs = {"/Cart.jsp", "/Feedback", "/manageMyOrder", "/EditProfile", "/notification", "/withdrawal","/ChangePassword", "/transaction"};
+    private static final String[] adminRequiredURLs = {"/ManageAccount", "/editcategory", "/ReportServlet", "/RevenueAdmin", "/withdrawalprocessing", "/GetInfAccountForAdmin"};
+>>>>>>> origin/branch-23
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,

@@ -107,7 +107,7 @@ public class AddProdcutServlet extends HttpServlet {
             for (Part filePart : fileParts) {
                 if (filePart != null) { // Kiểm tra nếu có dữ liệu gửi lên
                     String imageFileName = filePart.getSubmittedFileName(); // Lấy tên của file
-                    String uploadPath = "/D:/Project_SSWP/SWP391_Project/web/imagesUpload/" + imageFileName; // Đường dẫn lưu trữ file
+                    String uploadPath = "D:/Semester_5/Project_SSWP/SWP391_Project/web/imagesUpload/" + imageFileName; // Đường dẫn lưu trữ file
                     try (FileOutputStream fos = new FileOutputStream(uploadPath)) {
                         InputStream is = filePart.getInputStream();
                         byte[] data = new byte[is.available()];
