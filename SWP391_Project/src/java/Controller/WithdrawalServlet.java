@@ -101,7 +101,8 @@ public class WithdrawalServlet extends HttpServlet {
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("user");
         String amount = request.getParameter("amount");
-   //      String priceWithoutCommas = amount.replace(",", "");
+       String priceWithoutCommas = amount.replace(",", "");
+       
         String accountNumber = request.getParameter("accountNumber");
         String accountHolder = request.getParameter("accountHolder");
         String bankName = request.getParameter("bankName");
@@ -111,7 +112,7 @@ public class WithdrawalServlet extends HttpServlet {
         try {
             Withdrawal withdrawal = new Withdrawal();
             Wallet walet = dao.getWallet(u.getId());
-            withdrawal.setAmount(Double.parseDouble(amount));
+            withdrawal.setAmount(Double.parseDouble(priceWithoutCommas));
             if (withdrawal.getAmount() < 100000) {
                 response.getWriter().write("less than 100000");
             } else if (accountNumber.equals("") || accountHolder.equals("") || bankName.equals("")) {
@@ -129,13 +130,16 @@ public class WithdrawalServlet extends HttpServlet {
                 withdrawal.setCreated_by(u.getId());
                 withdrawal.setUpdated_by(u.getId());
                 withdrawal.setResponse("");
-                
+                 
                 String code = "WDR2024000" + dao.getIdWithdrawal() + 1;
-
+                  
+                try {
+                    
+               
                 int transactionId = dao.insertTransactionVnpay(u.getId(), withdrawal.getCode(), "Pending"); // Insert transaction with pending status
                 if (transactionId != -1) {
-                    dao.InsertWithdrawal(withdrawal);
-                    dao.insertReport(6, dao.getWithdrawalByCode(code).getId(), u.getId(), true, "Bạn đã yêu cầu rút tiền với mã yêu cầu là: " + withdrawal.getAmount() + ".", u.getId(), false);
+                   dao.InsertWithdrawal(withdrawal);
+                   dao.insertReport(6, dao.getWithdrawalByCode(code).getId(), u.getId(), true, "Bạn đã yêu cầu rút tiền với mã yêu cầu là: " + withdrawal.getCode() + ".", u.getId(), false);
                     // Add the purchase transaction to the queue
                     
                     //binh them vao day
@@ -148,6 +152,9 @@ public class WithdrawalServlet extends HttpServlet {
                     
                 } else {
                     response.getWriter().print("Failed to process transaction. Please try again later!");
+                }
+                 } catch (IOException e) {
+                       response.getWriter().write("loi");
                 }
 //                //dao.updateAmount(walet.getBalance(), u.getId());
 

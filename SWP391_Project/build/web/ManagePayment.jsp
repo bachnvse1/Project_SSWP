@@ -335,6 +335,7 @@
                         </div>
                     </main>
                     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
                     <script src="jscript/vnpay.js"></script>
                     <!--   Core JS Files   -->
                     <script src="./assets/js/core/popper.min.js"></script>
@@ -407,7 +408,13 @@
                                 }
                             });
                         });
+                        
+              $(document).ready(function() {
+    // Áp dụng mask cho ô input giá
+    $('#amountInput').mask('000,000,000,000', {reverse: true});
+});
                     </script>
+                    
                     </body>
 
                     </html>

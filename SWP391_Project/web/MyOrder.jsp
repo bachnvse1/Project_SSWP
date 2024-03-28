@@ -316,6 +316,33 @@
                 }
             }
 
+                                    /* Ẩn radio button mặc định */
+                                    input[type="radio"] {
+                                        display: none;
+                                    }
+
+                                    /* Tùy chỉnh hình dạng và kiểu nền của radio button khi được chọn */
+                                    input[type="radio"] + label::before {
+                                        content: "";
+                                        display: inline-block;
+                                        width: 20px;
+                                        height: 20px;
+                                        margin-right: 5px;
+                                        border: 2px solid #3498db; /* Màu xanh */
+                                        border-radius: 4px;
+                                    }
+
+                                    /* Hiển thị hình vuông màu xanh khi radio button được chọn */
+                                    input[type="radio"]:checked + label::before {
+                                        background-color: #3498db; /* Màu nền xanh khi checked */
+                                    }
+
+                                    /* Căn chỉnh văn bản để nằm cùng hàng với radio button */
+                                    label {
+                                        display: inline-block;
+                                        vertical-align: middle;
+                                    }
+                          
         </style>
 
     </head>
@@ -619,7 +646,7 @@
                                 <textarea name="Description"></textarea><br>
 
                                 <label for="image1">Ảnh:</label>
-                                <input type="file" id="images" name="images" multiple=""><br>
+                                <input  type="file" id="images" name="images" multiple=""><br>
 
                                 <label for="transactionFee">Bên chịu phí:</label>
 
@@ -719,54 +746,27 @@
                     <div class="container-complain">
                         <button class="close-button"  onclick="hideProductModal()" style="text-align: right;"><i class="fa fa-close"></i></button>
                         <h2>Cập nhật đơn hàng</h2>   
-                        <form>
+                        <form id="updateForm" enctype="multipart/form-data">
                             <label for="orderCode">Mã đơn hàng:</label>
-                            <input type="text" id="orderCode_ud" value="" readonly ><br>
+                            <input type="text" id="orderCode_ud" name="orderCode_ud" value="" readonly ><br>
 
                             <label for="productName">Tên sản phẩm:</label>
-                            <input type="text" id="productName_ud" value="" ><br>
+                            <input type="text" id="productName_ud" name="productName_ud" value="" ><br>
 
                             <label for="price">Giá:</label><br>
-                            <input type="text" id="price_ud" value="" ><br>
-
+                            <input type="text" id="price_ud" name="price_ud" ><br>
+ 
                             <label for="intermediaryFee">Phí giao dịch:</label>
                             <input type="text" id="intermediaryFee_ud" value="" readonly><br>
 
                             <label for="party">Bên chịu phí:</label><br>                   
                             <div style="display: flex;">
-                                <style>
-                                    /* Ẩn radio button mặc định */
-                                    input[type="radio"] {
-                                        display: none;
-                                    }
+                               
 
-                                    /* Tùy chỉnh hình dạng và kiểu nền của radio button khi được chọn */
-                                    input[type="radio"] + label::before {
-                                        content: "";
-                                        display: inline-block;
-                                        width: 20px;
-                                        height: 20px;
-                                        margin-right: 5px;
-                                        border: 2px solid #3498db; /* Màu xanh */
-                                        border-radius: 4px;
-                                    }
-
-                                    /* Hiển thị hình vuông màu xanh khi radio button được chọn */
-                                    input[type="radio"]:checked + label::before {
-                                        background-color: #3498db; /* Màu nền xanh khi checked */
-                                    }
-
-                                    /* Căn chỉnh văn bản để nằm cùng hàng với radio button */
-                                    label {
-                                        display: inline-block;
-                                        vertical-align: middle;
-                                    }
-                                </style>
-
-                                <input type="radio" id="partySeller_ud" name="party" value="seller">
+                                <input type="radio" id="partySeller_ud" name="party_ud" value="seller">
                                 <label for="partySeller_ud">Bên bán</label>
 
-                                <input type="radio" id="partyBuyer_ud" name="party" value="buyer">
+                                <input type="radio" id="partyBuyer_ud" name="party_ud" value="buyer">
                                 <label for="partyBuyer_ud">Bên mua</label>
                             </div>
                             <label for="receivedAmount">Tổng tiền thực nhận:</label>
@@ -776,26 +776,24 @@
                             <input type="text" id="paidAmount_ud" value="" readonly><br>
 
                             <label for="productImage">Hình ảnh sản phẩm:</label><br>
-                            <label for="image1">Ảnh 1:</label>
-                            <input type="text" id="img1_ud" name="image1" value=""><br>
-
-                            <label for="image2">Ảnh 2:</label>
-                            <input type="text" id="img2_ud" name="image2" value=""><br>
-
-                            <label for="image3">Ảnh 3:</label>
-                            <input type="text" id="img3_ud" name="image3" value="" ><br>
-
-                            <label for="image4">Ảnh 4:</label>
-                            <input type="text" id="img4_ud" name="image4" value=""><br>
+                            
+                            <img style="max-width: 150px; max-height: 150px" onclick="showModalImg(this.src)" src="" id="img1_ud" name="image1">
+                            <img style="max-width: 150px; max-height: 150px" onclick="showModalImg(this.src)" src="" id="img2_ud" name="image2">
+                            <img style="max-width: 150px; max-height: 150px" onclick="showModalImg(this.src)" src="" id="img3_ud" name="image3">
+                            <img style="max-width: 150px; max-height: 150px" onclick="showModalImg(this.src)" src="" id="img4_ud" name="image4"><br>
+                            
+                            
+                           <label for="image">Ảnh update:</label>
+                                <input  type="file" id="images_ud" name="images_ud" multiple><br>
 
                             <label for="description">Mô tả:</label>
-                            <input id="description_ud" value="" ></input><br>
+                            <input id="description_ud" name="description_ud" value="" ></input><br>
 
                             <label for="hiddenContent">Thông tin ẩn:</label>
-                            <input type="text" id="hiddenContent_ud" value=""  ><br>
+                            <input type="text" id="hiddenContent_ud" name="hiddenContent_ud" value=""  ><br>
 
                             <label for="contactMethod">Phương thức liên lạc:</label>
-                            <input type="text" id="contactMethod_ud" value=""  ><br>
+                            <input type="text" id="contactMethod_ud" name="contactMethod_ud" value=""  ><br>
 
                             <label for="status">Trạng thái:</label>
                             <input type="text" id="status_ud" value="" ><br>
@@ -806,7 +804,7 @@
                             <input type="text" id="create_at_ud" value="" readonly><br>
                             <label for="buyer">Chỉnh sửa cuối:</label>
                             <input type="text" id="update_at_ud" value="" readonly><br>
-                            <button style="background-color:  #34ce57 " id="updateButton">Cập nhật</button>
+                            <button type="submit" style="background-color:#34ce57 " id="updateButton">Cập nhật</button>
                         </form>
 
                     </div>

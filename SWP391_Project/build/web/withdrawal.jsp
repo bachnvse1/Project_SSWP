@@ -215,8 +215,6 @@
                                     alert("Không được để trống (Số tài khoản,Chủ tài khoản,Tên ngân hàng)!");
                                 } else if (response === "Insufficient balance") {
                                     alert("Số dư không đủ!");
-                                } else {
-                                    alert("Vui lòng kiểm tra lại số tiền!");
                                 }
                             },
                             error: function (xhr, status, error) {

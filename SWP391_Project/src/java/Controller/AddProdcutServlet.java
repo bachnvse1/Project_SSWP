@@ -101,13 +101,13 @@ public class AddProdcutServlet extends HttpServlet {
             product.setCategoryID(Integer.parseInt(request.getParameter("categoryID")));
             product.setDescription(request.getParameter("Description"));
 
-            Collection<Part> fileParts = request.getParts().stream().filter(part -> part.getName().startsWith("images")).collect(Collectors.toList());
+            Collection<Part> fileParts = request.getParts().stream().filter(part -> part.getName().startsWith("images_ud")).collect(Collectors.toList());
 
             int i = 1;
             for (Part filePart : fileParts) {
                 if (filePart != null) { // Kiểm tra nếu có dữ liệu gửi lên
                     String imageFileName = filePart.getSubmittedFileName(); // Lấy tên của file
-                    String uploadPath = "/D:/Project_SSWP/SWP391_Project/web/imagesUpload/" + imageFileName; // Đường dẫn lưu trữ file
+                    String uploadPath = "D:/Semester_5/Project_SSWP/SWP391_Project/web/imagesUpload/" + imageFileName; // Đường dẫn lưu trữ file
                     try (FileOutputStream fos = new FileOutputStream(uploadPath)) {
                         InputStream is = filePart.getInputStream();
                         byte[] data = new byte[is.available()];

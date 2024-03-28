@@ -81,17 +81,14 @@ public class UpdateOrderServlet extends HttpServlet {
          String priceWithoutCommas = pricepro.replace(",", "");
         Double price = Double.valueOf(priceWithoutCommas);
         String party = request.getParameter("party").trim();
-        String img1 = request.getParameter("img1").trim();
-        String img2 = request.getParameter("img2").trim();
-        String img3 = request.getParameter("img3").trim();
-        String img4 = request.getParameter("img4").trim();
         String description = request.getParameter("description");
         String hiddenContent = request.getParameter("hiddenContent");
         String contactMethod = request.getParameter("contactMethod");
         DAO dao = new DAO();
-
+            
         intermediateOrders order = dao.getOrderByCode(code);
         Product product = dao.getProductByID(order.getProductId());
+        
         if (order.getStatus().equals("Sẵn sàng giao dịch")) {
             product.setName(productName);
             product.setPrice(price);
@@ -100,11 +97,6 @@ public class UpdateOrderServlet extends HttpServlet {
             } else {
                 product.setTransaction_fee(false);
             }
-
-            product.setImage1(img1);
-            product.setImage2(img2);
-            product.setImage3(img3);
-            product.setImage4(img4);
             product.setDescription(description);
             product.setContact_Method(contactMethod);
             product.setHidden_content(hiddenContent);
