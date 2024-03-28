@@ -101,7 +101,7 @@ public class reportServ extends HttpServlet {
             if (dao.getWallet(u.getId()).getBalance() > 10000) {
                 if (!dao.getOrderByID(id).getStatus().equals("Yêu cầu admin giải quyết") && !dao.getOrderByID(id).getStatus().equals("Người mua đang kiểm tra đơn hàng")) {
                     if (!dao.getOrderByID(id).getStatus().equals("Đơn hàng đã hoàn thành")) {
-                        dao.insertReport(7, id, 1, false, "2 bên không tự giải quyết được yêu cầu admin tham gia giải quyết đơn hàng mã code: " + dao.getOrderByID(id).getCode(), u.getId(), false);
+                        dao.insertReport(7, id, 1, false, "2 bên không tự giải quyết được yêu cầu admin tham gia giải quyết đơn hàng mã code: " + dao.getOrderByID(id).getCode() + ", liên hệ người mua: " + dao.getUserById(dao.getOrderByID(id).getBuyer_id()).getEmail(), u.getId(), false);
                         dao.updateOrderStatus(u.getId(), "Yêu cầu admin giải quyết", id);
                         dao.insertOrderHistory(id, "Chờ Admin giải quyết", "Giao dịch được khiếu nại và chờ Admin giải quyết", dao.getOrderByID(id).getCreate_by());
                         dao.updateAmount(dao.getWallet(u.getId()).getBalance() - 10000, u.getId());
@@ -180,7 +180,7 @@ public class reportServ extends HttpServlet {
             if (dao.getWallet(u.getId()).getBalance() > 10000) {
                 if (!dao.getOrderByID(id).getStatus().equals("Yêu cầu admin giải quyết")) {
                     if (!dao.getOrderByID(id).getStatus().equals("Đơn hàng đã hoàn thành")) {
-                        dao.insertReport(7, id, 1, false, "2 bên không tự giải quyết được yêu cầu admin tham gia giải quyết đơn hàng mã code: " + dao.getOrderByID(id).getCode(), u.getId(), false);
+                        dao.insertReport(7, id, 1, false, "2 bên không tự giải quyết được yêu cầu admin tham gia giải quyết đơn hàng mã code: " + dao.getOrderByID(id).getCode() + ", liên hệ người mua: " + dao.getUserById(dao.getOrderByID(id).getBuyer_id()).getEmail(), u.getId(), false);
                         dao.updateOrderStatus(u.getId(), "Yêu cầu admin giải quyết", id);
                         dao.updateAmount(dao.getWallet(u.getId()).getBalance() - 10000, u.getId());
                         dao.insertOrderHistory(id, "Chờ Admin giải quyết", "Giao dịch được khiếu nại và chờ Admin giải quyết", dao.getOrderByID(id).getBuyer_id());

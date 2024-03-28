@@ -461,6 +461,12 @@ $(document).ready(function () {
                             "render": function (data, type, row) {
                                 return '<button class="btn btn-info btn-detail" data-ordercode="' + row.orderCode + '">Detail</button>';
                             }
+                        },
+                        {
+                            "data": null,
+                            "render": function (data, type, row) {
+                                return '<a class="historyOrder" href="orderHistory?idor=' + row.orderCode + '"><i style="color: #FFFFFF" class="fa fa-calendar"></i> Lịch sử</a>';
+                            }
                         }
                         // Thêm các cột khác tại đây
                     ]
@@ -543,6 +549,12 @@ $(document).ready(function () {
                             "data": null,
                             "render": function (data, type, row) {
                                 return '<button class="btn btn-info btn-detail" data-ordercode="' + row.orderCode + '">Detail</button>';
+                            }
+                        },
+                        {
+                            "data": null,
+                            "render": function (data, type, row) {
+                                return '<a class="historyOrder" href="orderHistory?idor="'+row.orderCode+'"}"><i style="color: #FFFFFF" class="fa fa-calendar"></i> Lịch sử</a>';
                             }
                         }
 

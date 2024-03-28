@@ -7,6 +7,7 @@ package Controller;
 
 import dao.DAO;
 import Entity.OrderHistory;
+import Entity.intermediateOrders;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -59,10 +60,11 @@ public class orderHistory extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String id = request.getParameter("idor");
-        int idr = Integer.parseInt(id);
+        String id = request.getParameter("idor").trim();
+        
         DAO dao = new DAO();
-        List<OrderHistory> list = dao.getOrderHistory(idr);
+        intermediateOrders o = dao.getOrderByCode(id);
+        List<OrderHistory> list = dao.getOrderHistory(o.getId());
         request.setAttribute("listO", list);
         request.setAttribute("dao", dao);
         

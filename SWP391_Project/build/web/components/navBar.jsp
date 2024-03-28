@@ -518,7 +518,7 @@
 
     </div>
 
-        <marquee scrollamount="10">🚀 Lưu ý khi mua bán cần kiểm tra kĩ thông tin cũng như đọc kĩ nội dung trước khi mua bán để tránh sai sót không đáng có 🛍</br>️Quá trình nạp rút tiền có thể sẽ mất thời gian 1 chút để xử lí, hãy chờ đợi nhé!️</marquee>
+        <marquee scrollamount="10">🚀 Lưu ý khi mua bán cần kiểm tra kĩ thông tin cũng như đọc kĩ nội dung trước khi mua bán để tránh sai sót không đáng có 🛍</marquee>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <style>

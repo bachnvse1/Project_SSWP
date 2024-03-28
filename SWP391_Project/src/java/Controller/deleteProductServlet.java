@@ -77,7 +77,7 @@ public class deleteProductServlet extends HttpServlet {
         // processRequest(request, response);
         DAO dal = new DAO();
         int oid = Integer.parseInt(request.getParameter("oid"));
-        if (dal.getOrderByID(oid).getStatus() == "Sẵn sàng giao dịch") {
+        if (dal.getOrderByID(oid).getStatus().equals( "Sẵn sàng giao dịch")) {
             dal.deleteOrder(oid, true);
             intermediateOrders order = dal.getOrderByID(oid);
             Product product = dal.getProductByID(order.getProductId());

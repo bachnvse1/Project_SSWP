@@ -73,7 +73,7 @@ public class homeServ extends HttpServlet {
 
         List<Category> listCategory = dao.getAllCategory();
         String page = request.getParameter("page");
-        int pageSize = 1;
+        int pageSize = 8;
         int Count = 0;
 
         if (page == null) {
@@ -128,7 +128,7 @@ public class homeServ extends HttpServlet {
                 out.println("    <!-- product -->");
                 out.println("    <div class=\"product\">");
                 out.println("        <div class=\"product-img\">");
-                out.println("            <img src=\"" + p.image1 + "\" alt=\"\" style=\"height: 150px;\">");
+                out.println("            <img src=\"imagesUpload/" + p.image1 + "\" alt=\"\" style=\"height: 150px;\">");
                 out.println("        </div>");
                 out.println("        <div class=\"product-body\">");
                 out.println("           <p class=\"product-category\">Danh mục</p>");

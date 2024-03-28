@@ -554,7 +554,7 @@
                                         </a>                                                                                 
                                     </td>
                                     <td>
-                                        <a class="historyOrder" href="orderHistory?idor=${c.getOrder().getId()}">
+                                        <a class="historyOrder" href="orderHistory?idor=${c.getOrder().getCode()}">
                                             <i style="color: #FFFFFF" class="fa fa-calendar"></i> Lịch sử
                                         </a>                                        
                                     </td>
@@ -611,7 +611,7 @@
                                         </a>  
                                     </td>
                                     <td>
-                                        <a class="historyOrder" href="orderHistory?idor=${o.getOrder().getId()}">
+                                        <a class="historyOrder" href="orderHistory?idor=${o.getOrder().getCode()}">
                                             <i style="color: #FFFFFF" class="fa fa-calendar"></i> Lịch sử
                                         </a>                                        
                                     </td>

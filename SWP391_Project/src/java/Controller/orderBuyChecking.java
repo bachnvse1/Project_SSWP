@@ -134,6 +134,7 @@ public class orderBuyChecking extends HttpServlet {
                 String s = product.isTransaction_fee() ? "Người bán" : "Người mua";
 
                 Map<String, String> orderInfo = new HashMap<>();
+                
                 orderInfo.put("orderCode", productOrderPair.getOrder().getCode());
                 orderInfo.put("orderStatus", productOrderPair.getOrder().getStatus());
                 orderInfo.put("sellerName", dao.getUserById(product.getCreate_by()).getDisplay_name());

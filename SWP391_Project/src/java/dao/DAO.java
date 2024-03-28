@@ -2391,32 +2391,12 @@ public class DAO extends DBContext {
 
     public static void main(String[] args) {
         DAO dao = new DAO();
-<<<<<<< HEAD
-
-        List<Report> listR = dao.getAllReportAdmin();
-        //List<ReportOrderProduct> reportOrderProductAll = new ArrayList<>();
-        for (Report report : listR) {
-            intermediateOrders order = dao.getOrderByID(84);
-//            Product product = dao.getProductByID(order.getProductId());
-//            reportOrderProductAll.add(new ReportOrderProduct(report, order, product));
-            System.out.println(order.getId());
-
+       
+        intermediateOrders o = dao.getOrderByCode("SP00100");
+        List<OrderHistory> list = dao.getOrderHistory(o.getId());
+        for (OrderHistory orderHistory : list) {
+            System.out.println(orderHistory.getOrder_status());
         }
-        /*
-        for (Cart cartx : cart) {
-            System.out.println(cartx.productID);
-        }
-         */
-//        for (ReportOrderProduct arg : reportOrderProductAll) {
-//            System.out.println(arg.getProduct().getId());
-//        }
-
-=======
-     intermediateOrders order = dao.getOrderByCode("SP002");
-           order.setTotal_paid_amount(100000);
-           dao.UpdateOrdersByID(order.getId(), order);
-        //   System.out.println(order.toString());
-        }
->>>>>>> origin/branch-23
+    }
     }
 
