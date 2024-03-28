@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import Validate.validate;
+import util.Encryption;
 
 /**
  *
@@ -77,15 +78,17 @@ public class ChangePassword extends HttpServlet {
             throws ServletException, IOException {
         String user = request.getParameter("username");
         String oldPass = request.getParameter("oldPassword");
+        String passEn = Encryption.toSHA1(oldPass);
         String newPass = request.getParameter("newPassword");
         String confirmPassword = request.getParameter("confirmPassword");
         validate s = new validate();
         DAO c = new DAO();
         User u = c.getUser(user);
-        if (oldPass.equals(u.getPassword())) {
+        if (passEn.equals(u.getPassword())) {
             if (s.checkInput(newPass, "^(?=.*[!@#$%^&*(),.?\":{}|<>]).*$", 6, 15)) {
                 if (confirmPassword.equals(newPass)) {
-                    c.changePassword(newPass, user);
+                    String newPassEn = Encryption.toSHA1(newPass);
+                    c.changePassword(newPassEn, user);
                     String mess = "Change password success";
                     request.setAttribute("done1", mess);
                     request.getRequestDispatcher("editprofile.jsp").forward(request, response);
