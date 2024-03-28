@@ -101,7 +101,7 @@ public class AddProdcutServlet extends HttpServlet {
             product.setCategoryID(Integer.parseInt(request.getParameter("categoryID")));
             product.setDescription(request.getParameter("Description"));
 
-            Collection<Part> fileParts = request.getParts().stream().filter(part -> part.getName().startsWith("images_ud")).collect(Collectors.toList());
+            Collection<Part> fileParts = request.getParts().stream().filter(part -> part.getName().startsWith("images")).collect(Collectors.toList());
 
             int i = 1;
             for (Part filePart : fileParts) {
