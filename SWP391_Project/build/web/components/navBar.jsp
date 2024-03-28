@@ -242,15 +242,15 @@
                     <div class="container">
                         <ul class="header-links pull-left">
                             <li><a href="#"><i class="fa fa-phone"></i> +021-95-51-84</a></li>
-                            <li><a href="#"><i class="fa fa-envelope-o"></i> email@email.com</a></li>
-                            <li><a href="#"><i class="fa fa-map-marker"></i>xxx</a></li>
+                            <li><a href="#"><i class="fa fa-envelope-o"></i> ODITSHello@email.com</a></li>
+                            
                         </ul>
                         <ul class="header-links pull-right">
                             <c:if test="${user != null}">
                                 <li id="notification-Button"><a><i class="fa fa-bell"></i>
                                         Thông báo</a></li>\
-                                <li id="notification-Button"><a href="withdrawal"><i class="fa fa-map-marker"></i>
-                                        Quan lí thanh toán</a></li>
+                                <li id="notification-Button"><a href="withdrawal"><i class="fa fa-money"></i>
+                                        Quản lí thanh toán</a></li>
 
                                 <li><a><c:out value="${String.format('%,.0f', balance)}" /> VND</a></li>
                                 <li id="info-Button"><a><i class="fa fa-user-o"></i>${user.display_name}</a></li>

@@ -12,6 +12,7 @@ import Entity.HistoryTransaction;
 import Entity.OrderHistory;
 import Entity.Product;
 import Entity.Report;
+import Entity.ReportOrderProduct;
 import Entity.User;
 import Entity.Wallet;
 import Entity.Withdrawal;
@@ -206,6 +207,32 @@ public class DAO extends DBContext {
     public List<Report> getAllReport() {
         List<Report> list = new ArrayList<>();
         String query = "select * from swp_demo.Report";
+        try {
+            con = new DBContext().connection; //connect sql
+            ps = con.prepareStatement(query);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Report(rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getBoolean(5),
+                        rs.getString(6),
+                        rs.getInt(7),
+                        rs.getTimestamp(8),
+                        rs.getInt(9),
+                        rs.getTimestamp(10),
+                        rs.getBoolean(11)));
+            }
+        } catch (Exception e) {
+
+        }
+        return list;
+    }
+
+    public List<Report> getAllReportAdmin() {
+        List<Report> list = new ArrayList<>();
+        String query = "select * from swp_demo.Report where type_report = 7";
         try {
             con = new DBContext().connection; //connect sql
             ps = con.prepareStatement(query);
@@ -2196,10 +2223,8 @@ public class DAO extends DBContext {
         return null;
     }
 
- public HistoryTransaction InsertHistory_Transaction(double money, String Transaction_type, boolean status, String note, int create_by, int receiver) {
+    public HistoryTransaction InsertHistory_Transaction(double money, String Transaction_type, boolean status, String note, int create_by, int receiver) {
         String query = "INSERT INTO `swp_demo`.`history_transaction` (`Money_Transaction`, `Transaction_Type`, `Status`,`Note`, `Create_by`, `receiver`) \n"
-
-
                 + "VALUES(?, ?, ?, ?, ?, ?)";
         try {
             con = new DBContext().connection;
@@ -2341,7 +2366,7 @@ public class DAO extends DBContext {
 
         return result;
     }
-    
+
     public int getQuantityProductInCart(int userID) {
         int count = 0;
         PreparedStatement statement = null;
@@ -2361,19 +2386,29 @@ public class DAO extends DBContext {
         }
 
         return count;
-    
+
     }
 
     public static void main(String[] args) {
         DAO dao = new DAO();
+
+        List<Report> listR = dao.getAllReportAdmin();
+        //List<ReportOrderProduct> reportOrderProductAll = new ArrayList<>();
+        for (Report report : listR) {
+            intermediateOrders order = dao.getOrderByID(84);
+//            Product product = dao.getProductByID(order.getProductId());
+//            reportOrderProductAll.add(new ReportOrderProduct(report, order, product));
+            System.out.println(order.getId());
+
+        }
         /*
-        List<Cart> cart = dao.getCartByUserID(3);
         for (Cart cartx : cart) {
             System.out.println(cartx.productID);
         }
-*/
-        int x = dao.getQuantityProductInCart(1);
-        System.out.println(x);
+         */
+//        for (ReportOrderProduct arg : reportOrderProductAll) {
+//            System.out.println(arg.getProduct().getId());
+//        }
 
     }
 }
